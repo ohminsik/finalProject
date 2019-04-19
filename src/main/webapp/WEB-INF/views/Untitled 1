@@ -1,0 +1,14 @@
+
+<!-- 
+<jsp:include page="../common/meta.jsp" />
+<body>
+	<div id="wrap">
+		<jsp:include page="../common/header.jsp" />		
+		<div id="container">
+			
+		</div>
+		<jsp:include page="../common/footer.jsp" />
+	</div>
+</body>
+</html>
+ -->
