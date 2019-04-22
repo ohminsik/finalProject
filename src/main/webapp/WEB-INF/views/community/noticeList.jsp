@@ -32,7 +32,7 @@
 		<!-- nav e -->	
 		<div id="container">
 			<div class="board_form">
-				<form method="GET" action="/community/notice">
+				<form method="GET" action="/community/noticeList">
 					<div class="search_form">
 						<ul>
 							<li>
@@ -70,7 +70,7 @@
 					<tbody>
 						<tr>
 							<td>1</td>
-							<td class="title"><a href="#">제목이다</a></td>
+							<td class="title"><a href="/community/noticeView">제목이다</a></td>
 							<td>글쓴이다</td>
 							<td>등록일이다</td>
 							<td>조회수다</td>
