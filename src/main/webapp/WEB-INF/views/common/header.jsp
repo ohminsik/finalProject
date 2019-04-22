@@ -53,7 +53,7 @@
 					<a href="#">마이페이지</a>
 					<ul>
 						<li><a href="#">내 정보</a></li>
-						<li><a href="#">팀 정보</a></li>
+						<li><a href="/mypage/teamInformation">팀 정보</a></li>
 						<li><a href="#">팀 게시판</a></li>
 						<li><a href="#">개인메세지</a></li>
 						<li><a href="#">내가 쓴 게시글</a></li>

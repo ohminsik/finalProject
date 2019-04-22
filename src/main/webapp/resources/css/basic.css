@@ -64,7 +64,9 @@ table{border-collapse:collapse;}
 .h30{ height:30px !important;}
 .h60{ height:60px !important;}
 
-
+.vt{vertical-align: top !important;}
+.vb{vertical-align: bottom !important;}
+.vm{vertical-align: middle !important;}
 
 
 

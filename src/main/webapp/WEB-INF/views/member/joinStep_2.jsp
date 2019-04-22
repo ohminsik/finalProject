@@ -148,7 +148,7 @@
 						</tr>
 					</tbody>
 				</table>
-				<div class="j_button mt50">
+				<div class="j_button mt50 tac">
 					<a onclick="nextStepFunc();" class="btnform0">회원가입</a>
 				</div>
 				</form>
