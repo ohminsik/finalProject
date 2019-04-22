@@ -154,7 +154,8 @@
 			.board_form .board_table thead tr th{padding:10px 20px; font-size:14px; border:1px solid #e1e1e1; background:rgba(83,131,232,0.3);}
 			.board_form .board_table tbody{}
 			.board_form .board_table tbody tr{}
-			.board_form .board_table tbody tr td{padding:10px 20px; font-size:14px; border:1px solid #e1e1e1; text-align:center;}
+			.board_form .board_table tbody tr td{padding:10px 20px; font-size:14px; border:1px solid #e1e1e1; text-align:center; position: relative;}
+			.board_form .board_table tbody tr td i.deleteBtn{position: absolute; top:50%; right:5px; color:red; font-weight: bold; font-size:16px; transform:translateY(-50%); cursor:pointer}
 			.board_form .board_table tbody tr:nth-child(2n-1) td{background:#f5f6f7}
 			.board_form .board_table tbody tr td.title{text-align:left;}
 			.board_form .board_table tbody tr td.title a{font-size:14px;}

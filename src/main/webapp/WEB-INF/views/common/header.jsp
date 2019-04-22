@@ -73,9 +73,9 @@
 					</ul>
 				</li>
 				<li>
-					<a href="/community/notice">커뮤니티</a>
+					<a href="/community/noticeList">커뮤니티</a>
 					<ul>
-						<li><a href="/community/notice">공지사항</a></li>
+						<li><a href="/community/noticeList">공지사항</a></li>
 						<li><a href="#">팀 가입인사</a></li>
 						<li><a href="#">팀 모집게시판</a></li>
 						<li><a href="#">자유게시판</a></li>
