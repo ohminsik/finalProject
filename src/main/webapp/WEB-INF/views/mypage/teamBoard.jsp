@@ -80,7 +80,7 @@
 						<tbody>
 							<tr>
 								<td>1</td>
-								<td class="title"><a href="/community/noticeView">제목이다 [1]</a></td>
+								<td class="title"><a href="/mypage/teamBoardView">제목이다 [1]</a></td>
 								<td>글쓴이다</td>
 								<td>등록일이다</td>
 								<td>조회수다</td>
@@ -92,7 +92,7 @@
 					</table>
 					
 					<div class="j_button fr mt20 mb20">
-						<a href="/community/noticeWrite" class="btnform7">글쓰기</a>
+						<a href="/mypage/teamBoardWrite" class="btnform7">글쓰기</a>
 					</div>
 					<div class="cb"></div>
 					
@@ -104,7 +104,7 @@
 				            <c:if test="${paging.curPage eq 1 }">
 				            </c:if>
 				            <c:if test="${paging.curPage ne 1 }">
-				               <li><a href="/board/list?cur=${paging.curPage-1}&search_div=${search_div}&search_word=${search_word}">&lt;</a></li>
+				               <li><a href="/mypage/teamBoard?cur=${paging.curPage-1}&search_div=${search_div}&search_word=${search_word}">&lt;</a></li>
 				            </c:if>
 				
 				
@@ -113,10 +113,10 @@
 				               var="i">
 				
 				               <c:if test="${paging.curPage eq i}">
-				                  <li class="on"><a href="/board/list?cur=${i }&search_div=${search_div}&search_word=${search_word}">${i }</a></li>
+				                  <li class="on"><a href="/mypage/teamBoard?cur=${i }&search_div=${search_div}&search_word=${search_word}">${i }</a></li>
 				               </c:if>
 				               <c:if test="${paging.curPage ne i}">
-				                  <li><a href="/board/list?cur=${i }&search_div=${search_div}&search_word=${search_word}">${i }</a></li>
+				                  <li><a href="/mypage/teamBoard?cur=${i }&search_div=${search_div}&search_word=${search_word}">${i }</a></li>
 				               </c:if>
 				            </c:forEach>
 				
@@ -124,7 +124,7 @@
 				            <c:if test="${paging.curPage eq paging.totalPage }">
 				            </c:if>
 				            <c:if test="${paging.curPage ne paging.totalPage }">
-				               <li><a href="/board/list?cur=${paging.curPage+1}&search_div=${search_div}&search_word=${search_word}">&gt;</a></li>
+				               <li><a href="/mypage/teamBoard?cur=${paging.curPage+1}&search_div=${search_div}&search_word=${search_word}">&gt;</a></li>
 				            </c:if>
 				         </ul>
 				    </c:if>

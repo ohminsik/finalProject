@@ -120,7 +120,7 @@
 			.nav > ul > li > a > i{font-size:20px; vertical-align:middle; transition:all,.5s;}
 			.nav > ul > li > a:hover > i{color:#5383e8; transition:all,.5s;}
 			
-		.content_form{max-width:1100px; width:100%; margin:50px auto; height:100%;}
+	.content_form{max-width:1100px; width:100%; margin:50px auto; height:100%;}
 			.content_form .j_title{font-size:16px; color:#333; font-weight: bold; margin-bottom:20px;}
 			.content_form .j_textform{width:100%; height:300px; overflow-y:auto; border:1px solid #e1e1e1;}
 			.content_form .j_input{float:right; margin-top:10px; margin-bottom:30px;}
@@ -147,7 +147,7 @@
 			.content_form .j_complete .text{font-size:14px;}
 			.content_form .j_complete .text span{color:#5383e8; font-size:14px; font-weight: bold;}
 		
-			.board_form{max-width:1100px; width:100%; margin:50px auto; height:100%;}
+	.board_form{max-width:1100px; width:100%; margin:50px auto; height:100%;}
 			.board_form .board_table{width:100%; border-top:2px solid #5383e8}
 			.board_form .board_table thead{}
 			.board_form .board_table thead tr{}
@@ -167,7 +167,7 @@
 			.board_form .board_table1 tbody tr td:first-child{text-align:center;}
 			.board_form .board_table1 tbody tr td{text-align:left;}
 			
-			.team_form{max-width:1100px; width:100%; margin:50px auto; height:100%;}
+	.team_form{max-width:1100px; width:100%; margin:50px auto; height:100%;}
 			.team_form .team_btn_list{}
 			.team_form .team_btn_list ul{overflow: hidden}
 			.team_form .team_btn_list ul li{float:left; width:25%; border:1px solid #5383e8; border-right:none; box-sizing:border-box; padding:0 20px}
@@ -216,7 +216,7 @@
 			.board_form .board_table1 tbody tr td:first-child{text-align:center;}
 			.board_form .board_table1 tbody tr td{text-align:left;}
 			
-			.teaminfo{}
+	.teaminfo{}
 			.teaminfo ul{overflow: hidden;}
 			.teaminfo ul li{float:left; width:48%; margin-right:2%;}
 			.teaminfo ul li+l1{margin:0; width:50%;}
@@ -237,31 +237,6 @@
 			.teaminfo ul li .bot .j_table_form1 tbody tr td{border-right:1px solid #ccc; text-align:center;}
 			.teaminfo ul li .bot .j_table_form1 tbody tr:nth-child(2n-1) td{background:#f5f6f7}
 			
-			.teammatchinfo ul{overflow: hidden;}
-			.teammatchinfo ul li{float:left; width:48%; margin-right:2%; overflow: hidden; position: relative; margin-bottom:30px;}
-			.teammatchinfo ul li+l1{margin:0; width:50%;}
-			.teammatchinfo ul li .wrapppppppp{width: 100%;    height: 100%;    position: relative;    overflow: hidden;}
-			
-			
-			    
-			.teammatchinfo ul li div.left, .teammatchinfo ul li div.right{width:49%; background:#5383e8; text-align: center; padding:50px; box-sizing:border-box; margin-right:2%; float:left;}
-			.teammatchinfo ul li div.right{margin:0; background:#955dff}
-			.teammatchinfo ul li div.center{background:#333; position: absolute; top:50%; left:50%; transform:translateX(-50%) translateY(-50%); width:60px; height:60px; border-radius: 50%; border:1px solid #fff;}
-			.teammatchinfo ul li div.center p{ color:#fff; text-align:center; font-weight: bold; font-size:30px; line-height:60px; position: absolute; top:50%; left:50%; transform:translateX(-50%) translateY(-50%);}
-			.teammatchinfo ul li div p.img{width:120px; height:120px; margin:0 auto; background:#fff; border-radius: 50%;}
-			.teammatchinfo ul li div p.img img{width:100%; height:100%; border-radius:50%;}
-			.teammatchinfo ul li div .title{font-size:22px; font-weight: bold; color:#fff;}
-			.teammatchinfo ul li div .score{font-size:20px; color:#fff; background:rgba(255,255,255,0.1);}
-			.teammatchinfo ul li div.timetable{width:100%; background:#fff; border:1px solid #ccc; box-sizing:border-box; padding:10px;  text-align: center;}
-			.teammatchinfo ul li div.timetable p{text-align: center; font-size:16px; font-weight: bold; color:#333;}
-			
-			
-			.teammatchinfo ul li div.leftscore{background:#333; position: absolute; top:50%; left:39%; transform:translateX(-50%) translateY(-50%); width:50px; height:50px; border-radius: 50%; border:1px solid #fff;}
-			.teammatchinfo ul li div.leftscore p{ color:#fff; text-align:center; font-weight: bold; font-size:30px; line-height:60px; position: absolute; top:50%; left:50%; transform:translateX(-50%) translateY(-50%);}
-			.teammatchinfo ul li div.rightscore{background:#333; position: absolute; top:50%; left:61%; transform:translateX(-50%) translateY(-50%); width:50px; height:50px; border-radius: 50%; border:1px solid #fff;}
-			.teammatchinfo ul li div.rightscore p{ color:#fff; text-align:center; font-weight: bold; font-size:30px; line-height:60px; position: absolute; top:50%; left:50%; transform:translateX(-50%) translateY(-50%);}
-			
-			
 			.teaminfo .j_table_form1{width:100%; border-top:2px solid #5383e8; border-bottom:2px solid #5383e8}
 			.teaminfo .j_table_form1 thead{}
 			.teaminfo .j_table_form1 thead tr{}
@@ -276,10 +251,75 @@
 			.teaminfo .j_table_form1 tbody tr td{border-right:1px solid #ccc; text-align:center;}
 			.teaminfo .j_table_form1 tbody tr:nth-child(2n-1) td{background:#f5f6f7}
 			
+	.teammatchinfo ul{overflow: hidden;}
+			.teammatchinfo ul li{float:left; width:48%; margin-right:2%; overflow: hidden; position: relative; margin-bottom:30px;}
+			.teammatchinfo ul li+l1{margin:0; width:50%;}
+			.teammatchinfo ul li .wrapppppppp{width: 100%;    height: 100%;    position: relative;    overflow: hidden;}		
+			    
+			.teammatchinfo ul li div.left, .teammatchinfo ul li div.right{width:49%; background:#5383e8; text-align: center; padding:50px; box-sizing:border-box; margin-right:2%; float:left;}
+			.teammatchinfo ul li div.right{margin:0; background:#955dff}
+			.teammatchinfo ul li div.center{background:#333; position: absolute; top:50%; left:50%; transform:translateX(-50%) translateY(-50%); width:60px; height:60px; border-radius: 50%; border:1px solid #fff;}
+			.teammatchinfo ul li div.center p{ color:#fff; text-align:center; font-weight: bold; font-size:30px; line-height:60px; position: absolute; top:50%; left:50%; transform:translateX(-50%) translateY(-50%);}
+			.teammatchinfo ul li div p.img{width:120px; height:120px; margin:0 auto; background:#fff; border-radius: 50%;}
+			.teammatchinfo ul li div p.img img{width:100%; height:100%; border-radius:50%;}
+			.teammatchinfo ul li div .title{font-size:22px; font-weight: bold; color:#fff;}
+			.teammatchinfo ul li div .score{font-size:20px; color:#fff; background:rgba(255,255,255,0.1);}
+			.teammatchinfo ul li div.timetable{width:100%; background:#fff; border:1px solid #ccc; box-sizing:border-box; padding:10px;  text-align: center;}
+			.teammatchinfo ul li div.timetable p{text-align: center; font-size:16px; font-weight: bold; color:#333;}			
+			
+			.teammatchinfo ul li div.leftscore{background:#333; position: absolute; top:50%; left:39%; transform:translateX(-50%) translateY(-50%); width:50px; height:50px; border-radius: 50%; border:1px solid #fff;}
+			.teammatchinfo ul li div.leftscore p{ color:#fff; text-align:center; font-weight: bold; font-size:30px; line-height:60px; position: absolute; top:50%; left:50%; transform:translateX(-50%) translateY(-50%);}
+			.teammatchinfo ul li div.rightscore{background:#333; position: absolute; top:50%; left:61%; transform:translateX(-50%) translateY(-50%); width:50px; height:50px; border-radius: 50%; border:1px solid #fff;}
+			.teammatchinfo ul li div.rightscore p{ color:#fff; text-align:center; font-weight: bold; font-size:30px; line-height:60px; position: absolute; top:50%; left:50%; transform:translateX(-50%) translateY(-50%);}
+			
+	.mypage_form{}
+			.mypage_form{}
+			.mypage_form .j_table_form1{width:100%; border-top:2px solid #5383e8; border-bottom:2px solid #5383e8}
+			.mypage_form .j_table_form1 thead{}
+			.mypage_form .j_table_form1 thead tr{}
+			.mypage_form .j_table_form1 thead tr th{text-align: center; padding:10px 20px; font-size:14px; border-right:1px solid #ccc;}
+			.mypage_form .j_table_form1 thead tr th:last-child{border-right:none}
+			.mypage_form .j_table_form1 tbody{}
+			.mypage_form .j_table_form1 tbody tr{}
+			.mypage_form .j_table_form1 tbody tr td{padding:10px 20px; font-size:14px;}
+			.mypage_form .j_table_form1 tbody tr td label{font-size:14px; margin-right:5px;}
+			.mypage_form .j_table_form1 tbody tr td input{font-size:14px; vertical-align: middle;}
+			.mypage_form .j_table_form1 tbody tr td input[type="radio"]{margin-right:10px;}
+			.mypage_form .j_table_form1 tbody tr td select{font-size:14px;}
+			.mypage_form .j_table_form1 tbody tr td{ text-align:left;}
+			.mypage_form .j_table_form1 tbody tr td:first-child{text-align:right;border-right:1px solid #ccc;}
+			.mypage_form .j_table_form1 tbody tr:nth-child(2n-1) td{background:#f5f6f7}
+			
+			.mypage_form .j_table_form2 tbody tr td{border-right:1px solid #ccc; text-align: center;}
+			.mypage_form .j_table_form2 tbody tr td.nocheck{color:red}
+			.mypage_form .j_table_form2 tbody tr td.check{color:blue}
+			.mypage_form .j_table_form2 tbody tr td a{transition:all,.5s;}
+			.mypage_form .j_table_form2 tbody tr td a:hover{color:#5383e8; transition:all,.5s;}
+			.mypage_form .j_table_form2 tbody tr td:first-child{text-align:center}
+			.mypage_form .j_table_form2 tbody tr td:last-child{border-right:none; }
+			
+			.mypage_form .j_button{text-align:center;}
+			.mypage_form .j_button ul{text-align: center;}
+			.mypage_form .j_button ul li{display: inline-block;}
+			.mypage_form .j_button a{margin:0 auto;}
+			
+	.messagebg{width:100%; height:100%; position: fixed; top:0; left:0; background:rgba(0,0,0,0.5); z-index:99; display: none}	
+	.message_wrap{width:500px; background:#fff; position:absolute; top:50%; left:50%; transform:translateX(-50%) translateY(-50%); z-index:999; padding:20px; box-sizing:border-box; border:1px solid #5383e8;  display: none}
+		.message_wrap > div{position: relative; text-align:center;}
+		.message_wrap p{font-size:16px; font-weight: bold; color:333; text-align:left;}	
+		.message_wrap i{position: absolute; top:0; right:0; font-size:20px; cursor:pointer}
+		.message_wrap textarea{height:160px;}
+	.password_wrap_bg{width:100%; height:100%; position: fixed; top:0; left:0; background:rgba(0,0,0,0.5); z-index:99; display: none}	
+	.password_wrap{width:500px; background:#fff; position:absolute; top:50%; left:50%; transform:translateX(-50%) translateY(-50%); z-index:999; padding:20px; box-sizing:border-box; border:1px solid #5383e8;  display: none}
+		.password_wrap > div{position: relative; text-align:center;}
+		.password_wrap p{font-size:16px; font-weight: bold; color:333; text-align:left;}	
+		.password_wrap i{position: absolute; top:0; right:0; font-size:20px; cursor:pointer}	
 			
 			
 			
-			.paging_wrap{margin:50px auto;}
+			
+			
+	.paging_wrap{margin:50px auto;}
 			.paging_wrap ul{text-align: center;}
 			.paging_wrap ul li{display: inline-block;}
 			.paging_wrap ul li a{border:1px solid #e1e1e1; padding:5px 10px; color:#333; font-size:14px;}

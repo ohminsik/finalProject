@@ -13,6 +13,55 @@ import com.fm.www.dao.face.CommunityDao;
 public class MypageController {
 	private static final Logger logger = LoggerFactory.getLogger(MypageController.class);
 	
+	/*----------------------------------------------Mypage mypage Start----------------------------------------------*/
+	
+	/*
+	 * 내정보
+	 * 내정보 창 띄우기
+	 * GET
+	 * */
+	@RequestMapping(value = "/mypage/mypageInformation", method = RequestMethod.GET)
+	public void mypageInformationGet() {		
+		
+	}
+	
+	/*
+	 * 내정보
+	 * 내정보 수정 창 띄우기
+	 * GET
+	 * */
+	@RequestMapping(value = "/mypage/mypageInformationUpdate", method = RequestMethod.GET)
+	public void mypageInformationUpdateGet() {		
+		
+	}
+	
+	/*
+	 * 내정보
+	 * 내정보 처리
+	 * POST
+	 * */
+	@RequestMapping(value = "/mypage/mypageInformationUpdate", method = RequestMethod.POST)
+	public void mypageInformationUpdatePost() {		
+		
+	}
+	
+	/*
+	 * 개인메세지
+	 * 게인매세지 창 띄우기
+	 * GET
+	 * */
+	@RequestMapping(value = "/mypage/mypagepersonalMessage", method = RequestMethod.GET)
+	public void mypagepersonalMessageGet() {		
+		
+	}
+	
+	
+	
+	/*----------------------------------------------Mypage mypage End----------------------------------------------*/
+	
+	
+	/*----------------------------------------------Mypage team Start----------------------------------------------*/
+	
 	/*
 	 * 팀정보
 	 * 팀정보 창 띄우기
@@ -103,6 +152,86 @@ public class MypageController {
 		
 	}
 	
+	/*
+	 * 팀게시판View페이지
+	 * 팀게시판 폼 띄우기
+	 * 댓글 목록 출력
+	 * GET
+	 * */
+	@RequestMapping(value = "/mypage/teamBoardView", method = RequestMethod.GET)
+	public void teamBoardViewGet() {		
+		
+	}
+	
+	/*
+	 * 팀게시판 글쓰기폼
+	 * 팀게시판 글쓰기폼 폼 띄우기
+	 * GET
+	 * */
+	@RequestMapping(value = "/mypage/teamBoardWrite", method = RequestMethod.GET)
+	public void teamBoardWriteGet() {		
+		
+	}
+	
+	/*
+	 * 팀게시판 글쓰기폼
+	 * 팀게시판 글쓰기폼 처리
+	 * POST
+	 * */
+	@RequestMapping(value = "/mypage/teamBoardWrite", method = RequestMethod.POST)
+	public void teamBoardWritePost() {		
+		
+	}
+	
+	/*
+	 * 팀게시판 수정 폼
+	 * 팀게시판 수정 폼 띄우기
+	 * GET
+	 * */
+	@RequestMapping(value = "/mypage/teamBoardUpdate", method = RequestMethod.GET)
+	public void teamBoardUpdateGet() {		
+		
+	}
+	
+	/*
+	 * 팀게시판 수정폼
+	 * 팀게시판 수정 처리
+	 * POST
+	 * */
+	@RequestMapping(value = "/mypage/teamBoardUpdate", method = RequestMethod.POST)
+	public void teamBoardUpdatePost() {		
+		
+	}
+	
+	/*
+	 * 팀게시판 삭제폼
+	 * 팀게시판 삭제 처리
+	 * POST
+	 * */
+	@RequestMapping(value = "/mypage/teamBoardDelete", method = RequestMethod.GET)
+	public void teamBoardDeleteGet() {		
+		
+	}
+	
+	/*
+	 * teamBoardCommentInsert POST
+	 * 팀게시판 댓글 등록 처리 폼
+	 * */
+	@RequestMapping(value="/mypage/teamBoardCommentInsert", method = RequestMethod.POST)
+	public void teamBoardCommentInsertPost() {
+		
+	}
+	
+	/*
+	 * teamBoardCommentDelete GET
+	 * 팀게시판 댓글 삭제 처리 폼
+	 * */
+	@RequestMapping(value="/mypage/teamBoardCommentDelete", method = RequestMethod.GET)
+	public void teamBoardCommentDeleteGet() {
+		
+	}
+	
+	/*----------------------------------------------Mypage team End----------------------------------------------*/
 	
 	
 	

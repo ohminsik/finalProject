@@ -25,8 +25,8 @@ public class CommunityController {
 	
 	/*
 	 * NoticeView GET
-	 * 공지사항 리스트 조회 폼
-	 * 검색,페이징 동시
+	 * 공지사항 상세페이지 조회 폼
+	 * 댓글 목록 출력
 	 * */
 	@RequestMapping(value="/community/noticeView", method = RequestMethod.GET)
 	public void noticeViewGet() {
@@ -53,7 +53,7 @@ public class CommunityController {
 	
 	/*
 	 * NoticeUpdate GET
-	 * 공지사항 글쓰기 폼
+	 * 공지사항 수정 폼
 	 * */
 	@RequestMapping(value="/community/noticeUpdate", method = RequestMethod.GET)
 	public void noticeUpdateGet() {
@@ -62,7 +62,7 @@ public class CommunityController {
 	
 	/*
 	 * NoticeUpdate POST
-	 * 공지사항 글쓰기 처리 폼
+	 * 공지사항 수정 처리 폼
 	 * */
 	@RequestMapping(value="/community/noticeUpdate", method = RequestMethod.POST)
 	public void noticeUpdatePost() {
@@ -70,12 +70,30 @@ public class CommunityController {
 	}
 	
 	/*
+	 * NoticeDelete GET
+	 * 공지사항 삭제 처리 폼
+	 * */
+	@RequestMapping(value="/community/noticeDelete", method = RequestMethod.GET)
+	public void noticeDeleteGet() {
+		
+	}
+	
+	/*
 	 * noticeCommentInsert POST
-	 * 공지사항 댓글 처리 폼
+	 * 공지사항 댓글 등록 처리 폼
 	 * */
 	@RequestMapping(value="/community/noticeCommentInsert", method = RequestMethod.POST)
 	public void noticeCommentInsertPost() {
 		
-	}	
+	}
+	
+	/*
+	 * noticeCommentDelete POST
+	 * 공지사항 댓글 삭제 처리 폼
+	 * */
+	@RequestMapping(value="/community/noticeCommentDelete", method = RequestMethod.GET)
+	public void noticeCommentDeleteGet() {
+		
+	}
 	
 }

@@ -50,14 +50,14 @@
 		<div class="h_bot">
 			<ul class="h_bot_list">
 				<li>
-					<a href="#">마이페이지</a>
+					<a>마이페이지</a>
 					<ul>
-						<li><a href="#">내 정보</a></li>
+						<li><a href="/mypage/mypageInformation">내 정보</a></li>
 						<li><a href="/mypage/teamInformation">팀 정보</a></li>
-						<li><a href="#">팀 게시판</a></li>
-						<li><a href="#">개인메세지</a></li>
-						<li><a href="#">내가 쓴 게시글</a></li>
-						<li><a href="#">내가 쓴 매치글</a></li>
+						<li><a href="/mypage/teamBoard">팀 게시판</a></li>
+						<li><a href="/mypage/mypagepersonalMessage">개인 메세지</a></li>
+						<li><a href="/mypage/mypageBoardList">내가 쓴 게시글</a></li>
+						<li><a href="/mypage/mypageMatchList">내가 쓴 매치글</a></li>
 					</ul>
 				</li>
 				<li>
