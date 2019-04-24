@@ -11,11 +11,402 @@
 	</div>
 </body>
 </html>
-1111
-2222
-333
-4444zsss�삎湲�
-555
-666 
-777788899dsasfdf
 -->
+
+
+- 테이블 순서는 관계를 고려하여 한 번에 실행해도 에러가 발생하지 않게 정렬되었습니다.
+DROP SEQUENCE team_tb_SEQ;
+DROP SEQUENCE user_tb_SEQ;
+DROP SEQUENCE board_division_SEQ;
+DROP SEQUENCE board_tb_SEQ;
+DROP SEQUENCE board_reply_SEQ;
+DROP SEQUENCE admin_tb_SEQ;
+DROP SEQUENCE photo_SEQ;
+DROP SEQUENCE match_SEQ;
+DROP SEQUENCE message_tb_SEQ;
+
+DROP TABLE team_tb;
+DROP TABLE admin_tb;
+DROP TABLE board_division;
+DROP TABLE board_reply;
+DROP TABLE board_tb;
+DROP TABLE match;
+DROP TABLE congress;
+DROP TABLE message_tb;
+DROP TABLE photo;
+DROP TABLE team_board;
+DROP TABLE user_tb;
+
+
+
+CREATE TABLE team_tb
+(
+    team_no         NUMBER            NOT NULL, 
+    team_name       VARCHAR2(2000)    NULL, 
+    team_cnt        VARCHAR2(2000)    NULL, 
+    team_region     VARCHAR2(2000)    NULL, 
+    team_age        VARCHAR2(2000)    NULL, 
+    team_type       VARCHAR2(2000)    NULL, 
+    team_level      VARCHAR2(2000)    NULL, 
+    team_uniform    VARCHAR2(2000)    NULL, 
+    team_field      VARCHAR2(2000)    NULL, 
+    team_mark       VARCHAR2(2000)    NULL, 
+    team_hello      VARCHAR2(2000)    NULL, 
+    team_YN         char(1)           NULL, 
+    team_etire      NUMBER            NULL, 
+    team_win        NUMBER            NULL, 
+    team_lose       NUMBER            NULL, 
+    team_tie        NUMBER            NULL, 
+    team_rating     NUMBER            NULL, 
+    CONSTRAINT TEAM_TB_PK PRIMARY KEY (team_no)
+);
+
+
+CREATE SEQUENCE team_tb_SEQ;
+
+
+COMMENT ON TABLE team_tb IS '팀 정보';
+COMMENT ON COLUMN team_tb.team_no IS '팀 번호';
+COMMENT ON COLUMN team_tb.team_name IS '팀 명';
+COMMENT ON COLUMN team_tb.team_cnt IS '팀원 수';
+COMMENT ON COLUMN team_tb.team_region IS '팀 지역';
+COMMENT ON COLUMN team_tb.team_age IS '평균 연령대';
+COMMENT ON COLUMN team_tb.team_type IS '팀 유형(성인,청소년)';
+COMMENT ON COLUMN team_tb.team_level IS '팀 실력';
+COMMENT ON COLUMN team_tb.team_uniform IS '유니폼 설명';
+COMMENT ON COLUMN team_tb.team_field IS '활동구장';
+COMMENT ON COLUMN team_tb.team_mark IS '팀 엠블럼';
+COMMENT ON COLUMN team_tb.team_hello IS '팀 가입인사';
+COMMENT ON COLUMN team_tb.team_YN IS '팀원 공개여부';
+COMMENT ON COLUMN team_tb.team_etire IS '총전적';
+COMMENT ON COLUMN team_tb.team_win IS '승수';
+COMMENT ON COLUMN team_tb.team_lose IS '패수';
+COMMENT ON COLUMN team_tb.team_tie IS '무승부';
+COMMENT ON COLUMN team_tb.team_rating IS '레이팅';
+
+
+CREATE TABLE user_tb
+(
+    user_no         NUMBER            NOT NULL, 
+    user_id         VARCHAR2(50)      NULL, 
+    user_pw         VARCHAR2(50)      NULL, 
+    user_name       VARCHAR2(50)      NULL, 
+    user_nick       VARCHAR2(50)      NULL, 
+    user_email      VARCHAR2(50)      NULL, 
+    user_phone      VARCHAR2(50)      NULL, 
+    user_year       NUMBER            NULL, 
+    user_region     VARCHAR2(50)      NULL, 
+    user_sport      VARCHAR2(50)      NULL, 
+    user_profile    VARCHAR2(2000)    NULL, 
+    team_no         NUMBER            NULL, 
+    CONSTRAINT USER_TB_PK PRIMARY KEY (user_no)
+);
+
+CREATE SEQUENCE user_tb_SEQ;
+
+COMMENT ON TABLE user_tb IS '회원정보';
+COMMENT ON COLUMN user_tb.user_no IS '회원번호';
+COMMENT ON COLUMN user_tb.user_id IS '회원아이디';
+COMMENT ON COLUMN user_tb.user_pw IS '회원비밀번호';
+COMMENT ON COLUMN user_tb.user_name IS '회원이름';
+COMMENT ON COLUMN user_tb.user_nick IS '회원닉네임';
+COMMENT ON COLUMN user_tb.user_email IS '회원이메일';
+COMMENT ON COLUMN user_tb.user_phone IS '회원전화번호';
+COMMENT ON COLUMN user_tb.user_year IS '회원 출생년도';
+COMMENT ON COLUMN user_tb.user_region IS '회원 지역';
+COMMENT ON COLUMN user_tb.user_sport IS '회원 종목';
+COMMENT ON COLUMN user_tb.user_profile IS '프로필사진';
+COMMENT ON COLUMN user_tb.team_no IS '팀 번호';
+
+ALTER TABLE user_tb
+    ADD CONSTRAINT FK_user_tb_team_no_team_tb_tea FOREIGN KEY (team_no)
+        REFERENCES team_tb (team_no);
+
+
+
+CREATE TABLE board_division
+(
+    board_fg        NUMBER            NOT NULL, 
+    board_detail    VARCHAR2(2000)    NULL, 
+    CONSTRAINT BOARD_DIVISION_PK PRIMARY KEY (board_fg)
+);
+
+CREATE SEQUENCE board_division_SEQ;
+
+
+COMMENT ON TABLE board_division IS '게시판구분';
+COMMENT ON COLUMN board_division.board_fg IS '게시판구분';
+COMMENT ON COLUMN board_division.board_detail IS '게시판설명';
+
+CREATE TABLE board_tb
+(
+    board_no         NUMBER            NOT NULL, 
+    user_no          NUMBER            NULL, 
+    board_div        NUMBER            NULL, 
+    board_title      VARCHAR2(2000)    NULL, 
+    board_content    VARCHAR2(2000)    NULL, 
+    board_date       DATE              NULL, 
+    board_cnt        NUMBER            NULL, 
+    delete_yn        char(1)           NULL, 
+    CONSTRAINT BOARD_TB_PK PRIMARY KEY (board_no)
+);
+
+CREATE SEQUENCE board_tb_SEQ;
+
+COMMENT ON TABLE board_tb IS '게시판';
+COMMENT ON COLUMN board_tb.board_no IS '게시글 번호';
+COMMENT ON COLUMN board_tb.user_no IS '유저 번호';
+COMMENT ON COLUMN board_tb.board_div IS '게시판 구분';
+COMMENT ON COLUMN board_tb.board_title IS '게시판 제목';
+COMMENT ON COLUMN board_tb.board_content IS '게시판 내용';
+COMMENT ON COLUMN board_tb.board_date IS '게시판 등록일';
+COMMENT ON COLUMN board_tb.board_cnt IS '게시판 조회수';
+COMMENT ON COLUMN board_tb.delete_yn IS '게시글 삭제여부';
+
+ALTER TABLE board_tb
+    ADD CONSTRAINT FK_board_tb_user_no_user_tb_us FOREIGN KEY (user_no)
+        REFERENCES user_tb (user_no);
+
+ALTER TABLE board_tb
+    ADD CONSTRAINT FK_board_tb_board_div_board_di FOREIGN KEY (board_div)
+        REFERENCES board_division (board_fg);
+
+
+
+CREATE TABLE board_reply
+(
+    reply_no           NUMBER            NOT NULL, 
+    board_fg           NUMBER            NULL, 
+    board_no           NUMBER            NULL, 
+    user_no            NUMBER            NULL, 
+    reply_content      VARCHAR2(2000)    NULL, 
+    reply_date         DATE              NULL, 
+    reply_delete_YN    CHAR(1)           NULL, 
+    CONSTRAINT BOARD_REPLY_PK PRIMARY KEY (reply_no)
+);
+
+CREATE SEQUENCE board_reply_SEQ;
+
+COMMENT ON TABLE board_reply IS '게시판댓글';
+COMMENT ON COLUMN board_reply.reply_no IS '댓글 번호';
+COMMENT ON COLUMN board_reply.board_fg IS '게시판구분';
+COMMENT ON COLUMN board_reply.board_no IS '게시글번호';
+COMMENT ON COLUMN board_reply.user_no IS '회원번호';
+COMMENT ON COLUMN board_reply.reply_content IS '댓글내용';
+COMMENT ON COLUMN board_reply.reply_date IS '댓글작성일';
+COMMENT ON COLUMN board_reply.reply_delete_YN IS '댓글삭제여부';
+
+ALTER TABLE board_reply
+    ADD CONSTRAINT FK_board_reply_board_no_board_ FOREIGN KEY (board_no)
+        REFERENCES board_tb (board_no);
+ALTER TABLE board_reply
+    ADD CONSTRAINT FK_board_reply_board_fg_board_ FOREIGN KEY (board_fg)
+        REFERENCES board_division (board_fg);
+
+ALTER TABLE board_reply
+    ADD CONSTRAINT FK_board_reply_user_no_user_tb FOREIGN KEY (user_no)
+        REFERENCES user_tb (user_no);
+
+
+
+CREATE TABLE admin_tb
+(
+    admin_no    NUMBER            NOT NULL, 
+    admin_id    VARCHAR2(2000)    NULL, 
+    admin_pw    VARCHAR2(2000)    NULL, 
+    CONSTRAINT ADMIN_TB_PK PRIMARY KEY (admin_no)
+);
+
+CREATE SEQUENCE admin_tb_SEQ;
+
+COMMENT ON TABLE admin_tb IS '관리자 정보';
+COMMENT ON COLUMN admin_tb.admin_no IS '관리자번호';
+COMMENT ON COLUMN admin_tb.admin_id IS '관리자 아이디';
+COMMENT ON COLUMN admin_tb.admin_pw IS '관리자비밀번호';
+
+
+CREATE TABLE photo
+(
+    photo_no           NUMBER            NOT NULL, 
+    photo_origin       VARCHAR2(2000)    NULL, 
+    photo_stored       VARCHAR2(2000)    NULL, 
+    board_fg           NUMBER            NULL, 
+    board_no           NUMBER            NULL, 
+    photo_delete_yn    CHAR(1)           NULL, 
+    CONSTRAINT PHOTO_PK PRIMARY KEY (photo_no)
+);
+
+CREATE SEQUENCE photo_SEQ;
+COMMENT ON TABLE photo IS '사진테이블';
+COMMENT ON COLUMN photo.photo_no IS '사진번호';
+COMMENT ON COLUMN photo.photo_origin IS '사진원본명';
+COMMENT ON COLUMN photo.photo_stored IS '사진변경명';
+COMMENT ON COLUMN photo.board_fg IS '연관게시판';
+COMMENT ON COLUMN photo.board_no IS '게시글번호';
+COMMENT ON COLUMN photo.photo_delete_yn IS '사진삭제여부';
+
+ALTER TABLE photo
+    ADD CONSTRAINT FK_photo_board_no_board_tb_boa FOREIGN KEY (board_no)
+        REFERENCES board_tb (board_no);
+
+ALTER TABLE photo
+    ADD CONSTRAINT FK_photo_board_fg_board_divisi FOREIGN KEY (board_fg)
+        REFERENCES board_division (board_fg);
+
+
+
+
+CREATE TABLE congress
+(
+    board_fg         NUMBER            NULL, 
+    board_no         NUMBER            NULL, 
+    con_reg_date     DATE              NULL, 
+    con_con_date     DATE              NULL, 
+    con_region       VARCHAR2(2000)    NULL, 
+    con_cnt          NUMBER            NULL, 
+    con_total_cnt    NUMBER            NULL   
+);
+
+COMMENT ON TABLE congress IS '대회일정게시판';
+COMMENT ON COLUMN congress.board_fg IS '게시판구분';
+COMMENT ON COLUMN congress.board_no IS '게시글번호';
+COMMENT ON COLUMN congress.con_reg_date IS '신청기간';
+COMMENT ON COLUMN congress.con_con_date IS '대회기간';
+COMMENT ON COLUMN congress.con_region IS '대회지역';
+COMMENT ON COLUMN congress.con_cnt IS '신청자수';
+COMMENT ON COLUMN congress.con_total_cnt IS '신청자정원';
+
+ALTER TABLE congress
+    ADD CONSTRAINT FK_congress_board_no_board_tb_ FOREIGN KEY (board_no)
+        REFERENCES board_tb (board_no);
+
+ALTER TABLE congress
+    ADD CONSTRAINT FK_congress_board_fg_board_div FOREIGN KEY (board_fg)
+        REFERENCES board_division (board_fg);
+
+
+-- team_board Table Create SQL
+CREATE TABLE team_board
+(
+    team_no     NUMBER    NULL, 
+    user_no     NUMBER    NULL, 
+    board_fg    NUMBER    NULL, 
+    board_no    NUMBER    NULL   
+);
+
+COMMENT ON TABLE team_board IS '팀게시판';
+COMMENT ON COLUMN team_board.team_no IS '팀번호';
+COMMENT ON COLUMN team_board.user_no IS '유저번호';
+COMMENT ON COLUMN team_board.board_fg IS '게시판 구분';
+COMMENT ON COLUMN team_board.board_no IS '게시글 번호';
+
+
+ALTER TABLE team_board
+    ADD CONSTRAINT FK_team_board_user_no FOREIGN KEY (user_no)
+        REFERENCES user_tb (user_no);
+
+ALTER TABLE team_board
+    ADD CONSTRAINT FK_team_board_team_no FOREIGN KEY (team_no)
+        REFERENCES team_tb (team_no);
+
+ALTER TABLE team_board
+    ADD CONSTRAINT FK_team_board_board_fg FOREIGN KEY (board_fg)
+        REFERENCES board_division (board_fg);
+
+ALTER TABLE team_board
+    ADD CONSTRAINT FK_team_board_board_no_board_t FOREIGN KEY (board_no)
+        REFERENCES board_tb (board_no);
+
+CREATE TABLE match
+(
+    match_no            NUMBER            NOT NULL, 
+    match_date          DATE              NULL, 
+    fight_date          DATE              NULL, 
+    match_ground        VARCHAR2(2000)    NULL, 
+    match_ground_YN     CHAR(1)           NULL, 
+    match_money         NUMBER            NULL, 
+    match_uniform       VARCHAR2(2000)    NULL, 
+    match_region        VARCHAR2(2000)    NULL, 
+    match_content       VARCHAR2(2000)    NULL, 
+    blueteam_no         NUMBER            NULL, 
+    purpleteam_no       NUMBER            NULL, 
+    user_no             NUMBER            NULL, 
+    blueteam_score      NUMBER            NULL, 
+    purpleteam_score    NUMBER            NULL, 
+    CONSTRAINT MATCH_PK PRIMARY KEY (match_no)
+);
+
+CREATE SEQUENCE match_SEQ;
+
+COMMENT ON TABLE match IS '매치보드';
+COMMENT ON COLUMN match.match_no IS '매치번호';
+COMMENT ON COLUMN match.match_date IS '매치등록일';
+COMMENT ON COLUMN match.fight_date IS '경기날짜';
+COMMENT ON COLUMN match.match_ground IS '구장';
+COMMENT ON COLUMN match.match_ground_YN IS '구장유무';
+COMMENT ON COLUMN match.match_money IS '구장비';
+COMMENT ON COLUMN match.match_uniform IS '유니폼색상';
+COMMENT ON COLUMN match.match_region IS '경기가능지역';
+COMMENT ON COLUMN match.match_content IS '매치내용';
+COMMENT ON COLUMN match.blueteam_no IS '블루팀';
+COMMENT ON COLUMN match.purpleteam_no IS '퍼플팀';
+COMMENT ON COLUMN match.user_no IS '회원번호';
+COMMENT ON COLUMN match.blueteam_score IS '블루팀스코어';
+COMMENT ON COLUMN match.purpleteam_score IS '퍼플팀스코어';
+
+ALTER TABLE match
+    ADD CONSTRAINT FK_match_blueteam_no FOREIGN KEY (blueteam_no)
+        REFERENCES team_tb (team_no);
+        
+ALTER TABLE match
+    ADD CONSTRAINT FK_match_purpleteam_no FOREIGN KEY (purpleteam_no)
+        REFERENCES team_tb (team_no);
+
+ALTER TABLE match
+    ADD CONSTRAINT FK_match_user_no FOREIGN KEY (user_no)
+        REFERENCES user_tb (user_no);
+
+
+-- message_tb Table Create SQL
+CREATE TABLE message_tb
+(
+    message_no         NUMBER            NOT NULL, 
+    reciveruser_no     NUMBER            NULL, 
+    senduser_no        NUMBER            NULL, 
+    message_content    VARCHAR2(2000)    NULL, 
+    message_date       DATE              NULL, 
+    CONSTRAINT MESSAGE_TB_PK PRIMARY KEY (message_no)
+);
+
+CREATE SEQUENCE message_tb_SEQ;
+
+COMMENT ON TABLE message_tb IS '개인쪽지함';
+COMMENT ON COLUMN message_tb.message_no IS '개인쪽지번호';
+COMMENT ON COLUMN message_tb.reciveruser_no IS '받는사람회원번호';
+COMMENT ON COLUMN message_tb.senduser_no IS '보낸사람회원번호';
+COMMENT ON COLUMN message_tb.message_content IS '쪽지내용';
+COMMENT ON COLUMN message_tb.message_date IS '쪽지발송날짜';
+
+ALTER TABLE message_tb
+    ADD CONSTRAINT FK_message_tb_reciveruser_no_u FOREIGN KEY (reciveruser_no)
+        REFERENCES user_tb (user_no);
+        
+ALTER TABLE message_tb
+    ADD CONSTRAINT FK_message_tb_senduser_no_u FOREIGN KEY (senduser_no)
+        REFERENCES user_tb (user_no);
+
+
+
+INSERT INTO board_division (board_fg, board_detail) VALUES (board_division_SEQ.nextVal, '공지사항');
+INSERT INTO board_division (board_fg, board_detail) VALUES (board_division_SEQ.nextVal, '팀가입인사');
+INSERT INTO board_division (board_fg, board_detail) VALUES (board_division_SEQ.nextVal, '팀모집게시판');
+INSERT INTO board_division (board_fg, board_detail) VALUES (board_division_SEQ.nextVal, '자유게시판');
+INSERT INTO board_division (board_fg, board_detail) VALUES (board_division_SEQ.nextVal, '경기후기');
+INSERT INTO board_division (board_fg, board_detail) VALUES (board_division_SEQ.nextVal, '중고장터');
+INSERT INTO board_division (board_fg, board_detail) VALUES (board_division_SEQ.nextVal, '축구동영상');
+INSERT INTO board_division (board_fg, board_detail) VALUES (board_division_SEQ.nextVal, '팀게시판');
+INSERT INTO board_division (board_fg, board_detail) VALUES (board_division_SEQ.nextVal, '대회일정');
+INSERT INTO board_division (board_fg, board_detail) VALUES (board_division_SEQ.nextVal, '경기장리스트');
+
+commit;
+
