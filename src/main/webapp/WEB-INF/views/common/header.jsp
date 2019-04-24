@@ -63,13 +63,13 @@
 				<li>
 					<a href="#">매치보드</a>
 					<ul>
-						<li><a href="#">매치신청</a></li>
+						<li><a href="/match/matchBoard">매치신청</a></li>
 					</ul>
 				</li>
 				<li>
 					<a href="#">팀</a>
 					<ul>
-						<li><a href="#">전국 팀 정보</a></li>
+						<li><a href="/team/allTeamInformation">전국 팀 정보</a></li>
 					</ul>
 				</li>
 				<li>

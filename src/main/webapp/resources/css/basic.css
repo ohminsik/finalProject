@@ -718,4 +718,6 @@ table{border-collapse:collapse;}
 
 .btnform7{width:100px; height:35px; box-sizing:border-box; color:#5383e8; border:1px solid #5383e8; background:rgba(83,131,232,0.1); text-align:center; line-height:35px; transition:all,.5s; display:inline-block; cursor:pointer;}
 .btnform7:hover{background:#5383e8; transition:all,.5s; color:#fff}
-			
+
+.btnform8{width:100px; height:35px; box-sizing:border-box; color:#e1e1e1; border:1px solid #575757; background:#636363; text-align:center; line-height:35px; transition:all,.5s; display:inline-block; cursor:pointer;}
+.btnform8:hover{background:#434343; transition:all,.5s; color:#fff}

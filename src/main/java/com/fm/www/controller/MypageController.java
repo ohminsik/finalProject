@@ -55,6 +55,26 @@ public class MypageController {
 		
 	}
 	
+	/*
+	 * 내가쓴 게시글 리스트
+	 * 내가쓴 게시글 창 띄우기
+	 * GET
+	 * */
+	@RequestMapping(value = "/mypage/mypageBoardList", method = RequestMethod.GET)
+	public void mypageBoardListGet() {		
+		
+	}
+	
+	
+	/*
+	 * 내가쓴 매치글 리스트
+	 * 내가쓴 매치글 창 띄우기
+	 * GET
+	 * */
+	@RequestMapping(value = "/mypage/mypageMatchList", method = RequestMethod.GET)
+	public void mypageMatchListGet() {		
+		
+	}
 	
 	
 	/*----------------------------------------------Mypage mypage End----------------------------------------------*/
@@ -230,6 +250,8 @@ public class MypageController {
 	public void teamBoardCommentDeleteGet() {
 		
 	}
+	
+	
 	
 	/*----------------------------------------------Mypage team End----------------------------------------------*/
 	

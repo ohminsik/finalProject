@@ -314,9 +314,31 @@
 		.password_wrap > div{position: relative; text-align:center;}
 		.password_wrap p{font-size:16px; font-weight: bold; color:333; text-align:left;}	
 		.password_wrap i{position: absolute; top:0; right:0; font-size:20px; cursor:pointer}	
-			
-			
-			
+	
+	.match_wrap{max-width:1100px; width:100%; margin:50px auto; height:100%;}
+	.match_wrap_ul{overflow: hidden;}
+	.match_wrap_ul > li{float:left; width:49%; margin-right:2%}
+	.match_wrap_ul > li:last-child{margin-right:0;}
+	.match_wrap_ul > li .title{padding:10px 20px; box-sizing:border-box; border:1px solid #e1e1e1; background:#f5f6f7; color:#5383e8}
+	.match_wrap_ul > li .region{}
+	.match_wrap_ul > li .region > ul{}
+	.match_wrap_ul > li .region > ul > li{padding:20px; box-sizing:border-box; border:1px solid #e1e1e1; color:#5383e8; margin-bottom:10px;}
+	.match_wrap_ul > li .region > ul > li:first-child{padding:10px 20px;}
+	.match_wrap_ul > li .region > ul > li:first-child a{font-weight: bold; font-size:24px; text-align: center;}
+	.match_wrap_ul > li .region > ul > li > ul{text-align: center;}
+	.match_wrap_ul > li .region > ul > li > ul > li{display: inline-block; margin-bottom:5px}
+	.match_wrap_ul > li .region > ul > li > ul > li > a{padding:10px 20px; border:1px solid #e1e1e1; box-sizing:border-box; transition:all,.5s; font-size:14px;}
+	.match_wrap_ul > li .region > ul > li > ul > li > a:hover{border:1px solid #5383e8; transition:all,.5s;}
+	.match_wrap_ul > li > table.week{width:100%; background:#5383e8; border:1px solid #5383e9; box-sizing:border-box; height:50px; margin-bottom:10px;}		
+	.match_wrap_ul > li > table.week tr{}		
+	.match_wrap_ul > li > table.week tr td{}		
+	.match_wrap_ul > li > table.week tr td a{display: inline-block; color:#fff; margin:0 10px;}		
+	.match_wrap_ul > li > table.week tr td span{display: inline-block; color:#fff; font-size:18px;}		
+	.match_wrap_ul > li > table.date{width:100%;}		
+	.match_wrap_ul > li > table.date thead{}		
+	.match_wrap_ul > li > table.date thead tr{}		
+	.match_wrap_ul > li > table.date thead tr td{padding:5px 0; box-sizing:border-box; border:1px solid #e1e1e1; text-align: center; font-weight: bold;}		
+	.match_wrap_ul > li > table.date tbody tr td{padding:5px; height:80px; width:79px; box-sizing:border-box; border:1px solid #e1e1e1; text-align: left; vertical-align:top; font-weight: bold; }		
 			
 			
 	.paging_wrap{margin:50px auto;}

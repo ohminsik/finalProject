@@ -75,9 +75,18 @@
 							</tr>
 							<tr>
 								<td>김강환</td>
-								<td class="tddd"><a href="#">담경기는 ㅇㄷㅇㄷ?</a></td>
+								<td class="tddd"><a href="#" class="messagebtn">담경기는 ㅇㄷㅇㄷ?</a></td>
 								<td class="check">확인</td>
 								<td>2019-02-02</td>
+								<div class="message_wrap">
+									<div>
+										<p>보낸사람 : 김강환(kkh123)</p>
+										<i class="xi-close messageclosebtn"></i>
+										<textarea class="textareaform100p mt20">담경기는 ㅇㄷㅇㄷ?</textarea>
+										<button type="button" class="btnform1 oh1 mt20">삭제</button>
+										<button type="button" class="btnform1 oh1 mt20">답장</button>
+									</div>								
+								</div>
 							</tr>
 						</tbody>
 					</table>
@@ -93,7 +102,7 @@ $(document).ready(function(){
 	$(".messagebtn").click(function(e){
 		e.preventDefault();
 		$(".messagebg").fadeIn();
-		$(".message_wrap").fadeIn();
+		$(this).parent().siblings(".message_wrap").fadeIn();
 	})
 	
 	$(".messageclosebtn").click(function(e){
