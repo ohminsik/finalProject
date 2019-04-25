@@ -1,12 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <div id="header">
 	<div class="h_top_wrap">
 		<div class="h_top">
 			<ul>
 				<li><a href="#">홈</a></li>
+				<c:if test="${empty login }">
 				<li><a href="#" class="login">로그인</a></li>
 				<li><a href="/member/joinStep_1">회원가입</a></li>
+				</c:if>
+				
+				<c:if test="${login }">
+				<li><a href="/logout" class="logout">로그아웃</a></li>
+				<li><a href="/member/joinStep_1">회원가입</a></li>
+				</c:if>
 			</ul>
 		</div>
 	</div>
@@ -109,10 +118,10 @@
         	<p><i class="xi-profile-o"></i>로그인</p>
     		<i class="xi-close"></i>
         </div>
-        <form action="" method="post" id="login_form" name="login_form">
+        <form action="/login" method="post" id="login_form" name="login_form">
 	        <div class="body">
-	            <div class="input"><i class="xi-mail-o"></i><input type="text" placeholder="아이디" id="login_id" name="login_id" value=""></div>
-	            <div class="input"><i class="xi-key"></i><input type="password" class="password" placeholder="비밀번호" id="login_pw" name="login_pw"></div>
+	            <div class="input"><i class="xi-mail-o"></i><input type="text" placeholder="아이디" id="login_id" name="user_id" value=""></div>
+	            <div class="input"><i class="xi-key"></i><input type="password" class="password" placeholder="비밀번호" id="login_pw" name="user_pw"></div>
 	            <label class="id_save"><input name="loginChk01" id="loginChk01" type="checkbox">로그인 기억</label>
 	            
 	            <ul class="menu">
