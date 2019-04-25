@@ -35,7 +35,7 @@
 			
 			<!-- 회원가입 step2 s -->
 			<div class="content_form">
-				<form action="/member/joinStep_2" method="post" id="join_form">
+				<form action="/member/joinStep_2" method="post" id="join_form" enctype="multipart/form-data">
 				<table class="j_table_form">
 					<colgroup>
 						<col width="20%">
@@ -45,6 +45,10 @@
 						<tr>
 							<td>이름</td>
 							<td><input type="text" name="user_name" id="user_name" class="inputform100p"></td>
+						</tr>
+						<tr>
+							<td>닉네임</td>
+							<td><input type="text" name="user_nick" id="user_nick" class="inputform100p"></td>
 						</tr>
 						<tr>
 							<td>아이디</td>
@@ -60,8 +64,8 @@
 						</tr>
 						<tr>
 							<td>이메일</td>
-							<td><input type="text" name="user_email" id="user_email" class="inputform250"> @ <input type="text" name="" id="" class="inputform250">
-								<select name="user_email2" class="selectform2">
+							<td><input type="text" name="user_email" id="user_email" class="inputform250"> @ <input type="text" name="user_email1" id="user_email1" class="inputform250">
+								<select name="user_email2" class="selectform2" onchange="javascript: emailChangeFunc(this.value)">
 									<option value="">직접입력</option>
 									<option value="naver.com">naver.com</option>
 									<option value="hanmail.net">hanmail.net</option>
@@ -114,8 +118,8 @@
 						<tr>
 							<td>지역</td>
 							<td>
-								<select name="region" id="region" class="selectform1">											
-									<option value="서울">서울</option>
+								<select name="user_region" id="user_region" class="selectform1">											
+									<option value="서울" selected="selected">서울</option>
 									<option value="인천">인천</option>
 									<option value="대전">대전</option>
 									<option value="대구">대구</option>
@@ -137,16 +141,16 @@
 						</tr>
 						<tr>
 							<td>프로필사진</td>
-							<td><input type="file" name="profile" id="profile"></td>
+							<td><input type="file" name="file" id="user_profile"></td>
 						</tr>
 						<tr>
 							<td>주 종목</td>
 							<td>
-								<input type="radio" name="sport" id="scooer" value="scooer"><label for="scooer">축구</label>
-								<input type="radio" name="sport" id="bascketball" value="bascketball"><label for="bascketball">농구</label>
-								<input type="radio" name="sport" id="jukgu" value="jukgu"><label for="jukgu">족구</label>
-								<input type="radio" name="sport" id="bollring" value="bollring"><label for="bollring">볼링</label>
-								<input type="radio" name="sport" id="takgu" value="takgu"><label for="takgu">탁구</label>
+								<input type="radio" name="user_sport" id="scooer" value="scooer"><label for="scooer">축구</label>
+								<input type="radio" name="user_sport" id="bascketball" value="bascketball"><label for="bascketball">농구</label>
+								<input type="radio" name="user_sport" id="jukgu" value="jukgu"><label for="jukgu">족구</label>
+								<input type="radio" name="user_sport" id="bollring" value="bollring"><label for="bollring">볼링</label>
+								<input type="radio" name="user_sport" id="takgu" value="takgu"><label for="takgu">탁구</label>
 							</td>
 						</tr>
 					</tbody>
@@ -162,6 +166,11 @@
 	</div>
 </body>
 <script>
+function emailChangeFunc(n){
+	$("#user_email1").val(n);
+}
+
+
 function nextStepFunc(){					
 	/* if($("#user_id").val()==""){
 		alert("아이디를 입력하셔야 합니다.");

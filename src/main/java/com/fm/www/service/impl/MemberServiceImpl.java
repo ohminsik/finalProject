@@ -24,4 +24,10 @@ public class MemberServiceImpl implements MemberService{
 		return false;
 	}
 
+	@Override
+	public void insertMember(User user) {
+		memberDao.insertMember(user);
+		
+	}
+
 }
