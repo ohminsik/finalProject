@@ -85,12 +85,12 @@
 					<a href="/community/noticeList">커뮤니티</a>
 					<ul>
 						<li><a href="/community/noticeList">공지사항</a></li>
-						<li><a href="#">팀 가입인사</a></li>
-						<li><a href="#">팀 모집게시판</a></li>
-						<li><a href="#">자유게시판</a></li>
-						<li><a href="#">경기 후기</a></li>
-						<li><a href="#">중고장터</a></li>
-						<li><a href="#">축구동영상</a></li>
+						<li><a href="/community/teamIntroList">팀 가입인사</a></li>
+						<li><a href="/community/teamAddList">팀 모집게시판</a></li>
+						<li><a href="/community/freeList">자유게시판</a></li>
+						<li><a href="/community/reviewList">경기 후기</a></li>
+						<li><a href="/community/usedList">중고장터</a></li>
+						<li><a href="/community/soccerVideoList">축구동영상</a></li>
 					</ul>
 				</li>
 				<li>
