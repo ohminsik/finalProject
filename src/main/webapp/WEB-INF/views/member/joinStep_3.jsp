@@ -38,7 +38,7 @@
 				<div class="j_complete">
 					<img src="/resources/img/logo_footer.png">
 					<p class="title">회원가입이 완료되었습니다.</p>
-					<p class="text"><span>name</span>님 가입을 환영합니다.</p>
+					<p class="text"><span>${nick }</span>님 가입을 환영합니다.</p>
 				</div>
 				<div class="j_button mt50">
 					<a href="/main" class="btnform0">메인</a>

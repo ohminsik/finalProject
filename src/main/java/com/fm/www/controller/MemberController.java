@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,7 +51,7 @@ public class MemberController {
 	 * POST
 	 * */
 	@RequestMapping(value = "/member/joinStep_2", method = RequestMethod.POST)
-	public String joinStep_2Post(User user, HttpServletRequest request, MultipartFile file) {
+	public String joinStep_2Post(User user, HttpServletRequest request, MultipartFile file, HttpSession session) {
 		
 		System.out.println(user);
 		System.out.println(file.getOriginalFilename());
@@ -87,7 +88,8 @@ public class MemberController {
 
 		//저장될 파일 이름
 		String stored_name = null;
-		stored_name =file.getOriginalFilename()+"_"+uId;
+		//stored_name =file.getOriginalFilename()+"_"+uId;
+		stored_name =file.getOriginalFilename();
 						
 		//파일 저장 경로		
 		String path = context.getRealPath("uploadImg");
@@ -109,6 +111,8 @@ public class MemberController {
 		
 		MemberService.insertMember(user);
 		
+		
+		session.setAttribute("nick", user.getUser_nick());
 		
 		return "redirect:/member/joinStep_3";
 	}
