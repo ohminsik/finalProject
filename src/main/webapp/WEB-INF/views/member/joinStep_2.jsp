@@ -93,17 +93,20 @@
 							<td>
 								<select name="year" id="year" class="selectform1">
 									<c:forEach var="i" begin="1" end="80">			
-									<option value="<%=year-- %>"><%=year-- %></option>
+									<option value="<%=year %>"><%=year %></option>
+									<%year--;%>
 									</c:forEach>
 								</select>
 								<select name="month" id="month" class="selectform1">
 									<c:forEach var="i" begin="1" end="12">			
-									<option value="<%=month++ %>"><%=month++ %></option>
+									<option value="<%=month %>"><%=month %></option>
+									<%month++; %>
 									</c:forEach>
 								</select>
 								<select name="day" id="day" class="selectform1">
 									<c:forEach var="i" begin="1" end="31">			
-									<option value="<%=day++ %>"><%=day++ %></option>
+									<option value="<%=day %>"><%=day %></option>
+									<%day++; %>
 									</c:forEach>
 								</select>
 							</td>

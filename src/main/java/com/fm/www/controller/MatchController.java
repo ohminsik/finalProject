@@ -22,4 +22,34 @@ public class MatchController {
 	public void matchBoardGet() {		
 		
 	}
+	
+	/*
+	 * 매치신청
+	 * 매치신청 창 띄우기
+	 * GET
+	 * */
+	@RequestMapping(value = "/match/matchApply", method = RequestMethod.GET)
+	public void matchApplyGet() {		
+		
+	}
+	
+	/*
+	 * 매치등록
+	 * 매치등록 창 띄우기
+	 * GET
+	 * */
+	@RequestMapping(value = "/match/matchRegister", method = RequestMethod.GET)
+	public void matchRegisterGet() {		
+		
+	}
+	
+	/*
+	 * 매치등록
+	 * 매치등록 처리 띄우기
+	 * GET
+	 * */
+	@RequestMapping(value = "/match/matchRegister", method = RequestMethod.POST)
+	public void matchRegisterPost() {		
+		
+	}
 }
