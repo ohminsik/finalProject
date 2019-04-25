@@ -149,6 +149,57 @@
 			            </table>
 					</li>
 				</ul>
+				
+				<div class="match_btn_list">
+					<ul>
+						<li><a href="#" class="btnform0">매치검색</a></li>
+						<li><a href="#" class="btnform0">매치등록</a></li>
+					</ul>
+				</div>
+				
+				<div class="match_diary">
+					<ul>
+						<li class="mb10">이달의 매치일정</li>
+						<li>
+							<table>
+								<colgroup>
+									<col width="10%">
+									<col width="15%">
+									<col width="15%">
+									<col width="15%">
+									<col width="*">
+									<col width="15%">
+								</colgroup>
+								<tbody>
+									<tr>
+										<td><img src="/resources/img/logo.png"></td>
+										<td>팀이름<br>0전 0승 0무 0패</td>
+										<td>2019년 04월 28일 16:00 <br>매치 요청합니다</td>
+										<td>지역 : 서울-강남<br>팀원 : 11명<br>장소 : 종합운동장</td>
+										<td>남기는 한마디 : ㅎㅇㅎㅇㅎㅇㅎㅇ</td>
+										<td><span class="btnform7 mb10">구장있음</span><a href="/match/matchApply" class="btnform7">매치신청</a></td>
+									</tr>
+									<tr>
+										<td><img src="/resources/img/logo.png"></td>
+										<td>팀이름<br>0전 0승 0무 0패</td>
+										<td>2019년 04월 28일 16:00 <br>매치 요청합니다</td>
+										<td>지역 : 서울-강남<br>팀원 : 11명<br>장소 : 종합운동장</td>
+										<td>남기는 한마디 : ㅎㅇㅎㅇㅎㅇㅎㅇ</td>
+										<td><span class="btnform7 mb10">원정</span><a href="#" class="btnform7">매치정보보기</a></td>
+									</tr>
+									<tr>
+										<td><img src="/resources/img/logo.png"></td>
+										<td>팀이름<br>0전 0승 0무 0패</td>
+										<td>2019년 04월 28일 16:00 <br>매치 요청합니다</td>
+										<td>지역 : 서울-강남<br>팀원 : 11명<br>장소 : 종합운동장</td>
+										<td>남기는 한마디 : ㅎㅇㅎㅇㅎㅇㅎㅇ</td>
+										<td><span class="btnform7 mb10">구장있음</span><a class="btnform8">기간만료</a></td>
+									</tr>
+								</tbody>
+							</table>
+						</li>
+					</ul>
+				</div>
 			</div>
 		</div>
 		<jsp:include page="../common/footer.jsp" />
