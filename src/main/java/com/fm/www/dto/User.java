@@ -10,17 +10,16 @@ public class User {
 	private String user_nick;
 	private String user_email;
 	private String user_phone;
-	private int user_year;
+	private String user_birth;
 	private String user_region;
 	private String user_sport;
 	private String user_profile;
 	private int team_no;
-	
 	@Override
 	public String toString() {
 		return "User [user_no=" + user_no + ", user_id=" + user_id + ", user_pw=" + user_pw + ", user_name=" + user_name
 				+ ", user_nick=" + user_nick + ", user_email=" + user_email + ", user_phone=" + user_phone
-				+ ", user_year=" + user_year + ", user_region=" + user_region + ", user_sport=" + user_sport
+				+ ", user_birth=" + user_birth + ", user_region=" + user_region + ", user_sport=" + user_sport
 				+ ", user_profile=" + user_profile + ", team_no=" + team_no + "]";
 	}
 	public int getUser_no() {
@@ -65,11 +64,11 @@ public class User {
 	public void setUser_phone(String user_phone) {
 		this.user_phone = user_phone;
 	}
-	public int getUser_year() {
-		return user_year;
+	public String getUser_birth() {
+		return user_birth;
 	}
-	public void setUser_year(int user_year) {
-		this.user_year = user_year;
+	public void setUser_birth(String user_birth) {
+		this.user_birth = user_birth;
 	}
 	public String getUser_region() {
 		return user_region;
@@ -95,6 +94,7 @@ public class User {
 	public void setTeam_no(int team_no) {
 		this.team_no = team_no;
 	}
+
 	
 	
 }
