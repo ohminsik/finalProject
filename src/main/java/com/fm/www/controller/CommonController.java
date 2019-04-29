@@ -37,6 +37,8 @@ public class CommonController {
 	public String loginPost(User user, HttpSession session) {
 		
 		System.out.println(user);
+		
+		
 		//로그인 여부 받아오기
 		boolean loginYn = memberService.getLoginYn(user);
 		
@@ -44,8 +46,10 @@ public class CommonController {
 			
 			return "redirect:/main";
 		}
+		//로그인 되었을 경우 id랑 team_no 넘겨줌
+		//아직 team번호가 없을 경우 처리 못해줌(2019.04.28)
 		session.setAttribute("login", true);
-		session.setAttribute("id", user.getUser_id());
+		session.setAttribute("user_no", user.getUser_no());
 		logger.info(user.toString());
 		
 		//로그인 했으면 메인 화면으로 이동
