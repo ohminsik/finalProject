@@ -34,11 +34,7 @@ public class CommonController {
 	 * POST
 	 * */	
 	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public String loginPost(User user, HttpSession session) {
-		
-		System.out.println(user);
-		
-		
+	public String loginPost(User user, HttpSession session) {		
 		//로그인 여부 받아오기
 		boolean loginYn = memberService.getLoginYn(user);
 		
@@ -46,11 +42,14 @@ public class CommonController {
 			
 			return "redirect:/main";
 		}
-		//로그인 되었을 경우 id랑 team_no 넘겨줌
-		//아직 team번호가 없을 경우 처리 못해줌(2019.04.28)
+		//로그인 되었을 경우 no랑 login 세션 넘겨줌
+		
+		//로그인한 유저 넘버값 가져오기
+		int user_no = memberService.getUserNo(user);
+		
 		session.setAttribute("login", true);
-		session.setAttribute("user_no", user.getUser_no());
-		logger.info(user.toString());
+		session.setAttribute("user_no", user_no);
+		
 		
 		//로그인 했으면 메인 화면으로 이동
 		return "redirect:/main";

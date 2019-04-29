@@ -30,4 +30,9 @@ public class MemberServiceImpl implements MemberService{
 		
 	}
 
+	@Override
+	public int getUserNo(User user) {
+		return memberDao.getUserNo(user);
+	}
+
 }

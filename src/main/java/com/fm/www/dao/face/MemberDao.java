@@ -10,4 +10,7 @@ public interface MemberDao {
 	//회원가입
 	public void insertMember(User user);
 	
+	//로그인한 유저 넘버값 가져오기
+	public int getUserNo(User user);
+	
 }
