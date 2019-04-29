@@ -46,9 +46,11 @@ public class CommonController {
 		
 		//로그인한 유저 넘버값 가져오기
 		int user_no = memberService.getUserNo(user);
+		User user1 = new User();
+		user1.setUser_no(user_no);
 		
 		session.setAttribute("login", true);
-		session.setAttribute("user_no", user_no);
+		session.setAttribute("user_no", user1.getUser_no());
 		
 		
 		//로그인 했으면 메인 화면으로 이동
