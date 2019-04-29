@@ -16,6 +16,7 @@ public class Paging {
 	private int endNo;
 
 	private String search;
+	private String word;
 	
 	// 총 게시글 수만 입력하는 생성자
 	public Paging(int totalCount) {
@@ -97,7 +98,7 @@ public class Paging {
 	public String toString() {
 		return "Paging [curPage=" + curPage + ", totalCount=" + totalCount + ", listCount=" + listCount + ", totalPage="
 				+ totalPage + ", pageCount=" + pageCount + ", startPage=" + startPage + ", endPage=" + endPage
-				+ ", startNo=" + startNo + ", endNo=" + endNo + ", search=" + search + "]";
+				+ ", startNo=" + startNo + ", endNo=" + endNo + ", search=" + search + ", word=" + word + "]";
 	}
 
 	public int getCurPage() {
@@ -179,6 +180,16 @@ public class Paging {
 	public void setSearch(String search) {
 		this.search = search;
 	}
+
+	public String getWord() {
+		return word;
+	}
+
+	public void setWord(String word) {
+		this.word = word;
+	}
+
+
 
 
 }
