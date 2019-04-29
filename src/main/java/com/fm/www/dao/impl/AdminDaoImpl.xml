@@ -7,6 +7,10 @@
   <!-- 매퍼 설정 -->
   <mapper namespace="com.fm.www.dao.face.AdminDao">
   
+  	<select id="login"  resultType="com.fm.www.dto.Admin">
+  		SELECT * FROM admin_tb
+  		WHERE admin_id = #{admin_id} AND admin_pw = #{admin_pw}
+  	</select>
   
   
   </mapper>

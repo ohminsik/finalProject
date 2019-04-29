@@ -9,8 +9,8 @@
 		<div class="head_right">
 			<ul class="">
 				<li>2017년 9월 5일 월요일</li>
-				<c:if test="${adminlogin }">
-					<li>${name }님 환영합니다.</li>
+				<c:if test="${adminlogin ne null }">
+					<li>${admin_id }님 환영합니다.</li>
 				</c:if>
 				<li class="nav_button"><a href="/admin/logout">로그아웃</a></li>
 			</ul>

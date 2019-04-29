@@ -9,8 +9,9 @@
 <link rel="stylesheet" type="text/css" href="/resources/css/basic.css">
 <link rel="stylesheet" type="text/css" href="/resources/css/adminstyle.css">
 
-<script src="/resources/js/jquery-1.11.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<!-- <script src="/resources/js/jquery-1.11.1.min.js"></script> -->
 
-<script src="/resource/js/script.js"></script>
+<!-- <script src="/resource/js/script.js"></script> -->
 <title>ADMIN</title>
 </head>

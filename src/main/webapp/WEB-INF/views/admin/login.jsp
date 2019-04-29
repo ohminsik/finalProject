@@ -4,11 +4,11 @@
 <jsp:include page="../common/adminmeta.jsp"/>
 <body>
 	<div class="login_bg">
-		<form action="/admin" method="post">
+		<form action="/admin/login" method="post">
 			<div class="login_wrap">
 				<div class="top">
 					<div>ADMIN</div>
-					<a href="/index">X</a>
+					<a href="/main">X</a>
 				</div>
 				<div class="bot">
 					<ul>
@@ -21,18 +21,39 @@
 							<input class="text" type="password" id="admin_pw" name="admin_pw">
 						</li>
 					</ul>
-					<button class="loginbtn">로그인</button>
+					<button class="loginbtn" id="btnLogin">로그인</button>
 				</div>
 			</div>
 		</form>
 	</div>
 </body>
-<c:if test="${adminlogin eq false}">
+<c:if test="${empty adminlogin}"> 
 	<script type="text/javascript">
-		alert("로그인에 실패했습니다");
+	$(document).ready(function(){
+		
+		$("#btnLogin").click(function(){
+			
+			if($("#admin_id").val()==''){
+				
+				alert("아이디를 입력하세요 ");
+				$("#admin_id").focus();
+				return false;
+				
+			}else if($("#admin_pw").val()==''){
+				
+				alert("비밀번호를 입력하세요");
+				$("#admin_pw").focus();
+				return false;
+				
+// 			}else if(($("#admin_id").val() != ${check.admin_id } ) && ($("#admin_pw").val() != ${check.admin_pw } ) ){
+// 				console.log('하이');
+// 				alert("로그인에 실패했습니다.");
+// 				return false;
+				
+			}
+		} 
+	})
+	});
 	</script>
-	<%
-		request.getSession().invalidate();
-	%>
-</c:if>
+	 </c:if>
 </html>
