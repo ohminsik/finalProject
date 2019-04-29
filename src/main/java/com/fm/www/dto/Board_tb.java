@@ -6,6 +6,7 @@ public class Board_tb {
 	
 	private int board_no;
 	private int user_no;
+	private String user_nick;
 	private int board_div;
 	private String board_title;
 	private String board_content;
@@ -14,9 +15,9 @@ public class Board_tb {
 	private String delete_yn;
 	@Override
 	public String toString() {
-		return "Board_tb [board_no=" + board_no + ", user_no=" + user_no + ", board_div=" + board_div + ", board_title="
-				+ board_title + ", board_content=" + board_content + ", board_date=" + board_date + ", board_cnt="
-				+ board_cnt + ", delete_yn=" + delete_yn + "]";
+		return "Board_tb [board_no=" + board_no + ", user_no=" + user_no + ", user_nick=" + user_nick + ", board_div="
+				+ board_div + ", board_title=" + board_title + ", board_content=" + board_content + ", board_date="
+				+ board_date + ", board_cnt=" + board_cnt + ", delete_yn=" + delete_yn + "]";
 	}
 	public int getBoard_no() {
 		return board_no;
@@ -30,11 +31,17 @@ public class Board_tb {
 	public void setUser_no(int user_no) {
 		this.user_no = user_no;
 	}
-	public int getBiard_div() {
+	public String getUser_nick() {
+		return user_nick;
+	}
+	public void setUser_nick(String user_nick) {
+		this.user_nick = user_nick;
+	}
+	public int getBoard_div() {
 		return board_div;
 	}
-	public void setBiard_div(int biard_div) {
-		this.board_div = biard_div;
+	public void setBoard_div(int board_div) {
+		this.board_div = board_div;
 	}
 	public String getBoard_title() {
 		return board_title;
@@ -66,5 +73,5 @@ public class Board_tb {
 	public void setDelete_yn(String delete_yn) {
 		this.delete_yn = delete_yn;
 	}
-	
+
 }
