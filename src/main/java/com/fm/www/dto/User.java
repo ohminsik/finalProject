@@ -1,5 +1,7 @@
 package com.fm.www.dto;
 
+import java.util.Date;
+
 public class User {
 
 //	ctrl + shift + y
@@ -14,14 +16,36 @@ public class User {
 	private String user_region;
 	private String user_sport;
 	private String user_profile;
+	private String user_position;
+	private Date user_date;
+	private Date user_team_date;
 	private int team_no;
 	@Override
 	public String toString() {
 		return "User [user_no=" + user_no + ", user_id=" + user_id + ", user_pw=" + user_pw + ", user_name=" + user_name
 				+ ", user_nick=" + user_nick + ", user_email=" + user_email + ", user_phone=" + user_phone
 				+ ", user_birth=" + user_birth + ", user_region=" + user_region + ", user_sport=" + user_sport
-				+ ", user_profile=" + user_profile + ", team_no=" + team_no + "]";
+				+ ", user_profile=" + user_profile + ", user_position=" + user_position + ", user_date=" + user_date
+				+ ", user_team_date=" + user_team_date + ", team_no=" + team_no + "]";
 	}
+	public String getUser_position() {
+		return user_position;
+	}
+	public void setUser_position(String user_position) {
+		this.user_position = user_position;
+	}
+	public Date getUser_date() {
+		return user_date;
+	}
+	public void setUser_date(Date user_date) {
+		this.user_date = user_date;
+	}
+	public Date getUser_team_date() {
+		return user_team_date;
+	}
+	public void setUser_team_date(Date user_team_date) {
+		this.user_team_date = user_team_date;
+	}	
 	public int getUser_no() {
 		return user_no;
 	}

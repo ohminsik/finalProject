@@ -145,12 +145,38 @@
 						</tr>
 						<tr>
 							<td>주 종목</td>
-							<td>
+							<td class="sport_user">
 								<input type="radio" name="user_sport" id="scooer" value="scooer"><label for="scooer">축구</label>
 								<input type="radio" name="user_sport" id="bascketball" value="bascketball"><label for="bascketball">농구</label>
 								<input type="radio" name="user_sport" id="jukgu" value="jukgu"><label for="jukgu">족구</label>
 								<input type="radio" name="user_sport" id="bollring" value="bollring"><label for="bollring">볼링</label>
 								<input type="radio" name="user_sport" id="takgu" value="takgu"><label for="takgu">탁구</label>
+							</td>
+						</tr>
+						<tr class="position_tr">
+							<td>포지션</td>
+							<td>
+								<select name="user_position" class="selectform2">
+									<option value="GK">GK - 골키퍼</option>
+									<option value="DF">DF - 수비수</option>
+									<option value="CB">CB - 센터백</option>
+									<option value="SW">SW - 스위퍼</option>
+									<option value="FB">FB - 풀백</option>
+									<option value="LB">LB - 왼쪽 풀백</option>
+									<option value="RB">RB - 오른쪽 풀백</option>
+									<option value="WB">WB - 윙백</option>
+									<option value="LWB">LWB - 왼쪽 윙백</option>
+									<option value="RWB">RWB - 오른쪽 윙백</option>
+									<option value="MF">MF - 미드필더</option>
+									<option value="CM">CM - 중앙미드필더</option>
+									<option value="DM">DM - 수비형미드필더</option>
+									<option value="AM">AM - 공격형미드필더</option>
+									<option value="LW">LW - 왼쪽  윙</option>
+									<option value="RW">RW - 오른쪽 윙</option>
+									<option value="FW">FW - 공격수</option>
+									<option value="CS">CS - 중앙공격수</option>
+									<option value="SS">SS - 세컨드 스트라이커</option>
+								</select>
 							</td>
 						</tr>
 					</tbody>
@@ -166,10 +192,27 @@
 	</div>
 </body>
 <script>
+
+$(document).ready(function(){
+	$(".sport_user > input:eq(0)").click(function(){
+		$(".position_tr").show();
+	})
+	$(".sport_user > input:eq(1)").click(function(){
+		$(".position_tr").hide();
+	})
+	$(".sport_user > input:eq(2)").click(function(){
+		$(".position_tr").hide();
+	})
+	$(".sport_user > input:eq(3)").click(function(){
+		$(".position_tr").hide();
+	})
+	$(".sport_user > input:eq(4)").click(function(){
+		$(".position_tr").hide();
+	})
+})
 function emailChangeFunc(n){
 	$("#user_email1").val(n);
 }
-
 
 function nextStepFunc(){					
 	/* if($("#user_id").val()==""){

@@ -16,8 +16,8 @@
   	
   	<!-- 회원가입 -->
   	<insert id="insertMember" parameterType="com.fm.www.dto.User">
-  		INSERT INTO user_tb (user_no, user_id, user_pw, user_name, user_nick ,user_email ,user_phone ,user_birth ,user_region ,user_sport ,user_profile) 
-      	VALUES (user_tb_SEQ.nextVal,#{user_id},#{user_pw}, #{user_name}, #{user_nick} ,#{user_email} ,#{user_phone},#{user_birth} ,#{user_region} ,#{user_sport}, #{user_profile} )
+  		INSERT INTO user_tb (user_no, user_id, user_pw, user_name, user_nick ,user_email ,user_phone ,user_birth ,user_region ,user_sport ,user_profile, user_position) 
+      	VALUES (user_tb_SEQ.nextVal,#{user_id},#{user_pw}, #{user_name}, #{user_nick} ,#{user_email} ,#{user_phone},#{user_birth} ,#{user_region} ,#{user_sport}, #{user_profile}, #{user_position})
   	</insert>
   	
   	<select id="getUserNo" parameterType="com.fm.www.dto.User" resultType="int">
