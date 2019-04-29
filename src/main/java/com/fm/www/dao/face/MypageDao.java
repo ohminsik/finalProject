@@ -1,0 +1,37 @@
+package com.fm.www.dao.face;
+
+import java.util.List;
+
+import com.fm.www.dto.Team;
+import com.fm.www.dto.User;
+
+public interface MypageDao {
+	//유저넘버로 팀넘버 있는지 없는지 검사
+	public String getUserTeamNo(User user);
+	
+	//팀생성
+	public void insertTeam(Team team);
+	
+	//팀번호 가져오기
+	public int selectTeamNo(Team team);
+	
+	//유저번호에 팀가입날짜 넣어주기
+	public void updateTeamDate(User user);
+	
+	//유저번호에 팀번호 넣어주기
+	public void updateTeamNo(User user);
+	
+	//유저번호로 팀번호 가져오기
+	public int selectTeamNoUserNo(User user);
+	
+	//유저가 가진 팀번호의 팀정보 조회
+	public Team selectTeamInfoMation(User user);
+
+	//팀번호로 유저들 조회
+	public List<User> selectTeamUserList(int team_no);
+
+	
+	
+	
+
+}

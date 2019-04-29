@@ -41,6 +41,7 @@
 					</ul>
 				</div>
 				
+				<c:if test="${teamYN eq false }">
 				<div class="team111 mt50">
 					<p>현재 소속된 팀이 없습니다.<br>새로운 팀을 생성하거나 다른 팀에 가입 신청을 하세요</p>
 					<ul class="mt30">
@@ -48,14 +49,16 @@
 						<li><a href="#" class="btnform0">팀 검색</a></li>
 					</ul>
 				</div>
+				</c:if>
 				
+				<c:if test="${teamYN eq true }">
 				<div class="teaminfo mt50">
 					<ul>
 						<li>
 							<div class="top">
-								<p class="img mb30"><img src="/resources/img/logo.png"></p>
-								<p class="title mb10">팀이름</p>
-								<p class="score">0전 0승 0무 0패</p>
+								<p class="img mb30"><img src="/uploadImg/${team.team_mark }"></p>
+								<p class="title mb10">${team.team_name }</p>
+								<p class="score">${team.team_entire }전 ${team.team_win }승 ${team.team_tie }무 ${team.team_lose }패</p>
 							</div>
 							<div class="bot mt20">
 								<table class="j_table_form1">
@@ -68,29 +71,29 @@
 									<tbody>
 										<tr>
 											<td>지역</td>
-											<td>인천/남동구</td>
+											<td>${team.team_region}</td>
 											<td>활동구장</td>
-											<td>XXX체육공원</td>
+											<td>${team.team_field }</td>
 										</tr>
 										<tr>
 											<td>팀 유형</td>
-											<td>성인</td>
+											<td>${team.team_type }</td>
 											<td>평균 연령</td>
-											<td>20대</td>
+											<td>${team.team_age }</td>
 										</tr>
 										<tr>
 											<td>실력</td>
-											<td>중</td>
+											<td>${team.team_level }</td>
 											<td>팀원수</td>
-											<td>11명</td>
+											<td>${team.team_cnt }</td>
 										</tr>
 										<tr>											
 											<td>유니폼 소개</td>
-											<td colspan="3">레알마드리드 홈 유니폼</td>
+											<td colspan="3">${team.team_uniform }</td>
 										</tr>
 										<tr>
 											<td>팀 소개</td>
-											<td colspan="3">팀소개입니다</td>
+											<td colspan="3">${team.team_hello }</td>
 										</tr>
 									</tbody>
 								</table>
@@ -113,41 +116,25 @@
 									</tr>
 								</thead>
 								<tbody>
+									<c:forEach items="${userList }" var="userList">
 									<tr>
-										<td>오민식(omsik)</td>
-										<td>SK</td>
+										<td>${userList.user_name }(${userList.user_id })</td>
+										<td>${userList.user_position }</td>
 										<td>팀 개설자</td>
 										<td><a href="#">관리</a></td>
 									</tr>
-									<tr>
-										<td>김형기(omsik)</td>
-										<td>LK</td>
-										<td>팀원</td>
-										<td><a href="#">관리</a></td>
-									</tr>
-									<tr>
-										<td>김준환(omsik)</td>
-										<td>GK</td>
-										<td>팀원</td>
-										<td><a href="#">관리</a></td>
-									</tr>
-									<tr>
-										<td>김강환(omsik)</td>
-										<td>LWK</td>
-										<td>팀원</td>
-										<td><a href="#">관리</a></td>
-									</tr>
-									<tr>
-										<td>이용환(omsik)</td>
-										<td>SK</td>
-										<td>팀원</td>
-										<td><a href="#">관리</a></td>
-									</tr>
+									</c:forEach>
 								</tbody>
 							</table>
 						</li>
 					</ul>
 				</div>
+				<form action="/mypage/teamDelete" method="POST">
+					<div class="j_button mt50">
+						<button class="btnform0">팀 해체</button>
+					</div>
+				</form>
+				</c:if>
 			</div>
 		</div>
 		<jsp:include page="../common/footer.jsp" />

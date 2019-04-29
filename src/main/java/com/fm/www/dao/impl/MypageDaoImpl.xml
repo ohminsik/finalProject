@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 마이바티스 3 Mapper DOCTYPE -->
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <!-- 매퍼 설정 -->
+  <mapper namespace="com.fm.www.dao.face.MypageDao">
+  	<!-- 유저가 가진 팀 넘버 가져오기 -->
+  	<select id="getUserTeamNo" resultType="String" parameterType="com.fm.www.dto.User">
+  		select team_no from user_tb
+  		WHERE user_no = #{user_no}
+  	</select>  
+  
+  	<!-- 팀생성 -->
+  	<insert id="insertTeam" parameterType="com.fm.www.dto.Team">
+  		INSERT INTO team_tb(team_no, team_name, team_cnt, team_region, team_age, team_type, team_level, team_uniform, team_field, team_mark, team_hello, team_YN)
+  		VALUES(team_tb_SEQ.nextVal, #{team_name}, #{team_cnt}, #{team_region}, #{team_age}, #{team_type}, #{team_level}, #{team_uniform}, #{team_field}, #{team_mark}, #{team_hello}, #{team_YN})
+  	</insert>
+  	
+  	<!-- 팀넘버 가져오기 -->
+  	<select id="selectTeamNo" resultType="int" parameterType="com.fm.www.dto.Team">
+  		SELECT team_no from team_tb
+  		WHERE team_name Like #{team_name}
+  	</select>
+  	<!-- 유저번호에 팀가입 날짜 넣어주기 -->
+  	<update id="updateTeamDate" parameterType="com.fm.www.dto.User">
+  		UPDATE user_tb set user_team_date = SYSDATE
+		WHERE 1=1 AND user_no = #{user_no}
+  	</update>
+  	<!-- 유저번호에 팀번호 넣어주기 -->
+  	<update id="updateTeamNo" parameterType="com.fm.www.dto.User">
+  		UPDATE user_tb set team_no = #{team_no}
+		WHERE 1=1 AND user_no = #{user_no}
+  	</update>
+  	
+  	<!-- 유저번호로 팀번호 가져오기 -->
+  	<select id="selectTeamNoUserNo" parameterType="com.fm.www.dto.User" resultType="int">
+  		select team_no from user_tb
+  		WHERE 1=1
+  		AND user_no = #{user_no}  	
+  	</select>
+  	<!-- 팀정보 조회 -->
+  	<select id="selectTeamInfoMation" parameterType="com.fm.www.dto.User" resultType="com.fm.www.dto.Team">
+  		select * from team_tb
+  		WHERE 1=1
+  		AND team_no = #{team_no}  	
+  	</select>
+  	
+  	<!-- 팀번호로 팀소속유저들 조회 -->
+  	<select id="selectTeamUserList" parameterType="int" resultType="com.fm.www.dto.User">
+  		select * from user_tb
+  		WHERE 1=1
+  		AND team_no = #{team_no}
+  		ORDER BY user_no
+  	</select>
+  </mapper>

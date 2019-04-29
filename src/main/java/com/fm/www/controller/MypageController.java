@@ -1,18 +1,34 @@
 package com.fm.www.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 
-import com.fm.www.dao.face.CommunityDao;
+import com.fm.www.dto.Team;
+import com.fm.www.dto.User;
+import com.fm.www.service.face.MypageService;
 
 @Controller
 public class MypageController {
 	private static final Logger logger = LoggerFactory.getLogger(MypageController.class);
-	
+	@Autowired ServletContext context;
+	@Autowired MypageService mypageService;
 	/*----------------------------------------------Mypage mypage Start----------------------------------------------*/
 	
 	/*
@@ -88,8 +104,28 @@ public class MypageController {
 	 * GET
 	 * */
 	@RequestMapping(value = "/mypage/teamInformation", method = RequestMethod.GET)
-	public void teamInformationGet() {		
+	public void teamInformationGet(HttpSession session, Model model) {
+		//세션에서 유저 넘버 받아오기
+		User user = new User();
+		user.setUser_no((int)(session.getAttribute("user_no")));
 		
+		//유저넘버로 팀넘버 있는지 없는지 검사
+		boolean teamYN = mypageService.getUserTeamNo(user);
+		
+		if(teamYN) {
+			//유저넘버로 팀번호 알아오기
+			user.setTeam_no(mypageService.selectTeamNoUserNo(user));	
+			//유저가 가진 팀번호로 팀정보 조회
+			Team team = new Team();
+			team = mypageService.selectTeamInfoMation(user);
+			List<User> userList = mypageService.selectTeamUserList(team.getTeam_no());
+			
+			model.addAttribute("userList",userList);
+			model.addAttribute("team",team);
+			session.setAttribute("teamYN", teamYN);
+		}else {
+			session.setAttribute("teamYN", teamYN);			
+		}
 	}
 	
 	/*
@@ -108,7 +144,63 @@ public class MypageController {
 	 * POST
 	 * */
 	@RequestMapping(value = "/mypage/teamCreate", method = RequestMethod.POST)
-	public void teamCreatePost() {		
+	public String teamCreatePost(Team team, HttpSession session, HttpServletRequest request, MultipartFile file) {	
+		try {
+			request.setCharacterEncoding("utf-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		String team_region1 = request.getParameter("team_region1");
+		String team_region2 = request.getParameter("team_region2");
+		String team_region = team_region1 + "-" + team_region2;
+		team.setTeam_region(team_region);
+		
+		//고유식별자
+		String uId = UUID.randomUUID().toString().split("-")[0];
+
+		//저장될 파일 이름
+		String stored_name = null;
+		//stored_name =file.getOriginalFilename()+"_"+uId;
+		stored_name =file.getOriginalFilename();
+						
+		//파일 저장 경로		
+		String path = context.getRealPath("uploadImg");
+		
+		//저장될 파일
+		File dest = new File(path, stored_name);
+		
+		//파일업로드
+		try {
+			file.transferTo(dest);
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		team.setTeam_mark(stored_name);
+		//세션에서 유저 넘버 받아오기
+		User user = new User();
+		user.setUser_no((int)(session.getAttribute("user_no")));
+		//팀생성
+		mypageService.insertTeam(team);
+		
+		//팀번호 가져오기
+		int team_no = mypageService.selectTeamNo(team);		
+		
+		
+		user.setTeam_no(team_no);
+		//팀에 가입한 시간 넣기
+		mypageService.updateTeamDate(user);
+		//팀번호를 유저번호에 업데이트		
+		mypageService.updateTeamNo(user);
+		System.out.println("완료");
+		
+		return "redirect:/mypage/teamInformation";
+		
 		
 	}
 	
@@ -130,6 +222,21 @@ public class MypageController {
 	@RequestMapping(value = "/mypage/teamUpdate", method = RequestMethod.POST)
 	public void teamUpdatePost() {		
 		
+	}
+	
+	/*
+	 * 팀삭제처리
+	 * 팀삭제 처리 띄우기
+	 * POST
+	 * */
+	@RequestMapping(value = "/mypage/teamDelete", method = RequestMethod.POST)
+	public String teamDeletePost(HttpSession session) {		
+		//세션에서 유저 넘버 받아오기
+		User user = new User();
+		user.setUser_no((int)(session.getAttribute("user_no")));
+		
+		
+		return "redirect:/mypage/teamInformation";
 	}
 	
 	/*
