@@ -29,9 +29,9 @@ public class AdminController {
 	 * GET
 	 * */
 	@RequestMapping(value = "/admin/index", method = RequestMethod.GET)
-	public String mainGet() {		
+	public void mainGet() {		
 		
-		return "redirect:/admin/login";
+		
 	}
 	
 	/*
@@ -52,46 +52,18 @@ public class AdminController {
 	public String loginPost(Model model, Admin admin, HttpSession session, HttpServletResponse resp) {		
 		logger.info(""+admin);
 		//로그인
-		Admin adminlogin = adminService.login(admin);
+		boolean admin_yn = adminService.loginYN(admin);
 		
-		logger.info("adminlogin"+adminlogin);
-		
-//		boolean a = true;
-		
-		if((admin.getAdmin_id() == adminlogin.getAdmin_id())&&(admin.getAdmin_pw() == adminlogin.getAdmin_pw())) {
+		if(admin_yn) {
+			System.out.println("로그인성공");
+			return "redirect:/admin/index";
 			
-			model.addAttribute("check", adminlogin);
-			
-			
-			try {
-				session.setAttribute("admin_id", adminlogin.getAdmin_id());
-				session.setAttribute("admin_pw", adminlogin.getAdmin_pw());
-				logger.info(""+admin);	
-				session.setAttribute("adminlogin", adminlogin);
-			} catch(Exception e) {
-				logger.info("로그인실패");
-				
-				return "redirect:/admin/login";
-			}
-			
-		}else {
-          PrintWriter out;
-          resp.setContentType("text/html; charset=utf-8");
-          
-          try {
-			out = resp.getWriter();
-			out.println("<scipt> alert('로그인 실패')</script>");
-		} catch (IOException e) {
-			e.printStackTrace();
+		}else{
+			System.out.println("로그인실패");
+			session.setAttribute("loginYN", false);
+			return "redirect:/admin/login";
 		}
-          return "redirect:/admin/login";
-          
-		}
-		
-		return "/admin/index";
-		
 	}
-	
 	/*
 	 * Admin logout 컨트롤러
 	 * Admin login 창 띄우기
@@ -102,7 +74,7 @@ public class AdminController {
 		session.invalidate();
 		
 		//로그아웃 후 main으로
-		return"redirect:/admin/index";
+		return"redirect:/admin/login";
 	}
 	
 	

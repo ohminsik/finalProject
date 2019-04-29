@@ -6,7 +6,7 @@ import com.fm.www.dto.Admin;
 
 public interface AdminDao {
 
-	public Admin login(Admin admin);
+	public int loginYN(Admin admin);
 
 
 	

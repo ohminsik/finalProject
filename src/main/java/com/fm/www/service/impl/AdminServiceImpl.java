@@ -13,8 +13,13 @@ public class AdminServiceImpl implements AdminService{
 	@Autowired AdminDao adminDao;
 
 	@Override
-	public Admin login(Admin admin) {
-		return adminDao.login(admin);
+	public boolean loginYN(Admin admin) {
+		if(adminDao.loginYN(admin) == 1) {
+			return true;
+		}else {
+			return false;
+		}
+		
 	}
 
 	
