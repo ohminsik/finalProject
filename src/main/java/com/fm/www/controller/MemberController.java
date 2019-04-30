@@ -49,7 +49,7 @@ public class MemberController {
 	}
 	
 	/*
-	 * 
+	 * 회원가입 ID AJAX로 중복처리
 	 * */
 	@RequestMapping(value = "/member/checkId", method = RequestMethod.POST)
 	public String checkId(HttpServletRequest request, Model model) throws Exception{
