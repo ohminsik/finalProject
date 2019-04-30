@@ -12,4 +12,7 @@ public interface MemberService {
 	
 	//아이디 체크
 	public int checkId(String member_id);
+	// 로그인한 유저 닉네임 받아오기
+	public String getuserNick(User user);
+	
 }

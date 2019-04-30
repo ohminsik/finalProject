@@ -15,5 +15,9 @@ public interface MemberDao {
 	
 	//아이디체크
 	public int checkId(String member_id);
+
+	//로그인한 유저 닉네임 가져오기
+	public String getUserNick(User user);
+
 	
 }

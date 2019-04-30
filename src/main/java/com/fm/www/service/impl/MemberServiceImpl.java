@@ -40,5 +40,13 @@ public class MemberServiceImpl implements MemberService{
 	public int checkId(String member_id) {
 		return memberDao.checkId(member_id);
 	}
+	
+	// 로그인한 유저 닉네임 가져오기
+	@Override
+	public String getuserNick(User user) {
+		return memberDao.getUserNick(user);
+	}
+
+	
 
 }

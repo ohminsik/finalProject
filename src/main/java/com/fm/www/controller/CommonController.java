@@ -48,10 +48,12 @@ public class CommonController {
 		int user_no = memberService.getUserNo(user);
 		User user1 = new User();
 		user1.setUser_no(user_no);
-		
+		// 로그인한 유저 닉네임 가져오기
+		String user_nick = memberService.getuserNick(user);
+
 		session.setAttribute("login", true);
 		session.setAttribute("user_no", user1.getUser_no());
-		session.setAttribute("user_nick", user1.getUser_nick());
+		session.setAttribute("user_nick", user_nick);
 		
 		//로그인 했으면 메인 화면으로 이동
 		return "redirect:/main";

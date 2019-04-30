@@ -30,5 +30,11 @@
   		SELECT COUNT(*) FROM user_tb
   		WHERE user_id=#{member_id }
   	</select>
+  	
+  	<select id="getUserNick" parameterType="com.fm.www.dto.User" resultType="String">
+  		SELECT user_nick FROM user_tb
+  		WHERE user_id=#{user_id}
+  		AND user_pw=#{user_pw}
+  	</select>
   
   </mapper>
