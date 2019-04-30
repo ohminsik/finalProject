@@ -13,4 +13,7 @@ public interface MemberDao {
 	//로그인한 유저 넘버값 가져오기
 	public int getUserNo(User user);
 	
+	//아이디체크
+	public int checkId(String member_id);
+	
 }

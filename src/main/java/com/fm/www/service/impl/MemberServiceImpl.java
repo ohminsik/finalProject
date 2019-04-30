@@ -34,5 +34,11 @@ public class MemberServiceImpl implements MemberService{
 	public int getUserNo(User user) {
 		return memberDao.getUserNo(user);
 	}
+	
+	//아이디체크
+	@Override
+	public int checkId(String member_id) {
+		return memberDao.checkId(member_id);
+	}
 
 }

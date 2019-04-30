@@ -3,6 +3,8 @@ package com.fm.www.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.ServletContext;
@@ -13,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
@@ -45,6 +48,21 @@ public class MemberController {
 	
 	}
 	
+	/*
+	 * 
+	 * */
+	@RequestMapping(value = "/member/checkId", method = RequestMethod.POST)
+	public String checkId(HttpServletRequest request, Model model) throws Exception{
+        String member_id = request.getParameter("inpuid");
+        //member_id와 같은 행의 갯수 조회
+        int rowcount = MemberService.checkId(member_id);
+        
+        Map map = new HashMap();
+		map.put("data",rowcount);			
+		
+		model.addAllAttributes(map);
+        return "jsonView";
+	}
 	/*
 	 * joinStep_2 컨트롤러
 	 * 회원가입처리

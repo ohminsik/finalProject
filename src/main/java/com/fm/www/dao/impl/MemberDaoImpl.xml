@@ -25,5 +25,10 @@
   		WHERE user_id=#{user_id}
   		AND user_pw=#{user_pw}
   	</select>
+  	
+  	<select id="checkId" parameterType="String" resultType="int">
+  		SELECT COUNT(*) FROM user_tb
+  		WHERE user_id=#{member_id }
+  	</select>
   
   </mapper>

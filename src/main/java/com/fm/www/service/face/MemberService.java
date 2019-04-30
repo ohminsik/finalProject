@@ -9,4 +9,7 @@ public interface MemberService {
 	public void insertMember(User user);
 	//로그인한 유저 넘버값 받아오기
 	public int getUserNo(User user);
+	
+	//아이디 체크
+	public int checkId(String member_id);
 }
