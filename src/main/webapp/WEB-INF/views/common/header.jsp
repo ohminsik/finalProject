@@ -6,7 +6,7 @@
 	<div class="h_top_wrap">
 		<div class="h_top">
 			<ul>
-				<li><a href="#">홈</a></li>
+				<li><a href="/main">홈</a></li>
 				<c:if test="${empty login }">
 				<li><a href="#" class="login">로그인</a></li>
 				<li><a href="/member/joinStep_1">회원가입</a></li>
@@ -14,7 +14,7 @@
 				
 				<c:if test="${login }">
 				<li><a href="/logout" class="logout">로그아웃</a></li>
-				<li><a href="/member/joinStep_1">회원가입</a></li>
+				<li><a href="/mypage/mypageInformation">마이페이지</a></li>
 				</c:if>
 			</ul>
 		</div>
