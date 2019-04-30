@@ -163,11 +163,11 @@
 						<tr>
 							<td>주 종목</td>
 							<td class="sport_user">
-								<input type="radio" name="user_sport" id="scooer" value="scooer"><label for="scooer">축구</label>
-								<input type="radio" name="user_sport" id="bascketball" value="bascketball"><label for="bascketball">농구</label>
-								<input type="radio" name="user_sport" id="jukgu" value="jukgu"><label for="jukgu">족구</label>
-								<input type="radio" name="user_sport" id="bollring" value="bollring"><label for="bollring">볼링</label>
-								<input type="radio" name="user_sport" id="takgu" value="takgu"><label for="takgu">탁구</label>
+								<input type="radio" name="user_sport" id="scooer" value="축구"><label for="scooer">축구</label>
+								<input type="radio" name="user_sport" id="bascketball" value="농구"><label for="bascketball">농구</label>
+								<input type="radio" name="user_sport" id="jukgu" value="족구"><label for="jukgu">족구</label>
+								<input type="radio" name="user_sport" id="bollring" value="볼링"><label for="bollring">볼링</label>
+								<input type="radio" name="user_sport" id="takgu" value="탁구"><label for="takgu">탁구</label>
 							</td>
 						</tr>
 						<tr class="position_tr">
@@ -440,6 +440,7 @@ function nextStepFunc(){
 		$("#signupbtn").prop("disabled", false);
 	} else {
 		$("#signupbtn").prop("disabled", true);
+		
 	}
 }
 </script>
