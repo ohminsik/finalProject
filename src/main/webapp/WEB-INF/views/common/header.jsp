@@ -58,6 +58,20 @@
 	<div class="h_bot_wrap">
 		<div class="h_bot">
 			<ul class="h_bot_list">
+				<c:if test="${empty login }">
+				<li>
+					<a>마이페이지</a>
+					<ul>
+						<li><a onclick="notlogin();">내 정보</a></li>
+						<li><a onclick="notlogin();">팀 정보</a></li>
+						<li><a onclick="notlogin();">팀 게시판</a></li>
+						<li><a onclick="notlogin();">개인 메세지</a></li>
+						<li><a onclick="notlogin();">내가 쓴 게시글</a></li>
+						<li><a onclick="notlogin();">내가 쓴 매치글</a></li>
+					</ul>
+				</li>
+				</c:if>
+				<c:if test="${login }">
 				<li>
 					<a>마이페이지</a>
 					<ul>
@@ -69,6 +83,7 @@
 						<li><a href="/mypage/mypageMatchList">내가 쓴 매치글</a></li>
 					</ul>
 				</li>
+				</c:if>
 				<li>
 					<a href="#">매치보드</a>
 					<ul>
