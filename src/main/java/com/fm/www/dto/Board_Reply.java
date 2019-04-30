@@ -10,11 +10,12 @@ public class Board_Reply {
 	private String reply_content;
 	private Date reply_date;
 	private String reply_delete_yn;
+	private String user_nick;
 	@Override
 	public String toString() {
 		return "Board_Reply [reply_no=" + reply_no + ", board_fg=" + board_fg + ", board_no=" + board_no + ", user_no="
 				+ user_no + ", reply_content=" + reply_content + ", reply_date=" + reply_date + ", reply_delete_yn="
-				+ reply_delete_yn + "]";
+				+ reply_delete_yn + ", user_nick=" + user_nick + "]";
 	}
 	public int getReply_no() {
 		return reply_no;
@@ -58,6 +59,14 @@ public class Board_Reply {
 	public void setReply_delete_yn(String reply_delete_yn) {
 		this.reply_delete_yn = reply_delete_yn;
 	}
+	public String getUser_nick() {
+		return user_nick;
+	}
+	public void setUser_nick(String user_nick) {
+		this.user_nick = user_nick;
+	}
+	
+	
 	
 	
 }
