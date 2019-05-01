@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%> 
 <jsp:include page="../common/meta.jsp"/>
 <body>
 	<div id="wrap">
@@ -46,14 +47,13 @@
 						<div class="search_form">
 							<ul>
 								<li>
-									<select name="" class="selectform1">
+									<select name="search_div" class="selectform1">
 										<option value="제목">제목</option>
 										<option value="내용">내용</option>
-										<option value="작성자">작성자</option>
 									</select>
 								</li>
 								<li>
-									<input type="text" name="" id="" class="inputform250">
+									<input type="text" name="search_word" id="search_word" class="inputform250">
 								</li>
 								<li><button class="btnform7">검색</button></li>
 							</ul>
@@ -63,7 +63,7 @@
 					<table class="board_table">
 						<colgroup>
 							<col width="10%">
-							<col width="20%">
+							<col width="10%">
 							<col width="*">
 							<col width="10%">
 							<col width="10%">
@@ -78,16 +78,58 @@
 							</tr>
 						</thead>
 						<tbody>
+							<c:set var="tableNum" value="${tableNum}"/>
+							<%
+								String tableNum = pageContext.getAttribute("tableNum").toString();
+								int no = Integer.parseInt(tableNum);
+							%>
+							<c:if test="${!empty mypageboardList }">
+							<c:forEach items="${mypageboardList }" var="mypageboardList">
 							<tr>
-								<td>1</td>
-								<td>자유게시판</td>
-								<td class="title"><a href="#">제목이다 [1]</a></td>
-								<td>등록일이다</td>
-								<td>조회수다</td>
+								<td><%=no-- %></td>
+								<td>
+									<c:if test="${mypageboardList.board_div eq 1}">
+										공지사항
+									</c:if>
+									<c:if test="${mypageboardList.board_div eq 2}">
+										팀가입인사
+									</c:if>
+									<c:if test="${mypageboardList.board_div eq 3}">
+										팀모집게시판
+									</c:if>
+									<c:if test="${mypageboardList.board_div eq 4}">
+										자유게시판
+									</c:if>
+									<c:if test="${mypageboardList.board_div eq 5}">
+										경기후기
+									</c:if>
+									<c:if test="${mypageboardList.board_div eq 6}">
+										중고장터
+									</c:if>
+									<c:if test="${mypageboardList.board_div eq 7}">
+										축구동영상
+									</c:if>
+									<c:if test="${mypageboardList.board_div eq 8}">
+										팀게시판
+									</c:if>
+									<c:if test="${mypageboardList.board_div eq 9}">
+										대회일정
+									</c:if>
+									<c:if test="${mypageboardList.board_div eq 10}">
+										경기장리스트
+									</c:if>
+								</td>
+								<td class="title"><a href="#">${mypageboardList.board_title } <span class="fb chs">[ ${mypageboardList.board_reply_cnt } ]</span></a></td>
+								<td><fmt:formatDate value="${mypageboardList.board_date }" pattern="yyyy-MM-dd"/></td>
+								<td>${mypageboardList.board_cnt } </td>
 							</tr>
+							</c:forEach>
+							</c:if>
+							<c:if test="${empty mypageboardList  }">
 							<tr>
 								<td colspan="5">등록된 내용이 없습니다.</td>
 							</tr>
+							</c:if>
 						</tbody>
 					</table>
 					

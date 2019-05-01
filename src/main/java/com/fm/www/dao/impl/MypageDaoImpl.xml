@@ -54,4 +54,80 @@
   		AND team_no = #{team_no}
   		ORDER BY user_no
   	</select>
+  	
+  	<!-- 유저번호로 유저정보 조회 -->
+  	<select id="selectUserInformation" parameterType="int" resultType="com.fm.www.dto.User">
+  		SELECT * FROM user_tb
+  		WHERE 1=1
+  		AND user_no = #{user_no}
+  	</select>
+  	
+  	<!-- //유저번호와 유저비밀번호로 비밀번호가 맞는지 조회 -->
+	<select id="checkPw" parameterType="com.fm.www.dto.User" resultType="int">
+		SELECT COUNT(*) FROM user_tb
+		WHERE 1=1
+		AND user_no = #{user_no}
+		AND user_pw = #{user_pw}
+	</select>
+	
+	<!-- 유저비밀번호 변경 -->
+	<update id="pwChange" parameterType="com.fm.www.dto.User">
+		UPDATE user_tb set user_pw = #{user_pw}
+		WHERE 1=1 AND user_no = #{user_no}
+	</update>
+	
+	<!-- 유저정보 업데이트 -->
+	<update id="updateMemberInfo" parameterType="com.fm.www.dto.User">
+		UPDATE user_tb set user_email = #{user_email}, user_phone = #{user_phone}, user_region = #{user_region}
+		WHERE 1=1 AND user_no = #{user_no}
+	</update>
+	
+	
+	<!-- 내가 쓴 게시글 총 갯수 가져오기 -->
+	<select id="getTotalCountSearch" resultType="int">
+		SELECT COUNT(*) from board_tb
+		WHERE 1=1
+		<choose>
+         <when test="p2 == '제목'">
+		 	AND board_title Like '%' || #{p3} || '%'
+		 </when>
+		 <when test="p2 == '내용'">
+		 	AND board_content Like '%' || #{p3} || '%'
+		 </when>
+		 </choose>
+		AND user_no = #{p1.user_no}
+		AND delete_yn = 'N'
+	</select>
+	
+	<!-- 내가 쓴 게시글 리스트 가져오기 -->
+	<select id="getPagingListSearch" resultType="com.fm.www.dto.Board_tb">
+		SELECT * FROM (
+	       SELECT rownum rnum, M.* FROM (
+	         SELECT B.*
+	          FROM board_tb B
+	          WHERE 1=1 
+	          <choose>
+	          <when test="p3 == '제목'">
+			  	AND board_title Like '%' || #{p4} || '%'
+			  </when>
+			  <when test="p3 == '내용'">
+			  	AND board_content Like '%' || #{p4} || '%'
+			  </when>
+			  </choose>
+	          AND user_no = #{p1.user_no}
+			  AND delete_yn = 'N'
+	          ORDER BY board_no desc
+	       ) M
+	       ORDER BY rnum
+	      ) R
+	      WHERE rnum BETWEEN #{p2.startNo} AND #{p2.endNo}
+	</select>
+	
+	<!-- 게시글 댓글수 조회해오기 -->
+	<select id="getBoardReplyCnt" resultType="int" parameterType="int">
+		select COUNT(*) FROM board_reply
+		WHERE board_no = #{board_no}
+	</select>
+	
+	
   </mapper>

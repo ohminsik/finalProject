@@ -2,8 +2,10 @@ package com.fm.www.service.face;
 
 import java.util.List;
 
+import com.fm.www.dto.Board_tb;
 import com.fm.www.dto.Team;
 import com.fm.www.dto.User;
+import com.fm.www.util.Paging;
 
 public interface MypageService {
 	
@@ -30,6 +32,30 @@ public interface MypageService {
 	
 	//팀번호로 유저 조회
 	public List<User> selectTeamUserList(int team_no);
+	
+	//유저번호로 유저조회
+	public User selectUserInformation(int user_no);
+
+	//유저번호와 유저비밀번호로 비밀번호가 맞는지 조회
+	public int checkPw(User user);
+	
+	//유저 비밀번호 업데이트
+	public void pwChange(User user);
+	
+	//유저 정보 업데이트
+	public void updateMemberInfo(User user);
+	
+	//내가 쓴 게시글 현재페이지번호 얻기
+	public int getCurPage(String cur);
+	
+	//내가 쓴 게시글 총 게시글수 얻기
+	public int getTotalCountSearch(User user, String search_div, String search_word);
+	
+	//내가 쓴 게시글 리스트 가져오기
+	public List<Board_tb> getPagingListSearch(User user, Paging paging, String search_div, String search_word);
+	
+	//게시글 댓글갯수 조회하기
+	public int getBoardReplyCnt(int board_no);
 	
 	
 

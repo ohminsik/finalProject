@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fm.www.dao.face.MypageDao;
+import com.fm.www.dto.Board_tb;
 import com.fm.www.dto.Team;
 import com.fm.www.dto.User;
 import com.fm.www.service.face.MypageService;
+import com.fm.www.util.Paging;
 
 @Service
 public class MypageServiceImpl implements MypageService{
@@ -69,6 +71,60 @@ public class MypageServiceImpl implements MypageService{
 	public List<User> selectTeamUserList(int team_no) {
 		return mypageDao.selectTeamUserList(team_no);
 	}
+	//유저번호로 유저조회
+	@Override
+	public User selectUserInformation(int user_no) {
+		return mypageDao.selectUserInformation(user_no);
+	}
+	
+	//유저번호와 유저비밀번호로 비밀번호가 맞는지 조회
+	@Override
+	public int checkPw(User user) {
+		return mypageDao.checkPw(user);
+	}
+	//유저비밀번호 업데이트
+	@Override
+	public void pwChange(User user) {
+		mypageDao.pwChange(user);
+		
+	}
+	//유저정보 업데이트
+	@Override
+	public void updateMemberInfo(User user) {
+		mypageDao.updateMemberInfo(user);
+	}
+	//내가 쓴 게시글 현재페이지번호 얻기
+	@Override
+	public int getCurPage(String cur) {
+		// 요청파라미터 curPage 받기
+		String param = cur;
+
+		// null이나 ""이 아니면 int로 리턴
+		if (param != null && !"".equals(param)) {
+			int curPage = Integer.parseInt(param);
+			return curPage;
+		}
+
+		// null이나 ""면 0으로 반환하기
+		return 1;
+	}
+	//내가 쓴 게시글 총 게시글수 얻기
+	@Override
+	public int getTotalCountSearch(User user, String search_div, String search_word) {
+		return mypageDao.getTotalCountSearch(user,search_div, search_word);
+	}
+	//내가 쓴 게시글 리스트 가져오기
+	@Override
+	public List<Board_tb> getPagingListSearch(User user, Paging paging, String search_div, String search_word) {
+		return mypageDao.getPagingListSearch(user, paging, search_div, search_word);
+	}
+	
+	//게시글 댓글수 조회하기
+	@Override
+	public int getBoardReplyCnt(int board_no) {
+		return mypageDao.getBoardReplyCnt(board_no);
+	}
+	
 	
 
 

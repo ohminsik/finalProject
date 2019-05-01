@@ -3,8 +3,9 @@ package com.fm.www.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.ServletContext;
@@ -20,9 +21,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fm.www.dto.Board_tb;
 import com.fm.www.dto.Team;
 import com.fm.www.dto.User;
 import com.fm.www.service.face.MypageService;
+import com.fm.www.util.Paging;
 
 @Controller
 public class MypageController {
@@ -37,7 +40,52 @@ public class MypageController {
 	 * GET
 	 * */
 	@RequestMapping(value = "/mypage/mypageInformation", method = RequestMethod.GET)
-	public void mypageInformationGet() {		
+	public void mypageInformationGet(HttpSession session, Model model) {		
+		//세션에서 유저 넘버 받아오기
+		User user = new User();
+		user.setUser_no((int)(session.getAttribute("user_no")));
+		
+		user = mypageService.selectUserInformation(user.getUser_no());
+		
+		model.addAttribute("userinfo",user);
+	}
+	
+	/*
+	 * 비밀번호 변경 AJAX로 PW맞는지 체크
+	 * */
+	@RequestMapping(value = "/mypage/checkPw", method = RequestMethod.POST)
+	public String checkId(HttpServletRequest request, HttpSession session, Model model) throws Exception{
+		//세션에서 유저 넘버 받아오기
+		User user = new User();
+		user.setUser_no((int)(session.getAttribute("user_no")));
+		user.setUser_pw(request.getParameter("inputpw"));
+		
+        //user_no과 user_pw으로 패스워드가 현재꺼와 맞는지 조회
+        int rowcount = mypageService.checkPw(user);
+        
+        Map map = new HashMap();
+		map.put("data",rowcount);			
+		
+		model.addAllAttributes(map);
+        return "jsonView";
+	}
+	
+	/*
+	 * 비밀번호 변경 처리
+	 * */
+	@RequestMapping(value = "/mypage/pwChange", method = RequestMethod.POST)
+	public String pwChange(User user, HttpSession session, Model model) {
+		//세션에서 유저 넘버 받아오기
+		user.setUser_no((int)(session.getAttribute("user_no")));
+		
+		//비밀번호 업데이트
+		mypageService.pwChange(user);
+		
+		Map map = new HashMap();
+		map.put("url","/mypage/mypageInformation");			
+		
+		model.addAllAttributes(map);
+        return "jsonView";
 		
 	}
 	
@@ -47,8 +95,37 @@ public class MypageController {
 	 * GET
 	 * */
 	@RequestMapping(value = "/mypage/mypageInformationUpdate", method = RequestMethod.GET)
-	public void mypageInformationUpdateGet() {		
+	public void mypageInformationUpdateGet(HttpSession session, Model model) {		
+		//세션에서 유저 넘버 받아오기
+		User user = new User();
+		user.setUser_no((int)(session.getAttribute("user_no")));
 		
+		user = mypageService.selectUserInformation(user.getUser_no());
+		
+		String email = user.getUser_email();
+		String[] emailArray = email.split("@");
+		String email1 = emailArray[0];
+		String email2 = emailArray[1];
+		
+		String phone = user.getUser_phone();
+		String[] phoneArray = phone.split("-");
+		String phone0 = phoneArray[0];
+		String phone1 = phoneArray[1];
+		String phone2 = phoneArray[2];
+		
+		String region = user.getUser_region();
+		
+		
+		model.addAttribute("region", region);
+		
+		model.addAttribute("phone0", phone0);		
+		model.addAttribute("phone1", phone1);		
+		model.addAttribute("phone2", phone2);
+		
+		model.addAttribute("email1", email1);		
+		model.addAttribute("email2", email2);
+				
+		model.addAttribute("userinfo",user);
 	}
 	
 	/*
@@ -57,7 +134,32 @@ public class MypageController {
 	 * POST
 	 * */
 	@RequestMapping(value = "/mypage/mypageInformationUpdate", method = RequestMethod.POST)
-	public void mypageInformationUpdatePost() {		
+	public String mypageInformationUpdatePost(User user, HttpServletRequest request, HttpSession session) {
+		
+		user.setUser_no((int)(session.getAttribute("user_no")));
+		
+		try {
+			request.setCharacterEncoding("utf-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
+		String email1 = request.getParameter("user_email");
+		String email2 = request.getParameter("user_email1");
+		String email = email1 + "@" + email2;
+		user.setUser_email(email);
+		
+		String phone1 = request.getParameter("user_phone1");
+		String phone2 = request.getParameter("user_phone2");
+		String phone3 = request.getParameter("user_phone3");
+		String phone = phone1 + "-" + phone2 + "-" + phone3;
+		user.setUser_phone(phone);
+		
+		mypageService.updateMemberInfo(user);
+		
+		return "redirect:/mypage/mypageInformationUpdate";
 		
 	}
 	
@@ -77,7 +179,34 @@ public class MypageController {
 	 * GET
 	 * */
 	@RequestMapping(value = "/mypage/mypageBoardList", method = RequestMethod.GET)
-	public void mypageBoardListGet() {		
+	public void mypageBoardListGet(Model model, String cur, String search_div, String search_word, HttpSession session) {
+		User user = new User();
+		user.setUser_no((int)(session.getAttribute("user_no")));
+		
+		//현재 페이지 번호 얻기
+		int curPage = mypageService.getCurPage(cur);
+		
+		//총 게시글 수 얻기
+		int totalCount = mypageService.getTotalCountSearch(user,search_div,search_word);
+
+		//페이지 객체 생성
+		Paging paging = new Paging(totalCount, curPage);
+		
+		
+		//게시글목록 MODEL로 추가
+		List<Board_tb> mypageboardList = mypageService.getPagingListSearch(user,paging, search_div, search_word);
+		
+		for(int i=0; i<mypageboardList.size(); i++) {
+			mypageboardList.get(i).setBoard_reply_cnt(mypageService.getBoardReplyCnt(mypageboardList.get(i).getBoard_no()));
+		}
+		
+		int tableNum = totalCount - (curPage - 1) * 10;		
+		
+		model.addAttribute("search_div", search_div);
+		model.addAttribute("search_word", search_word);
+		model.addAttribute("tableNum", tableNum);
+		model.addAttribute("paging",paging);
+		model.addAttribute("mypageboardList",mypageboardList);
 		
 	}
 	

@@ -50,21 +50,28 @@
 						<tbody>
 							<tr>
 								<td>아이디</td>
-								<td>KKKKK</td>
+								<td>${userinfo.user_id }</td>
 							</tr>
 							<tr>
 								<td>이름</td>
-								<td>김준환</td>
+								<td>${userinfo.user_name }</td>
+							</tr>
+							<tr>
+								<td>닉네임</td>
+								<td>
+									${userinfo.user_nick }
+								</td>
 							</tr>
 							<tr>
 								<td>이메일</td>
-								<td><input type="text" name="user_email" id="user_email" class="inputform250"> @ <input type="text" name="" id="" class="inputform250">
-									<select name="user_email2" class="selectform2">
+								<td><input type="text" name="user_email" id="user_email" class="inputform250" oninput="checkEmail()" value="${email1 }"> @ <input type="text" name="user_email1" id="user_email1" class="inputform250" oninput="checkEmail()" value="${email2 }">
+									<select name="user_email2" id="user_email2" class="selectform2 vm" >
 										<option value="">직접입력</option>
 										<option value="naver.com">naver.com</option>
 										<option value="hanmail.net">hanmail.net</option>
-										<option value="hanmail.net">nate.com</option>
+										<option value="nate.com">nate.com</option>
 									</select>
+									<p id="emailtxt" style="display: inline-block; margin-left:10px;" ></p>
 								</td>
 							</tr>
 							<tr>
@@ -78,38 +85,20 @@
 										<option value="018">018</option>
 										<option value="019">019</option>
 									</select>
-								 - <input type="text" name="user_phone2" id="user_phone2" class="inputform250"> - <input type="text" name="user_phone3" id="user_phone3" class="inputform250">
+								 - <input type="text" name="user_phone2" id="user_phone2" class="inputform250" oninput="checkPhone()" value="${phone1 }"> - <input type="text" name="user_phone3" id="user_phone3" class="inputform250" oninput="checkPhone()" value="${phone2 }">
+								   <p id="phonetxt" style="display: inline-block; margin-left:10px;" ></p>
 								</td>
 							</tr>
 							<tr>
-								<% 
-									int year = 2019;
-									int month = 1;
-									int day = 1;
-								%>
 								<td>생년월일</td>
 								<td>
-									<select name="year" id="year" class="selectform1">
-										<c:forEach var="i" begin="1" end="80">			
-										<option><%=year-- %></option>
-										</c:forEach>
-									</select>
-									<select name="month" id="month" class="selectform1">
-										<c:forEach var="i" begin="1" end="12">			
-										<option><%=month++ %></option>
-										</c:forEach>
-									</select>
-									<select name="day" id="day" class="selectform1">
-										<c:forEach var="i" begin="1" end="31">			
-										<option><%=day++ %></option>
-										</c:forEach>
-									</select>
+									${userinfo.user_birth }
 								</td>
 							</tr>
 							<tr>
 								<td>지역</td>
 								<td>
-									<select name="region" id="region" class="selectform1">											
+									<select name="user_region" id="user_region" class="selectform1">											
 										<option value="서울">서울</option>
 										<option value="인천">인천</option>
 										<option value="대전">대전</option>
@@ -132,16 +121,12 @@
 							</tr>
 							<tr>
 								<td>프로필사진</td>
-								<td><input type="file" name="profile" id="profile"></td>
+								<td>${userinfo.user_profile }</td>
 							</tr>
 							<tr>
 								<td>주 종목</td>
 								<td>
-									<input type="radio" name="sport" id="scooer" value="scooer"><label for="scooer">축구</label>
-									<input type="radio" name="sport" id="bascketball" value="bascketball"><label for="bascketball">농구</label>
-									<input type="radio" name="sport" id="jukgu" value="jukgu"><label for="jukgu">족구</label>
-									<input type="radio" name="sport" id="bollring" value="bollring"><label for="bollring">볼링</label>
-									<input type="radio" name="sport" id="takgu" value="takgu"><label for="takgu">탁구</label>
+									${userinfo.user_sport }
 								</td>
 							</tr>
 						</tbody>
@@ -149,7 +134,7 @@
 					
 					<div class="j_button mt30">
 						<ul>
-							<li><a href="#" class="btnform0">회원정보 수정</a></li>
+							<li><button type="submit" id="signupbtn" disabled="disabled" class="btnform0" >회원정보 수정</button></li>
 							<li><a href="/mypage/mypageInformation" class="btnform0">취소</a></li>
 						</ul>
 					</div>				
@@ -160,4 +145,96 @@
 		<jsp:include page="../common/footer.jsp" />
 	</div>
 </body>
+<script>
+	var phone = "${phone0 }";
+	var region = "${region }";
+	$(document).ready(function(){
+		$("#user_region").val(region);
+		$("#user_phone1").val(phone);
+	})
+
+</script>
+<script>
+	var mail2 = document.getElementById('user_email1');
+	var mail3 = document.getElementById('user_email2');
+	mail3.onchange = function(event){
+	        var _val = this.value.trim();
+	        mail2.value = _val ;
+	}
+</script>
+<script>	
+	var emailCheck = 1;
+	var phoneCheck = 1;
+
+	//이메일 유효성검사
+	function checkEmail(){
+		var email1 = $('#user_email').val();
+		var email2 = $('#user_email1').val();
+		var email = email1 + '@' + email2;
+		
+		if(email1 == "" && email2 == ""){
+			$("#user_email").css("background-color", "white");
+			$("#user_email1").css("background-color", "white");
+		}else{
+			var pattern = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+			
+			if(pattern.test(email)){
+				$("#user_email").css("background-color", "#B0F6AC");
+				$("#user_email1").css("background-color", "#B0F6AC");
+				emailCheck = 1;
+				$("#emailtxt").html("사용가능").css("color","green");
+			}else{
+				$("#user_email").css("background-color", "#FFCECE");
+				$("#user_email1").css("background-color", "#FFCECE");
+				emailCheck = -1;
+				$("#emailtxt").html("사용불가").css("color","red");
+			}
+		}
+		nextStepFunc();
+	}
+	
+	//휴대폰번호 유효성검사
+	function checkPhone() {
+		var phone1 = $("#user_phone1").val();
+		var phone2 = $("#user_phone2").val();
+		var phone3 = $("#user_phone3").val();
+		var phone = phone1 + phone2 + phone3;
+		
+		if (phone2 == "" && phone3 == "") {
+			$("#user_phone2").css("background-color", "white");
+			$("#user_phone3").css("background-color", "white");
+			phoneCheck = 0;
+		} else {
+			
+			var pattern =  /(01[016789])([1-9]{1}[0-9]{2,3})([0-9]{4})$/;
+		
+			if(pattern.test(phone)){
+				$("#user_phone2").css("background-color", "#B0F6AC");
+				$("#user_phone3").css("background-color", "#B0F6AC");
+				phoneCheck = 1;
+				$("#phonetxt").html("사용가능").css("color","green");
+			}else{
+				$("#user_phone2").css("background-color", "#FFCECE");
+				$("#user_phone3").css("background-color", "#FFCECE");
+				phoneCheck = -1;
+				$("#phonetxt").html("사용불가").css("color","red");
+			}
+		}
+		nextStepFunc();
+	}
+	
+	
+	
+	
+	function nextStepFunc(){					
+	var activeBtn = emailCheck + phoneCheck;
+	console.log(activeBtn);
+	if (activeBtn == 2) {
+		$("#signupbtn").prop("disabled", false);
+	} else {
+		$("#signupbtn").prop("disabled", true);
+		
+	}
+}
+</script>
 </html>
