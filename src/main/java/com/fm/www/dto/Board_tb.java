@@ -4,20 +4,23 @@ import java.util.Date;
 
 public class Board_tb {
 	
-	private int board_no;
-	private int user_no;
-	private String user_nick;
-	private int board_div;
-	private String board_title;
-	private String board_content;
-	private Date board_date;
-	private int board_cnt;
-	private String delete_yn;
+	private int board_no;			//게시판글번호
+	private int user_no;			//유저번호
+	private String user_nick;		//유저닉네임
+	private int board_div;			//게시판구분
+	private String board_title;		//게시글제목
+	private String board_content;	//게시글내용
+	private Date board_date;		//게시글등록날짜
+	private int board_cnt;			//게시글조회수
+	private String delete_yn;		//게시글 삭제여부
+	private int board_reply_cnt;	//게시글 댓글갯수
+	
 	@Override
 	public String toString() {
 		return "Board_tb [board_no=" + board_no + ", user_no=" + user_no + ", user_nick=" + user_nick + ", board_div="
 				+ board_div + ", board_title=" + board_title + ", board_content=" + board_content + ", board_date="
-				+ board_date + ", board_cnt=" + board_cnt + ", delete_yn=" + delete_yn + "]";
+				+ board_date + ", board_cnt=" + board_cnt + ", delete_yn=" + delete_yn + ", board_reply_cnt="
+				+ board_reply_cnt + "]";
 	}
 	public int getBoard_no() {
 		return board_no;
@@ -72,6 +75,12 @@ public class Board_tb {
 	}
 	public void setDelete_yn(String delete_yn) {
 		this.delete_yn = delete_yn;
+	}
+	public int getBoard_reply_cnt() {
+		return board_reply_cnt;
+	}
+	public void setBoard_reply_cnt(int board_reply_cnt) {
+		this.board_reply_cnt = board_reply_cnt;
 	}
 
 }
