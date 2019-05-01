@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <jsp:include page="../common/meta.jsp"/>
 <body>
 	<div id="wrap">
@@ -36,14 +37,14 @@
 					<div class="search_form">
 						<ul>
 							<li>
-								<select name="" class="selectform1">
-									<option value="제목">제목</option>
-									<option value="내용">내용</option>
-									<option value="작성자">작성자</option>
+								<select name="search" class="selectform1">
+									<option value="board_title">제목</option>
+									<option value="board_content">내용</option>
+									<option value="user_nick">작성자</option>
 								</select>
 							</li>
 							<li>
-								<input type="text" name="" id="" class="inputform250">
+								<input type="text" name="word" id="" class="inputform250">
 							</li>
 							<li><button class="btnform7">검색</button></li>
 						</ul>
@@ -54,7 +55,7 @@
 					<colgroup>
 						<col width="10%">
 						<col width="*">
-						<col width="10%">
+						<col width="20%">
 						<col width="10%">
 						<col width="10%">
 					</colgroup>
@@ -68,24 +69,33 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>1</td>
-							<td class="title"><a href="/community/noticeView">제목이다</a></td>
-							<td>글쓴이다</td>
-							<td>등록일이다</td>
-							<td>조회수다</td>
-						</tr>
-						<tr>
-							<td colspan="5">등록된 내용이 없습니다.</td>
-						</tr>
+						<c:set var="tableNum" value="${tableNum}"/>
+							<%
+								String tableNum = pageContext.getAttribute("tableNum").toString();
+								int no = Integer.parseInt(tableNum);
+							%>
+						<c:forEach items="${list }" var="l">
+							<tr>
+								<td><%=no-- %></td>
+								<td class="title"><a href="/community/noticeView?board_no=${l.board_no }">${l.board_title } <span class="fb chs">[ ${l.board_reply_cnt } ]</span></a></td>
+								<td>${l.user_nick }</td>
+								<td><fmt:formatDate value="${l.board_date }" pattern="yyyy-MM-dd"/></td>
+								<td>${l.board_cnt }</td>
+							</tr>
+						</c:forEach>
+						<c:if test="${totalCount eq 0}">
+							<tr>
+								<td colspan="5">등록된 내용이 없습니다.</td>
+							</tr>
+						</c:if>	
 					</tbody>
 				</table>
 				
 				<div class="j_button fr mt20 mb20">
-					<a href="/community/noticeWrite" class="btnform7">글쓰기</a>
+					
 				</div>
 				<div class="cb"></div>
-				
+<!-- 				<a href="/community/noticeWrite"class="btnform7">글쓰기</a> -->
 				<div class="paging_wrap">
 			      <c:if test="${paging.totalPage != 0 }">
 			         <ul class="list">
@@ -94,7 +104,7 @@
 			            <c:if test="${paging.curPage eq 1 }">
 			            </c:if>
 			            <c:if test="${paging.curPage ne 1 }">
-			               <li><a href="/board/list?cur=${paging.curPage-1}&search_div=${search_div}&search_word=${search_word}">&lt;</a></li>
+			               <li><a href="/community/noticeList?curPage=${paging.curPage-1}&search=${search}&search=${search}">&lt;</a></li>
 			            </c:if>
 			
 			
@@ -103,10 +113,10 @@
 			               var="i">
 			
 			               <c:if test="${paging.curPage eq i}">
-			                  <li class="on"><a href="/board/list?cur=${i }&search_div=${search_div}&search_word=${search_word}">${i }</a></li>
+			                  <li class="on"><a href="/community/noticeList?curPage=${i }&search=${search}&search=${search}">${i }</a></li>
 			               </c:if>
 			               <c:if test="${paging.curPage ne i}">
-			                  <li><a href="/board/list?cur=${i }&search_div=${search_div}&search_word=${search_word}">${i }</a></li>
+			                  <li><a href="/community/noticeList?curPage=${i }&search=${searc}&search=${search}">${i }</a></li>
 			               </c:if>
 			            </c:forEach>
 			
@@ -114,7 +124,7 @@
 			            <c:if test="${paging.curPage eq paging.totalPage }">
 			            </c:if>
 			            <c:if test="${paging.curPage ne paging.totalPage }">
-			               <li><a href="/board/list?cur=${paging.curPage+1}&search_div=${search_div}&search_word=${search_word}">&gt;</a></li>
+			               <li><a href="/community/noticeList?curPage=${paging.curPage+1}&search=${search}&search=${search}">&gt;</a></li>
 			            </c:if>
 			         </ul>
 			    </c:if>

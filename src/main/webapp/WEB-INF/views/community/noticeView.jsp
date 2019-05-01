@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <jsp:include page="../common/meta.jsp"/>
 <body>
 	<div id="wrap">
@@ -39,12 +40,13 @@
 					</colgroup>
 					<tbody>
 						<tr>
-							<td class="fb">제목</td>
-							<td class="fb">2019-01-01</td>
+							<td class="fb">${board.board_no }</td>
+							<td class="fb"><fmt:formatDate value="${board.board_date }" pattern="yyyy-MM-dd"/></td>
 						</tr>
 						<tr>
-							<td colspan="2">내용</td>						
+							<td colspan="2"><img src="/uploadImg/${photo.photo_stored }" alt="${photo.photo_stored }"><br>${board.board_content }</td>						
 						</tr>
+		
 					</tbody>
 				</table>
 				
@@ -54,40 +56,25 @@
 						<col width="*">
 					</colgroup>
 					<tbody>
-						<tr>
-							<td class="tal">
-								닉네임<br>
-								2019-01-01
-							</td>
-							<td>
-								댓글내용
-								<i class="xi-close deleteBtn"></i>
-							</td>
-						</tr>
-						<tr>
-							<td class="tal">
-								닉네임<br>
-								2019-01-01
-							</td>
-							<td>
-								댓글내용
-								<i class="xi-close deleteBtn"></i>
-							</td>
-						</tr>
-						<tr>
-							<td class="tal">
-								닉네임<br>
-								2019-01-01
-							</td>
-							<td>
-								댓글내용
-								<i class="xi-close deleteBtn"></i>
-							</td>
-						</tr>
+						<c:forEach items="${list }" var="l">
+						
+							<tr>
+								<td class="tal">${l.user_nick }
+									<br><fmt:formatDate value="${l.reply_date }" pattern="yyyy-MM-dd"/>
+							
+								</td>
+								<td>
+									${l.reply_content }
+									<c:if test="${user_no eq l.user_no }">
+									<a href="/community/noticeCommentDelete?reply_no=${l.reply_no }&board_no=${board.board_no }"><i class="xi-close deleteBtn"></i></a>
+									</c:if>
+								</td>
+							</tr>
+						</c:forEach>
 					</tbody>
 				</table>
 				
-				<form action="/community/noticeCommentInsert" method="POST">
+				<form action="/community/noticeCommentInsert?board_no=${board.board_no }" method="POST">
 					<table class="board_table board_table1 mt30">
 						<colgroup>
 							<col width="10%">
@@ -97,10 +84,10 @@
 						<tbody>
 							<tr>
 								<td class="tal">
-									자기닉네임
+									${user_nick }
 								</td>
 								<td>
-									<input type="text" name="" id="" class="inputform100p">
+									<input type="text" name="reply_content" id="" class="inputform100p">
 								</td>
 								<td>
 									<button class="btnform7">댓글등록</button>
@@ -112,8 +99,7 @@
 				
 				
 				<div class="j_button mt20 mb20 tac">
-					<a href="/community/noticeUpdate"class="btnform7">수정</a>
-					<a href="/community/noticeDelete"class="btnform7">삭제</a>
+			
 					<a href="/community/noticeList"class="btnform7">목록</a>
 				</div>
 			</div>
