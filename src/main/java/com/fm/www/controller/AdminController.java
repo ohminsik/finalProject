@@ -56,11 +56,11 @@ public class AdminController {
 		
 		if(admin_yn) {
 			System.out.println("로그인성공");
+			session.setAttribute("AdminloginYN", true);
 			return "redirect:/admin/index";
 			
 		}else{
 			System.out.println("로그인실패");
-			session.setAttribute("loginYN", false);
 			return "redirect:/admin/login";
 		}
 	}
