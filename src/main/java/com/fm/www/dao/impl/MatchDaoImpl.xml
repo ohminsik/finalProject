@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 마이바티스 3 Mapper DOCTYPE -->
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <!-- 매퍼 설정 -->
+  <mapper namespace="com.fm.www.dao.face.MatchDao">
+  
+  <!-- 매치등록 -->
+  <insert id="enrollMatch" parameterType="com.fm.www.dto.Match">
+  	INSERT INTO match(match_no,match_date,fight_date,match_ground,
+  	 match_money,match_uniform,match_region,match_content,
+  	blueteam_no,user_no) 
+  	VALUES 
+  	(match_SEQ.nextval,sysdate,#{fight_date}, #{match_ground},
+  	 #{match_money}, #{match_uniform}, 
+  	#{match_region}, #{match_content},#{blueteam_no},
+  	#{user_no})
+  </insert>
+  
+  <!-- user_no로 User정보 조회 -->
+  <select id="selectUserByuserNo" parameterType="int" resultType="com.fm.www.dto.User">
+  	SELECT * FROM user_tb
+  	WHERE user_no=#{user_no}
+  </select>
+  
+  <!-- 등록된 이달의 매치 정보 List -->
+  <select id="selectMatchOnThisMonth" resultType="com.fm.www.dto.Match">
+  	SELECT mth.*, 
+  	tm.team_mark, tm.team_win, tm.team_name, tm.team_etire,
+  	tm.team_lose, tm.team_tie, tm.team_cnt, tm.team_region
+  	FROM match mth
+  	inner join team_tb tm
+  	on mth.blueteam_no = tm.team_no
+  </select>
+  
+  <!-- 매치등록여부 검사, 개수반환 -->
+  <select id="selectCntMatch" parameterType="com.fm.www.dto.Match" resultType="int">
+  	SELECT COUNT(*) FROM match
+	WHERE user_no=#{user_no}  	
+  </select>
+  </mapper>
+  

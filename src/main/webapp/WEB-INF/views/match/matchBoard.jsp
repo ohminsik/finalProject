@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
 <jsp:include page="../common/meta.jsp"/>
 <%@page import="java.util.Calendar"%>
 <%
@@ -149,14 +150,15 @@
 			            </table>
 					</li>
 				</ul>
-				
+
 				<div class="match_btn_list">
+									
 					<ul>
-						<li><a href="#" class="btnform0">매치검색</a></li>
-						<li><a href="#" class="btnform0">매치등록</a></li>
+						<li><a href="/match/matchBoard" class="btnform0">매치검색</a></li>
+						<!-- <li><a href="/match/matchRegister" class="btnform0" id="team_enroll">매치등록</a></li> -->
+					    <li><a href="/match/matchRegister" class="btnform0" id="match_enroll">매치등록</a></li>
 					</ul>
 				</div>
-				
 				<div class="match_diary">
 					<ul>
 						<li class="mb10">이달의 매치일정</li>
@@ -171,30 +173,16 @@
 									<col width="15%">
 								</colgroup>
 								<tbody>
+									<c:forEach items="${matchList }" var="match">
 									<tr>
 										<td><img src="/resources/img/logo.png"></td>
-										<td>팀이름<br>0전 0승 0무 0패</td>
-										<td>2019년 04월 28일 16:00 <br>매치 요청합니다</td>
-										<td>지역 : 서울-강남<br>팀원 : 11명<br>장소 : 종합운동장</td>
-										<td>남기는 한마디 : ㅎㅇㅎㅇㅎㅇㅎㅇ</td>
+										<td>${match.team_name }<br>${match.team_etire }전 ${match.team_win }승 ${match.team_tie }무 ${match.team_lose }패</td>
+										<td><fmt:formatDate value="${match.match_date }" pattern="yyyy/MM/dd"/> <br>매치 요청합니다</td>
+										<td>지역 : ${match.team_region }<br>팀원 : ${match.team_cnt }명<br>장소 : ${match.match_ground }</td>
+										<td>남기는 한마디 : ${match.match_content }</td>
 										<td><span class="btnform7 mb10">구장있음</span><a href="/match/matchApply" class="btnform7">매치신청</a></td>
 									</tr>
-									<tr>
-										<td><img src="/resources/img/logo.png"></td>
-										<td>팀이름<br>0전 0승 0무 0패</td>
-										<td>2019년 04월 28일 16:00 <br>매치 요청합니다</td>
-										<td>지역 : 서울-강남<br>팀원 : 11명<br>장소 : 종합운동장</td>
-										<td>남기는 한마디 : ㅎㅇㅎㅇㅎㅇㅎㅇ</td>
-										<td><span class="btnform7 mb10">원정</span><a href="#" class="btnform7">매치정보보기</a></td>
-									</tr>
-									<tr>
-										<td><img src="/resources/img/logo.png"></td>
-										<td>팀이름<br>0전 0승 0무 0패</td>
-										<td>2019년 04월 28일 16:00 <br>매치 요청합니다</td>
-										<td>지역 : 서울-강남<br>팀원 : 11명<br>장소 : 종합운동장</td>
-										<td>남기는 한마디 : ㅎㅇㅎㅇㅎㅇㅎㅇ</td>
-										<td><span class="btnform7 mb10">구장있음</span><a class="btnform8">기간만료</a></td>
-									</tr>
+									</c:forEach>
 								</tbody>
 							</table>
 						</li>
@@ -204,5 +192,6 @@
 		</div>
 		<jsp:include page="../common/footer.jsp" />
 	</div>
+	
 </body>
 </html>
