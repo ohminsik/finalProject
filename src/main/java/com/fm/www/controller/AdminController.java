@@ -77,6 +77,26 @@ public class AdminController {
 		return"redirect:/admin/login";
 	}
 	
+	/*
+	 * Admin noticeBoard 컨트롤러
+	 * Admin notice 띄우기
+	 * GET
+	 * */
+	@RequestMapping(value = "/admin/board/notice", method = RequestMethod.GET)
+	public void noticeGet() {		
+		
+	}
+	
+	/*
+	 * Admin noticeBoard 컨트롤러
+	 * Admin notice 띄우기
+	 * GET
+	 * */
+	@RequestMapping(value = "/admin/board/noticeWrite", method = RequestMethod.GET)
+	public void noticeWriteGet() {		
+		
+	}
+	
 	
 }
 
