@@ -177,7 +177,7 @@
 									<tr>
 										<td><img src="/resources/img/logo.png"></td>
 										<td>${match.team_name }<br>${match.team_etire }전 ${match.team_win }승 ${match.team_tie }무 ${match.team_lose }패</td>
-										<td><fmt:formatDate value="${match.match_date }" pattern="yyyy/MM/dd"/> <br>매치 요청합니다</td>
+										<td><fmt:formatDate value="${match.fight_date }" pattern="yyyy/MM/dd"/> <br>매치 요청합니다</td>
 										<td>지역 : ${match.team_region }<br>팀원 : ${match.team_cnt }명<br>장소 : ${match.match_ground }</td>
 										<td>남기는 한마디 : ${match.match_content }</td>
 										<td><span class="btnform7 mb10">구장있음</span><a href="/match/matchApply" class="btnform7">매치신청</a></td>
