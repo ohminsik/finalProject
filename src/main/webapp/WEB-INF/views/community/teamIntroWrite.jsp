@@ -67,19 +67,20 @@
 			</form>
 		</div>
 <script type="text/javascript">
-	function readurl(input) {
-		if (input.files && input.files[0]) {
-			var reader = new filereader();
-			reader.onload = function(e) {
-				$('#foo').attr('src', e.target.result);
-			}
-			reader.readasdataurl(input.files[0]);
-		}
-	}
+	
+	function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('#foo').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
 
-	$("#file").change(function() {
-		readurl(this);
-	});
+    $("#file").change(function() {
+        readURL(this);
+    });
 </script>
 		<jsp:include page="../common/footer.jsp" />
 	</div>
