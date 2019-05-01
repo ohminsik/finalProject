@@ -90,7 +90,12 @@
 									<input type="text" name="reply_content" id="" class="inputform100p">
 								</td>
 								<td>
+									<c:if test="${empty login }">
+									<a class="btnform7" onclick="notlogin();">댓글등록</a>
+									</c:if>
+									<c:if test="${login }">
 									<button class="btnform7">댓글등록</button>
+									</c:if>
 								</td>
 							</tr>
 						</tbody>
