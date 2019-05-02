@@ -42,19 +42,19 @@
 						<tr>
 							<td>경기일</td>
 							<td>
-								<input type="text" name="" id="" placeholder="날짜선택" class="inputform200">
+								<input type="text" name="selDate" id="selDate" placeholder="날짜선택" class="inputform200">
 								<i class="xi-calendar-list"></i>
 								<%
 									int hh = 0;
 									int mm = 0;
 								%>
-								<select name="" class="selectform1">
+								<select name="hours" class="selectform1">
 									<c:forEach var="i" begin="1" end="24">			
 									<option value="<%=hh %>"><%=hh %>시</option>
 									<%hh++; %>
 									</c:forEach>									
 								</select>
-								<select name="" class="selectform1">
+								<select name="minute" class="selectform1">
 									<c:forEach var="i" begin="1" end="12">			
 									<option value="<%=mm %>"><%=mm %>분</option>
 									<%mm+=5; %>
@@ -65,33 +65,33 @@
 						<tr>
 							<td>구장</td>
 							<td>
-								<input type="text" name="" id="" class="inputform200 vm oh1">
+								<input type="text" name="match_ground" id="match_ground" class="inputform200 vm oh1">
 								<a href="#" class="btnform1 vm oh1">구장검색</a>
 							</td>
 						</tr>
 						<tr>
 							<td>구장비</td>
 							<td>
-								<input type="text" name="" id="" class="inputform200">
+								<input type="text" name="match_money" id="match_money" class="inputform200">
 							</td>
 						</tr>						
 						<tr>
 							<td>유니폼색상</td>
 							<td>
-								<input type="text" name="" id="" class="inputform200">
+								<input type="text" name="match_uniform" id="match_uniform" class="inputform200">
 							</td>
 						</tr>
 						<tr>
 							<td>경기가능지역</td>
 							<td>
-								<input type="text" name="" id="" class="inputform200 vm oh1">
+								<input type="text" name="match_region" id="match_region" class="inputform200 vm oh1">
 								<a href="#" class="btnform1 vm oh1">검색</a>
 							</td>
 						</tr>	
 						<tr>
 							<td>남기는한마디</td>
 							<td>
-								<textarea name="" id="" class="textareaform100p"></textarea>
+								<textarea name="match_content" id="match_content" class="textareaform100p"></textarea>
 							</td>
 						</tr>		
 					</tbody>
@@ -99,7 +99,7 @@
 				
 				<div class="match_btn_list">
 					<ul>
-						<li><button class="btnform1">등록</button></li>
+						<li><button class="btnform1" id="btnEnroll">등록</button></li>
 						<li><a href="/match/matchBoard" class="btnform1">목록</a></li>
 					</ul>
 				</div>
@@ -110,3 +110,14 @@
 	</div>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
