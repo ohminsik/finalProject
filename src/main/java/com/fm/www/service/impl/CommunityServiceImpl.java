@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.fm.www.dao.face.CommunityDao;
 import com.fm.www.dto.Board_Reply;
 import com.fm.www.dto.Board_tb;
+import com.fm.www.dto.Movie;
 import com.fm.www.dto.Photo;
 import com.fm.www.service.face.CommunityService;
 import com.fm.www.util.Paging;
@@ -416,5 +417,62 @@ public class CommunityServiceImpl implements CommunityService{
 	public void usedCommentInsert(Board_Reply board_reply) {
 		communityDao.usedCommentInsert(board_reply);	
 	}
+	
+	//-- 축구 동영상
+	//축구동영상 리스트 총 개수
+	@Override
+	public int soccerVideototalCount(String search, String word) {
+		
+		return communityDao.soccerVideototalCount(search, word);
+	}
+	//축구 동영상 리스트 페이징 처리 및 출력
+	@Override
+	public List<Board_tb> soccerVideoListgetList(Paging paging) {
+	
+		return communityDao.soccerVideoListgetList(paging);
+	}
+	//축구 동영상 댓글 수
+	@Override
+	public int soccerVideototalreplyCnt(int board_no) {
+		
+		return communityDao.soccerVideototalreplyCnt(board_no);
+	}
+	//축구 동영상 게시글 조회수 증가
+	@Override
+	public void soccerVideouphit(int board_no) {
+		communityDao.soccerVideouphit(board_no);
+		
+	}
+	//축구 동영상 view 정보
+	@Override
+	public Board_tb soccerVideoView(int board_no) {
+		
+		return communityDao.soccerVideoView(board_no);
+	}
+	//축구 동영상 upload 영상
+	@Override
+	public Movie soccerVideouplodView(int board_no) {
+		
+		return communityDao.soccerVideouplodView(board_no);
+	}
+	//다음글 글 작성
+	@Override
+	public void soccerVideoWrite(Board_tb board_tb) {
+		communityDao.soccerVideoWrite(board_tb);
+		
+	}
+	//다음글 동영상 업로드
+	@Override
+	public void soccerVideoupload(Movie movie) {
+		communityDao.soccerVideoupload(movie);
+		
+	}
+	//축구 동영상 댓글 등록
+	@Override
+	public void soccerVideoCommentInsert(Board_Reply board_reply) {
+		communityDao.soccerVideoCommentInsert(board_reply);
+		
+	}
+
 
 }

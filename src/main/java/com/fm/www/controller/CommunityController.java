@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fm.www.dto.Board_Reply;
 import com.fm.www.dto.Board_tb;
+import com.fm.www.dto.Movie;
 import com.fm.www.dto.Photo;
 import com.fm.www.dto.User;
 import com.fm.www.service.face.CommunityService;
@@ -1321,4 +1322,146 @@ public class CommunityController {
 		
 		return "redirect:/community/usedView?board_no="+board_no;
 	}
+	/*
+	 * soccerVideoList GET
+	 * 축구동영상 리스트 조회 폼
+	 * 검색,페이징 동시
+	 * */
+	@RequestMapping(value="/community/soccerVideoList", method= RequestMethod.GET)
+	public void soccerVideoList(@RequestParam(defaultValue="1") int curPage, Model model,String word, String search) {
+		//축구동영상 리스트 총 개수
+		int totalCount = communityService.soccerVideototalCount(search,word);
+		if(totalCount==0) {
+			model.addAttribute("totalCount", totalCount);
+		}
+		Paging paging = new Paging(totalCount, curPage);
+		paging.setSearch(search);
+		paging.setWord(word);
+	    //축구 동영상 리스트 페이징 처리 및 출력
+		List<Board_tb> list= communityService.soccerVideoListgetList(paging);
+		
+		for(int i = 0; i< list.size(); i++) {
+			//축구 동영상 댓글 수
+			int board_reply_cnt= communityService.soccerVideototalreplyCnt(list.get(i).getBoard_no());
+			list.get(i).setBoard_reply_cnt(board_reply_cnt);
+		}
+		// 게시글 번호 생성
+	    int tableNum = totalCount -((curPage-1)*10);
+	    model.addAttribute("search", search);
+	    model.addAttribute("word", word);
+	    model.addAttribute("tableNum", tableNum);
+		model.addAttribute("list", list);
+		model.addAttribute("paging", paging);
+	}
+	/*
+
+	 * 축구 동영상 상세페이지 조회 폼
+	 * 댓글 목록 출력 (아직)
+	 * */
+	@RequestMapping(value="/community/soccerVideoView", method = RequestMethod.GET)
+	public void soccerVideoViewGet(int board_no, Model model, Board_tb board_tb,HttpSession session,Movie movie) {
+		//축구 동영상 게시글 조회수 증가
+		communityService.soccerVideouphit(board_no);
+		
+		//축구 동영상 view 정보 
+		board_tb= communityService.soccerVideoView(board_no);
+		//축구 동영상 upload 영상
+		movie = communityService.soccerVideouplodView(board_no);
+		
+		model.addAttribute("movie", movie);
+		model.addAttribute("board_tb", board_tb);
+	
+		
+		//댓글 리스트 정보
+		List<Board_Reply> replaylist= communityService.teamIntrogetreplylist(board_no);
+		model.addAttribute("replaylist", replaylist);
+		
+	}
+	/*
+
+	 * 축구 동영상  글쓰기 폼
+	 * */
+	@RequestMapping(value="/community/soccerVideoWrite", method = RequestMethod.GET)
+	public void soccerVideoWriteGet() {	}
+	/*
+
+	 * 축구 동영상 글쓰기 처리 폼
+	 * */
+	@RequestMapping(value="/community/soccerVideoWrite", method = RequestMethod.POST)
+	public String soccerVideoWritePost(Board_tb board_tb ,HttpSession session ,HttpServletRequest request,Movie movie) {
+		System.out.println(board_tb);
+	
+		try {
+			request.setCharacterEncoding("utf-8");
+		} catch (UnsupportedEncodingException e1) {
+		
+			e1.printStackTrace();
+		}
+		//다음글 번호 가져오기
+		int board_no =communityService.teamIntrogetboard_no();
+		int user_no = (int) session.getAttribute("user_no");
+		board_tb.setUser_no(user_no);
+		board_tb.setBoard_no(board_no);
+		movie.setBoard_no(board_no);
+	
+		String movie_address=movie.getMovie_address();
+		//실제 주소
+		String movie_address1= movie_address.substring(17, 28);
+		System.out.println("[movei]"+movie_address1);
+		//다음글 글 작성
+		communityService.soccerVideoWrite(board_tb);
+		movie.setMovie_address(movie_address1);
+		
+		//다음글 동영상 업로드
+		communityService.soccerVideoupload(movie);
+	
+		
+		return "redirect:/community/soccerVideoList";
+	}
+
+	/*
+
+	 * 축구 동영상 댓글 등록 처리 폼
+	 * */
+	@RequestMapping(value="/community/soccerVideoCommentInsert", method = RequestMethod.POST)
+	public String soccerVideoCommentInsertPost(Board_Reply board_reply,int board_no, HttpSession session) {
+		
+		int user_no = (int) session.getAttribute("user_no");
+		board_reply.setBoard_no(board_no);
+		board_reply.setUser_no(user_no);
+	
+		//축구 동영상 댓글 등록
+		communityService.soccerVideoCommentInsert(board_reply);
+		
+		return "redirect:/community/soccerVideoView?board_no="+board_no;
+	}
+	
+	/*
+
+	 * 축구 동영상 댓글 삭제 처리 폼
+	 * */
+	@RequestMapping(value="/community/soccerVideoCommentDelete", method = RequestMethod.GET)
+	public String soccerVideoCommentDeleteGet(int reply_no , int board_no) {
+		//축구 동영상 댓글 삭제
+		communityService.teamIntroCommentDelete(reply_no);
+		
+		return "redirect:/community/soccerVideoView?board_no="+board_no;
+		
+	}
+	
+	/*
+
+	 * 축구 동영상 삭제 처리 폼
+	 * */
+	@RequestMapping(value="/community/soccerVideoDelete", method = RequestMethod.GET)
+	public String soccerVideoDeleteGet(int board_no) {
+		//팀 가입 인사 삭제
+		communityService.teamIntrodelete(board_no);
+		
+		return "redirect:/community/soccerVideoList";
+	}
+
+	
+	
+	
 }

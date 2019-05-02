@@ -8,7 +8,7 @@
 <mapper namespace="com.fm.www.dao.face.CommunityDao">
 
 
-	<!-- 공지사항 게시글 전체 수 --> 
+   <!-- 공지사항 게시글 전체 수 --> 
    <select id="noticeTotalCount" resultType="int">
       select count(*) from board_tb M
       JOIN USER_TB U ON(U.USER_NO = M.USER_NO)
@@ -121,10 +121,10 @@
       and board_no = #{board_no}
    </select>
 
-	
-	
-	<!--팀 가입 인사 리스트 총 개수  -->
-  	 <select id="teamIntrototalCount" resultType="int">
+   
+   
+   <!--팀 가입 인사 리스트 총 개수  -->
+      <select id="teamIntrototalCount" resultType="int">
       select count(*) from board_tb B, user_tb U
       where board_div = 2 and delete_yn = 'N'
          <choose>
@@ -142,7 +142,7 @@
    </select>
     <!--팀 가입 인사 리스트 페이징 처리 및 출력-->
     <select id="teamIntrogetList" parameterType="com.fm.www.util.Paging" resultType="com.fm.www.dto.Board_tb">
-					
+               
       SELECT * FROM (
          SELECT rownum rnum, B.* FROM (
             SELECT U.USER_nick,  M.*
@@ -171,492 +171,579 @@
       WHERE rnum BETWEEN #{startNo} AND #{endNo}
    </select>
    
-   	<!--팀 가입 인사 view 정보  --> 
-   	<select id="teamIntroView" parameterType="int" resultType="com.fm.www.dto.Board_tb">
-   		select * from board_tb
-   		where board_no= #{board_no}
-   	
-   	</select>
-   	<!-- 팀 가입 인사 게시글 조회수 증가 -->
-   	<update id="teamIntrouphit" parameterType="int">
-		  update board_tb
-	      set BOARD_CNT = BOARD_CNT +1
-	       where board_no = #{board_no} 	
-   	</update>
-	<!--다음글 번호 가져오기  -->
-	<select id="teamIntrogetboard_no" resultType="int">
-		 SELECT board_tb_seq.nextval FROM dual
-	</select>
-	<!-- 글쓰기 -->
-	<insert id="teamIntrowrite" parameterType="com.fm.www.dto.Board_tb">
-		insert into board_tb
+      <!--팀 가입 인사 view 정보  --> 
+      <select id="teamIntroView" parameterType="int" resultType="com.fm.www.dto.Board_tb">
+         select * from board_tb
+         where board_no= #{board_no}
+      
+      </select>
+      <!-- 팀 가입 인사 게시글 조회수 증가 -->
+      <update id="teamIntrouphit" parameterType="int">
+        update board_tb
+         set BOARD_CNT = BOARD_CNT +1
+          where board_no = #{board_no}    
+      </update>
+   <!--다음글 번호 가져오기  -->
+   <select id="teamIntrogetboard_no" resultType="int">
+       SELECT board_tb_seq.nextval FROM dual
+   </select>
+   <!-- 글쓰기 -->
+   <insert id="teamIntrowrite" parameterType="com.fm.www.dto.Board_tb">
+      insert into board_tb
             (user_no,board_no, board_div, board_title, board_content,board_date,board_cnt, delete_yn)
         values(#{user_no},#{board_no},  2, #{board_title}, #{board_content} , sysdate,0,'N')
-	</insert>
-	<!-- 파일첨부 -->
-	<insert id="teamIntrophotowrite" parameterType="com.fm.www.dto.Photo">
-		 insert into photo
+   </insert>
+   <!-- 파일첨부 -->
+   <insert id="teamIntrophotowrite" parameterType="com.fm.www.dto.Photo">
+       insert into photo
          (PHOTO_NO, photo_origin, PHOTO_STORED, BOARD_FG, BOARD_NO, PHOTO_DELETE_YN )
          values(photo_seq.nextval, #{photo_origin }, #{photo_stored }, 2, #{board_no }, 'N' ) 
-  	</insert>
-  	<!--  팀 가입 인사 photo view 정보-->
-  	<select id="teamIntrophotoView" parameterType="int" resultType="com.fm.www.dto.Photo">
-  		select * from photo 
-  		where board_no= #{board_no}
-  	</select>
-  	<!-- 팀 가입 인사 검색 리스트  개수 -->
-  	<select id="teamIntrosearchtotalCount" resultType="int">
-  		select count(*) from board_tb
-  		where ${search} like '%'|| #{word} || '%'	
-  	</select>
+     </insert>
+     <!--  팀 가입 인사 photo view 정보-->
+     <select id="teamIntrophotoView" parameterType="int" resultType="com.fm.www.dto.Photo">
+        select * from photo 
+        where board_no= #{board_no}
+     </select>
+     <!-- 팀 가입 인사 검색 리스트  개수 -->
+     <select id="teamIntrosearchtotalCount" resultType="int">
+        select count(*) from board_tb
+        where ${search} like '%'|| #{word} || '%'   
+     </select>
 
-  	<!-- 팀 가입 인사 검색리스트 페이징 처리 및 출력 -->
-  	<select id="teamIntroserachgetList" parameterType="com.fm.www.util.Paging" resultType="com.fm.www.dto.Board_tb">
-  	  	SELECT * FROM (
-					SELECT rownum rnum, B.* FROM (
-					SELECT U.USER_nick,  M.*
-					FROM board_tb M
-					JOIN USER_TB U ON(U.USER_NO = M.USER_NO)
-					WHERE delete_yn = 'N'
-				    and board_div = 2
-				    and ${search} like '%'|| #{word} || '%'	
-				ORDER BY board_no desc
-				) B
-				ORDER BY rnum
-				) R
-				 WHERE rnum BETWEEN #{startNo} AND #{endNo}
-  	</select>
-  	<!-- 팀 가입 인사 삭제 -->
-  	<update id="teamIntrodelete" parameterType="int">
-  		update board_tb
-  			set delete_yn= 'Y'
-  			where board_no = #{board_no}
-  	</update>
-  	<!--수정 전 글 가져오기   -->
-  	<select id="teamIntrogetupdateview" parameterType="int" resultType="com.fm.www.dto.Board_tb">
-  		select * from board_tb
-  		where board_no = #{board_no}
-  	</select>
-  	<!-- 수정 전 파일 첨부 가져오기 -->
-  	<select id="teamIntrogetUpdatePhoto" parameterType="int" resultType="com.fm.www.dto.Photo">
-  	 	select * from photo
-  	 	where board_no= #{board_no}
-  	</select>
-  	<!-- 수정 글 쓰기 -->
-  	<update id="teamIntroupdate" parameterType="com.fm.www.dto.Board_tb">
-  		update board_tb
-  			set board_title = #{board_title}
-  			, board_content = #{board_content}
-  			where board_no= #{board_no} 
-  	</update>
-  	<!-- 수정 파일첨부 -->
-  	<update id="teamIntrophotoupdate" parameterType="com.fm.www.dto.Photo">
-  	  	 update photo
-  	 	set  photo_origin = #{photo_origin}
-  	 	, photo_stored = #{photo_stored}
-  	 	where board_no = #{board_no}
-  	</update>
-  	<!-- 파일첨부 존재 여부 -->
-  	<select id="teamIntrocntphoto" parameterType="int" resultType="int">
-  		select count(*) from photo
-  		where board_no = #{board_no}
-  	</select>
-  	<!--팀 가입 인사 댓글 등록 -->
-  	<insert id="teamIntroCommentInsert" parameterType="com.fm.www.dto.Board_Reply">
-  		insert into board_reply
+     <!-- 팀 가입 인사 검색리스트 페이징 처리 및 출력 -->
+     <select id="teamIntroserachgetList" parameterType="com.fm.www.util.Paging" resultType="com.fm.www.dto.Board_tb">
+          SELECT * FROM (
+               SELECT rownum rnum, B.* FROM (
+               SELECT U.USER_nick,  M.*
+               FROM board_tb M
+               JOIN USER_TB U ON(U.USER_NO = M.USER_NO)
+               WHERE delete_yn = 'N'
+                and board_div = 2
+                and ${search} like '%'|| #{word} || '%'   
+            ORDER BY board_no desc
+            ) B
+            ORDER BY rnum
+            ) R
+             WHERE rnum BETWEEN #{startNo} AND #{endNo}
+     </select>
+     <!-- 팀 가입 인사 삭제 -->
+     <update id="teamIntrodelete" parameterType="int">
+        update board_tb
+           set delete_yn= 'Y'
+           where board_no = #{board_no}
+     </update>
+     <!--수정 전 글 가져오기   -->
+     <select id="teamIntrogetupdateview" parameterType="int" resultType="com.fm.www.dto.Board_tb">
+        select * from board_tb
+        where board_no = #{board_no}
+     </select>
+     <!-- 수정 전 파일 첨부 가져오기 -->
+     <select id="teamIntrogetUpdatePhoto" parameterType="int" resultType="com.fm.www.dto.Photo">
+         select * from photo
+         where board_no= #{board_no}
+     </select>
+     <!-- 수정 글 쓰기 -->
+     <update id="teamIntroupdate" parameterType="com.fm.www.dto.Board_tb">
+        update board_tb
+           set board_title = #{board_title}
+           , board_content = #{board_content}
+           where board_no= #{board_no} 
+     </update>
+     <!-- 수정 파일첨부 -->
+     <update id="teamIntrophotoupdate" parameterType="com.fm.www.dto.Photo">
+           update photo
+         set  photo_origin = #{photo_origin}
+         , photo_stored = #{photo_stored}
+         where board_no = #{board_no}
+     </update>
+     <!-- 파일첨부 존재 여부 -->
+     <select id="teamIntrocntphoto" parameterType="int" resultType="int">
+        select count(*) from photo
+        where board_no = #{board_no}
+     </select>
+     <!--팀 가입 인사 댓글 등록 -->
+     <insert id="teamIntroCommentInsert" parameterType="com.fm.www.dto.Board_Reply">
+        insert into board_reply
          (REPLY_NO,BOARD_FG,REPLY_CONTENT,REPLY_DATE,REPLY_DELETE_YN, board_no , user_no)
          values(board_reply_seq.nextval,  2, #{reply_content},  sysdate,'N', #{board_no}, #{user_no})
-  	</insert>
-  	<!-- 댓글 리스트 정보 -->
-  	<select id="teamIntrogetreplylist" parameterType="int" resultType="com.fm.www.dto.Board_Reply">
-  		select * from board_reply B, user_tb U
-		where B.user_no = U.user_no
-		and reply_delete_yn= 'N'
-		and board_fg= 2
-		and board_no=#{board_no}
-  	
-  	</select>
-  	<!-- 팀 가입 인사 댓글 삭제 -->
-  	<update id="teamIntroCommentDelete" parameterType="int">
-		update Board_Reply
-		set reply_delete_yn = 'Y'
-		where reply_no= #{reply_no} 
-  	</update>
-  	<!--댓글 리스트 개수 가져오기 -->
-  	<select id="teamIntrototalreplyCnt" parameterType="int" resultType="int">
-  		select count(*) from board_reply
-  		where board_no= #{board_no}
-  		and reply_delete_yn= 'N'
-  	</select>
+     </insert>
+     <!-- 댓글 리스트 정보 -->
+     <select id="teamIntrogetreplylist" parameterType="int" resultType="com.fm.www.dto.Board_Reply">
+        select * from board_reply B, user_tb U
+      where B.user_no = U.user_no
+      and reply_delete_yn= 'N'
+      and board_fg= 2
+      and board_no=#{board_no}
+     
+     </select>
+     <!-- 팀 가입 인사 댓글 삭제 -->
+     <update id="teamIntroCommentDelete" parameterType="int">
+      update Board_Reply
+      set reply_delete_yn = 'Y'
+      where reply_no= #{reply_no} 
+     </update>
+     <!--댓글 리스트 개수 가져오기 -->
+     <select id="teamIntrototalreplyCnt" parameterType="int" resultType="int">
+        select count(*) from board_reply
+        where board_no= #{board_no}
+        and reply_delete_yn= 'N'
+     </select>
 
 
     <!-- 자유 free -->
-	<!-- 자유게시판 총 게시글 수  -->
-	<select id="freeTotalCount" resultType="int">
-		select count(*) from board_tb M
-			JOIN USER_TB U ON(U.USER_NO = M.USER_NO)
-				where board_div = 4 and delete_yn = 'N'
-				<choose>
-					<when test="search == 'board_title'">
-						AND board_title Like '%' || #{word} || '%'
-					</when>
-					<when test="search == 'board_content'">
-						AND board_content Like '%' || #{word} || '%'
-					</when>
-					<when test="search == 'user_nick'">
-						AND user_nick Like '%' || #{word} || '%'
-					</when>
-				</choose>
-	</select>
-	
-	<select id="freeGetList" parameterType="com.fm.www.util.Paging" resultType="com.fm.www.dto.Board_tb">
-		SELECT * FROM (
-		   SELECT rownum rnum, B.* FROM (
-		      SELECT U.USER_nick,  M.*
-		      FROM board_tb M
-		      JOIN USER_TB U ON(U.USER_NO = M.USER_NO)
-		      WHERE delete_yn = 'N'
-		      <choose>
-		         <when test="search == 'board_title'">
-		            AND board_title Like '%' || #{word} || '%'
-		         </when>
-		         <when test="search == 'board_content'">
-		            AND board_content Like '%' || #{word} || '%'
-		         </when>
-		         <when test="search == 'user_nick'">
-		            AND user_nick Like '%' || #{word} || '%'
-		         </when>
-		      </choose>
-		      and board_div = 4
-		      ORDER BY board_no desc
-		   ) B
-		   ORDER BY rnum
-		) R
-		WHERE rnum BETWEEN #{paging.startNo} AND #{paging.endNo}      
+   <!-- 자유게시판 총 게시글 수  -->
+   <select id="freeTotalCount" resultType="int">
+      select count(*) from board_tb M
+         JOIN USER_TB U ON(U.USER_NO = M.USER_NO)
+            where board_div = 4 and delete_yn = 'N'
+            <choose>
+               <when test="search == 'board_title'">
+                  AND board_title Like '%' || #{word} || '%'
+               </when>
+               <when test="search == 'board_content'">
+                  AND board_content Like '%' || #{word} || '%'
+               </when>
+               <when test="search == 'user_nick'">
+                  AND user_nick Like '%' || #{word} || '%'
+               </when>
+            </choose>
    </select>
-	
-	<!-- 자유 게시글 번호 생성하기 -->
-	<select id="freeGetBoard_no" resultType="int">
-		SELECT board_tb_seq.nextval FROM dual
-	</select>
-	
-	<!-- 자유 글 번호 찾아 글 작성 -->
-	<insert id="freeInserWrite1" parameterType="com.fm.www.dto.Board_tb">
-		insert into board_tb
-		(board_no, board_div, board_title, board_content, board_cnt, delete_yn, user_no, board_date)
-		values(#{board_no}, 4 , #{board_title }, #{board_content } ,0 ,'N' , #{user_no }, sysdate)
-	</insert>
-	<insert id="freeInsertPhoto" parameterType="com.fm.www.dto.Photo">
-		insert into photo
-		(photo_no, photo_origin, photo_stored, board_fg, board_no, photo_delete_yn )
-		values(photo_seq.nextval, #{photo_origin }, #{photo_stored }, 4, #{board_no }, 'N' ) 
-	</insert>
-	<!-- 자유 이미지 파일 없이 게시글 작성 -->
-	<insert id="freeInsertWrite2" parameterType="com.fm.www.dto.Board_tb">
-		insert into board_tb
-			(board_no, board_div, board_title, board_content, board_cnt, delete_yn, user_no, board_date)
-			values(board_tb_seq.nextval,  4, #{board_title }, #{board_content } , 0 ,'N', #{user_no }, sysdate )
-	</insert>
-	<!-- 자유 조회수 증가 -->
-	<update id="freeUpHit" parameterType="int">
-		update board_tb
-		set board_cnt = board_cnt +1
-		where board_no = #{board_no} 
+   
+   <select id="freeGetList" parameterType="com.fm.www.util.Paging" resultType="com.fm.www.dto.Board_tb">
+      SELECT * FROM (
+         SELECT rownum rnum, B.* FROM (
+            SELECT U.USER_nick,  M.*
+            FROM board_tb M
+            JOIN USER_TB U ON(U.USER_NO = M.USER_NO)
+            WHERE delete_yn = 'N'
+            <choose>
+               <when test="search == 'board_title'">
+                  AND board_title Like '%' || #{word} || '%'
+               </when>
+               <when test="search == 'board_content'">
+                  AND board_content Like '%' || #{word} || '%'
+               </when>
+               <when test="search == 'user_nick'">
+                  AND user_nick Like '%' || #{word} || '%'
+               </when>
+            </choose>
+            and board_div = 4
+            ORDER BY board_no desc
+         ) B
+         ORDER BY rnum
+      ) R
+      WHERE rnum BETWEEN #{paging.startNo} AND #{paging.endNo}      
+   </select>
+   
+   <!-- 자유 게시글 번호 생성하기 -->
+   <select id="freeGetBoard_no" resultType="int">
+      SELECT board_tb_seq.nextval FROM dual
+   </select>
+   
+   <!-- 자유 글 번호 찾아 글 작성 -->
+   <insert id="freeInserWrite1" parameterType="com.fm.www.dto.Board_tb">
+      insert into board_tb
+      (board_no, board_div, board_title, board_content, board_cnt, delete_yn, user_no, board_date)
+      values(#{board_no}, 4 , #{board_title }, #{board_content } ,0 ,'N' , #{user_no }, sysdate)
+   </insert>
+   <insert id="freeInsertPhoto" parameterType="com.fm.www.dto.Photo">
+      insert into photo
+      (photo_no, photo_origin, photo_stored, board_fg, board_no, photo_delete_yn )
+      values(photo_seq.nextval, #{photo_origin }, #{photo_stored }, 4, #{board_no }, 'N' ) 
+   </insert>
+   <!-- 자유 이미지 파일 없이 게시글 작성 -->
+   <insert id="freeInsertWrite2" parameterType="com.fm.www.dto.Board_tb">
+      insert into board_tb
+         (board_no, board_div, board_title, board_content, board_cnt, delete_yn, user_no, board_date)
+         values(board_tb_seq.nextval,  4, #{board_title }, #{board_content } , 0 ,'N', #{user_no }, sysdate )
+   </insert>
+   <!-- 자유 조회수 증가 -->
+   <update id="freeUpHit" parameterType="int">
+      update board_tb
+      set board_cnt = board_cnt +1
+      where board_no = #{board_no} 
    </update>
    
    <!-- 자유 지정 게시글 정보 가져오기 -->
     <select id="freeView" parameterType="com.fm.www.dto.Board_tb" resultType="com.fm.www.dto.Board_tb">
-		select * from board_tb
-		where board_no = #{board_no}
+      select * from board_tb
+      where board_no = #{board_no}
    </select>
    <!-- 자유 사진 가져오기 -->
     <select id="freePhotoView" parameterType="com.fm.www.dto.Photo" resultType="com.fm.www.dto.Photo">
-		select * from photo
-		where board_no = #{board_no}
+      select * from photo
+      where board_no = #{board_no}
    </select>
    <!-- 자유 댓글 리스트 가져오기 -->
     <select id="freeReplyList" parameterType="com.fm.www.dto.Board_Reply" resultType="com.fm.www.dto.Board_Reply">
-		select * from board_reply B
-		JOIN USER_TB U ON(U.USER_NO = B.USER_NO)
-		where reply_delete_yn = 'N'
-		and board_no = #{board_no}
+      select * from board_reply B
+      JOIN USER_TB U ON(U.USER_NO = B.USER_NO)
+      where reply_delete_yn = 'N'
+      and board_no = #{board_no}
    </select>
    
-	<!--자유 수정 전 글 가져오기   -->
-	<select id="freeUpdateView" parameterType="int" resultType="com.fm.www.dto.Board_tb">
-		select * from board_tb
-		where board_no = #{board_no}
-	</select>
-	
-	<!-- 자유 수정 전 파일 첨부 가져오기 -->
-	<select id="freeUpdatePhoto" parameterType="int" resultType="com.fm.www.dto.Photo">
-		select * from photo
-		where board_no= #{board_no}
-	</select>
-	
-	<!-- 자유 수정  파일첨부 존재 여부 -->
-	<select id="freeCntPhoto" parameterType="int" resultType="int">
-		select count(*) from photo
-		where board_no = #{board_no}
-  	</select>
-  	
-	<!-- 자유 수정 글쓰기 -->  	
-  	<update id="freeUpdate" parameterType="com.fm.www.dto.Board_tb">
-		update board_tb
-			set board_title = #{board_title}
-			, board_content = #{board_content}
-			where board_no= #{board_no} 
-  	</update>
-  	
-  	<!-- 자유 이미지 존재 할 때 수정 파일첨부 -->
-  	<update id="freePhotoUpdate" parameterType="com.fm.www.dto.Photo">
-		update photo
-			set  photo_origin = #{photo_origin}
-			, photo_stored = #{photo_stored}
-			where board_no = #{board_no}
-  	</update>
-  	
-  	<!-- 자유 이미지 없을 때 파일첨부 -->
-  	<insert id="freePhotoWrite" parameterType="com.fm.www.dto.Photo">
-		insert into photo
-			(PHOTO_NO, photo_origin, PHOTO_STORED, BOARD_FG, BOARD_NO, PHOTO_DELETE_YN )
-			values(photo_seq.nextval, #{photo_origin }, #{photo_stored }, 4, #{board_no }, 'N' ) 
-  	</insert>
-  	
-  	<!-- 자유 삭제 -->
-  	<update id="freeDelete" parameterType="int">
-		update board_tb
-			set delete_yn= 'Y'
-			where board_no = #{board_no}
-  	</update>
-  	
-  	<!-- 자유 댓글 등록 -->
-  	<insert id="freeCommentInsert" parameterType="com.fm.www.dto.Board_Reply">
-		insert into board_reply
-			(REPLY_NO,BOARD_FG,REPLY_CONTENT,REPLY_DATE,REPLY_DELETE_YN, board_no , user_no)
-			values(board_reply_seq.nextval,  4, #{reply_content},  sysdate,'N', #{board_no}, #{user_no})
-  	</insert>
-  	
-  	<!-- 자유 댓글 삭제 -->
-  	<update id="freeCommentDelete" parameterType="int">
-		update Board_Reply
-			set reply_delete_yn = 'Y'
-			where reply_no= #{reply_no} 
-  	</update>
-  	
-  	<!-- 자유 댓글 갯수 구하기 -->
-  	<select id="freeReplyCount" parameterType="int" resultType="int">
-		select COUNT(*) from board_reply 
-			where reply_delete_yn = 'N'
-			and board_no = #{board_no}
+   <!--자유 수정 전 글 가져오기   -->
+   <select id="freeUpdateView" parameterType="int" resultType="com.fm.www.dto.Board_tb">
+      select * from board_tb
+      where board_no = #{board_no}
+   </select>
+   
+   <!-- 자유 수정 전 파일 첨부 가져오기 -->
+   <select id="freeUpdatePhoto" parameterType="int" resultType="com.fm.www.dto.Photo">
+      select * from photo
+      where board_no= #{board_no}
+   </select>
+   
+   <!-- 자유 수정  파일첨부 존재 여부 -->
+   <select id="freeCntPhoto" parameterType="int" resultType="int">
+      select count(*) from photo
+      where board_no = #{board_no}
+     </select>
+     
+   <!-- 자유 수정 글쓰기 -->     
+     <update id="freeUpdate" parameterType="com.fm.www.dto.Board_tb">
+      update board_tb
+         set board_title = #{board_title}
+         , board_content = #{board_content}
+         where board_no= #{board_no} 
+     </update>
+     
+     <!-- 자유 이미지 존재 할 때 수정 파일첨부 -->
+     <update id="freePhotoUpdate" parameterType="com.fm.www.dto.Photo">
+      update photo
+         set  photo_origin = #{photo_origin}
+         , photo_stored = #{photo_stored}
+         where board_no = #{board_no}
+     </update>
+     
+     <!-- 자유 이미지 없을 때 파일첨부 -->
+     <insert id="freePhotoWrite" parameterType="com.fm.www.dto.Photo">
+      insert into photo
+         (PHOTO_NO, photo_origin, PHOTO_STORED, BOARD_FG, BOARD_NO, PHOTO_DELETE_YN )
+         values(photo_seq.nextval, #{photo_origin }, #{photo_stored }, 4, #{board_no }, 'N' ) 
+     </insert>
+     
+     <!-- 자유 삭제 -->
+     <update id="freeDelete" parameterType="int">
+      update board_tb
+         set delete_yn= 'Y'
+         where board_no = #{board_no}
+     </update>
+     
+     <!-- 자유 댓글 등록 -->
+     <insert id="freeCommentInsert" parameterType="com.fm.www.dto.Board_Reply">
+      insert into board_reply
+         (REPLY_NO,BOARD_FG,REPLY_CONTENT,REPLY_DATE,REPLY_DELETE_YN, board_no , user_no)
+         values(board_reply_seq.nextval,  4, #{reply_content},  sysdate,'N', #{board_no}, #{user_no})
+     </insert>
+     
+     <!-- 자유 댓글 삭제 -->
+     <update id="freeCommentDelete" parameterType="int">
+      update Board_Reply
+         set reply_delete_yn = 'Y'
+         where reply_no= #{reply_no} 
+     </update>
+     
+     <!-- 자유 댓글 갯수 구하기 -->
+     <select id="freeReplyCount" parameterType="int" resultType="int">
+      select COUNT(*) from board_reply 
+         where reply_delete_yn = 'N'
+         and board_no = #{board_no}
    </select>
   
   
   <!-- 후기 review --> 
   <!-- 경기 후기 게시글 전체 수  -->
-	<select id="reviewTotalCount" resultType="int">
-		select count(*) from board_tb M
-			JOIN USER_TB U ON(U.USER_NO = M.USER_NO)
-				where board_div = 5 and delete_yn = 'N'
-				<choose>
-					<when test="search == 'board_title'">
-						AND board_title Like '%' || #{word} || '%'
-					</when>
-					<when test="search == 'board_content'">
-						AND board_content Like '%' || #{word} || '%'
-					</when>
-					<when test="search == 'user_nick'">
-						AND user_nick Like '%' || #{word} || '%'
-					</when>
-				</choose>
-	</select>
-	
-	<!-- 경기 후기 게시글  페이징 리스트 처리 -->
-	<select id="reviewGetList" parameterType="com.fm.www.util.Paging" resultType="com.fm.www.dto.Board_tb">
-		SELECT * FROM (
-		   SELECT rownum rnum, B.* FROM (
-		      SELECT U.USER_nick,  M.*
-		      FROM board_tb M
-		      JOIN USER_TB U ON(U.USER_NO = M.USER_NO)
-		      WHERE delete_yn = 'N'
-		      <choose>
-		         <when test="search == 'board_title'">
-		            AND board_title Like '%' || #{word} || '%'
-		         </when>
-		         <when test="search == 'board_content'">
-		            AND board_content Like '%' || #{word} || '%'
-		         </when>
-		         <when test="search == 'user_nick'">
-		            AND user_nick Like '%' || #{word} || '%'
-		         </when>
-		      </choose>
-		      and board_div = 5
-		      ORDER BY board_no desc
-		   ) B
-		   ORDER BY rnum
-		) R
-		WHERE rnum BETWEEN #{paging.startNo} AND #{paging.endNo}      
-	</select>
-   
-	<!-- 경기 후기 댓글 갯수 구하기 -->
-	<select id="reviewReplyCount" parameterType="int" resultType="int">
-		select COUNT(*) from board_reply 
-		where reply_delete_yn = 'N'
-		and board_no = #{board_no}
-	</select>
-	
-	<!-- 경기 후기 글 번호 생성하기 -->
-	<select id="reviewGetBoard_no" resultType="int">
-		SELECT board_tb_seq.nextval FROM dual
-	</select>
-	
-	<!-- 경기 후기 글 번호 찾아 글 작성 -->
-	<insert id="reviewInsertWrite1" parameterType="com.fm.www.dto.Board_tb">
-		insert into board_tb
-		(board_no, board_div, board_title, board_content, board_cnt, delete_yn, user_no, board_date)
-		values(#{board_no}, 5 , #{board_title }, #{board_content } ,0 ,'N' , #{user_no }, sysdate)
-	</insert>
-	<insert id="reviewInsertPhoto" parameterType="com.fm.www.dto.Photo">
-		insert into photo
-		(photo_no, photo_origin, photo_stored, board_fg, board_no, photo_delete_yn )
-		values(photo_seq.nextval, #{photo_origin }, #{photo_stored }, 5, #{board_no }, 'N' ) 
-   	</insert>
-	
-	<!-- 경기 후기 이미지 파일 없이 글 작성 -->
-	<insert id="reviewInsertWrite2" parameterType="com.fm.www.dto.Board_tb">
-		insert into board_tb
-			(board_no, board_div, board_title, board_content, board_cnt, delete_yn, user_no, board_date)
-			values(board_tb_seq.nextval,  5, #{board_title }, #{board_content } , 0 ,'N', #{user_no }, sysdate )
-	</insert>
-	
-	<!-- 경기 후기 수정전 글 가져오기 -->
-	<select id="reviewUpdateView" parameterType="int" resultType="com.fm.www.dto.Board_tb">
-		select * from board_tb
-		where board_no = #{board_no}
-	</select>
-	
-	<!-- 경기 후기 수정전 파일첨부 가져오기-->
-	<select id="reviewUpdatePhoto" parameterType="int" resultType="com.fm.www.dto.Photo">
-		select * from photo
-		where board_no= #{board_no}
-	</select>
-	
-	<!-- 경기 후기 파일첨부 존재 여부 -->
-	<select id="reviewCntPhoto" parameterType="int" resultType="int">
-		select count(*) from photo
-		where board_no = #{board_no}
-  	</select>
-  	
-  	<!-- 경기 후기 이미지 없을 때 파일첨부 -->
-  	<insert id="reviewPhotoWrite" parameterType="com.fm.www.dto.Photo">
-		insert into photo
-			(PHOTO_NO, photo_origin, PHOTO_STORED, BOARD_FG, BOARD_NO, PHOTO_DELETE_YN )
-			values(photo_seq.nextval, #{photo_origin }, #{photo_stored }, 5, #{board_no }, 'N' ) 
-  	</insert>
-  	
-	<!-- 경기 후기 수정 글쓰기 -->  	
-  	<update id="reviewUpdate" parameterType="com.fm.www.dto.Board_tb">
-		update board_tb
-			set board_title = #{board_title}
-			, board_content = #{board_content}
-			where board_no= #{board_no} 
-  	</update>
-  	
-  	<!-- 경기 후기 이미지 존재 할 때 수정 파일첨부 -->
-	
-  	<update id="reviewPhotoUpdate" parameterType="com.fm.www.dto.Photo">
-		update photo
-			set  photo_origin = #{photo_origin}
-			, photo_stored = #{photo_stored}
-			where board_no = #{board_no}
-  	</update>
-  	
-  	<!-- 경기 후기 댓글 등록 -->
-  	<insert id="reviewCommentInsert" parameterType="com.fm.www.dto.Board_Reply">
-		insert into board_reply
-			(REPLY_NO,BOARD_FG,REPLY_CONTENT,REPLY_DATE,REPLY_DELETE_YN, board_no , user_no)
-			values(board_reply_seq.nextval,  5, #{reply_content},  sysdate,'N', #{board_no}, #{user_no})
-  	</insert>
-	
-	
-	<!-- 중고장터  market --> 
-	<!-- 중고장터 게시글 전체 수 -->
-	<select id="usedTotalCount" resultType="int">
-		select count(*) from board_tb M
-			JOIN USER_TB U ON(U.USER_NO = M.USER_NO)
-				where board_div = 6 and delete_yn = 'N'
-				<choose>
-					<when test="search == 'board_title'">
-						AND board_title Like '%' || #{word} || '%'
-					</when>
-					<when test="search == 'board_content'">
-						AND board_content Like '%' || #{word} || '%'
-					</when>
-					<when test="search == 'user_nick'">
-						AND user_nick Like '%' || #{word} || '%'
-					</when>
-				</choose>
-	</select>
-	<!-- 중고장터 게시글 페이징 리스트 처리 -->
-	<select id="usedGetList" parameterType="com.fm.www.util.Paging" resultType="com.fm.www.dto.Board_tb">
-		SELECT * FROM (
-		   SELECT rownum rnum, B.* FROM (
-		      SELECT U.USER_nick,  M.*
-		      FROM board_tb M
-		      JOIN USER_TB U ON(U.USER_NO = M.USER_NO)
-		      WHERE delete_yn = 'N'
-		      <choose>
-		         <when test="search == 'board_title'">
-		            AND board_title Like '%' || #{word} || '%'
-		         </when>
-		         <when test="search == 'board_content'">
-		            AND board_content Like '%' || #{word} || '%'
-		         </when>
-		         <when test="search == 'user_nick'">
-		            AND user_nick Like '%' || #{word} || '%'
-		         </when>
-		      </choose>
-		      and board_div = 6
-		      ORDER BY board_no desc
-		   ) B
-		   ORDER BY rnum
-		) R
-		WHERE rnum BETWEEN #{paging.startNo} AND #{paging.endNo}      
+   <select id="reviewTotalCount" resultType="int">
+      select count(*) from board_tb M
+         JOIN USER_TB U ON(U.USER_NO = M.USER_NO)
+            where board_div = 5 and delete_yn = 'N'
+            <choose>
+               <when test="search == 'board_title'">
+                  AND board_title Like '%' || #{word} || '%'
+               </when>
+               <when test="search == 'board_content'">
+                  AND board_content Like '%' || #{word} || '%'
+               </when>
+               <when test="search == 'user_nick'">
+                  AND user_nick Like '%' || #{word} || '%'
+               </when>
+            </choose>
    </select>
-	
-	<!-- 중고장터 글 번호 찾아 글 작성 -->
-	<insert id="usedInsertWrite1" parameterType="com.fm.www.dto.Board_tb">
-		insert into board_tb
-		(board_no, board_div, board_title, board_content, board_cnt, delete_yn, user_no, board_date)
-		values(#{board_no}, 6 , #{board_title }, #{board_content } ,0 ,'N' , #{user_no }, sysdate)
-	</insert>
-	<insert id="usedInsertPhoto" parameterType="com.fm.www.dto.Photo">
-		insert into photo
-		(photo_no, photo_origin, photo_stored, board_fg, board_no, photo_delete_yn )
-		values(photo_seq.nextval, #{photo_origin }, #{photo_stored }, 6, #{board_no }, 'N' ) 
-	</insert>
-	
-	<!-- 중고장터 이미지 파일 없이 글 작성 -->
-	<insert id="usedInsertWrite2" parameterType="com.fm.www.dto.Board_tb">
-		insert into board_tb
-			(board_no, board_div, board_title, board_content, board_cnt, delete_yn, user_no, board_date)
-			values(board_tb_seq.nextval,  6, #{board_title }, #{board_content } , 0 ,'N', #{user_no }, sysdate )
-	</insert>
-	
-	<!-- 중고장터 이미지 없을 때 파일첨부 -->
-  	<insert id="usedPhotoWrite" parameterType="com.fm.www.dto.Photo">
-		insert into photo
-			(PHOTO_NO, photo_origin, PHOTO_STORED, BOARD_FG, BOARD_NO, PHOTO_DELETE_YN )
-			values(photo_seq.nextval, #{photo_origin }, #{photo_stored }, 6, #{board_no }, 'N' ) 
-  	</insert>
-	
-	<!-- 중고장터 댓글 등록 -->
-  	<insert id="usedCommentInsert" parameterType="com.fm.www.dto.Board_Reply">
-		insert into board_reply
-			(REPLY_NO,BOARD_FG,REPLY_CONTENT,REPLY_DATE,REPLY_DELETE_YN, board_no , user_no)
-			values(board_reply_seq.nextval,  6, #{reply_content},  sysdate,'N', #{board_no}, #{user_no})
-  	</insert>
-	
-	
-	
+   
+   <!-- 경기 후기 게시글  페이징 리스트 처리 -->
+   <select id="reviewGetList" parameterType="com.fm.www.util.Paging" resultType="com.fm.www.dto.Board_tb">
+      SELECT * FROM (
+         SELECT rownum rnum, B.* FROM (
+            SELECT U.USER_nick,  M.*
+            FROM board_tb M
+            JOIN USER_TB U ON(U.USER_NO = M.USER_NO)
+            WHERE delete_yn = 'N'
+            <choose>
+               <when test="search == 'board_title'">
+                  AND board_title Like '%' || #{word} || '%'
+               </when>
+               <when test="search == 'board_content'">
+                  AND board_content Like '%' || #{word} || '%'
+               </when>
+               <when test="search == 'user_nick'">
+                  AND user_nick Like '%' || #{word} || '%'
+               </when>
+            </choose>
+            and board_div = 5
+            ORDER BY board_no desc
+         ) B
+         ORDER BY rnum
+      ) R
+      WHERE rnum BETWEEN #{paging.startNo} AND #{paging.endNo}      
+   </select>
+   
+   <!-- 경기 후기 댓글 갯수 구하기 -->
+   <select id="reviewReplyCount" parameterType="int" resultType="int">
+      select COUNT(*) from board_reply 
+      where reply_delete_yn = 'N'
+      and board_no = #{board_no}
+   </select>
+   
+   <!-- 경기 후기 글 번호 생성하기 -->
+   <select id="reviewGetBoard_no" resultType="int">
+      SELECT board_tb_seq.nextval FROM dual
+   </select>
+   
+   <!-- 경기 후기 글 번호 찾아 글 작성 -->
+   <insert id="reviewInsertWrite1" parameterType="com.fm.www.dto.Board_tb">
+      insert into board_tb
+      (board_no, board_div, board_title, board_content, board_cnt, delete_yn, user_no, board_date)
+      values(#{board_no}, 5 , #{board_title }, #{board_content } ,0 ,'N' , #{user_no }, sysdate)
+   </insert>
+   <insert id="reviewInsertPhoto" parameterType="com.fm.www.dto.Photo">
+      insert into photo
+      (photo_no, photo_origin, photo_stored, board_fg, board_no, photo_delete_yn )
+      values(photo_seq.nextval, #{photo_origin }, #{photo_stored }, 5, #{board_no }, 'N' ) 
+      </insert>
+   
+   <!-- 경기 후기 이미지 파일 없이 글 작성 -->
+   <insert id="reviewInsertWrite2" parameterType="com.fm.www.dto.Board_tb">
+      insert into board_tb
+         (board_no, board_div, board_title, board_content, board_cnt, delete_yn, user_no, board_date)
+         values(board_tb_seq.nextval,  5, #{board_title }, #{board_content } , 0 ,'N', #{user_no }, sysdate )
+   </insert>
+   
+   <!-- 경기 후기 수정전 글 가져오기 -->
+   <select id="reviewUpdateView" parameterType="int" resultType="com.fm.www.dto.Board_tb">
+      select * from board_tb
+      where board_no = #{board_no}
+   </select>
+   
+   <!-- 경기 후기 수정전 파일첨부 가져오기-->
+   <select id="reviewUpdatePhoto" parameterType="int" resultType="com.fm.www.dto.Photo">
+      select * from photo
+      where board_no= #{board_no}
+   </select>
+   
+   <!-- 경기 후기 파일첨부 존재 여부 -->
+   <select id="reviewCntPhoto" parameterType="int" resultType="int">
+      select count(*) from photo
+      where board_no = #{board_no}
+     </select>
+     
+     <!-- 경기 후기 이미지 없을 때 파일첨부 -->
+     <insert id="reviewPhotoWrite" parameterType="com.fm.www.dto.Photo">
+      insert into photo
+         (PHOTO_NO, photo_origin, PHOTO_STORED, BOARD_FG, BOARD_NO, PHOTO_DELETE_YN )
+         values(photo_seq.nextval, #{photo_origin }, #{photo_stored }, 5, #{board_no }, 'N' ) 
+     </insert>
+     
+   <!-- 경기 후기 수정 글쓰기 -->     
+     <update id="reviewUpdate" parameterType="com.fm.www.dto.Board_tb">
+      update board_tb
+         set board_title = #{board_title}
+         , board_content = #{board_content}
+         where board_no= #{board_no} 
+     </update>
+     
+     <!-- 경기 후기 이미지 존재 할 때 수정 파일첨부 -->
+   
+     <update id="reviewPhotoUpdate" parameterType="com.fm.www.dto.Photo">
+      update photo
+         set  photo_origin = #{photo_origin}
+         , photo_stored = #{photo_stored}
+         where board_no = #{board_no}
+     </update>
+     
+     <!-- 경기 후기 댓글 등록 -->
+     <insert id="reviewCommentInsert" parameterType="com.fm.www.dto.Board_Reply">
+      insert into board_reply
+         (REPLY_NO,BOARD_FG,REPLY_CONTENT,REPLY_DATE,REPLY_DELETE_YN, board_no , user_no)
+         values(board_reply_seq.nextval,  5, #{reply_content},  sysdate,'N', #{board_no}, #{user_no})
+     </insert>
+   
+   
+   <!-- 중고장터  market --> 
+   <!-- 중고장터 게시글 전체 수 -->
+   <select id="usedTotalCount" resultType="int">
+      select count(*) from board_tb M
+         JOIN USER_TB U ON(U.USER_NO = M.USER_NO)
+            where board_div = 6 and delete_yn = 'N'
+            <choose>
+               <when test="search == 'board_title'">
+                  AND board_title Like '%' || #{word} || '%'
+               </when>
+               <when test="search == 'board_content'">
+                  AND board_content Like '%' || #{word} || '%'
+               </when>
+               <when test="search == 'user_nick'">
+                  AND user_nick Like '%' || #{word} || '%'
+               </when>
+            </choose>
+   </select>
+   <!-- 중고장터 게시글 페이징 리스트 처리 -->
+   <select id="usedGetList" parameterType="com.fm.www.util.Paging" resultType="com.fm.www.dto.Board_tb">
+      SELECT * FROM (
+         SELECT rownum rnum, B.* FROM (
+            SELECT U.USER_nick,  M.*
+            FROM board_tb M
+            JOIN USER_TB U ON(U.USER_NO = M.USER_NO)
+            WHERE delete_yn = 'N'
+            <choose>
+               <when test="search == 'board_title'">
+                  AND board_title Like '%' || #{word} || '%'
+               </when>
+               <when test="search == 'board_content'">
+                  AND board_content Like '%' || #{word} || '%'
+               </when>
+               <when test="search == 'user_nick'">
+                  AND user_nick Like '%' || #{word} || '%'
+               </when>
+            </choose>
+            and board_div = 6
+            ORDER BY board_no desc
+         ) B
+         ORDER BY rnum
+      ) R
+      WHERE rnum BETWEEN #{paging.startNo} AND #{paging.endNo}      
+   </select>
+   
+   <!-- 중고장터 글 번호 찾아 글 작성 -->
+   <insert id="usedInsertWrite1" parameterType="com.fm.www.dto.Board_tb">
+      insert into board_tb
+      (board_no, board_div, board_title, board_content, board_cnt, delete_yn, user_no, board_date)
+      values(#{board_no}, 6 , #{board_title }, #{board_content } ,0 ,'N' , #{user_no }, sysdate)
+   </insert>
+   <insert id="usedInsertPhoto" parameterType="com.fm.www.dto.Photo">
+      insert into photo
+      (photo_no, photo_origin, photo_stored, board_fg, board_no, photo_delete_yn )
+      values(photo_seq.nextval, #{photo_origin }, #{photo_stored }, 6, #{board_no }, 'N' ) 
+   </insert>
+   
+   <!-- 중고장터 이미지 파일 없이 글 작성 -->
+   <insert id="usedInsertWrite2" parameterType="com.fm.www.dto.Board_tb">
+      insert into board_tb
+         (board_no, board_div, board_title, board_content, board_cnt, delete_yn, user_no, board_date)
+         values(board_tb_seq.nextval,  6, #{board_title }, #{board_content } , 0 ,'N', #{user_no }, sysdate )
+   </insert>
+   
+   <!-- 중고장터 이미지 없을 때 파일첨부 -->
+     <insert id="usedPhotoWrite" parameterType="com.fm.www.dto.Photo">
+      insert into photo
+         (PHOTO_NO, photo_origin, PHOTO_STORED, BOARD_FG, BOARD_NO, PHOTO_DELETE_YN )
+         values(photo_seq.nextval, #{photo_origin }, #{photo_stored }, 6, #{board_no }, 'N' ) 
+     </insert>
+   
+   <!-- 중고장터 댓글 등록 -->
+     <insert id="usedCommentInsert" parameterType="com.fm.www.dto.Board_Reply">
+      insert into board_reply
+         (REPLY_NO,BOARD_FG,REPLY_CONTENT,REPLY_DATE,REPLY_DELETE_YN, board_no , user_no)
+         values(board_reply_seq.nextval,  6, #{reply_content},  sysdate,'N', #{board_no}, #{user_no})
+     </insert>
+   	<!-- 축구동영상 리스트 총 개수 -->
+	<select id="soccerVideototalCount" resultType="int">
+		      select count(*) from board_tb M
+		      JOIN USER_TB U ON(U.USER_NO = M.USER_NO)
+		      where board_div = 7 and delete_yn = 'N'
+		         <choose>
+		            <when test="search == 'board_title'">
+		               AND board_title Like '%' || #{word} || '%'
+		            </when>
+		            <when test="search == 'board_content'">
+		               AND board_content Like '%' || #{word} || '%'
+		            </when>
+		            <when test="search == 'user_nick'">
+		                  AND user_nick Like '%' || #{word} || '%'
+		               </when>
+		         </choose>
+	</select>
+	<!-- 축구 동영상 리스트 페이징 처리 및 출력 -->
+	<select id="soccerVideoListgetList" parameterType="com.fm.www.util.Paging" resultType="com.fm.www.dto.Board_tb">
+		 SELECT * FROM (
+         SELECT rownum rnum, B.* FROM (
+            SELECT U.USER_nick,  M.*
+            FROM board_tb M
+            JOIN USER_TB U ON(U.USER_NO = M.USER_NO)
+            WHERE delete_yn = 'N'
+            <choose>
+               <when test="search == 'board_title'">
+                  AND board_title Like '%' || #{word} || '%'
+               </when>
+               <when test="search == 'board_content'">
+                  AND board_content Like '%' || #{word} || '%'
+               </when>
+                  <when test="search == 'board_title'">
+                  AND board_title Like '%' || #{word} || '%'
+               </when>
+               <when test="search == 'user_nick'">
+                  AND user_nick Like '%' || #{word} || '%'
+               </when>
+            </choose>
+            and board_div = 7
+            ORDER BY board_no desc
+         ) B
+         ORDER BY rnum
+      ) R
+      WHERE rnum BETWEEN #{startNo} AND #{endNo}
+	</select>
+	<!-- 축구 동영상 댓글 수 -->
+	<select id="soccerVideototalreplyCnt" parameterType="int" resultType="int">
+		select count(*) from board_reply
+  		where board_no= #{board_no}
+  		and reply_delete_yn= 'N'
+	</select>
+	<!-- 축구 동영상 게시글 조회수 증가  -->
+	<update id="soccerVideouphit" parameterType="int">
+		  update board_tb
+	      set BOARD_CNT = BOARD_CNT +1
+	       where board_no = #{board_no} 	
+   	</update>
+	<!-- 축구 동영상 view 정보 -->
+	<select id="soccerVideoView" parameterType="int" resultType="com.fm.www.dto.Board_tb">
+   		select * from board_tb
+   		where board_no= #{board_no}
+   	
+   	</select>
+   	<!--  축구 동영상 upload 영상-->
+   	<select id="soccerVideouplodView" parameterType="int" resultType="com.fm.www.dto.Movie">
+   		select * from movie
+   		where board_no= #{board_no}
+   	</select>
+   	<!-- 다음글 글 작성 -->
+   	<insert id="soccerVideoWrite" parameterType="com.fm.www.dto.Board_tb">
+   		insert into board_tb
+	    (board_no, board_div, board_title, board_content,board_date,board_cnt, delete_yn,user_no)
+	    values(#{board_no},  7, #{board_title}, #{board_content} , sysdate,0,'N',#{user_no})
+   	</insert>
+   	<!-- 다음글 동영상 업로드 -->
+   	<insert id="soccerVideoupload" parameterType="com.fm.www.dto.Movie">
+   		insert into movie
+	    (movie_no,board_fg,board_no,movie_address)
+	    values(movie_seq.nextval,7,#{board_no},#{movie_address})
+   	</insert>
+   	<!-- 축구 동영상 댓글 등록 -->
+   	<insert id="soccerVideoCommentInsert" parameterType="com.fm.www.dto.Board_Reply">
+   		insert into board_reply
+         (REPLY_NO,BOARD_FG,REPLY_CONTENT,REPLY_DATE,REPLY_DELETE_YN, board_no , user_no)
+         values(board_reply_seq.nextval,  7, #{reply_content},  sysdate,'N', #{board_no}, #{user_no})
+   	</insert>
+   
+   
+   
 </mapper>

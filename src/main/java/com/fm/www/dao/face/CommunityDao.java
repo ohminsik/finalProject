@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.fm.www.dto.Board_Reply;
 import com.fm.www.dto.Board_tb;
+import com.fm.www.dto.Movie;
 import com.fm.www.dto.Photo;
 import com.fm.www.util.Paging;
 
@@ -165,4 +166,25 @@ public interface CommunityDao {
 	public void usedPhotoWrite(Photo photo);
 	// 중고장터 댓글 등록
 	public void usedCommentInsert(Board_Reply board_reply);
+	
+	//-- 축구 동영상
+	//축구동영상 리스트 총 개수
+	public int soccerVideototalCount(@Param("search")String search, @Param("word")String word);
+	//축구 동영상 리스트 페이징 처리 및 출력
+	public List<Board_tb> soccerVideoListgetList(Paging paging);
+	//축구 동영상 댓글 수
+	public int soccerVideototalreplyCnt(int board_no);
+	//축구 동영상 게시글 조회수 증가
+	public void soccerVideouphit(int board_no);
+	//축구 동영상 view 정보
+	public Board_tb soccerVideoView(int board_no);
+	//축구 동영상 upload 영상
+	public Movie soccerVideouplodView(int board_no);
+	//다음글 글 작성
+	public void soccerVideoWrite(Board_tb board_tb);
+	//다음글 동영상 업로드
+	public void soccerVideoupload(Movie movie);
+	//축구 동영상 댓글 등록
+	public void soccerVideoCommentInsert(Board_Reply board_reply);
+	
 }
