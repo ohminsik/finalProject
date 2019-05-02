@@ -39,7 +39,7 @@ public class CommonController {
 		boolean loginYn = memberService.getLoginYn(user);
 		
 		if(loginYn == false) {//로그인 안 되 있는 경우
-			
+			session.setAttribute("loginYn", loginYn);
 			return "redirect:/main";
 		}
 		//로그인 되었을 경우 no랑 login 세션 넘겨줌
@@ -50,7 +50,8 @@ public class CommonController {
 		user1.setUser_no(user_no);
 		// 로그인한 유저 닉네임 가져오기
 		String user_nick = memberService.getuserNick(user);
-
+		
+		session.setAttribute("loginYn", loginYn);
 		session.setAttribute("login", true);
 		session.setAttribute("user_no", user1.getUser_no());
 		session.setAttribute("user_nick", user_nick);

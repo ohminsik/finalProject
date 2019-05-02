@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <div id="header">
 	<div class="h_top_wrap">
 		<div class="h_top">
@@ -213,22 +214,14 @@
 </div>
 <!-- 비밀번호찾기:e -->
 
-
+<c:if test="${loginYn == false }">
+	<script>
+		alert("로그인에 실패했습니다");
+	</script>
+</c:if>
 
 <script>
-	/* $(document).ready(function(){
-		 $(".h_bot_list > li > a").mouseover(function(){
-			$(this).siblings("ul").slideDown();
-			$(this).parent().siblings().find("ul").slideUp();
-		});
-		
-		$(".h_bot_list > li > ul").mouseleave(function(){
-			$(this).slideUp();			
-			$(".h_bot_list").mouseleave(function(){
-				$(".h_bot_list > li > ul").slideUp();
-			})
-		});	
-	}); */
+	
 	
 	$(document).ready(function(){
 		// gnb:s
