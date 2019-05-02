@@ -11,7 +11,7 @@
 			<span class="bg"></span>
 			<div class="textBox">
 				<p class="title">커뮤니티</p>
-				<p class="text">공지사항</p>
+				<p class="text">자유게시판</p>
 			</div>
 		</div>
 		<!-- sub_banner e -->
@@ -25,7 +25,7 @@
 						<a>커뮤니티</a>
 					</li>
 					<li>
-						<a>공지사항</a>
+						<a>자유게시판</a>
 					</li>
 				</ul>
 			</div>
@@ -33,7 +33,7 @@
 		<!-- nav e -->	
 		<div id="container">
 			<div class="board_form">
-				<form method="GET" action="/community/noticeList">
+				<form method="GET" action="/community/freeList">
 					<div class="search_form">
 						<ul>
 							<li>
@@ -44,7 +44,7 @@
 								</select>
 							</li>
 							<li>
-								<input type="text" name="word" id="" class="inputform250">
+								<input type="text" name="word" id="word" class="inputform250">
 							</li>
 							<li><button class="btnform7">검색</button></li>
 						</ul>
@@ -55,9 +55,9 @@
 					<colgroup>
 						<col width="10%">
 						<col width="*">
-						<col width="20%">
+						<col width="12%">
 						<col width="10%">
-						<col width="10%">
+						<col width="8%">
 					</colgroup>
 					<thead>
 						<tr>
@@ -69,33 +69,41 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:set var="tableNum" value="${tableNum}"/>
-							<%
-								String tableNum = pageContext.getAttribute("tableNum").toString();
-								int no = Integer.parseInt(tableNum);
-							%>
-						<c:forEach items="${list }" var="l">
-							<tr>
-								<td><%=no-- %></td>
-								<td class="title"><a href="/community/noticeView?board_no=${l.board_no }">${l.board_title } <span class="fb chs">[ ${l.board_reply_cnt } ]</span></a></td>
-								<td>${l.user_nick }</td>
-								<td><fmt:formatDate value="${l.board_date }" pattern="yyyy-MM-dd"/></td>
-								<td>${l.board_cnt }</td>
-							</tr>
+					         <c:set var="tableNum" value="${tableNum}"/>
+                     <%
+                        String tableNum = pageContext.getAttribute("tableNum").toString();
+                        int no = Integer.parseInt(tableNum);
+                     %>
+						<c:forEach items="${list }" var="i">
+							<c:if test="${ i.delete_yn eq 'N'}">
+								<tr>
+									<td><%=no-- %></td>
+									<td class="title"><a href="/community/freeView?board_no=${i.board_no }">${i.board_title }<span class="fb chs">[ ${i.board_reply_cnt } ]</span></a></td>
+									<td>${i.user_nick }</td>
+									<td><fmt:formatDate value="${i.board_date }" pattern="yyyy-MM-dd"></fmt:formatDate></td>
+									<td>${i.board_cnt }</td>
+								</tr>
+							</c:if>
+							
 						</c:forEach>
-						<c:if test="${totalCount eq 0}">
+						<c:if test="${totalCount eq 0 }">
 							<tr>
 								<td colspan="5">등록된 내용이 없습니다.</td>
 							</tr>
-						</c:if>	
+						</c:if>
 					</tbody>
 				</table>
 				
 				<div class="j_button fr mt20 mb20">
-					
+						<c:if test="${empty login }">
+							<a href="#" class="login btnform7">글쓰기</a>
+						</c:if>
+						<c:if test="${login }">
+							<a href="/community/freeWrite" class="btnform7">글쓰기</a>
+						</c:if>
 				</div>
 				<div class="cb"></div>
-<!-- 				<a href="/community/noticeWrite"class="btnform7">글쓰기</a> -->
+				
 				<div class="paging_wrap">
 			      <c:if test="${paging.totalPage != 0 }">
 			         <ul class="list">
@@ -104,7 +112,7 @@
 			            <c:if test="${paging.curPage eq 1 }">
 			            </c:if>
 			            <c:if test="${paging.curPage ne 1 }">
-			               <li><a href="/community/noticeList?curPage=${paging.curPage-1}&search=${search}&word=${word}">&lt;</a></li>
+			               <li><a href="/community/freeList?curPage=${paging.curPage-1}&search=${search}&sword=${word}">&lt;</a></li>
 			            </c:if>
 			
 			
@@ -113,10 +121,10 @@
 			               var="i">
 			
 			               <c:if test="${paging.curPage eq i}">
-			                  <li class="on"><a href="/community/noticeList?curPage=${i }&search=${search}&word=${word}">${i }</a></li>
+			                  <li class="on"><a href="/community/freeList?curPage=${i }&search=${search}&word=${word}">${i }</a></li>
 			               </c:if>
 			               <c:if test="${paging.curPage ne i}">
-			                  <li><a href="/community/noticeList?curPage=${i }&search=${search}&word=${word}">${i }</a></li>
+			                  <li><a href="/community/freeList?curPage=${i }&search=${search}&word=${word}">${i }</a></li>
 			               </c:if>
 			            </c:forEach>
 			
@@ -124,7 +132,7 @@
 			            <c:if test="${paging.curPage eq paging.totalPage }">
 			            </c:if>
 			            <c:if test="${paging.curPage ne paging.totalPage }">
-			               <li><a href="/community/noticeList?curPage=${paging.curPage+1}&search=${search}&word=${word}">&gt;</a></li>
+			               <li><a href="/community/freeList?curPage=${paging.curPage+1}&search=${search}&word=${word}">&gt;</a></li>
 			            </c:if>
 			         </ul>
 			    </c:if>

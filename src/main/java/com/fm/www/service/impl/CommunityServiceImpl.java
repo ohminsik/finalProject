@@ -87,6 +87,8 @@ public class CommunityServiceImpl implements CommunityService{
 		
 		return communityDao.replyCount(board_no);
 	}
+	
+	
     //팀 가입 인사 리스트 총 개수
 	@Override
 	public int teamIntrototalCount(String search, String word) {
@@ -179,8 +181,7 @@ public class CommunityServiceImpl implements CommunityService{
 	}
 	//파일첨부 존재 여부
 	@Override
-	public int teamIntrocntphoto(int board_no) {
-		// TODO Auto-generated method stub
+	public int teamIntrocntphoto(int board_no) { 
 		return communityDao.teamIntrocntphoto(board_no);
 	}
 	//팀 가입 인사 댓글 등록
@@ -208,9 +209,212 @@ public class CommunityServiceImpl implements CommunityService{
 		return communityDao.teamIntrototalreplyCnt(i);
 	}
 
-		
-
+	//-----------------------자유 free---------------------------------------
+	// 자유 게시글 전체 수 
+	@Override
+	public int freeTotalCount(String search, String word) {
+		return communityDao.freeTotalCount(search, word);
+	}
+	// 자유게시글 페이징 리스트 처리
+	@Override
+	public List<Board_tb> freeGetList(Paging paging, String search, String word) {
+		return communityDao.freeGetList(paging, search, word);
+	}
+	// 자유 게시글 번호 생성하기
+	@Override
+	public int freeGetBoard_no() {
+		return communityDao.freeGetBoard_no();
+	}
+	// 자유 글 번호 찾아 글 작성
+	@Override
+	public void freeInsertWrite1(Board_tb board_tb) {
+		communityDao.freeInserWrite1(board_tb);
+	}
+	@Override
+	public void freeInsertPhoto(Photo photo) {
+		communityDao.freeInsertPhoto(photo);
+	}
+	// 자유 이미지 파일 없이 글 작성
+	@Override
+	public void freeInsertWrite2(Board_tb board_tb) {
+		communityDao.freeInsertWrite2(board_tb);
+	}
+	// 자유 조회수 증가
+	@Override
+	public void freeUpHit(int board_no) {
+		communityDao.freeUpHit(board_no);
+	}
+	// 자유 지정 게시글 정보 가져오기
+	@Override
+	public Board_tb freeView(int board_no) {
+		return communityDao.freeView(board_no);
+	}
+	// 자유 사진 가져오기
+	@Override
+	public Photo freePhotoView(int board_no) {
+		return communityDao.freePhotoView(board_no);
+	}
+	// 자유 댓글 리스트 가져오기
+	@Override
+	public List<Board_Reply> freeReplyList(Board_Reply board_reply) {
+		return communityDao.freeReplyList(board_reply);
+	}
+	// 자유 수정 전 글 가져오기
+	@Override
+	public Board_tb freeUpdateView(int board_no) {
+		return communityDao.freeUpdateView(board_no);
+	}
+	// 자유 수정전 파일첨부 가져오기
+	@Override
+	public Photo freeUpdatePhoto(int board_no) {
+		return communityDao.freeUpdatePhoto(board_no);
+	}
+	// 자유 파일첨부 존재 여부
+	@Override
+	public int freeCntPhoto(int board_no) {
+		return communityDao.freeCntPhoto(board_no);
+	}
+	// 자유 수정 글쓰기
+	@Override
+	public void freeUpdate(Board_tb board_tb) {
+		communityDao.freeUpdate(board_tb);
+	}
+	// 자유 이미지 존재 할 때 수정 파일첨부
+	@Override
+	public void freePhotoUpdate(Photo photo) {
+		communityDao.freePhotoUpdate(photo);
+	}
+	// 자유 이미지 없을 때 파일첨부
+	@Override
+	public void freePhotoWrite(Photo photo) {
+		communityDao.freePhotoWrite(photo);
+	}
+	// 자유 삭제
+	@Override
+	public void freeDelete(int board_no) {
+		communityDao.freeDelete(board_no);
+	}
+	// 자유 댓글 등록
+	@Override
+	public void freeCommentInsert(Board_Reply board_reply) {
+		communityDao.freeCommentInsert(board_reply);
+	}
+	// 자유 댓글 삭제
+	@Override
+	public void freeCommentDelete(int reply_no) {
+		communityDao.freeCommentDelete(reply_no);
+	}
+	// 자유 댓글 갯수 구하기
+	@Override
+	public int freeReplyCount(int board_no) {
+		return communityDao.freeReplyCount(board_no);
+	}
 	
-
+	//-----------------------경기 후기 review---------------------------------------
+	// 경기 후기 게시글 전체 수
+	@Override
+	public int reviewTotalCount(String search, String word) {
+		return communityDao.reviewTotalCount(search, word);
+	}
+	// 경기 후기 게시글  페이징 리스트 처리
+	@Override
+	public List<Board_tb> reviewGetList(Paging paging, String search, String word) {
+		return communityDao.reviewGetList(paging, search, word);
+	}
+	// 경기 후기 댓글 갯수 구하기
+	@Override
+	public int reviewReplyCount(int board_no) {
+		return communityDao.reviewReplyCount(board_no);
+	}
+	// 경기 후기 글 번호 생성하기
+	@Override
+	public int reviewGetBoard_no() {
+		return communityDao.reviewGetBoard_no();
+	}
+	// 경기 후기 글 번호 찾아 글 작성
+	@Override
+	public void reviewInsertWrite1(Board_tb board_tb) {
+		communityDao.reviewInsertWrite1(board_tb);
+	}
+	@Override
+	public void reviewInsertPhoto(Photo photo) {
+		communityDao.reviewInsertPhoto(photo);
+	}
+	// 경기 후기 이미지 파일 없이 글 작성
+	@Override
+	public void reviewInsertWrite2(Board_tb board_tb) {
+		communityDao.reviewInsertWrite2(board_tb);
+	}
+	// 경기 후기 수정전 글 가져오기
+	@Override
+	public Board_tb reviewUpdateView(int board_no) {
+		return communityDao.reviewUpdateView(board_no);
+	}
+	// 경기 후기 수정전 파일첨부 가져오기
+	@Override
+	public Photo reviewUpdatePhoto(int board_no) {
+		return communityDao.reviewUpdatePhoto(board_no);
+	}
+	// 경기 후기 파일첨부 존재 여부
+	@Override
+	public int reviewCntPhoto(int board_no) {
+		return communityDao.reviewCntPhoto(board_no);
+	}
+	// 경기 후기 이미지 없을 때 파일첨부
+	@Override
+	public void reviewPhotoWrite(Photo photo) {
+		communityDao.reviewPhotoWrite(photo);
+	}
+	// 경기 후기 수정 글쓰기
+	@Override
+	public void reviewUpdate(Board_tb board_tb) {
+		communityDao.reviewUpdate(board_tb);
+	}
+	// 경기 후기 이미지 존재 할 때 수정 파일첨부
+	@Override
+	public void reviewPhotoUpdate(Photo photo) {
+		communityDao.reviewPhotoUpdate(photo);
+	}
+	// 자유 댓글 등록
+	@Override
+	public void reviewCommentInsert(Board_Reply board_reply) {
+		communityDao.reviewCommentInsert(board_reply);
+	}
+	
+	// ------------------ 중고장터  market ----------------------
+	// 중고장터 게시글 전체 수
+	@Override
+	public int usedTotalCount(String search, String word) {
+		return communityDao.usedTotalCount(search, word);
+	}
+	// 중고장터 게시글 페이징 리스트 처리
+	@Override
+	public List<Board_tb> usedGetList(Paging paging, String search, String word) {
+		return communityDao.usedGetList(paging, search, word);
+	}
+	// 중고장터 후기 글 번호 찾아 글 작성
+	@Override
+	public void usedInsertWrite1(Board_tb board_tb) {
+		communityDao.usedInsertWrite1(board_tb);
+	}
+	@Override
+	public void usedInsertPhoto(Photo photo) {
+		communityDao.usedInsertPhoto(photo);
+	}
+	// 중고장터 이미지 파일 없이 글 작성
+	@Override
+	public void usedInsertWrite2(Board_tb board_tb) {
+		communityDao.usedInsertWrite2(board_tb);
+	}
+	// 중고장터 이미지 없을 때 파일첨부
+	@Override
+	public void usedPhotoWrite(Photo photo) {
+		communityDao.usedPhotoWrite(photo);
+	}
+	// 중고장터 댓글 등록
+	@Override
+	public void usedCommentInsert(Board_Reply board_reply) {
+		communityDao.usedCommentInsert(board_reply);	
+	}
 
 }

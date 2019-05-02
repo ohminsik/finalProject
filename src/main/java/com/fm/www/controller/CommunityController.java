@@ -61,6 +61,7 @@ public class CommunityController {
 		// 게시글 번호 생성
 		int tableNum = totalCount - (curPage - 1) * 10;
 		
+		model.addAttribute("word", word);
 		model.addAttribute("search", search);
 		model.addAttribute("model", model);
 		model.addAttribute("tableNum", tableNum);
@@ -505,5 +506,819 @@ public class CommunityController {
 		
 		return "redirect:/community/teamIntroView?board_no="+board_no;
 		
+	}
+	
+	// ------------------ 자유 free ----------------------
+	
+	/*
+	 * FreeList GET 
+	 * 자유 리스트 조회 폼 검색,페이징 동시
+	 */
+	@RequestMapping(value = "/community/freeList", method = RequestMethod.GET)
+	public void freeGet(Board_tb board, @RequestParam(defaultValue = "1") int curPage, Model model, String search, String word) {
+		// 자유 게시글 전체 수
+		int totalCount = communityService.freeTotalCount(search, word);
+
+		if (totalCount == 0) {
+			model.addAttribute("totalCount", totalCount);
+		}
+		// 자유게시글 페이징 처리
+		Paging paging = new Paging(totalCount, curPage);
+
+		// 자유게시글 페이징 리스트 처리
+		List<Board_tb> list = communityService.freeGetList(paging, search, word);
+
+		// 자유 댓글 갯수 구하기
+		for (int i = 0; i < list.size(); i++) {
+			list.get(i).setBoard_reply_cnt(communityService.freeReplyCount(list.get(i).getBoard_no()));
+		}
+
+		// 자유 게시글 번호 생성
+		int tableNum = totalCount - (curPage - 1) * 10;
+
+		model.addAttribute("word", word);
+		model.addAttribute("search", search);
+		model.addAttribute("model", model);
+		model.addAttribute("tableNum", tableNum);
+		model.addAttribute("paging", paging);
+		model.addAttribute("list", list);
+	}
+	/*
+	 * FreeView GET
+	 * 자유 상세페이지 조회 폼
+	 * 댓글 목록 출력
+	 * */
+	@RequestMapping(value="/community/freeView", method = RequestMethod.GET)
+	public void freeViewGet(User user, Board_tb board, int board_no, Model model, Photo photo, HttpSession session, Board_Reply board_reply) {
+
+		// 자유 조회수 증가
+		communityService.freeUpHit(board_no);
+		// 자유 지정 게시글 정보 가져오기
+		board = communityService.freeView(board_no);
+		// 자유 사진 가져오기
+		photo = communityService.freePhotoView(board_no);
+		
+		
+		// 자유 댓글 리스트 가져오기
+		List <Board_Reply> list = communityService.freeReplyList(board_reply);
+
+		model.addAttribute("photo", photo);
+		model.addAttribute("board", board);
+		model.addAttribute("list", list);
+	}
+	/*
+	 * FreeWrite GET 자유 글쓰기 폼
+	 */
+	@RequestMapping(value = "/community/freeWrite", method = RequestMethod.GET)
+	public void freeWriteGet() {
+
+	}
+
+	/*
+	 * FreeWrite POST 자유 글쓰기 처리 폼
+	 */
+	@RequestMapping(value = "/community/freeWrite", method = RequestMethod.POST)
+	public String freeWritePost(Board_tb board_tb, MultipartFile file, HttpSession session, Photo photo) {
+
+		if (!"".equals(file.getOriginalFilename()) && file.getOriginalFilename() != null) {
+			// 고유식별자
+			String uId = UUID.randomUUID().toString().split("-")[0];
+
+			// 저장될 파일 이름
+			String stored_name = null;
+			stored_name = file.getOriginalFilename() + "_" + uId;
+			// stored_name =file.getOriginalFilename();
+
+			// 파일 저장 경로
+			String path = context.getRealPath("uploadImg");
+
+			// 저장될 파일
+			File dest = new File(path, stored_name);
+
+			// 파일업로드
+			try {
+				file.transferTo(dest);
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			photo.setPhoto_origin(file.getOriginalFilename());
+			photo.setPhoto_stored(stored_name);
+
+			// 자유 글 번호 생성하기
+			int board_no = communityService.freeGetBoard_no();
+
+			// 자유 유저 번호 받아오기
+			board_tb.setUser_no((int) session.getAttribute("user_no"));
+			board_tb.setBoard_no(board_no);
+			photo.setBoard_no(board_no);
+			communityService.freeInsertWrite1(board_tb);
+			communityService.freeInsertPhoto(photo);
+		} else {
+			// 자유 유저 번호 받아오기
+			board_tb.setUser_no((int) session.getAttribute("user_no"));
+			// 자유 이미지 파일 없이 글 작성
+			communityService.freeInsertWrite2(board_tb);
+		}
+		System.out.println(board_tb);
+
+		return "redirect:/community/freeList";
+	}
+	
+	/*
+	 * FreeUpdate GET
+	 * 자유 수정 폼
+	 * */
+	@RequestMapping(value="/community/freeUpdate", method = RequestMethod.GET)
+	public void freeUpdateGet(int board_no, Model model) {
+		// 자유 수정전 글 가져오기
+		Board_tb board = communityService.freeUpdateView(board_no);
+		// 자유 수정전 파일첨부 가져오기
+		Photo photo = communityService.freeUpdatePhoto(board_no);
+		model.addAttribute("board", board);
+		model.addAttribute("photo", photo);
+		model.addAttribute("board_no", board_no);
+	}
+
+	/*
+	 * FreeUpdate POST
+	 * 자유 수정 처리 폼
+	 * */
+	@RequestMapping(value="/community/freeUpdate", method = RequestMethod.POST)
+	public String freeUpdatePost(int board_no,Photo photo,Board_tb board_tb ,HttpSession session,HttpServletRequest request, MultipartFile file) {
+		try {
+			request.setCharacterEncoding("utf-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		// 자유 파일첨부 존재 여부
+		int photo_no = communityService.freeCntPhoto(board_no);
+	
+		if(photo_no!=0) {
+			//고유식별자
+			String uId = UUID.randomUUID().toString().split("-")[0];
+			//저장될 파일 이름
+			String stored_name = null;
+			stored_name =file.getOriginalFilename()+"_"+uId;		
+			//파일 저장 경로		
+			String path = context.getRealPath("uploadImg");
+			//저장될 파일
+			File dest = new File(path, stored_name);
+			System.out.println("파일경로"+dest);
+			//파일업로드
+			try {
+				file.transferTo(dest);
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				
+				e.printStackTrace();
+			}
+			photo.setPhoto_origin(file.getOriginalFilename());
+			photo.setPhoto_stored(stored_name);
+		
+			board_tb.setBoard_no(board_no);
+			photo.setBoard_no(board_no);
+			//세션번호넣어주기
+			int user_no = (int) session.getAttribute("user_no");
+			board_tb.setUser_no(user_no);
+
+			// 자유 수정 글쓰기
+			communityService.freeUpdate(board_tb);
+		
+			// 자유 이미지 존재 할 때 수정 파일첨부
+			communityService.freePhotoUpdate(photo);
+			
+		}else if(photo_no==0){
+			//고유식별자
+			String uId = UUID.randomUUID().toString().split("-")[0];
+	
+			//저장될 파일 이름
+			String stored_name = null;
+			stored_name =file.getOriginalFilename()+"_"+uId;
+			
+							
+			//파일 저장 경로		
+			String path = context.getRealPath("uploadImg");
+			
+			//저장될 파일
+			File dest = new File(path, stored_name);
+			System.out.println("파일경로"+dest);
+			//파일업로드
+			try {
+				file.transferTo(dest);
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				
+				e.printStackTrace();
+			}
+			photo.setPhoto_origin(file.getOriginalFilename());
+			photo.setPhoto_stored(stored_name);
+		
+			board_tb.setBoard_no(board_no);
+			photo.setBoard_no(board_no);
+			board_tb.setBoard_no(board_no);
+			//세션번호넣어주기
+			int user_no = (int) session.getAttribute("user_no");
+			board_tb.setUser_no(user_no);
+		
+			// 자유 수정 글쓰기
+			communityService.freeUpdate(board_tb);
+			// 자유 이미지 없을 때 파일첨부
+			communityService.freePhotoWrite(photo);
+		}
+		
+		return "redirect:/community/freeList";
+	}	
+	
+	/*
+	 * FreeDelete GET
+	 * 자유 삭제 처리 폼
+	 * */
+	@RequestMapping(value="/community/freeDelete", method = RequestMethod.GET)
+	public String freeDeleteGet(int board_no) {
+		// 자유 삭제
+		communityService.freeDelete(board_no);
+		
+		return "redirect:/community/freeList";
+	}	
+	
+	/*
+	 * freeCommentInsert POST
+	 * 자유 댓글 등록 처리 폼
+	 * */
+	@RequestMapping(value="/community/freeCommentInsert", method = RequestMethod.POST)
+	public String freeCommentInsertPost(Board_Reply board_reply,int board_no, HttpSession session) {
+		
+		int user_no = (int) session.getAttribute("user_no");
+		board_reply.setBoard_no(board_no);
+		board_reply.setUser_no(user_no);
+	
+		// 자유 댓글 등록
+		communityService.freeCommentInsert(board_reply);
+		
+		return "redirect:/community/freeView?board_no="+board_no;
+	}	
+	
+	/*
+	 * freeCommentDelete POST
+	 * 자유 댓글 삭제 처리 폼
+	 * */
+	@RequestMapping(value="/community/freeCommentDelete", method = RequestMethod.GET)
+	public String freeCommentDeleteGet(int reply_no , int board_no) {
+		//자유 댓글 삭제
+		communityService.freeCommentDelete(reply_no);
+		
+		return "redirect:/community/freeView?board_no="+board_no;
+	}
+	
+//----------------------- 경기 후기 review -------------------------------------
+	/*
+	 * ReviewList GET 
+	 * 경기 후기 리스트 조회 폼 검색,페이징 동시
+	 */
+	@RequestMapping(value = "/community/reviewList", method = RequestMethod.GET)
+	public void reviewGet(Board_tb board, @RequestParam(defaultValue = "1") int curPage, Model model, String search, String word) {
+		// 경기 후기 게시글 전체 수
+		int totalCount = communityService.reviewTotalCount(search, word);
+
+		if (totalCount == 0) {
+			model.addAttribute("totalCount", totalCount);
+		}
+		// 경기 후기 게시글  페이징 처리
+		Paging paging = new Paging(totalCount, curPage);
+
+		// 경기 후기 게시글  페이징 리스트 처리
+		List<Board_tb> list = communityService.reviewGetList(paging, search, word);
+
+		// 경기 후기 댓글 갯수 구하기
+		for (int i = 0; i < list.size(); i++) {
+			list.get(i).setBoard_reply_cnt(communityService.reviewReplyCount(list.get(i).getBoard_no()));
+		}
+
+		// 자유 게시글 번호 생성
+		int tableNum = totalCount - (curPage - 1) * 10;
+
+		model.addAttribute("word", word);
+		model.addAttribute("search", search);
+		model.addAttribute("model", model);
+		model.addAttribute("tableNum", tableNum);
+		model.addAttribute("paging", paging);
+		model.addAttribute("list", list);
+	}
+	/*
+	 * ReviewView GET
+	 * 경기 후기 상세페이지 조회 폼
+	 * 댓글 목록 출력
+	 * */
+	@RequestMapping(value="/community/reviewView", method = RequestMethod.GET)
+	public void reviewViewGet(User user, Board_tb board, int board_no, Model model, Photo photo, HttpSession session, Board_Reply board_reply) {
+
+		// 자유 조회수 증가
+		communityService.freeUpHit(board_no);
+		// 자유 지정 게시글 정보 가져오기
+		board = communityService.freeView(board_no);
+		// 자유 사진 가져오기
+		photo = communityService.freePhotoView(board_no);
+		
+		
+		// 자유 댓글 리스트 가져오기
+		List <Board_Reply> list = communityService.freeReplyList(board_reply);
+
+		model.addAttribute("photo", photo);
+		model.addAttribute("board", board);
+		model.addAttribute("list", list);
+	}
+	
+	/*
+	 * ReviewWrite GET 자유 글쓰기 폼
+	 */
+	@RequestMapping(value = "/community/reviewWrite", method = RequestMethod.GET)
+	public void reviewWriteGet() {
+
+	}
+
+	/*
+	 * ReviewWrite POST 자유 글쓰기 처리 폼
+	 */
+	@RequestMapping(value = "/community/reviewWrite", method = RequestMethod.POST)
+	public String reviewWritePost(Board_tb board_tb, MultipartFile file, HttpSession session, Photo photo) {
+
+		if (!"".equals(file.getOriginalFilename()) && file.getOriginalFilename() != null) {
+			// 고유식별자
+			String uId = UUID.randomUUID().toString().split("-")[0];
+
+			// 저장될 파일 이름
+			String stored_name = null;
+			stored_name = file.getOriginalFilename() + "_" + uId;
+			// stored_name =file.getOriginalFilename();
+
+			// 파일 저장 경로
+			String path = context.getRealPath("uploadImg");
+
+			// 저장될 파일
+			File dest = new File(path, stored_name);
+
+			// 파일업로드
+			try {
+				file.transferTo(dest);
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			photo.setPhoto_origin(file.getOriginalFilename());
+			photo.setPhoto_stored(stored_name);
+
+			// 경기 후기 글 번호 생성하기
+			int board_no = communityService.reviewGetBoard_no();
+
+			// 경기 후기 유저 번호 받아오기
+			board_tb.setUser_no((int) session.getAttribute("user_no"));
+			board_tb.setBoard_no(board_no);
+			photo.setBoard_no(board_no);
+			communityService.reviewInsertWrite1(board_tb);
+			communityService.reviewInsertPhoto(photo);
+		} else {
+			// 경기 후기 유저 번호 받아오기
+			board_tb.setUser_no((int) session.getAttribute("user_no"));
+			// 경기 후기 이미지 파일 없이 글 작성
+			communityService.reviewInsertWrite2(board_tb);
+		}
+		System.out.println(board_tb);
+
+		return "redirect:/community/reviewList";
+	}
+	
+	/*
+	 * ReviewUpdate GET
+	 * 경기 후기 수정 폼
+	 * */
+	@RequestMapping(value="/community/reviewUpdate", method = RequestMethod.GET)
+	public void reviewUpdateGet(int board_no, Model model) {
+		// 경기 후기 수정전 글 가져오기
+		Board_tb board = communityService.reviewUpdateView(board_no);
+		// 경기 후기 수정전 파일첨부 가져오기
+		Photo photo = communityService.reviewUpdatePhoto(board_no);
+		model.addAttribute("board", board);
+		model.addAttribute("photo", photo);
+		model.addAttribute("board_no", board_no);
+	}
+	
+	/*
+	 * ReviewUpdate POST
+	 * 경기 후기 처리 폼
+	 * */
+	@RequestMapping(value="/community/reviewUpdate", method = RequestMethod.POST)
+	public String reviewUpdatePost(int board_no,Photo photo,Board_tb board_tb ,HttpSession session,HttpServletRequest request, MultipartFile file) {
+		try {
+			request.setCharacterEncoding("utf-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		// 경기 후기 파일첨부 존재 여부
+		int photo_no = communityService.reviewCntPhoto(board_no);
+	
+		if(photo_no!=0) {
+			//고유식별자
+			String uId = UUID.randomUUID().toString().split("-")[0];
+			//저장될 파일 이름
+			String stored_name = null;
+			stored_name =file.getOriginalFilename()+"_"+uId;		
+			//파일 저장 경로		
+			String path = context.getRealPath("uploadImg");
+			//저장될 파일
+			File dest = new File(path, stored_name);
+			System.out.println("파일경로"+dest);
+			//파일업로드
+			try {
+				file.transferTo(dest);
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				
+				e.printStackTrace();
+			}
+			photo.setPhoto_origin(file.getOriginalFilename());
+			photo.setPhoto_stored(stored_name);
+		
+			board_tb.setBoard_no(board_no);
+			photo.setBoard_no(board_no);
+			//세션번호넣어주기
+			int user_no = (int) session.getAttribute("user_no");
+			board_tb.setUser_no(user_no);
+
+			// 경기 후기 수정 글쓰기
+			communityService.reviewUpdate(board_tb);
+		
+			// 경기 후기 이미지 존재 할 때 수정 파일첨부
+			communityService.reviewPhotoUpdate(photo);
+			
+		}else if(photo_no==0){
+			//고유식별자
+			String uId = UUID.randomUUID().toString().split("-")[0];
+	
+			//저장될 파일 이름
+			String stored_name = null;
+			stored_name =file.getOriginalFilename()+"_"+uId;
+			
+							
+			//파일 저장 경로		
+			String path = context.getRealPath("uploadImg");
+			
+			//저장될 파일
+			File dest = new File(path, stored_name);
+			System.out.println("파일경로"+dest);
+			//파일업로드
+			try {
+				file.transferTo(dest);
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				
+				e.printStackTrace();
+			}
+			photo.setPhoto_origin(file.getOriginalFilename());
+			photo.setPhoto_stored(stored_name);
+		
+			board_tb.setBoard_no(board_no);
+			photo.setBoard_no(board_no);
+			board_tb.setBoard_no(board_no);
+			//세션번호넣어주기
+			int user_no = (int) session.getAttribute("user_no");
+			board_tb.setUser_no(user_no);
+		
+			// 경기 후기 수정 글쓰기
+			communityService.reviewUpdate(board_tb);
+			// 경기 후기 이미지 없을 때 파일첨부
+			communityService.reviewPhotoWrite(photo);
+		}
+		
+		return "redirect:/community/reviewList";
+	}	
+	
+	/*
+	 * ReviewDelete GET
+	 * 경기 후기 삭제 처리 폼
+	 * */
+	@RequestMapping(value="/community/reviewDelete", method = RequestMethod.GET)
+	public String reviewDeleteGet(int board_no) {
+		// 경기 후기 삭제
+		communityService.freeDelete(board_no);
+		
+		return "redirect:/community/reviewList";
+	}	
+	
+	/*
+	 * ReviewCommentInsert POST
+	 * 경기 후기 댓글 등록 처리 폼
+	 * */
+	@RequestMapping(value="/community/reviewCommentInsert", method = RequestMethod.POST)
+	public String reviewCommentInsertPost(Board_Reply board_reply,int board_no, HttpSession session) {
+		
+		int user_no = (int) session.getAttribute("user_no");
+		board_reply.setBoard_no(board_no);
+		board_reply.setUser_no(user_no);
+	
+		// 자유 댓글 등록
+		communityService.reviewCommentInsert(board_reply);
+		
+		return "redirect:/community/reviewView?board_no="+board_no;
+	}	
+	
+	/*
+	 * ReviewCommentDelete POST
+	 * 자유 댓글 삭제 처리 폼
+	 * */
+	@RequestMapping(value="/community/reviewCommentDelete", method = RequestMethod.GET)
+	public String reviewCommentDeleteGet(int reply_no , int board_no) {
+		//자유 댓글 삭제
+		communityService.freeCommentDelete(reply_no);
+		
+		return "redirect:/community/reviewView?board_no="+board_no;
+	}
+	
+	// ------------------ 중고장터  market ----------------------
+	
+	/*
+	 * UsedList GET 
+	 * 중고장터 리스트 조회 폼 검색,페이징 동시
+	 */
+	@RequestMapping(value = "/community/usedList", method = RequestMethod.GET)
+	public void usedGet(Board_tb board, @RequestParam(defaultValue = "1") int curPage, Model model, String search, String word) {
+		// 중고장터 게시글 전체 수
+		int totalCount = communityService.usedTotalCount(search, word);
+
+		if (totalCount == 0) {
+			model.addAttribute("totalCount", totalCount);
+		}
+		// 중고장터 게시글 페이징 처리
+		Paging paging = new Paging(totalCount, curPage);
+
+		// 중고장터 게시글 페이징 리스트 처리
+		List<Board_tb> list = communityService.usedGetList(paging, search, word);
+
+		// 중고장터 댓글 갯수 구하기
+		for (int i = 0; i < list.size(); i++) {
+			list.get(i).setBoard_reply_cnt(communityService.freeReplyCount(list.get(i).getBoard_no()));
+		}
+
+		// 중고장터 게시글 번호 생성
+		int tableNum = totalCount - (curPage - 1) * 10;
+
+		model.addAttribute("word", word);
+		model.addAttribute("search", search);
+		model.addAttribute("model", model);
+		model.addAttribute("tableNum", tableNum);
+		model.addAttribute("paging", paging);
+		model.addAttribute("list", list);
+	}	
+	/*
+	 * UsedView GET
+	 * 중고장터 상세페이지 조회 폼
+	 * 댓글 목록 출력
+	 * */
+	@RequestMapping(value="/community/usedView", method = RequestMethod.GET)
+	public void usedViewGet(User user, Board_tb board, int board_no, Model model, Photo photo, HttpSession session, Board_Reply board_reply) {
+
+		// 자유 조회수 증가
+		communityService.freeUpHit(board_no);
+		// 자유 지정 게시글 정보 가져오기
+		board = communityService.freeView(board_no);
+		// 자유 사진 가져오기
+		photo = communityService.freePhotoView(board_no);
+		
+		
+		// 자유 댓글 리스트 가져오기
+		List <Board_Reply> list = communityService.freeReplyList(board_reply);
+
+		model.addAttribute("photo", photo);
+		model.addAttribute("board", board);
+		model.addAttribute("list", list);
+	}
+	
+	/*
+	 * UsedWrite GET 중고장터 글쓰기 폼
+	 */
+	@RequestMapping(value = "/community/usedWrite", method = RequestMethod.GET)
+	public void usedWriteGet() {
+
+	}
+
+	/*
+	 * UsedWrite POST 중고장터 글쓰기 처리 폼
+	 */
+	@RequestMapping(value = "/community/usedWrite", method = RequestMethod.POST)
+	public String usedWritePost(Board_tb board_tb, MultipartFile file, HttpSession session, Photo photo) {
+
+		if (!"".equals(file.getOriginalFilename()) && file.getOriginalFilename() != null) {
+			// 고유식별자
+			String uId = UUID.randomUUID().toString().split("-")[0];
+
+			// 저장될 파일 이름
+			String stored_name = null;
+			stored_name = file.getOriginalFilename() + "_" + uId;
+			// stored_name =file.getOriginalFilename();
+
+			// 파일 저장 경로
+			String path = context.getRealPath("uploadImg");
+
+			// 저장될 파일
+			File dest = new File(path, stored_name);
+
+			// 파일업로드
+			try {
+				file.transferTo(dest);
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			photo.setPhoto_origin(file.getOriginalFilename());
+			photo.setPhoto_stored(stored_name);
+
+			// 중고장터 글 번호 생성하기
+			int board_no = communityService.freeGetBoard_no();
+
+			// 중고장터 유저 번호 받아오기
+			board_tb.setUser_no((int) session.getAttribute("user_no"));
+			board_tb.setBoard_no(board_no);
+			photo.setBoard_no(board_no);
+			communityService.usedInsertWrite1(board_tb);
+			communityService.usedInsertPhoto(photo);
+		} else {
+			// 중고장터 유저 번호 받아오기
+			board_tb.setUser_no((int) session.getAttribute("user_no"));
+			// 중고장터 이미지 파일 없이 글 작성
+			communityService.usedInsertWrite2(board_tb);
+		}
+		System.out.println(board_tb);
+
+		return "redirect:/community/usedList";
+	}
+	
+	/*
+	 * UsedUpdate GET
+	 * 중고장터 수정 폼
+	 * */
+	@RequestMapping(value="/community/usedUpdate", method = RequestMethod.GET)
+	public void usedUpdateGet(int board_no, Model model) {
+		// 중고장터 수정전 글 가져오기
+		Board_tb board = communityService.freeUpdateView(board_no);
+		// 중고장터 수정전 파일첨부 가져오기
+		Photo photo = communityService.freeUpdatePhoto(board_no);
+		model.addAttribute("board", board);
+		model.addAttribute("photo", photo);
+		model.addAttribute("board_no", board_no);
+	}
+
+	/*
+	 * UsedUpdate POST
+	 * 중고장터 수정 처리 폼
+	 * */
+	@RequestMapping(value="/community/usedUpdate", method = RequestMethod.POST)
+	public String usedUpdatePost(int board_no,Photo photo,Board_tb board_tb ,HttpSession session,HttpServletRequest request, MultipartFile file) {
+		try {
+			request.setCharacterEncoding("utf-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		// 중고장터 파일첨부 존재 여부
+		int photo_no = communityService.freeCntPhoto(board_no);
+	
+		if(photo_no!=0) {
+			//고유식별자
+			String uId = UUID.randomUUID().toString().split("-")[0];
+			//저장될 파일 이름
+			String stored_name = null;
+			stored_name =file.getOriginalFilename()+"_"+uId;		
+			//파일 저장 경로		
+			String path = context.getRealPath("uploadImg");
+			//저장될 파일
+			File dest = new File(path, stored_name);
+			System.out.println("파일경로"+dest);
+			//파일업로드
+			try {
+				file.transferTo(dest);
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				
+				e.printStackTrace();
+			}
+			photo.setPhoto_origin(file.getOriginalFilename());
+			photo.setPhoto_stored(stored_name);
+		
+			board_tb.setBoard_no(board_no);
+			photo.setBoard_no(board_no);
+			//세션번호넣어주기
+			int user_no = (int) session.getAttribute("user_no");
+			board_tb.setUser_no(user_no);
+
+			// 중고장터 수정 글쓰기
+			communityService.freeUpdate(board_tb);
+		
+			// 중고장터 이미지 존재 할 때 수정 파일첨부
+			communityService.freePhotoUpdate(photo);
+			
+		}else if(photo_no==0){
+			//고유식별자
+			String uId = UUID.randomUUID().toString().split("-")[0];
+	
+			//저장될 파일 이름
+			String stored_name = null;
+			stored_name =file.getOriginalFilename()+"_"+uId;
+			
+							
+			//파일 저장 경로		
+			String path = context.getRealPath("uploadImg");
+			
+			//저장될 파일
+			File dest = new File(path, stored_name);
+			System.out.println("파일경로"+dest);
+			//파일업로드
+			try {
+				file.transferTo(dest);
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				
+				e.printStackTrace();
+			}
+			photo.setPhoto_origin(file.getOriginalFilename());
+			photo.setPhoto_stored(stored_name);
+		
+			board_tb.setBoard_no(board_no);
+			photo.setBoard_no(board_no);
+			board_tb.setBoard_no(board_no);
+			//세션번호넣어주기
+			int user_no = (int) session.getAttribute("user_no");
+			board_tb.setUser_no(user_no);
+		
+			// 중고장터 수정 글쓰기
+			communityService.freeUpdate(board_tb);
+			// 중고장터 이미지 없을 때 파일첨부
+			communityService.usedPhotoWrite(photo);
+		}
+		
+		return "redirect:/community/usedList";
+	}	
+	
+	/*
+	 * UsedDelete GET
+	 * 중고장터 삭제 처리 폼
+	 * */
+	@RequestMapping(value="/community/usedDelete", method = RequestMethod.GET)
+	public String usedDeleteGet(int board_no) {
+		// 자유 삭제
+		communityService.freeDelete(board_no);
+		
+		return "redirect:/community/usedList";
+	}	
+	
+	/*
+	 * UsedCommentInsert POST
+	 * 중고장터 댓글 등록 처리 폼
+	 * */
+	@RequestMapping(value="/community/usedCommentInsert", method = RequestMethod.POST)
+	public String usedCommentInsertPost(Board_Reply board_reply,int board_no, HttpSession session) {
+		
+		int user_no = (int) session.getAttribute("user_no");
+		board_reply.setBoard_no(board_no);
+		board_reply.setUser_no(user_no);
+	
+		// 중고장터 댓글 등록
+		communityService.usedCommentInsert(board_reply);
+		
+		return "redirect:/community/usedView?board_no="+board_no;
+	}	
+	
+	/*
+	 * UsedCommentDelete POST
+	 * 중고장터 댓글 삭제 처리 폼
+	 * */
+	@RequestMapping(value="/community/usedCommentDelete", method = RequestMethod.GET)
+	public String usedCommentDeleteGet(int reply_no , int board_no) {
+		//중고장터 댓글 삭제
+		communityService.freeCommentDelete(reply_no);
+		
+		return "redirect:/community/usedView?board_no="+board_no;
 	}
 }
