@@ -187,4 +187,42 @@ public interface CommunityDao {
 	//축구 동영상 댓글 등록
 	public void soccerVideoCommentInsert(Board_Reply board_reply);
 	
+	
+	//팀 모집 게시판
+	
+	//총 게시글 얻기(검색후포함)
+	public int getteamAddListtotalCnt(@Param("search")String search,@Param("word") String word);
+	//조회된 게시글 리스트
+	public List<Board_tb> teamAddList(@Param("paging")Paging paging,@Param("search")String search,@Param("word") String word);
+	//board_no로 게시글 조회
+	public Board_tb teamAddView(int board_no);
+	//게시글 등록
+	public void teamAddWrite1(Board_tb board_tb);
+	//게시글 등록
+	public void teamAddWrite2(Board_tb board_tb);
+	//게시글 수정
+	public void teamAddUpdate(Board_tb board_tb);
+	//게시글 삭제
+	public void teamAddDelete(int board_no);
+	//board_no로 조회된 팀 모집 게시판 댓글 입력 
+	public void teamAddCommentInsert(Board_Reply board_reply);
+	//팀 모집 게시판 댓글 조회
+	public List<Board_Reply> teamAddReplyList(Board_Reply board_reply);
+	//팀 모집 게시판 댓글 삭제
+	public void teamAddCommentDelete(int reply_no);
+	//팀 모집 게시판 게시글 조회수 증가
+	public void teamAdduphit(int board_no);
+	//다음글 번호 가져오기
+	public int teamAddgetboard_no();
+	//파일첨부
+	public void teamAddphotoWrite(Photo photo);
+	//팀 모집 게시글 파일 존재 여부
+	public int teamAddcntphoto(int board_no);
+	//게시글 파일 수정 
+	public void teamAddphotoUpdate(Photo photo);
+	//수정전 파일첨부 가져오기
+	public Photo teamAddUpdatephoto(int board_no);
+	//수정전 글 가져오기
+	public Board_tb teamAddUpdateView(int board_no);
+
 }

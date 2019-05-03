@@ -474,5 +474,94 @@ public class CommunityServiceImpl implements CommunityService{
 		
 	}
 
+	// 팀 모집 게시판
+	//총 게시글 얻기(검색후포함)
+	@Override
+	public int getteamAddListtotalCnt(String search, String word) {
+		return communityDao.getteamAddListtotalCnt(search, word);
+	}
+	//조회된 게시글 리스트
+	@Override
+	public List<Board_tb> teamAddList(Paging p, String search, String word) {
+		return communityDao.teamAddList(p,search, word);
+	}
+	//board_no로 게시글 조회
+	@Override
+	public Board_tb teamAddView(int board_no) {
+		return communityDao.teamAddView(board_no);
+	}
+	//게시글 등록
+	@Override
+	public void teamAddWrite1(Board_tb board_tb) {
+		communityDao.teamAddWrite1(board_tb);
+	}
+	//게시글 등록
+	@Override
+	public void teamAddWrite2(Board_tb board_tb) {
+		communityDao.teamAddWrite2(board_tb);
+	}
+	//게시글 수정
+	@Override
+	public void teamAddUpdate(Board_tb board_tb) {
+		communityDao.teamAddUpdate(board_tb);
+	}
+	//게시글 삭제
+	@Override
+	public void teamAddDelete(int board_no) {
+		communityDao.teamAddDelete(board_no);
+		
+	}
+	//board_no로 조회된 팀 모집 게시판 댓글 입력 
+	@Override
+	public void teamAddCommentInsert(Board_Reply board_reply) {
+		communityDao.teamAddCommentInsert(board_reply);
+	}
+	//팀 모집 게시판 댓글 조회
+	@Override
+	public List<Board_Reply> teamAddReplyList(Board_Reply board_reply) {
+		return communityDao.teamAddReplyList(board_reply);
+	}
+	//팀 모집 게시판 댓글 삭제
+	@Override
+	public void teamAddCommentDelete(int reply_no) {
+		communityDao.teamAddCommentDelete(reply_no);
+	}
+	//팀 모집 게시판 게시글 조회수 증가
+	@Override
+	public void teamAdduphit(int board_no) {
+		communityDao.teamAdduphit(board_no);
+	}
+	//다음글 번호 가져오기
+	@Override
+	public int teamAddgetboard_no() {
+		return communityDao.teamAddgetboard_no();
+	}
+	//파일첨부
+	@Override
+	public void teamAddphotoWrite(Photo photo) {
+		communityDao.teamAddphotoWrite(photo);
+	}
+	//팀 모집 게시글 파일 존재 여부
+	@Override
+	public int teamAddcntphoto(int board_no) {
+		return communityDao.teamAddcntphoto(board_no);
+	}
+	//게시글 파일 수정 
+	@Override
+	public void teamAddphotoUpdate(Photo photo) {
+		communityDao.teamAddphotoUpdate(photo);
+	}
+	//수정전 파일첨부 가져오기
+	@Override
+	public Photo teamAddUpdatephoto(int board_no) {
+		return communityDao.teamAddUpdatephoto(board_no);
+	}
+	//수정전 글 가져오기
+	@Override
+	public Board_tb teamAddUpdateView(int board_no) {
+		return communityDao.teamAddUpdateView(board_no);
+	}
+		
+	
 
 }

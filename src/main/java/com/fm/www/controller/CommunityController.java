@@ -248,11 +248,6 @@ public class CommunityController {
 
 	}
 
-	private int teamIntrototalreplyCnt(int i) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
 	/*
 	 * teamIntroView GET
 	 * 팀 가입 인사 상세페이지 조회 폼
@@ -1461,7 +1456,284 @@ public class CommunityController {
 		return "redirect:/community/soccerVideoList";
 	}
 
+	/*
+	 * teamAddList GET
+	 * 팀 모집 게시판 조회 폼
+	 * */
+	@RequestMapping(value="/community/teamAddList", method = RequestMethod.GET)
+	public void teamAddListGet(@RequestParam(defaultValue="1") int curPage,Paging paging,String search, String word, Board_tb board_tb, Model model) {
+		
+			//게시글 수 얻기
+			int	totalCount = communityService.getteamAddListtotalCnt(search, word);
+			if(totalCount == 0) {
+				model.addAttribute("totalCount", totalCount);
+			}
+			//페이징 객체 생성
+			Paging p = new Paging(totalCount, curPage);
+			//팀 모집 게시판 리스트 조회
+			List<Board_tb> list = communityService.teamAddList(p, search, word);
+			
+			for(int i = 0; i< list.size(); i++) {
+				int board_reply_cnt= communityService.teamIntrototalreplyCnt(list.get(i).getBoard_no());
+				list.get(i).setBoard_reply_cnt(board_reply_cnt);
+			}
+			
+			int tableNum = totalCount -(curPage - 1) * 10;
+			//모델 설정
+			model.addAttribute("search", search);
+			model.addAttribute("word", word);
+			model.addAttribute("tableNum", tableNum);
+			model.addAttribute("paging", p);
+			model.addAttribute("teamAddlist" ,list);
+	}
+	/*
+	 * teamAddView GET
+	 * 팀 모집 게시판 상세페이지 조회 폼
+	 * 댓글 목록 출력
+	 * */
+	@RequestMapping(value="/community/teamAddView", method = RequestMethod.GET)
+	public void teamAddViewGet(int board_no ,Photo photo, Board_Reply board_reply,Model model) {
+		
+			//팀 모집 게시판 게시글 조회수 증가
+			communityService.teamAdduphit(board_no);
+		
+			//팀 모집 게시판 게시글 상세 정보
+			Board_tb Board_tbview = communityService.teamAddView(board_no);
+		
+			// 팀 모집 게시판 파일 가져오기
+			photo = communityService.teamAddUpdatephoto(board_no);
+			// 댓글 리스트 가져오기
+			List <Board_Reply> replylist = communityService.teamAddReplyList(board_reply);
+			
+			//모델 설정
+			model.addAttribute("photo",photo);
+			model.addAttribute("Board_tbview",Board_tbview);
+			model.addAttribute("replylist",replylist);
+	}
 	
+	/*
+	 * teamAddWrite GET
+	 * 팀 모집 게시판 글쓰기 폼
+	 * */
+	@RequestMapping(value="/community/teamAddWrite", method = RequestMethod.GET)
+	public void teamAddWriteGet() {
+		
+	}
+	
+	/*
+	 * teamAddWrite POST
+	 * 팀 모집 게시판 글쓰기 처리 폼
+	 * */
+	@RequestMapping(value="/community/teamAddWrite", method = RequestMethod.POST)
+	public String teamAddWritePost(Photo photo ,Board_tb board_tb,HttpSession session,HttpServletRequest request, MultipartFile file) {
+		try {
+			request.setCharacterEncoding("utf-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		if (!"".equals(file.getOriginalFilename()) && file.getOriginalFilename() != null) {
+			// 고유식별자
+			String uId = UUID.randomUUID().toString().split("-")[0];
+
+			// 저장될 파일 이름
+			String stored_name = null;
+			stored_name = file.getOriginalFilename() + "_" + uId;
+			// stored_name =file.getOriginalFilename();
+
+			// 파일 저장 경로
+			String path = context.getRealPath("uploadImg");
+
+			// 저장될 파일
+			File dest = new File(path, stored_name);
+
+			// 파일업로드
+			try {
+				file.transferTo(dest);
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			photo.setPhoto_origin(file.getOriginalFilename());
+			photo.setPhoto_stored(stored_name);
+
+			// 경기 후기 글 번호 생성하기
+			int board_no = communityService.teamAddgetboard_no();
+
+			// 경기 후기 유저 번호 받아오기
+			board_tb.setUser_no((int) session.getAttribute("user_no"));
+			logger.info(""+(int) session.getAttribute("user_no"));
+			board_tb.setBoard_no(board_no);
+			photo.setBoard_no(board_no);
+			communityService.teamAddWrite1(board_tb);
+			communityService.teamAddphotoWrite(photo);
+		} else {
+			// 경기 후기 유저 번호 	
+			board_tb.setUser_no((int) session.getAttribute("user_no"));
+			// 경기 후기 이미지 파일 없이 글 작성
+			communityService.teamAddWrite2(board_tb);
+			System.out.println(board_tb);
+		}
+		
+
+		return "redirect:/community/teamAddList";
+	}
+
+	
+	/*
+	 * teamAddUpdate GET
+	 * 팀 모집 게시판 수정 폼
+	 * */
+	@RequestMapping(value="/community/teamAddUpdate", method = RequestMethod.GET)
+	public void teamAddUpdateGet(int board_no,Model model) {
+		//수정 전 글 가져오기
+		Board_tb Board_tbview = communityService.teamAddUpdateView(board_no);
+		//수정전 파일첨부 가져오기
+		Photo photo = communityService.teamAddUpdatephoto(board_no);
+		
+		model.addAttribute("Board_tbview",Board_tbview);
+		model.addAttribute("photo",photo);
+		model.addAttribute("board_no",board_no);
+		
+	}
+	
+	/*
+	 * teamAddUpdate POST
+	 * 팀 모집 게시판 수정 처리 폼
+	 * */
+	@RequestMapping(value="/community/teamAddUpdate", method = RequestMethod.POST)
+	public String teamAddUpdatePost(int board_no,Photo photo,Board_tb board_tb ,HttpSession session,HttpServletRequest request, MultipartFile file) {
+		
+		try {
+			request.setCharacterEncoding("utf-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		//파일첨부 존재 여부
+		int photo_no = communityService.teamAddcntphoto(board_no);
+		
+		if(photo_no!=0) {
+			//고유식별자
+			String uId = UUID.randomUUID().toString().split("-")[0];
+			
+			//저장할 파일 이름
+			String stored_name = null;
+			stored_name = file.getOriginalFilename()+"_"+uId;
+			
+			//파일 저장 결로
+			String path = context.getRealPath("uploadImg");
+			
+			//저장될 파일
+			File dest = new File(path, stored_name);
+			
+			//파일 업로드
+			try {
+				file.transferTo(dest);
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				
+				e.printStackTrace();
+			}
+			photo.setPhoto_origin(file.getOriginalFilename());
+			photo.setPhoto_stored(stored_name);
+		
+			board_tb.setBoard_no(board_no);
+			photo.setBoard_no(board_no);
+			//세션 번호 넣어주기
+			int user_no = (int) session.getAttribute("user_no");
+			board_tb.setUser_no(user_no);
+			
+			//팀 모집 게시판 수정
+			communityService.teamAddUpdate(board_tb);
+			
+			//수정 파일 첨부
+			communityService.teamAddphotoUpdate(photo);
+		}else if(photo_no == 0) {
+			//고유식별자
+			String uId = UUID.randomUUID().toString().split("-")[0];
+			//저장될 파일 이름
+			String stored_name = file.getOriginalFilename()+"_"+uId;
+			
+			//파일 저장 경로
+			String path = context.getRealPath("uploadImg");
+			//저장될 파일
+			File dest = new File(path,stored_name);
+			//파일 업로드
+			try {
+				file.transferTo(dest);
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			photo.setPhoto_origin(file.getOriginalFilename());
+			photo.setPhoto_stored(stored_name);
+			
+			board_tb.setBoard_no(board_no);
+			photo.setBoard_no(board_no);
+			//세션번호 넣어주기
+			int user_no = (int) session.getAttribute("user_no");
+			board_tb.setUser_no(user_no);
+			
+			//수정 글쓰기
+			communityService.teamAddUpdate(board_tb);
+			//파일첨부
+			communityService.teamAddphotoWrite(photo);
+			
+		}
+		
+		return "redirect:/community/teamAddList";
+	}
+	
+	/*
+	 * teamAddDelete GET
+	 * 팀 모집 게시판 삭제 처리 폼
+	 * */
+	@RequestMapping(value="/community/teamAddDelete", method = RequestMethod.GET)
+	public String teamAddDeleteGet(int board_no) {
+		//팀 모집 게시판 삭제
+		communityService.teamAddDelete(board_no);
+		
+		return "redirect:/community/teamAddList";
+	}
+	
+	/*
+	 * teamAddCommentInsert POST
+	 * 팀 모집 게시판 댓글 등록 처리 폼
+	 * */
+	@RequestMapping(value="/community/teamAddCommentInsert", method = RequestMethod.POST)
+	public String teamAddCommentInsertPost(Board_Reply board_reply, int board_no, HttpSession session) {
+		
+		board_reply.setBoard_no(board_no);
+		int user_no = (int) session.getAttribute("user_no");
+		board_reply.setUser_no(user_no);
+		
+		//팀 모집 게시판 댓글 등록
+		communityService.teamAddCommentInsert(board_reply);
+		
+		return "redirect:/community/teamAddView?board_no="+board_no;
+				
+	}
+	
+	/*
+	 * teamAddCommentDelete POST
+	 * 팀 모집 게시판 댓글 삭제 처리 폼
+	 * */
+	@RequestMapping(value="/community/teamAddCommentDelete", method = RequestMethod.GET)
+	public String teamAddCommentDeleteGet(int reply_no, int board_no) {
+		//팀 모집 게시판 댓글 삭제
+		communityService.teamAddCommentDelete(reply_no);
+		
+		return "redirect:/community/teamAddView?board_no="+board_no;
+	}
 	
 	
 }

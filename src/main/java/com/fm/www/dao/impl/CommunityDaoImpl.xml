@@ -272,7 +272,6 @@
         select * from board_reply B, user_tb U
       where B.user_no = U.user_no
       and reply_delete_yn= 'N'
-      and board_fg= 2
       and board_no=#{board_no}
      
      </select>
@@ -656,26 +655,26 @@
          (REPLY_NO,BOARD_FG,REPLY_CONTENT,REPLY_DATE,REPLY_DELETE_YN, board_no , user_no)
          values(board_reply_seq.nextval,  6, #{reply_content},  sysdate,'N', #{board_no}, #{user_no})
      </insert>
-   	<!-- 축구동영상 리스트 총 개수 -->
-	<select id="soccerVideototalCount" resultType="int">
-		      select count(*) from board_tb M
-		      JOIN USER_TB U ON(U.USER_NO = M.USER_NO)
-		      where board_div = 7 and delete_yn = 'N'
-		         <choose>
-		            <when test="search == 'board_title'">
-		               AND board_title Like '%' || #{word} || '%'
-		            </when>
-		            <when test="search == 'board_content'">
-		               AND board_content Like '%' || #{word} || '%'
-		            </when>
-		            <when test="search == 'user_nick'">
-		                  AND user_nick Like '%' || #{word} || '%'
-		               </when>
-		         </choose>
-	</select>
-	<!-- 축구 동영상 리스트 페이징 처리 및 출력 -->
-	<select id="soccerVideoListgetList" parameterType="com.fm.www.util.Paging" resultType="com.fm.www.dto.Board_tb">
-		 SELECT * FROM (
+      <!-- 축구동영상 리스트 총 개수 -->
+   <select id="soccerVideototalCount" resultType="int">
+            select count(*) from board_tb M
+            JOIN USER_TB U ON(U.USER_NO = M.USER_NO)
+            where board_div = 7 and delete_yn = 'N'
+               <choose>
+                  <when test="search == 'board_title'">
+                     AND board_title Like '%' || #{word} || '%'
+                  </when>
+                  <when test="search == 'board_content'">
+                     AND board_content Like '%' || #{word} || '%'
+                  </when>
+                  <when test="search == 'user_nick'">
+                        AND user_nick Like '%' || #{word} || '%'
+                     </when>
+               </choose>
+   </select>
+   <!-- 축구 동영상 리스트 페이징 처리 및 출력 -->
+   <select id="soccerVideoListgetList" parameterType="com.fm.www.util.Paging" resultType="com.fm.www.dto.Board_tb">
+       SELECT * FROM (
          SELECT rownum rnum, B.* FROM (
             SELECT U.USER_nick,  M.*
             FROM board_tb M
@@ -701,49 +700,177 @@
          ORDER BY rnum
       ) R
       WHERE rnum BETWEEN #{startNo} AND #{endNo}
-	</select>
-	<!-- 축구 동영상 댓글 수 -->
-	<select id="soccerVideototalreplyCnt" parameterType="int" resultType="int">
-		select count(*) from board_reply
-  		where board_no= #{board_no}
-  		and reply_delete_yn= 'N'
-	</select>
-	<!-- 축구 동영상 게시글 조회수 증가  -->
-	<update id="soccerVideouphit" parameterType="int">
-		  update board_tb
-	      set BOARD_CNT = BOARD_CNT +1
-	       where board_no = #{board_no} 	
-   	</update>
-	<!-- 축구 동영상 view 정보 -->
-	<select id="soccerVideoView" parameterType="int" resultType="com.fm.www.dto.Board_tb">
-   		select * from board_tb
-   		where board_no= #{board_no}
-   	
-   	</select>
-   	<!--  축구 동영상 upload 영상-->
-   	<select id="soccerVideouplodView" parameterType="int" resultType="com.fm.www.dto.Movie">
-   		select * from movie
-   		where board_no= #{board_no}
-   	</select>
-   	<!-- 다음글 글 작성 -->
-   	<insert id="soccerVideoWrite" parameterType="com.fm.www.dto.Board_tb">
-   		insert into board_tb
-	    (board_no, board_div, board_title, board_content,board_date,board_cnt, delete_yn,user_no)
-	    values(#{board_no},  7, #{board_title}, #{board_content} , sysdate,0,'N',#{user_no})
-   	</insert>
-   	<!-- 다음글 동영상 업로드 -->
-   	<insert id="soccerVideoupload" parameterType="com.fm.www.dto.Movie">
-   		insert into movie
-	    (movie_no,board_fg,board_no,movie_address)
-	    values(movie_seq.nextval,7,#{board_no},#{movie_address})
-   	</insert>
-   	<!-- 축구 동영상 댓글 등록 -->
-   	<insert id="soccerVideoCommentInsert" parameterType="com.fm.www.dto.Board_Reply">
-   		insert into board_reply
+   </select>
+   <!-- 축구 동영상 댓글 수 -->
+   <select id="soccerVideototalreplyCnt" parameterType="int" resultType="int">
+      select count(*) from board_reply
+        where board_no= #{board_no}
+        and reply_delete_yn= 'N'
+   </select>
+   <!-- 축구 동영상 게시글 조회수 증가  -->
+   <update id="soccerVideouphit" parameterType="int">
+        update board_tb
+         set BOARD_CNT = BOARD_CNT +1
+          where board_no = #{board_no}    
+      </update>
+   <!-- 축구 동영상 view 정보 -->
+   <select id="soccerVideoView" parameterType="int" resultType="com.fm.www.dto.Board_tb">
+         select * from board_tb
+         where board_no= #{board_no}
+      
+      </select>
+      <!--  축구 동영상 upload 영상-->
+      <select id="soccerVideouplodView" parameterType="int" resultType="com.fm.www.dto.Movie">
+         select * from movie
+         where board_no= #{board_no}
+      </select>
+      <!-- 다음글 글 작성 -->
+      <insert id="soccerVideoWrite" parameterType="com.fm.www.dto.Board_tb">
+         insert into board_tb
+       (board_no, board_div, board_title, board_content,board_date,board_cnt, delete_yn,user_no)
+       values(#{board_no},  7, #{board_title}, #{board_content} , sysdate,0,'N',#{user_no})
+      </insert>
+      <!-- 다음글 동영상 업로드 -->
+      <insert id="soccerVideoupload" parameterType="com.fm.www.dto.Movie">
+         insert into movie
+       (movie_no,board_fg,board_no,movie_address)
+       values(movie_seq.nextval,7,#{board_no},#{movie_address})
+      </insert>
+      <!-- 축구 동영상 댓글 등록 -->
+      <insert id="soccerVideoCommentInsert" parameterType="com.fm.www.dto.Board_Reply">
+         insert into board_reply
          (REPLY_NO,BOARD_FG,REPLY_CONTENT,REPLY_DATE,REPLY_DELETE_YN, board_no , user_no)
          values(board_reply_seq.nextval,  7, #{reply_content},  sysdate,'N', #{board_no}, #{user_no})
-   	</insert>
+      </insert>
    
-   
-   
+   	<!-- 팀 모집 게시판 -->
+		<!-- 팀 모집 게시판 검색리스트 페이징 처리 및 출력 -->	
+		<select id="teamAddList" resultType="com.fm.www.dto.Board_tb" parameterType="com.fm.www.util.Paging">
+	 		 SELECT * FROM (
+	         SELECT rownum rnum, B.* FROM (
+	            SELECT U.USER_nick,  M.*
+	            FROM board_tb M
+	            JOIN USER_TB U ON(U.USER_NO = M.USER_NO)
+	            WHERE delete_yn = 'N'
+	            <choose>
+	               <when test="search == 'board_title'">
+	                  AND board_title Like '%' || #{word} || '%'
+	               </when>
+	               <when test="search == 'board_content'">
+	                  AND board_content Like '%' || #{word} || '%'
+	               </when>
+	               <when test="search == 'user_nick'">
+	                  AND user_nick Like '%' || #{word} || '%'
+	               </when>
+	            </choose>
+	            and board_div = 3
+	            ORDER BY board_no desc
+	         ) B
+	         ORDER BY rnum
+	      ) R
+	      WHERE rnum BETWEEN #{paging.startNo} AND #{paging.endNo}
+	 	</select>
+	 	
+	 	<!--팀 모집 게시판 리스트 총 개수  -->
+		<select id="getteamAddListtotalCnt" resultType="int">
+	 		SELECT COUNT(*) FROM board_tb M
+	 		JOIN USER_TB U ON(U.USER_NO = M.USER_NO)
+			WHERE board_div = 3 AND delete_yn = 'N' 			
+			<choose>
+	               <when test="search == 'board_title'">
+	               	and	board_title Like '%' || #{word} || '%'
+	               </when>
+	               <when test="search == 'board_content'">
+	                and board_content Like '%' || #{word} || '%'
+	               </when>
+	               <when test="search == 'user_nick'">
+	                and user_nick Like '%' || #{word} || '%'
+	               </when>
+	        </choose>
+	 	</select>
+	 	<!-- 게시글 상세 페이지 -->
+	 	<select id="teamAddView" resultType="com.fm.www.dto.Board_tb" parameterType="int">
+	 		SELECT * FROM board_tb
+			WHERE board_no = #{board_no} AND board_div = 3
+	 	</select>
+	    <!-- 게시글 삭제 -->
+	    <update id="teamAddDelete" parameterType="int">
+	   		update board_tb
+			set delete_yn= 'Y'
+			where board_no = #{board_no} 
+	    </update>
+		<!-- 댓글 작성 -->
+		<insert id="teamAddCommentInsert"  parameterType="com.fm.www.dto.Board_Reply">
+			INSERT INTO board_reply (REPLY_NO,BOARD_FG,BOARD_NO,USER_NO,REPLY_CONTENT,REPLY_DATE,REPLY_DELETE_YN)
+			VALUES (board_reply_SEQ.nextval,3,#{board_no},#{user_no},#{reply_content},sysdate,'N')
+		</insert>    
+	    
+	    <!-- 댓글 리스트 정보 -->
+	  	<select id="teamAddReplyList" parameterType="int" resultType="com.fm.www.dto.Board_Reply">
+	  		select * from board_reply B, user_tb U
+			where B.user_no = U.user_no
+			and reply_delete_yn= 'N'
+			and board_fg= 3
+			and board_no=#{board_no}
+			ORDER BY reply_no desc
+	  	</select>
+	  	<!-- 팀 모집 게시판 댓글 삭제 -->
+	  	<update id="teamAddCommentDelete" parameterType="int">
+	  		UPDATE board_reply SET REPLY_DELETE_YN = 'Y'
+	  		WHERE reply_no = #{reply_no }
+	  	</update>
+	  	<!-- 팀 모집 게시판 게시글 조회수 증가 -->
+	  	<update id="teamAdduphit" parameterType="int">
+	  		UPDATE board_tb
+	  		SET board_cnt = board_cnt+1
+	  		WHERE board_no = #{board_no} 
+	  	</update>
+	  	<!-- 다음 글 번호 가져 오기 -->
+	  	<select id="teamAddgetboard_no" resultType="int">
+	  		SELECT board_tb_seq.nextval FROM dual
+	  	</select>
+	  	
+	  	<!-- 게시글 작성 -->
+		<insert id="teamAddWrite1" parameterType="com.fm.www.dto.Board_tb">
+		  	INSERT INTO board_tb(BOARD_NO, USER_NO, BOARD_DIV, BOARD_TITLE, BOARD_CONTENT, DELETE_YN, BOARD_DATE, BOARD_CNT) 
+			VALUES( #{board_no}, #{user_no}, 3,#{board_title},#{board_content},'N', sysdate, 0 )
+		</insert>
+	  	<!-- 이미지 파일 없이 글 작성 -->
+	   <insert id="teamAddWrite2" parameterType="com.fm.www.dto.Board_tb">
+	         INSERT INTO board_tb(BOARD_NO, USER_NO, BOARD_DIV, BOARD_TITLE, BOARD_CONTENT, DELETE_YN, BOARD_DATE, BOARD_CNT) 
+			VALUES( board_tb_seq.nextval, #{user_no}, 3,#{board_title},#{board_content},'N', sysdate, 0 )
+	   </insert>
+	    <!-- 게시글 수정 -->
+	    <update id="teamAddUpdate" parameterType="com.fm.www.dto.Board_tb">
+	    	UPDATE board_tb SET board_title=#{board_title} , board_content=#{board_content}
+	    	WHERE board_no = #{board_no}
+	    </update>
+	  	<!-- 파일 첨부 -->
+	  	<insert id="teamAddphotoWrite" parameterType="com.fm.www.dto.Photo">
+	  	
+	  		INSERT INTO photo (PHOTO_NO,PHOTO_ORIGIN,PHOTO_STORED,BOARD_FG,BOARD_NO,PHOTO_DELETE_YN)
+	  		VALUES (photo_seq.nextval, #{photo_origin }, #{photo_stored }, 3, #{board_no }, 'N')
+	  	</insert>
+   		<!-- 팀 모집 게시글 파일 존재 여부 -->
+   		<select id="teamAddcntphoto" parameterType="int" resultType="int">
+   			SELECT COUNT(*) FROM photo
+   			WHERE board_no = #{board_no}
+   		</select>
+   		<!-- 게시글 파일 수정 -->
+   		<update id="teamAddphotoUpdate" parameterType="com.fm.www.dto.Photo">
+   			UPDATE photo SET PHOTO_ORIGIN = #{photo_origin} , PHOTO_STORED = #{photo_stored}
+   			WHERE board_no = #{board_no}
+   		</update>
+   		<!-- 수정전 글 가져오기 -->
+   		<select id="teamAddUpdateView" parameterType="int" resultType="com.fm.www.dto.Board_tb">
+   			SELECT * FROM board_tb
+   			WHERE board_no = #{board_no}
+   		</select>
+   		
+   		<!-- 수정전 파일첨부 가져오기 -->
+   		<select id="teamAddUpdatephoto" parameterType="int" resultType="com.fm.www.dto.Photo">
+   			SELECT * FROM photo
+   			WHERE board_no = #{board_no}
+   		</select>
+   		
 </mapper>
