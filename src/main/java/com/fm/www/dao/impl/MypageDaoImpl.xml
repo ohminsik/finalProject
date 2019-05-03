@@ -129,5 +129,155 @@
 		WHERE board_no = #{board_no}
 	</select>
 	
+	<!-- 내게온 메세지 조회 -->
+	<select id="selectMessage" resultType="com.fm.www.dto.Message" parameterType="com.fm.www.dto.User">
+		SELECT R.*, mt.* FROM message_tb mt,
+		    (select U.user_name AS reciveruser_name, U.user_id AS reciveruser_id
+		        FROM user_tb u
+		        WHERE user_no = #{user_no}
+		        ) R
+		WHERE 1=1  
+
+		ORDER BY message_date DESC
+	</select>
+	<!-- 내게 온 메세지 보낸사람 정보 조회 -->
+	<select id="getSendUserId" resultType="String" parameterType="int">
+		select user_id from user_tb
+		WHERE 1=1
+		AND user_no = #{senduser_no}
+	</select>
+	<select id="getSendUserName" resultType="String" parameterType="int">
+		select user_name from user_tb
+		WHERE 1=1
+		AND user_no = #{senduser_no}
+	</select>
+	<!-- 메세지 확인으로 변경 -->
+	<update id="updateMessageYn" parameterType="int">
+		UPDATE message_tb set message_YN = 'Y'
+		WHERE 1=1 AND message_no = #{messageno}
+	</update>
+	<!-- 메세지 삭제 -->
+	<delete id="deleteMessage" parameterType="int">
+		DELETE from message_tb
+		WHERE 1=1 AND message_no = #{messageno}
+	</delete>
+	<!-- 개인메세지 답장 -->
+	<insert id="replyMessage" parameterType="com.fm.www.dto.Message">
+		INSERT INTO message_tb(message_no, RECIVERUSER_NO, SENDUSER_NO, MESSAGE_CONTENT, MESSAGE_DATE, message_YN)
+		values(message_tb_SEQ.nextVal, #{reciveruser_no}, #{senduser_no}, #{message_content}, sysdate, 'N')
+	</insert>
 	
+	
+	<!-- 팀 번호로 팀게시판 총 게시글 수 얻어오기 -->
+	<select id="getTotalCountSearchTeam" resultType="int">
+		select COUNT(*) from board_tb b,user_tb u,(
+		    select * from team_board 
+		    WHERE 1=1
+		    AND team_no = ${p1}
+		)tb
+		WHERE 1=1
+		AND board_div = 8
+		<choose>
+         <when test="p2 == '제목'">
+		 	AND board_title Like '%' || #{p3} || '%'
+		 </when>
+		 <when test="p2 == '내용'">
+		 	AND board_content Like '%' || #{p3} || '%'
+		 </when>
+		 <when test="p2 == '작성자'">
+		 	AND user_nick Like '%' || #{p3} || '%'
+		 </when>
+		 </choose>
+		AND tb.board_no = b.board_no
+		AND u.user_no = b.user_no
+	</select>
+	
+	<!-- 팀 번호로 팀게시판 총 게시글 얻어오기 -->
+	<select id="getPagingListSearchTeam" resultType="com.fm.www.dto.Board_tb">		
+		SELECT * FROM (
+		    SELECT rownum rnum, M.* FROM (
+		        select b.*, u.user_nick from board_tb b, user_tb u,(
+		            select * from team_board 
+		                    WHERE 1=1                
+		                    AND team_no = #{p1}
+		                )tb
+		                    WHERE 1=1
+		                    AND board_div = 8
+		                   <choose>
+					         <when test="p3 == '제목'">
+							 	AND board_title Like '%' || #{p4} || '%'
+							 </when>
+							 <when test="p3 == '내용'">
+							 	AND board_content Like '%' || #{p4} || '%'
+							 </when>
+							 <when test="p3 == '작성자'">
+							 	AND user_nick Like '%' || #{p4} || '%'
+							 </when>
+							 </choose>
+		                    AND tb.board_no = b.board_no
+		                    AND u.user_no = b.user_no
+		                     order by b.board_no desc
+		                    
+		            ) M
+		        ORDER BY rnum
+		    ) R
+		 WHERE rnum BETWEEN #{p2.startNo} AND #{p2.endNo}
+	</select>
+	
+	<!-- 다음 팀게시판 글번호 얻어오기 -->
+	<select id="teamBoardGetBoard_no" resultType="int">
+  		SELECT board_tb_seq.nextval FROM dual
+  	</select> 	
+  
+  	 
+ 	 <!-- 팀게시글 작성 -->
+	<insert id="teamBoardInsertWrite" parameterType="com.fm.www.dto.Board_tb">
+	  	INSERT INTO board_tb(BOARD_NO, USER_NO, BOARD_DIV, BOARD_TITLE, BOARD_CONTENT, DELETE_YN, BOARD_DATE, BOARD_CNT) 
+		VALUES( #{board_no}, #{user_no}, 8, #{board_title}, #{board_content}, 'N' , sysdate, 0 )
+	</insert>
+	
+  	<!-- 팀 포토 인써트 -->
+  	<insert id="teamBoardInsertPhoto" parameterType="com.fm.www.dto.Photo">	  	
+  		INSERT INTO photo (PHOTO_NO,PHOTO_ORIGIN,PHOTO_STORED,BOARD_FG,BOARD_NO,PHOTO_DELETE_YN)
+  		VALUES (photo_seq.nextval, #{photo_origin }, #{photo_stored }, 8, #{board_no }, 'N')
+  	</insert>
+  	<!-- 팀게시글 포토 없을때 -->
+  	<insert id="teamBoardInsertWrite2" parameterType="com.fm.www.dto.Board_tb">
+      insert into board_tb (board_no, board_div, board_title, board_content, board_cnt, delete_yn, user_no, board_date)
+         values(board_tb_seq.nextval,  8, #{board_title }, #{board_content } , 0 ,'N', #{user_no }, sysdate )
+    </insert>
+    <!-- teamBoard 추가 -->
+    <insert id="teamBoardInsertTeamBoard">
+    	insert into team_board (team_no, user_no, board_fg, board_no) VALUES (#{p2.team_no},#{p2.user_no}, 8, #{p1.board_no})
+    </insert>
+    
+    
+   
+   
+    
+    <!-- //조회수증가 -->
+	<update id="teamBoardUpHit" parameterType="int">
+      update board_tb
+      set board_cnt = board_cnt +1
+      where board_no = #{board_no} 
+   </update>
+	
+	<!-- //게시글 정보 가져오기 -->
+	<select id="teamBoardView" parameterType="com.fm.www.dto.Board_tb" resultType="com.fm.www.dto.Board_tb">
+      select * from board_tb
+      where board_no = #{board_no}
+   </select>
+	<!-- //사진 가져오기 -->
+	<select id="teamBoardPhotoView" parameterType="com.fm.www.dto.Photo" resultType="com.fm.www.dto.Photo">
+      select * from photo
+      where board_no = #{board_no}
+   </select>
+	<!-- //댓글리스트 가졍오기 -->
+	<select id="ReplyList" parameterType="com.fm.www.dto.Board_Reply" resultType="com.fm.www.dto.Board_Reply">
+      select * from board_reply B
+      JOIN USER_TB U ON(U.USER_NO = B.USER_NO)
+      where reply_delete_yn = 'N'
+      and board_no = #{board_no}
+   </select>
+
   </mapper>

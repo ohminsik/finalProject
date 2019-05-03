@@ -63,7 +63,7 @@
 					<table class="board_table">
 						<colgroup>
 							<col width="10%">
-							<col width="10%">
+							<col width="13%">
 							<col width="*">
 							<col width="10%">
 							<col width="10%">
@@ -119,7 +119,38 @@
 										경기장리스트
 									</c:if>
 								</td>
-								<td class="title"><a href="#">${mypageboardList.board_title } <span class="fb chs">[ ${mypageboardList.board_reply_cnt } ]</span></a></td>
+								<td class="title">
+									<c:if test="${mypageboardList.board_div eq 1}">
+										<a href="/community/noticeView?board_no=${mypageboardList.board_no }">${mypageboardList.board_title } <span class="fb chs">[ ${mypageboardList.board_reply_cnt } ]</span></a>
+									</c:if>
+									<c:if test="${mypageboardList.board_div eq 2}">
+										<a href="/community/teamIntroView?board_no=${mypageboardList.board_no }">${mypageboardList.board_title } <span class="fb chs">[ ${mypageboardList.board_reply_cnt } ]</span></a>
+									</c:if>
+									<c:if test="${mypageboardList.board_div eq 3}">
+										<a href="/community/teamAddView?board_no=${mypageboardList.board_no }">${mypageboardList.board_title } <span class="fb chs">[ ${mypageboardList.board_reply_cnt } ]</span></a>
+									</c:if>
+									<c:if test="${mypageboardList.board_div eq 4}">
+										<a href="/community/freeView?board_no=${mypageboardList.board_no }">${mypageboardList.board_title } <span class="fb chs">[ ${mypageboardList.board_reply_cnt } ]</span></a>
+									</c:if>
+									<c:if test="${mypageboardList.board_div eq 5}">
+										<a href="/community/reviewView?board_no=${mypageboardList.board_no }">${mypageboardList.board_title } <span class="fb chs">[ ${mypageboardList.board_reply_cnt } ]</span></a>
+									</c:if>
+									<c:if test="${mypageboardList.board_div eq 6}">
+										<a href="/community/usedView?board_no=${mypageboardList.board_no }">${mypageboardList.board_title } <span class="fb chs">[ ${mypageboardList.board_reply_cnt } ]</span></a>
+									</c:if>
+									<c:if test="${mypageboardList.board_div eq 7}">
+										<a href="/community/soccerVideoView?board_no=${mypageboardList.board_no }">${mypageboardList.board_title } <span class="fb chs">[ ${mypageboardList.board_reply_cnt } ]</span></a>
+									</c:if>
+									<c:if test="${mypageboardList.board_div eq 8}">
+										<a href="/community/freeView?board_no=${mypageboardList.board_no }">${mypageboardList.board_title } <span class="fb chs">[ ${mypageboardList.board_reply_cnt } ]</span></a>
+									</c:if>
+									<c:if test="${mypageboardList.board_div eq 9}">
+										<a href="/community/freeView?board_no=${mypageboardList.board_no }">${mypageboardList.board_title } <span class="fb chs">[ ${mypageboardList.board_reply_cnt } ]</span></a>
+									</c:if>
+									<c:if test="${mypageboardList.board_div eq 10}">
+										<a href="/community/freeView?board_no=${mypageboardList.board_no }">${mypageboardList.board_title } <span class="fb chs">[ ${mypageboardList.board_reply_cnt } ]</span></a>
+									</c:if>									
+								</td>
 								<td><fmt:formatDate value="${mypageboardList.board_date }" pattern="yyyy-MM-dd"/></td>
 								<td>${mypageboardList.board_cnt } </td>
 							</tr>

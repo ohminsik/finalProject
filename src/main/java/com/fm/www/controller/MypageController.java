@@ -21,7 +21,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fm.www.dto.Board_Reply;
 import com.fm.www.dto.Board_tb;
+import com.fm.www.dto.Message;
+import com.fm.www.dto.Photo;
 import com.fm.www.dto.Team;
 import com.fm.www.dto.User;
 import com.fm.www.service.face.MypageService;
@@ -169,9 +172,72 @@ public class MypageController {
 	 * GET
 	 * */
 	@RequestMapping(value = "/mypage/mypagepersonalMessage", method = RequestMethod.GET)
-	public void mypagepersonalMessageGet() {		
+	public void mypagepersonalMessageGet(HttpSession session, Model model) {	
+		User user = new User();
+		
+		//유저번호 세션에서 얻어와서 넣어주기
+		user.setUser_no((int)(session.getAttribute("user_no")));
+		
+		//내게 온 메세지 리스트 조회
+		List<Message> messageList = mypageService.selectMessage(user);
+		
+		//내게 온 메세지 보낸사람 정보 조회
+		for(int i=0; i<messageList.size(); i++) {
+			messageList.get(i).setSenduser_id((mypageService.getSendUserId(messageList.get(i).getSenduser_no())));
+			messageList.get(i).setSenduser_name((mypageService.getSendUserName(messageList.get(i).getSenduser_no())));
+		}
+		
+		model.addAttribute("user",user);
+		model.addAttribute("messageList", messageList);	
 		
 	}
+	
+	/*
+	 * 개인메세지
+	 * 게인매세지 확인으로 바꾸기 
+	 * POST
+	 * */
+	@RequestMapping(value = "/mypage/MessageYN", method = RequestMethod.POST)
+	public String MessageYNPost(HttpServletRequest request, Model model) {	
+		int messageno = Integer.parseInt(request.getParameter("messageno"));
+		
+		mypageService.updateMessageYn(messageno);
+		
+		return "jsonView";
+		
+	}
+	/*
+	 * 개인메세지
+	 * 게인매세지 삭제 
+	 * POST
+	 * */
+	@RequestMapping(value = "/mypage/MessageDelete", method = RequestMethod.POST)
+	public String MessageDeletePost(HttpServletRequest request, Model model) {	
+		int messageno = Integer.parseInt(request.getParameter("messageno"));
+		
+		mypageService.deleteMessage(messageno);
+		
+		return "jsonView";
+		
+	}
+	
+	/*
+	 * 개인메세지
+	 * 게인매세지 답장보내기 
+	 * POST
+	 * */
+	@RequestMapping(value = "/mypage/replyMessage", method = RequestMethod.POST)
+	public String replyMessagePost(Message message) {	
+		
+		//개인메세지 답장
+		mypageService.replyMessage(message);
+		
+		return "redirect:/mypage/mypagepersonalMessage";
+	}
+	
+	
+	
+	
 	
 	/*
 	 * 내가쓴 게시글 리스트
@@ -404,7 +470,36 @@ public class MypageController {
 	 * GET
 	 * */
 	@RequestMapping(value = "/mypage/teamBoard", method = RequestMethod.GET)
-	public void teamBoardGet() {		
+	public void teamBoardGet(HttpSession session, String cur, String search_div, String search_word, Model model) {		
+		User user = new User();
+		user.setUser_no((int)(session.getAttribute("user_no")));
+		//팀번호 얻기
+		int team_no = mypageService.selectTeamNoUserNo(user);
+		
+		//현재 페이지 번호 얻기
+		int curPage = mypageService.getCurPage(cur);
+		
+		//총 게시글 수 얻기
+		int totalCount = mypageService.getTotalCountSearchTeam(team_no,search_div,search_word);
+
+		//페이지 객체 생성
+		Paging paging = new Paging(totalCount, curPage);
+		
+		
+		//게시글목록 MODEL로 추가
+		List<Board_tb> mypageboardList = mypageService.getPagingListSearchTeam(team_no, paging, search_div, search_word);
+		
+		for(int i=0; i<mypageboardList.size(); i++) {
+			mypageboardList.get(i).setBoard_reply_cnt(mypageService.getBoardReplyCnt(mypageboardList.get(i).getBoard_no()));
+		}
+		
+		int tableNum = totalCount - (curPage - 1) * 10;		
+		
+		model.addAttribute("search_div", search_div);
+		model.addAttribute("search_word", search_word);
+		model.addAttribute("tableNum", tableNum);
+		model.addAttribute("paging",paging);
+		model.addAttribute("mypageboardList",mypageboardList);
 		
 	}
 	
@@ -415,8 +510,21 @@ public class MypageController {
 	 * GET
 	 * */
 	@RequestMapping(value = "/mypage/teamBoardView", method = RequestMethod.GET)
-	public void teamBoardViewGet() {		
+	public void teamBoardViewGet(User user, Board_tb board, int board_no, Model model, Photo photo, HttpSession session, Board_Reply board_reply) {		
+		// 조회수 증가
+		mypageService.teamBoardUpHit(board_no);
+		// 지정 게시글 정보 가져오기
+		board = mypageService.teamBoardView(board_no);
+		// 사진 가져오기
+		photo = mypageService.teamBoardPhotoView(board_no);
 		
+		
+		// 댓글 리스트 가져오기
+		List <Board_Reply> list = mypageService.ReplyList(board_reply);
+
+		model.addAttribute("photo", photo);
+		model.addAttribute("board", board);
+		model.addAttribute("list", list);
 	}
 	
 	/*
@@ -425,9 +533,7 @@ public class MypageController {
 	 * GET
 	 * */
 	@RequestMapping(value = "/mypage/teamBoardWrite", method = RequestMethod.GET)
-	public void teamBoardWriteGet() {		
-		
-	}
+	public void teamBoardWriteGet() {}
 	
 	/*
 	 * 팀게시판 글쓰기폼
@@ -435,8 +541,61 @@ public class MypageController {
 	 * POST
 	 * */
 	@RequestMapping(value = "/mypage/teamBoardWrite", method = RequestMethod.POST)
-	public void teamBoardWritePost() {		
+	public String teamBoardWritePost(Board_tb board_tb, MultipartFile file, HttpSession session, Photo photo) {	
 		
+		// 유저 번호 & 팀번호 받아오기
+		User user = new User();
+		user.setUser_no((int)(session.getAttribute("user_no")));
+		int team_no = mypageService.selectTeamNoUserNo(user);
+		user.setTeam_no(team_no);
+		
+		int board_no = mypageService.teamBoardGetBoard_no();		
+					
+		if(!"".equals(file.getOriginalFilename())&& file.getOriginalFilename()!=null) {
+			//고유식별자
+			String uId = UUID.randomUUID().toString().split("-")[0];
+	
+			//저장될 파일 이름
+			String stored_name = null;
+			stored_name =file.getOriginalFilename()+"_"+uId;
+			
+			//파일 저장 경로		
+			String path = context.getRealPath("uploadImg");
+			
+			//저장될 파일
+			File dest = new File(path, stored_name);
+			
+			//파일업로드
+			try {
+				file.transferTo(dest);
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			photo.setPhoto_origin(file.getOriginalFilename());
+			photo.setPhoto_stored(stored_name);
+			
+			// 글 번호 생성하기
+			
+			
+			board_tb.setUser_no(user.getUser_no());
+			board_tb.setBoard_no(board_no);
+			photo.setBoard_no(board_no);
+			mypageService.teamBoardInsertWrite(board_tb);
+			mypageService.teamBoardInsertPhoto(photo);
+			
+		} else {	
+			// 유저 번호 받아오기
+			board_tb.setUser_no((int)session.getAttribute("user_no"));
+			// 이미지 파일 없이 글 작성
+			mypageService.teamBoardInsertWrite2(board_tb);
+		}	
+		mypageService.teamBoardInsertTeamBoard(board_tb,user);
+		
+		return "redirect:/mypage/teamBoard";
 	}
 	
 	/*

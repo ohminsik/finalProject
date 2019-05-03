@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> 
 <jsp:include page="../common/meta.jsp"/>
 <body>
 	<div id="wrap">
@@ -46,14 +47,14 @@
 						<div class="search_form">
 							<ul>
 								<li>
-									<select name="" class="selectform1">
+									<select name="search_div" class="selectform1">
 										<option value="제목">제목</option>
 										<option value="내용">내용</option>
 										<option value="작성자">작성자</option>
 									</select>
 								</li>
 								<li>
-									<input type="text" name="" id="" class="inputform250">
+									<input type="text" name="search_word" id="" class="inputform250">
 								</li>
 								<li><button class="btnform7">검색</button></li>
 							</ul>
@@ -78,16 +79,27 @@
 							</tr>
 						</thead>
 						<tbody>
+							<c:set var="tableNum" value="${tableNum}"/>
+							<%
+								String tableNum = pageContext.getAttribute("tableNum").toString();
+								int no = Integer.parseInt(tableNum);
+							%>
+							<c:if test="${!empty mypageboardList }">
+							<c:forEach items="${mypageboardList }" var="mypageboardList">
 							<tr>
-								<td>1</td>
-								<td class="title"><a href="/mypage/teamBoardView">제목이다 [1]</a></td>
-								<td>글쓴이다</td>
-								<td>등록일이다</td>
-								<td>조회수다</td>
+								<td><%=no-- %></td>
+								<td class="title"><a href="/mypage/teamBoardView?board_no=${mypageboardList.board_no }">${mypageboardList.board_title } <span class="fb chs">[ ${mypageboardList.board_reply_cnt } ]</span></a></td>
+								<td>${mypageboardList.user_nick }</td>
+								<td><fmt:formatDate value="${mypageboardList.board_date }" pattern="yyyy-MM-dd"/></td>
+								<td>${mypageboardList.board_cnt } </td>
 							</tr>
+							</c:forEach>
+							</c:if>
+							<c:if test="${empty mypageboardList  }">
 							<tr>
 								<td colspan="5">등록된 내용이 없습니다.</td>
 							</tr>
+							</c:if>
 						</tbody>
 					</table>
 					

@@ -2,7 +2,10 @@ package com.fm.www.service.face;
 
 import java.util.List;
 
+import com.fm.www.dto.Board_Reply;
 import com.fm.www.dto.Board_tb;
+import com.fm.www.dto.Message;
+import com.fm.www.dto.Photo;
 import com.fm.www.dto.Team;
 import com.fm.www.dto.User;
 import com.fm.www.util.Paging;
@@ -56,6 +59,49 @@ public interface MypageService {
 	
 	//게시글 댓글갯수 조회하기
 	public int getBoardReplyCnt(int board_no);
+	
+	//내게 온 메세지 리스트 조회
+	public List<Message> selectMessage(User user);
+
+	//내게 온 메세지 보낸사람 정보 조회
+	public String getSendUserId(int senduser_no);
+	public String getSendUserName(int senduser_no);
+	
+	//메세지 확인으로 변경
+	public void updateMessageYn(int messageno);
+	//메세지 삭제
+	public void deleteMessage(int messageno);
+
+	//개인메세지 답장
+	public void replyMessage(Message message);
+	
+	//팀 게시판 총 게시글 수 얻어오기
+	public int getTotalCountSearchTeam(int team_no, String search_div, String search_word);
+	
+	//팀 게시판 글 가져오기
+	public List<Board_tb> getPagingListSearchTeam(int team_no, Paging paging, String search_div, String search_word);
+
+	//팀 글번호 생성하기
+	public int teamBoardGetBoard_no();
+
+	//팀 게시판 인써트
+	public void teamBoardInsertWrite(Board_tb board_tb);
+	public void teamBoardInsertPhoto(Photo photo);
+	public void teamBoardInsertWrite2(Board_tb board_tb);
+	
+	//team_board 삽입
+	public void teamBoardInsertTeamBoard(Board_tb board_tb, User user);
+
+	//조회수증가
+	public void teamBoardUpHit(int board_no);
+	//게시글 정보 가져오기
+	public Board_tb teamBoardView(int board_no);
+	//사진 가져오기
+	public Photo teamBoardPhotoView(int board_no);
+	//댓글리스트 가졍오기
+	public List<Board_Reply> ReplyList(Board_Reply board_reply);
+	
+	
 	
 	
 

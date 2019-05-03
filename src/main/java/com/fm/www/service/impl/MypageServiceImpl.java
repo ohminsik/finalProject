@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fm.www.dao.face.MypageDao;
+import com.fm.www.dto.Board_Reply;
 import com.fm.www.dto.Board_tb;
+import com.fm.www.dto.Message;
+import com.fm.www.dto.Photo;
 import com.fm.www.dto.Team;
 import com.fm.www.dto.User;
 import com.fm.www.service.face.MypageService;
@@ -123,6 +126,106 @@ public class MypageServiceImpl implements MypageService{
 	@Override
 	public int getBoardReplyCnt(int board_no) {
 		return mypageDao.getBoardReplyCnt(board_no);
+	}
+	
+	//내게 온 메세지 리스트 조회
+	@Override
+	public List<Message> selectMessage(User user) {
+		return mypageDao.selectMessage(user);
+	}
+
+	//내게 온 메세지 보낸사람 정보 조회
+	@Override
+	public String getSendUserId(int senduser_no) {
+		return mypageDao.getSendUserId(senduser_no);
+	}
+	@Override
+	public String getSendUserName(int senduser_no) {
+		return mypageDao.getSendUserName(senduser_no);
+	}
+	
+	//메세지 확인으로 변경
+	@Override
+	public void updateMessageYn(int messageno) {
+		mypageDao.updateMessageYn(messageno);
+		
+	}
+	//메세지삭제
+	@Override
+	public void deleteMessage(int messageno) {
+		mypageDao.deleteMessage(messageno);
+		
+	}
+
+	//개인메세지 답장
+	@Override
+	public void replyMessage(Message message) {
+		mypageDao.replyMessage(message);
+		
+	}
+
+	//팀 게시판 총 게시글 수 얻어오기
+	@Override
+	public int getTotalCountSearchTeam(int team_no, String search_div, String search_word) {
+		return mypageDao.getTotalCountSearchTeam(team_no, search_div, search_word);
+	}
+	
+	//팀게시판 글 가져오기
+	@Override
+	public List<Board_tb> getPagingListSearchTeam(int team_no, Paging paging, String search_div, String search_word) {
+		return mypageDao.getPagingListSearchTeam(team_no, paging, search_div, search_word);
+	}
+
+	//팀 글번호 생성하기
+	@Override
+	public int teamBoardGetBoard_no() {
+		return mypageDao.teamBoardGetBoard_no();
+	}
+
+	//팀 게시판  글 인써트
+	@Override
+	public void teamBoardInsertWrite(Board_tb board_tb) {
+		mypageDao.teamBoardInsertWrite(board_tb);
+		
+	}
+	//팀 게시판  사진 인써트
+	@Override
+	public void teamBoardInsertPhoto(Photo photo) {
+		mypageDao.teamBoardInsertPhoto(photo);
+		
+	}
+	//팀 게시판  글 (사진없을때) 인써트
+	@Override
+	public void teamBoardInsertWrite2(Board_tb board_tb) {
+		mypageDao.teamBoardInsertWrite2(board_tb);
+		
+	}
+	//팀 게시판  team_Board 인써트
+	@Override
+	public void teamBoardInsertTeamBoard(Board_tb board_tb, User user) {
+		mypageDao.teamBoardInsertTeamBoard(board_tb, user);
+		
+	}
+
+	@Override
+	public void teamBoardUpHit(int board_no) {
+		mypageDao.teamBoardUpHit(board_no);
+		
+	}
+
+	@Override
+	public Board_tb teamBoardView(int board_no) {
+		return mypageDao.teamBoardView(board_no);
+	}
+
+	@Override
+	public Photo teamBoardPhotoView(int board_no) {
+		return mypageDao.teamBoardPhotoView(board_no);
+	}
+
+	@Override
+	public List<Board_Reply> ReplyList(Board_Reply board_reply) {
+		return mypageDao.ReplyList(board_reply);
 	}
 	
 	
