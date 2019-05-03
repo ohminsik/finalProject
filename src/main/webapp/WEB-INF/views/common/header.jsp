@@ -112,7 +112,7 @@
 				<li>
 					<a href="#">대회</a>
 					<ul>
-						<li><a href="#">대회 일정</a></li>
+						<li><a href="/tournament/tournamentRegion">대회 일정</a></li>
 					</ul>
 				</li>
 				<li>
