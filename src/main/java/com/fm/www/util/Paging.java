@@ -18,6 +18,12 @@ public class Paging {
 	private String search;
 	private String word;
 	
+	
+	public Paging() {
+		
+	}
+	
+	
 	// 총 게시글 수만 입력하는 생성자
 	public Paging(int totalCount) {
 		this.setTotalCount(totalCount);
