@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <jsp:include page="../../common/adminmeta.jsp" />
 <body>
 	<div id="wrap">
@@ -13,28 +14,67 @@
 		<div id="container">
 			<div class="main_title">
 				<ul class="">
-					<li><a href="#" class="btnform1">공지사항</a></li>
+					<li><a href="/admin/board?board_div=1" class="btnform1">공지사항</a></li>
+					<li><a href="/admin/board?board_div=2" class="btnform1">팀 가입인사</a></li>
+					<li><a href="/admin/board?board_div=3" class="btnform1">팀 모집게시판</a></li>
+					<li><a href="/admin/board?board_div=4" class="btnform1">자유게시판</a></li>
+					<li><a href="/admin/board?board_div=5" class="btnform1">경기후기</a></li>
+					<li><a href="/admin/board?board_div=6" class="btnform1">중고장터</a></li>
+					<li><a href="/admin/board?board_div=7" class="btnform1">축구동영상</a></li>
+					<li><a href="/admin/board?board_div=8" class="btnform1">팀 게시판</a></li>
+					<li><a href="/admin/board?board_div=9" class="btnform1">대회일정</a></li>
+					<li><a href="/admin/board?board_div=10" class="btnform1">경기장 리스트</a></li>
 				</ul>
 			</div>
 			<div class="main_title">
-				<p>공지사항 관리</p>
+				<c:if test="${board_div eq 1 }">
+					<p>공지사항 관리</p>
+				</c:if>
+				<c:if test="${board_div eq 2 }">
+					<p>팀가입인사 관리</p>
+				</c:if>
+				<c:if test="${board_div eq 3 }">
+					<p>팀모집게시판 관리</p>
+				</c:if>
+				<c:if test="${board_div eq 4 }">
+					<p>자유게시판 관리</p>
+				</c:if>
+				<c:if test="${board_div eq 5}">
+					<p>경기후기 관리</p>
+				</c:if>
+				<c:if test="${board_div eq 6 }">
+					<p>중고장터 관리</p>
+				</c:if>
+				<c:if test="${board_div eq 7 }">
+					<p>축구동영상 관리</p>
+				</c:if>
+				<c:if test="${board_div eq 8 }">
+					<p>팀게시판 관리</p>
+				</c:if>
+				<c:if test="${board_div eq 9 }">
+					<p>대회일정 관리</p>
+				</c:if>
+				<c:if test="${board_div eq 10 }">
+					<p>경기장리스트 관리</p>
+				</c:if>
+				
 			</div>
 
 			<div class="category_wrap">
-			<form action="/admin/board/notice" method="get">
+			<form action="/admin/board?board_div=${board_div }" method="get">
 				<ul class="ul_form1">
-					<li><select name="search_div" title="" class="selectform1">
-							<option value="notice_title" selected="selected">제목</option>
-							<option value="notice_text">내용</option>
-							<option value="notice_title+notice_text">제목 + 내용</option>
+					<li><select name="search" title="" class="selectform1">
+							<option value="board_title" selected="selected">제목</option>
+							<option value="board_content">내용</option>
+							<option value="board_title+board_content">제목 + 내용</option>
 					</select></li>
-					<li><input type="text" class="inputform150" title="" value="" name="search_word" /></li>
-					<li><button type='submit' class="btnform1">검색</button></li>
-					<li><a href="/admin/board/notice" class="btnform2">전체보기</a></li>
+					<li><input type="text" class="inputform150" title="" value="" name="word" /></li>
+					<li><button class="btnform1">검색</button></li>
+					<li><a href="/admin/board?board_div=${board_div }" class="btnform2">전체보기</a></li>
 				</ul>
 			</form>
 				<ul class="ul_form2">
-					<li><a href="/admin/board/noticeWrite" class="btnform3">등록</a></li>
+					<li><a href="/admin/board/write?board_div=${board_div }" class="btnform3">등록</a></li>
 					<li><a href="#" class="btnform4">삭제</a></li>
 				</ul>
 			</div>
@@ -65,24 +105,27 @@
 						</tr>
 					</thead>
 					<tbody>
-
+					<c:forEach items="${list }" var="l">
 						<tr>
 							<td><input type="checkbox" name="check2" id="check22" value="" /><label for="check2"></label></td>
-							<td>NO</td>
-							<td>제목</td>
-							<td>내용</td>
-							<td>등록일</td>
-							<td>조회</td>
-							<td>삭제구분</td>
+							<td>${l.board_no }</td>
+							<td>${l.board_title }<span class="fb chs">[ ${l.board_reply_cnt } ]</span></td>
+							<td>${l.board_content }</td>
+							<td><fmt:formatDate value="${l.board_date }" pattern="yyyy-MM-dd"></fmt:formatDate></td>
+							<td>${l.board_cnt }</td>
+							<td><c:if test="${l.delete_yn.equals('Y') }">삭제</c:if>
+								<c:if test="${l.delete_yn.equals('N') }">존재</c:if></td>
 							<td>
 								<a class="btnform5">수정</a>
-								<a class="btnform6">삭제</a>
+								<a class="btnform6" href="/admin/boardDelete?board_no=${l.board_no }&board_div=${board_div}" onclick="return deletee();">삭제</a>
 							</td>
-						</tr>						
+						</tr>
+					</c:forEach>		
+					<c:if test="${totalCount eq 0 }">				
 						<tr>
 							<td colspan="8">등록된 게시물이 없습니다.</td>
 						</tr>					
-
+					</c:if>
 					</tbody>
 				</table>
 
@@ -95,7 +138,7 @@
 				            <c:if test="${paging.curPage eq 1 }">
 				            </c:if>
 				            <c:if test="${paging.curPage ne 1 }">
-				               <li><a href="/admin/board/notice?cur=${paging.curPage-1}&search_div=${search_div}&search_word=${search_word}">&lt;</a></li>
+				               <li><a href="/admin/board?board_div=${board_div }&curPage=${paging.curPage-1}&search=${search}&word=${word}">&lt;</a></li>
 				            </c:if>
 				
 				
@@ -104,10 +147,10 @@
 				               var="i">
 				
 				               <c:if test="${paging.curPage eq i}">
-				                  <li class="on"><a href="/admin/board/notice?cur=${i }&search_div=${search_div}&search_word=${search_word}">${i }</a></li>
+				                  <li class="on"><a href="/admin/board?board_div=${board_div }&curPage=${i }&search=${search}&sword=${word}">${i }</a></li>
 				               </c:if>
 				               <c:if test="${paging.curPage ne i}">
-				                  <li><a href="/admin/board/notice?cur=${i }&search_div=${search_div}&search_word=${search_word}">${i }</a></li>
+				                  <li><a href="/admin/board?board_div=${board_div }&curPage=${i }&search=${search}&word=${word}">${i }</a></li>
 				               </c:if>
 				            </c:forEach>
 				
@@ -115,7 +158,7 @@
 				            <c:if test="${paging.curPage eq paging.totalPage }">
 				            </c:if>
 				            <c:if test="${paging.curPage ne paging.totalPage }">
-				               <li><a href="/admin/board/notice?cur=${paging.curPage+1}&search_div=${search_div}&search_word=${search_word}">&gt;</a></li>
+				               <li><a href="/admin/board?board_div=${board_div }&curPage=${paging.curPage+1}&search=${search}&word=${word}">&gt;</a></li>
 				            </c:if>
 				         </ul>
 				    </c:if>
@@ -139,6 +182,14 @@
 
 		}
 
+		function deletee() {
+			if (confirm("게시글을 삭제하겠습니까?")) {
+				var board_no = "${l.board_no }";
+				alert("삭제되었습니다");
+			} else {
+				return false;
+			}
+		}
 	</script>
 </body>
 </html>
@@ -157,5 +208,8 @@
 
 .menuuuuuu li p span {
 	font-size: 20px;
+}
+.paging_wrap ul li {
+    display: inline-block;
 }
 </style>

@@ -11,6 +11,100 @@
   		SELECT COUNT(*) FROM admin_tb
   		WHERE admin_id = #{admin_id} AND admin_pw = #{admin_pw}
   	</select>
-  
-  
+  	<!-- 게시글 전체 수 -->
+  	<select id="boardTotalCount" resultType="int">
+		select count(*) from board_tb M
+			JOIN USER_TB U ON(U.USER_NO = M.USER_NO)
+			where board_div = #{board_div }
+			<choose>
+				<when test="search == 'board_title'">
+					AND board_title Like '%' || #{word} || '%'
+				</when>
+				<when test="search == 'board_content'">
+					AND board_content Like '%' || #{word} || '%'
+				</when>
+				<when test="search == 'board_title+board_content'">
+					AND user_nick Like '%' || #{word} || '%'
+				</when>
+			</choose>
+  	</select>
+  	
+  	<!-- 게시판 페이징 리스트 처리 -->
+  	<select id="boardGetList" parameterType="com.fm.www.util.Paging" resultType="com.fm.www.dto.Board_tb">
+  		SELECT * FROM (
+         SELECT rownum rnum, B.* FROM (
+            SELECT U.USER_nick,  M.*
+            FROM board_tb M
+            JOIN USER_TB U ON(U.USER_NO = M.USER_NO)
+            
+            <choose>
+               <when test="search == 'board_title'">
+                  AND board_title Like '%' || #{word} || '%'
+               </when>
+               <when test="search == 'board_content'">
+                  AND board_content Like '%' || #{word} || '%'
+               </when>
+               <when test="search == 'board_title+board_content'">
+                  AND user_nick Like '%' || #{word} || '%'
+               </when>
+            </choose>
+            and board_div = #{board_div }
+            ORDER BY board_no desc
+         ) B
+         ORDER BY rnum
+      ) R
+      WHERE rnum BETWEEN #{paging.startNo} AND #{paging.endNo}
+  	</select>
+  	
+  	<!-- 댓글 갯수 구하기 -->
+	<select id="boardReplyCount" parameterType="int" resultType="int">
+		select COUNT(*) from board_reply 
+		where reply_delete_yn = 'N'
+		and board_no = #{board_no}
+	</select>
+  	
+  	<!-- 게시글 삭제 -->
+	<update id="boardDelete" parameterType="int">
+		UPDATE board_tb
+		SET delete_yn = 'Y'
+		where board_no = #{board_no}
+	</update>
+	
+	<!-- 게시글 선택 삭제 -->
+  	<update id="boardCheckDelete"></update>
+  	
+  	<!-- 게시글 작성 시퀀스 번호 생성 -->
+  	<select id="adminGetBoard_no" resultType="int">
+  		SELECT board_tb_seq.nextval FROM dual
+  	</select>
+  	
+	<!-- 시퀀스 번호에 게시글 작성 -->
+	<insert id="adminInsertWrite1" parameterType="com.fm.www.dto.Board_tb">
+		insert into board_tb
+		(board_no, board_div, board_title, board_content, board_cnt, delete_yn, admin_no, board_date)
+		values(#{board_no}, #{board_div } , #{board_title }, #{board_content } ,0 ,'N' , #{admin_no }, sysdate)
+	</insert>
+	<insert id="adminInsertPhoto" parameterType="com.fm.www.dto.Photo">
+		insert into photo
+		(photo_no, photo_origin, photo_stored, board_fg, board_no, photo_delete_yn )
+		values(photo_seq.nextval, #{photo_origin }, #{photo_stored }, 5, #{board_no }, 'N' ) 
+	</insert>  
+	<!-- 로그인 닉네임 가져오기 -->
+	<select id="getAdminNo" parameterType="com.fm.www.dto.Admin" resultType="int">
+  		SELECT admin_no FROM Admin_tb
+  		WHERE admin_id=#{admin_id}
+  		AND admin_pw=#{admin_pw}
+  	</select>
+  	
+  	<!-- 관리자 게시판 이미지 파일 없이 글 작성 -->
+  	<insert id="adminInsertWrite2" parameterType="com.fm.www.dto.Board_tb">
+      insert into board_tb
+         (board_no, board_div, board_title, board_content, board_cnt, delete_yn, admin_no, board_date)
+         values(board_tb_seq.nextval, #{board_div }, #{board_title }, #{board_content } , 0 ,'N', #{admin_no }, sysdate )
+   </insert>
+  	
+  	
+  	
+  	
+  	
   </mapper>

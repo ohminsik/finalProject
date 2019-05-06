@@ -14,13 +14,13 @@ public class Board_tb {
 	private int board_cnt;			//게시글조회수
 	private String delete_yn;		//게시글 삭제여부
 	private int board_reply_cnt;	//게시글 댓글갯수
-	
+	private int admin_no; 			//관리자 번호
 	@Override
 	public String toString() {
 		return "Board_tb [board_no=" + board_no + ", user_no=" + user_no + ", user_nick=" + user_nick + ", board_div="
 				+ board_div + ", board_title=" + board_title + ", board_content=" + board_content + ", board_date="
 				+ board_date + ", board_cnt=" + board_cnt + ", delete_yn=" + delete_yn + ", board_reply_cnt="
-				+ board_reply_cnt + "]";
+				+ board_reply_cnt + ", admin_no=" + admin_no + "]";
 	}
 	public int getBoard_no() {
 		return board_no;
@@ -82,5 +82,14 @@ public class Board_tb {
 	public void setBoard_reply_cnt(int board_reply_cnt) {
 		this.board_reply_cnt = board_reply_cnt;
 	}
+	public int getAdmin_no() {
+		return admin_no;
+	}
+	public void setAdmin_no(int admin_no) {
+		this.admin_no = admin_no;
+	}
+	
+	
+	
 
 }
