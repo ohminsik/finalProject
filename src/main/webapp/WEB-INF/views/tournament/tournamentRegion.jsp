@@ -40,19 +40,19 @@
 				<ul class="tournament_region_ul">
 					<li><a href="/tournament/tournamentRegion" class="btnform3">전체</a></li>
 					<li><a href="/tournament/tournamentRegion?region=서울" class="btnform3">서울</a></li>
-					<li><a href="#" class="btnform3">인천</a></li>
-					<li><a href="#" class="btnform3">대전</a></li>
-					<li><a href="#" class="btnform3">대구</a></li>
-					<li><a href="#" class="btnform3">울산</a></li>
-					<li><a href="#" class="btnform3">부산</a></li>
-					<li><a href="#" class="btnform3">세종</a></li>
-					<li><a href="#" class="btnform3">광주</a></li>
-					<li><a href="#" class="btnform3">경기</a></li>
-					<li><a href="#" class="btnform3">강원</a></li>
-					<li><a href="#" class="btnform3">충청</a></li>
-					<li><a href="#" class="btnform3">전라</a></li>
-					<li><a href="#" class="btnform3">경상</a></li>
-					<li><a href="#" class="btnform3">제주</a></li>
+					<li><a href="/tournament/tournamentRegion?region=인천" class="btnform3">인천</a></li>
+					<li><a href="/tournament/tournamentRegion?region=대전" class="btnform3">대전</a></li>
+					<li><a href="/tournament/tournamentRegion?region=대구" class="btnform3">대구</a></li>
+					<li><a href="/tournament/tournamentRegion?region=울산" class="btnform3">울산</a></li>
+					<li><a href="/tournament/tournamentRegion?region=부산" class="btnform3">부산</a></li>
+					<li><a href="/tournament/tournamentRegion?region=세종" class="btnform3">세종</a></li>
+					<li><a href="/tournament/tournamentRegion?region=광주" class="btnform3">광주</a></li>
+					<li><a href="/tournament/tournamentRegion?region=경기" class="btnform3">경기</a></li>
+					<li><a href="/tournament/tournamentRegion?region=강원" class="btnform3">강원</a></li>
+					<li><a href="/tournament/tournamentRegion?region=충청" class="btnform3">충청</a></li>
+					<li><a href="/tournament/tournamentRegion?region=전라" class="btnform3">전라</a></li>
+					<li><a href="/tournament/tournamentRegion?region=경상" class="btnform3">경상</a></li>
+					<li><a href="/tournament/tournamentRegion?region=제주" class="btnform3">제주</a></li>
 				</ul>
 			
 				<ul class="tournament_list">
