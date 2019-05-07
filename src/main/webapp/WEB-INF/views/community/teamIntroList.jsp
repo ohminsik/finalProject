@@ -132,7 +132,7 @@
 			            <c:if test="${paging.curPage eq paging.totalPage }">
 			            </c:if>
 			            <c:if test="${paging.curPage ne paging.totalPage }">
-			               <li><a href="/community/teamIntroList?curPage=${paging.curPage+1}&search_div=${search_div}&search_word=${search_word}">&gt;</a></li>
+			               <li><a href="/community/teamIntroList?curPage=${paging.curPage+1}&search=${search}&search=${search}">&gt;</a></li>
 			            </c:if>
 			         </ul>
 			    </c:if>

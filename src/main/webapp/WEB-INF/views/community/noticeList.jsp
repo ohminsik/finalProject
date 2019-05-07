@@ -78,7 +78,7 @@
 							<tr>
 								<td><%=no-- %></td>
 								<td class="title"><a href="/community/noticeView?board_no=${l.board_no }">${l.board_title } <span class="fb chs">[ ${l.board_reply_cnt } ]</span></a></td>
-								<td>${l.user_nick }</td>
+								<td>관리자</td>
 								<td><fmt:formatDate value="${l.board_date }" pattern="yyyy-MM-dd"/></td>
 								<td>${l.board_cnt }</td>
 							</tr>

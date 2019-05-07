@@ -22,10 +22,10 @@
 				<ul>
 					<li><a href="/main"><i class="xi-home"></i></a></li>
 					<li>
-						<a>중고장터</a>
+						<a>커뮤니티</a>
 					</li>
 					<li>
-						<a>팀 가입 인사</a>
+						<a>중고장터</a>
 					</li>
 				</ul>
 			</div>

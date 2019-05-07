@@ -46,11 +46,7 @@ public class AdminServiceImpl implements AdminService{
 	public void boardDelete(int board_no) {
 		adminDao.boardDelete(board_no);
 	}
-	// 게시글 선택 삭제
-	@Override
-	public void boardCheckDelete(int board_no) {
-		adminDao.boardCheckDelete(board_no);
-	}
+
 	// 게시글 작성 시퀀스 번호 생성
 	@Override
 	public int adminGetBoard_no() {
@@ -75,6 +71,31 @@ public class AdminServiceImpl implements AdminService{
 	public void adminInsertWrite2(Board_tb board_tb) {
 		adminDao.adminInsertWrite2(board_tb);
 	}
+	// 이전 글 가져오기
+	@Override
+	public Board_tb boardUpdate(int board_no) {
+		return adminDao.boardUpdate(board_no);
+	}
+	// 이전 파일 가져오기
+	@Override
+	public Photo photoUpdate(Photo photo) {
+		return adminDao.photoUpdate(photo);
+	}
+	//파일첨부 존재 여부
+	@Override
+	public int adminPhotoCheck(int board_no) {
+		return adminDao.adminPhotoCheck(board_no);
+	}
+	//수정 글쓰기
+	@Override
+	public void adminBoardWrite(Board_tb board) {
+		adminDao.adminBoardWrite(board);
+	}
+	@Override
+	public void adminPhotoWrite(Photo photo) {
+		adminDao.adminPhotoWrite(photo);
+	}
+	
 	
 
 }

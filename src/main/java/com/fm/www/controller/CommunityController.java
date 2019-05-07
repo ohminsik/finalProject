@@ -368,96 +368,97 @@ public class CommunityController {
 	 * */
 	@RequestMapping(value="/community/teamIntroUpdate", method = RequestMethod.POST)
 	public String teamIntroUpdatePost(int board_no,Photo photo,Board_tb board_tb ,HttpSession session,HttpServletRequest request, MultipartFile file) {
-		try {
-			request.setCharacterEncoding("utf-8");
-		} catch (UnsupportedEncodingException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 		//파일첨부 존재 여부
 		int photo_no = communityService.teamIntrocntphoto(board_no);
 	
-		if(photo_no!=0) {
-			//고유식별자
-			String uId = UUID.randomUUID().toString().split("-")[0];
-	
-			//저장될 파일 이름
-			String stored_name = null;
-			stored_name =file.getOriginalFilename()+"_"+uId;
-			
-							
-			//파일 저장 경로		
-			String path = context.getRealPath("uploadImg");
-			
-			//저장될 파일
-			File dest = new File(path, stored_name);
-			System.out.println("파일경로"+dest);
-			//파일업로드
-			try {
-				file.transferTo(dest);
-			} catch (IllegalStateException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
+		if(!"".equals(file.getOriginalFilename())&& file.getOriginalFilename()!=null) {
+		
+			if(photo_no!=0) {
+				//고유식별자
+				String uId = UUID.randomUUID().toString().split("-")[0];
+		
+				//저장될 파일 이름
+				String stored_name = null;
+				stored_name =file.getOriginalFilename()+"_"+uId;
 				
-				e.printStackTrace();
+								
+				//파일 저장 경로		
+				String path = context.getRealPath("uploadImg");
+				
+				//저장될 파일
+				File dest = new File(path, stored_name);
+				System.out.println("파일경로"+dest);
+				//파일업로드
+				try {
+					file.transferTo(dest);
+				} catch (IllegalStateException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					
+					e.printStackTrace();
+				}
+				photo.setPhoto_origin(file.getOriginalFilename());
+				photo.setPhoto_stored(stored_name);
+			
+				board_tb.setBoard_no(board_no);
+				photo.setBoard_no(board_no);
+				//세션번호넣어주기
+				int user_no = (int) session.getAttribute("user_no");
+				board_tb.setUser_no(user_no);
+			
+			
+				//수정 글쓰기
+				communityService.teamIntroupdate(board_tb);
+			
+				//수정 파일첨부
+				communityService.teamIntrophotoupdate(photo);
+				
+			}else if(photo_no==0){
+				//고유식별자
+				String uId = UUID.randomUUID().toString().split("-")[0];
+		
+				//저장될 파일 이름
+				String stored_name = null;
+				stored_name =file.getOriginalFilename()+"_"+uId;
+				
+								
+				//파일 저장 경로		
+				String path = context.getRealPath("uploadImg");
+				
+				//저장될 파일
+				File dest = new File(path, stored_name);
+				System.out.println("파일경로"+dest);
+				//파일업로드
+				try {
+					file.transferTo(dest);
+				} catch (IllegalStateException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					
+					e.printStackTrace();
+				}
+				photo.setPhoto_origin(file.getOriginalFilename());
+				photo.setPhoto_stored(stored_name);
+			
+				board_tb.setBoard_no(board_no);
+				photo.setBoard_no(board_no);
+				board_tb.setBoard_no(board_no);
+				//세션번호넣어주기
+				int user_no = (int) session.getAttribute("user_no");
+				board_tb.setUser_no(user_no);
+			
+				//수정 글쓰기
+				communityService.teamIntroupdate(board_tb);
+				//파일첨부
+				communityService.teamIntrophotowrite(photo);
 			}
-			photo.setPhoto_origin(file.getOriginalFilename());
-			photo.setPhoto_stored(stored_name);
-		
-			board_tb.setBoard_no(board_no);
-			photo.setBoard_no(board_no);
-			//세션번호넣어주기
-			int user_no = (int) session.getAttribute("user_no");
-			board_tb.setUser_no(user_no);
-		
-		
+		}else {
 			//수정 글쓰기
 			communityService.teamIntroupdate(board_tb);
-		
-			//수정 파일첨부
-			communityService.teamIntrophotoupdate(photo);
-			
-		}else if(photo_no==0){
-			//고유식별자
-			String uId = UUID.randomUUID().toString().split("-")[0];
-	
-			//저장될 파일 이름
-			String stored_name = null;
-			stored_name =file.getOriginalFilename()+"_"+uId;
-			
-							
-			//파일 저장 경로		
-			String path = context.getRealPath("uploadImg");
-			
-			//저장될 파일
-			File dest = new File(path, stored_name);
-			System.out.println("파일경로"+dest);
-			//파일업로드
-			try {
-				file.transferTo(dest);
-			} catch (IllegalStateException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				
-				e.printStackTrace();
-			}
-			photo.setPhoto_origin(file.getOriginalFilename());
-			photo.setPhoto_stored(stored_name);
-		
-			board_tb.setBoard_no(board_no);
-			photo.setBoard_no(board_no);
-			board_tb.setBoard_no(board_no);
-			//세션번호넣어주기
-			int user_no = (int) session.getAttribute("user_no");
-			board_tb.setUser_no(user_no);
-		
-			//수정 글쓰기
-			communityService.teamIntroupdate(board_tb);
-			//파일첨부
-			communityService.teamIntrophotowrite(photo);
 		}
+		
 		
 		return "redirect:/community/teamIntroList";
 	}
@@ -645,90 +646,89 @@ public class CommunityController {
 	 * */
 	@RequestMapping(value="/community/freeUpdate", method = RequestMethod.POST)
 	public String freeUpdatePost(int board_no,Photo photo,Board_tb board_tb ,HttpSession session,HttpServletRequest request, MultipartFile file) {
-		try {
-			request.setCharacterEncoding("utf-8");
-		} catch (UnsupportedEncodingException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		// 자유 파일첨부 존재 여부
+		
 		int photo_no = communityService.freeCntPhoto(board_no);
-	
-		if(photo_no!=0) {
-			//고유식별자
-			String uId = UUID.randomUUID().toString().split("-")[0];
-			//저장될 파일 이름
-			String stored_name = null;
-			stored_name =file.getOriginalFilename()+"_"+uId;		
-			//파일 저장 경로		
-			String path = context.getRealPath("uploadImg");
-			//저장될 파일
-			File dest = new File(path, stored_name);
-			System.out.println("파일경로"+dest);
-			//파일업로드
-			try {
-				file.transferTo(dest);
-			} catch (IllegalStateException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				
-				e.printStackTrace();
-			}
-			photo.setPhoto_origin(file.getOriginalFilename());
-			photo.setPhoto_stored(stored_name);
-		
-			board_tb.setBoard_no(board_no);
-			photo.setBoard_no(board_no);
-			//세션번호넣어주기
-			int user_no = (int) session.getAttribute("user_no");
-			board_tb.setUser_no(user_no);
+		if(!"".equals(file.getOriginalFilename())&& file.getOriginalFilename()!=null) {
+			if(photo_no!=0) {
+				//고유식별자
+				String uId = UUID.randomUUID().toString().split("-")[0];
+				//저장될 파일 이름
+				String stored_name = null;
+				stored_name =file.getOriginalFilename()+"_"+uId;		
+				//파일 저장 경로		
+				String path = context.getRealPath("uploadImg");
+				//저장될 파일
+				File dest = new File(path, stored_name);
+				System.out.println("파일경로"+dest);
+				//파일업로드
+				try {
+					file.transferTo(dest);
+				} catch (IllegalStateException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					
+					e.printStackTrace();
+				}
+				photo.setPhoto_origin(file.getOriginalFilename());
+				photo.setPhoto_stored(stored_name);
+			
+				board_tb.setBoard_no(board_no);
+				photo.setBoard_no(board_no);
+				//세션번호넣어주기
+				int user_no = (int) session.getAttribute("user_no");
+				board_tb.setUser_no(user_no);
 
-			// 자유 수정 글쓰기
-			communityService.freeUpdate(board_tb);
-		
-			// 자유 이미지 존재 할 때 수정 파일첨부
-			communityService.freePhotoUpdate(photo);
+				// 자유 수정 글쓰기
+				communityService.freeUpdate(board_tb);
 			
-		}else if(photo_no==0){
-			//고유식별자
-			String uId = UUID.randomUUID().toString().split("-")[0];
-	
-			//저장될 파일 이름
-			String stored_name = null;
-			stored_name =file.getOriginalFilename()+"_"+uId;
-			
-							
-			//파일 저장 경로		
-			String path = context.getRealPath("uploadImg");
-			
-			//저장될 파일
-			File dest = new File(path, stored_name);
-			System.out.println("파일경로"+dest);
-			//파일업로드
-			try {
-				file.transferTo(dest);
-			} catch (IllegalStateException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
+				// 자유 이미지 존재 할 때 수정 파일첨부
+				communityService.freePhotoUpdate(photo);
 				
-				e.printStackTrace();
+			}else if(photo_no==0){
+				//고유식별자
+				String uId = UUID.randomUUID().toString().split("-")[0];
+		
+				//저장될 파일 이름
+				String stored_name = null;
+				stored_name =file.getOriginalFilename()+"_"+uId;
+				
+								
+				//파일 저장 경로		
+				String path = context.getRealPath("uploadImg");
+				
+				//저장될 파일
+				File dest = new File(path, stored_name);
+				System.out.println("파일경로"+dest);
+				//파일업로드
+				try {
+					file.transferTo(dest);
+				} catch (IllegalStateException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					
+					e.printStackTrace();
+				}
+				photo.setPhoto_origin(file.getOriginalFilename());
+				photo.setPhoto_stored(stored_name);
+			
+				board_tb.setBoard_no(board_no);
+				photo.setBoard_no(board_no);
+				board_tb.setBoard_no(board_no);
+				//세션번호넣어주기
+				int user_no = (int) session.getAttribute("user_no");
+				board_tb.setUser_no(user_no);
+			
+				// 자유 수정 글쓰기
+				communityService.freeUpdate(board_tb);
+				// 자유 이미지 없을 때 파일첨부
+				communityService.freePhotoWrite(photo);
 			}
-			photo.setPhoto_origin(file.getOriginalFilename());
-			photo.setPhoto_stored(stored_name);
-		
-			board_tb.setBoard_no(board_no);
-			photo.setBoard_no(board_no);
-			board_tb.setBoard_no(board_no);
-			//세션번호넣어주기
-			int user_no = (int) session.getAttribute("user_no");
-			board_tb.setUser_no(user_no);
-		
+			
+		}else {
 			// 자유 수정 글쓰기
 			communityService.freeUpdate(board_tb);
-			// 자유 이미지 없을 때 파일첨부
-			communityService.freePhotoWrite(photo);
 		}
 		
 		return "redirect:/community/freeList";
@@ -916,91 +916,92 @@ public class CommunityController {
 	 * */
 	@RequestMapping(value="/community/reviewUpdate", method = RequestMethod.POST)
 	public String reviewUpdatePost(int board_no,Photo photo,Board_tb board_tb ,HttpSession session,HttpServletRequest request, MultipartFile file) {
-		try {
-			request.setCharacterEncoding("utf-8");
-		} catch (UnsupportedEncodingException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+
+
 		// 경기 후기 파일첨부 존재 여부
 		int photo_no = communityService.reviewCntPhoto(board_no);
-	
-		if(photo_no!=0) {
-			//고유식별자
-			String uId = UUID.randomUUID().toString().split("-")[0];
-			//저장될 파일 이름
-			String stored_name = null;
-			stored_name =file.getOriginalFilename()+"_"+uId;		
-			//파일 저장 경로		
-			String path = context.getRealPath("uploadImg");
-			//저장될 파일
-			File dest = new File(path, stored_name);
-			System.out.println("파일경로"+dest);
-			//파일업로드
-			try {
-				file.transferTo(dest);
-			} catch (IllegalStateException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				
-				e.printStackTrace();
-			}
-			photo.setPhoto_origin(file.getOriginalFilename());
-			photo.setPhoto_stored(stored_name);
-		
-			board_tb.setBoard_no(board_no);
-			photo.setBoard_no(board_no);
-			//세션번호넣어주기
-			int user_no = (int) session.getAttribute("user_no");
-			board_tb.setUser_no(user_no);
+		if(!"".equals(file.getOriginalFilename())&& file.getOriginalFilename()!=null) {
+			if(photo_no!=0) {
+				//고유식별자
+				String uId = UUID.randomUUID().toString().split("-")[0];
+				//저장될 파일 이름
+				String stored_name = null;
+				stored_name =file.getOriginalFilename()+"_"+uId;		
+				//파일 저장 경로		
+				String path = context.getRealPath("uploadImg");
+				//저장될 파일
+				File dest = new File(path, stored_name);
+				System.out.println("파일경로"+dest);
+				//파일업로드
+				try {
+					file.transferTo(dest);
+				} catch (IllegalStateException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					
+					e.printStackTrace();
+				}
+				photo.setPhoto_origin(file.getOriginalFilename());
+				photo.setPhoto_stored(stored_name);
+			
+				board_tb.setBoard_no(board_no);
+				photo.setBoard_no(board_no);
+				//세션번호넣어주기
+				int user_no = (int) session.getAttribute("user_no");
+				board_tb.setUser_no(user_no);
 
-			// 경기 후기 수정 글쓰기
-			communityService.reviewUpdate(board_tb);
-		
-			// 경기 후기 이미지 존재 할 때 수정 파일첨부
-			communityService.reviewPhotoUpdate(photo);
+				// 경기 후기 수정 글쓰기
+				communityService.reviewUpdate(board_tb);
 			
-		}else if(photo_no==0){
-			//고유식별자
-			String uId = UUID.randomUUID().toString().split("-")[0];
-	
-			//저장될 파일 이름
-			String stored_name = null;
-			stored_name =file.getOriginalFilename()+"_"+uId;
-			
-							
-			//파일 저장 경로		
-			String path = context.getRealPath("uploadImg");
-			
-			//저장될 파일
-			File dest = new File(path, stored_name);
-			System.out.println("파일경로"+dest);
-			//파일업로드
-			try {
-				file.transferTo(dest);
-			} catch (IllegalStateException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
+				// 경기 후기 이미지 존재 할 때 수정 파일첨부
+				communityService.reviewPhotoUpdate(photo);
 				
-				e.printStackTrace();
+			}else if(photo_no==0){
+				//고유식별자
+				String uId = UUID.randomUUID().toString().split("-")[0];
+		
+				//저장될 파일 이름
+				String stored_name = null;
+				stored_name =file.getOriginalFilename()+"_"+uId;
+				
+								
+				//파일 저장 경로		
+				String path = context.getRealPath("uploadImg");
+				
+				//저장될 파일
+				File dest = new File(path, stored_name);
+				System.out.println("파일경로"+dest);
+				//파일업로드
+				try {
+					file.transferTo(dest);
+				} catch (IllegalStateException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					
+					e.printStackTrace();
+				}
+				photo.setPhoto_origin(file.getOriginalFilename());
+				photo.setPhoto_stored(stored_name);
+			
+				board_tb.setBoard_no(board_no);
+				photo.setBoard_no(board_no);
+				board_tb.setBoard_no(board_no);
+				//세션번호넣어주기
+				int user_no = (int) session.getAttribute("user_no");
+				board_tb.setUser_no(user_no);
+			
+				// 경기 후기 수정 글쓰기
+				communityService.reviewUpdate(board_tb);
+				// 경기 후기 이미지 없을 때 파일첨부
+				communityService.reviewPhotoWrite(photo);
 			}
-			photo.setPhoto_origin(file.getOriginalFilename());
-			photo.setPhoto_stored(stored_name);
-		
-			board_tb.setBoard_no(board_no);
-			photo.setBoard_no(board_no);
-			board_tb.setBoard_no(board_no);
-			//세션번호넣어주기
-			int user_no = (int) session.getAttribute("user_no");
-			board_tb.setUser_no(user_no);
-		
+		}else {
 			// 경기 후기 수정 글쓰기
 			communityService.reviewUpdate(board_tb);
-			// 경기 후기 이미지 없을 때 파일첨부
-			communityService.reviewPhotoWrite(photo);
 		}
+		
 		
 		return "redirect:/community/reviewList";
 	}	
@@ -1188,91 +1189,91 @@ public class CommunityController {
 	 * */
 	@RequestMapping(value="/community/usedUpdate", method = RequestMethod.POST)
 	public String usedUpdatePost(int board_no,Photo photo,Board_tb board_tb ,HttpSession session,HttpServletRequest request, MultipartFile file) {
-		try {
-			request.setCharacterEncoding("utf-8");
-		} catch (UnsupportedEncodingException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		
 		// 중고장터 파일첨부 존재 여부
 		int photo_no = communityService.freeCntPhoto(board_no);
-	
-		if(photo_no!=0) {
-			//고유식별자
-			String uId = UUID.randomUUID().toString().split("-")[0];
-			//저장될 파일 이름
-			String stored_name = null;
-			stored_name =file.getOriginalFilename()+"_"+uId;		
-			//파일 저장 경로		
-			String path = context.getRealPath("uploadImg");
-			//저장될 파일
-			File dest = new File(path, stored_name);
-			System.out.println("파일경로"+dest);
-			//파일업로드
-			try {
-				file.transferTo(dest);
-			} catch (IllegalStateException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				
-				e.printStackTrace();
-			}
-			photo.setPhoto_origin(file.getOriginalFilename());
-			photo.setPhoto_stored(stored_name);
-		
-			board_tb.setBoard_no(board_no);
-			photo.setBoard_no(board_no);
-			//세션번호넣어주기
-			int user_no = (int) session.getAttribute("user_no");
-			board_tb.setUser_no(user_no);
+		if(!"".equals(file.getOriginalFilename())&& file.getOriginalFilename()!=null) {
+			if(photo_no!=0) {
+				//고유식별자
+				String uId = UUID.randomUUID().toString().split("-")[0];
+				//저장될 파일 이름
+				String stored_name = null;
+				stored_name =file.getOriginalFilename()+"_"+uId;		
+				//파일 저장 경로		
+				String path = context.getRealPath("uploadImg");
+				//저장될 파일
+				File dest = new File(path, stored_name);
+				System.out.println("파일경로"+dest);
+				//파일업로드
+				try {
+					file.transferTo(dest);
+				} catch (IllegalStateException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					
+					e.printStackTrace();
+				}
+				photo.setPhoto_origin(file.getOriginalFilename());
+				photo.setPhoto_stored(stored_name);
+			
+				board_tb.setBoard_no(board_no);
+				photo.setBoard_no(board_no);
+				//세션번호넣어주기
+				int user_no = (int) session.getAttribute("user_no");
+				board_tb.setUser_no(user_no);
 
-			// 중고장터 수정 글쓰기
-			communityService.freeUpdate(board_tb);
-		
-			// 중고장터 이미지 존재 할 때 수정 파일첨부
-			communityService.freePhotoUpdate(photo);
+				// 중고장터 수정 글쓰기
+				communityService.freeUpdate(board_tb);
 			
-		}else if(photo_no==0){
-			//고유식별자
-			String uId = UUID.randomUUID().toString().split("-")[0];
-	
-			//저장될 파일 이름
-			String stored_name = null;
-			stored_name =file.getOriginalFilename()+"_"+uId;
-			
-							
-			//파일 저장 경로		
-			String path = context.getRealPath("uploadImg");
-			
-			//저장될 파일
-			File dest = new File(path, stored_name);
-			System.out.println("파일경로"+dest);
-			//파일업로드
-			try {
-				file.transferTo(dest);
-			} catch (IllegalStateException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
+				// 중고장터 이미지 존재 할 때 수정 파일첨부
+				communityService.freePhotoUpdate(photo);
 				
-				e.printStackTrace();
+			}else if(photo_no==0){
+				//고유식별자
+				String uId = UUID.randomUUID().toString().split("-")[0];
+		
+				//저장될 파일 이름
+				String stored_name = null;
+				stored_name =file.getOriginalFilename()+"_"+uId;
+				
+								
+				//파일 저장 경로		
+				String path = context.getRealPath("uploadImg");
+				
+				//저장될 파일
+				File dest = new File(path, stored_name);
+				System.out.println("파일경로"+dest);
+				//파일업로드
+				try {
+					file.transferTo(dest);
+				} catch (IllegalStateException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					
+					e.printStackTrace();
+				}
+				photo.setPhoto_origin(file.getOriginalFilename());
+				photo.setPhoto_stored(stored_name);
+			
+				board_tb.setBoard_no(board_no);
+				photo.setBoard_no(board_no);
+				board_tb.setBoard_no(board_no);
+				//세션번호넣어주기
+				int user_no = (int) session.getAttribute("user_no");
+				board_tb.setUser_no(user_no);
+			
+				// 중고장터 수정 글쓰기
+				communityService.freeUpdate(board_tb);
+				// 중고장터 이미지 없을 때 파일첨부
+				communityService.usedPhotoWrite(photo);
 			}
-			photo.setPhoto_origin(file.getOriginalFilename());
-			photo.setPhoto_stored(stored_name);
-		
-			board_tb.setBoard_no(board_no);
-			photo.setBoard_no(board_no);
-			board_tb.setBoard_no(board_no);
-			//세션번호넣어주기
-			int user_no = (int) session.getAttribute("user_no");
-			board_tb.setUser_no(user_no);
-		
+		}else {
 			// 중고장터 수정 글쓰기
 			communityService.freeUpdate(board_tb);
-			// 중고장터 이미지 없을 때 파일첨부
-			communityService.usedPhotoWrite(photo);
 		}
+		
 		
 		return "redirect:/community/usedList";
 	}	
@@ -1608,87 +1609,87 @@ public class CommunityController {
 	@RequestMapping(value="/community/teamAddUpdate", method = RequestMethod.POST)
 	public String teamAddUpdatePost(int board_no,Photo photo,Board_tb board_tb ,HttpSession session,HttpServletRequest request, MultipartFile file) {
 		
-		try {
-			request.setCharacterEncoding("utf-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
 		//파일첨부 존재 여부
 		int photo_no = communityService.teamAddcntphoto(board_no);
-		
-		if(photo_no!=0) {
-			//고유식별자
-			String uId = UUID.randomUUID().toString().split("-")[0];
-			
-			//저장할 파일 이름
-			String stored_name = null;
-			stored_name = file.getOriginalFilename()+"_"+uId;
-			
-			//파일 저장 결로
-			String path = context.getRealPath("uploadImg");
-			
-			//저장될 파일
-			File dest = new File(path, stored_name);
-			
-			//파일 업로드
-			try {
-				file.transferTo(dest);
-			} catch (IllegalStateException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
+		if(!"".equals(file.getOriginalFilename())&& file.getOriginalFilename()!=null) {
+			if(photo_no!=0) {
+				//고유식별자
+				String uId = UUID.randomUUID().toString().split("-")[0];
 				
-				e.printStackTrace();
+				//저장할 파일 이름
+				String stored_name = null;
+				stored_name = file.getOriginalFilename()+"_"+uId;
+				
+				//파일 저장 결로
+				String path = context.getRealPath("uploadImg");
+				
+				//저장될 파일
+				File dest = new File(path, stored_name);
+				
+				//파일 업로드
+				try {
+					file.transferTo(dest);
+				} catch (IllegalStateException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					
+					e.printStackTrace();
+				}
+				photo.setPhoto_origin(file.getOriginalFilename());
+				photo.setPhoto_stored(stored_name);
+			
+				board_tb.setBoard_no(board_no);
+				photo.setBoard_no(board_no);
+				//세션 번호 넣어주기
+				int user_no = (int) session.getAttribute("user_no");
+				board_tb.setUser_no(user_no);
+				
+				//팀 모집 게시판 수정
+				communityService.teamAddUpdate(board_tb);
+				
+				//수정 파일 첨부
+				communityService.teamAddphotoUpdate(photo);
+			}else if(photo_no == 0) {
+				//고유식별자
+				String uId = UUID.randomUUID().toString().split("-")[0];
+				//저장될 파일 이름
+				String stored_name = file.getOriginalFilename()+"_"+uId;
+				
+				//파일 저장 경로
+				String path = context.getRealPath("uploadImg");
+				//저장될 파일
+				File dest = new File(path,stored_name);
+				//파일 업로드
+				try {
+					file.transferTo(dest);
+				} catch (IllegalStateException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				photo.setPhoto_origin(file.getOriginalFilename());
+				photo.setPhoto_stored(stored_name);
+				
+				board_tb.setBoard_no(board_no);
+				photo.setBoard_no(board_no);
+				//세션번호 넣어주기
+				int user_no = (int) session.getAttribute("user_no");
+				board_tb.setUser_no(user_no);
+				
+				//수정 글쓰기
+				communityService.teamAddUpdate(board_tb);
+				//파일첨부
+				communityService.teamAddphotoWrite(photo);
+				
 			}
-			photo.setPhoto_origin(file.getOriginalFilename());
-			photo.setPhoto_stored(stored_name);
-		
-			board_tb.setBoard_no(board_no);
-			photo.setBoard_no(board_no);
-			//세션 번호 넣어주기
-			int user_no = (int) session.getAttribute("user_no");
-			board_tb.setUser_no(user_no);
-			
-			//팀 모집 게시판 수정
-			communityService.teamAddUpdate(board_tb);
-			
-			//수정 파일 첨부
-			communityService.teamAddphotoUpdate(photo);
-		}else if(photo_no == 0) {
-			//고유식별자
-			String uId = UUID.randomUUID().toString().split("-")[0];
-			//저장될 파일 이름
-			String stored_name = file.getOriginalFilename()+"_"+uId;
-			
-			//파일 저장 경로
-			String path = context.getRealPath("uploadImg");
-			//저장될 파일
-			File dest = new File(path,stored_name);
-			//파일 업로드
-			try {
-				file.transferTo(dest);
-			} catch (IllegalStateException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			photo.setPhoto_origin(file.getOriginalFilename());
-			photo.setPhoto_stored(stored_name);
-			
-			board_tb.setBoard_no(board_no);
-			photo.setBoard_no(board_no);
-			//세션번호 넣어주기
-			int user_no = (int) session.getAttribute("user_no");
-			board_tb.setUser_no(user_no);
-			
+		}else {
 			//수정 글쓰기
 			communityService.teamAddUpdate(board_tb);
-			//파일첨부
-			communityService.teamAddphotoWrite(photo);
-			
 		}
+		
 		
 		return "redirect:/community/teamAddList";
 	}

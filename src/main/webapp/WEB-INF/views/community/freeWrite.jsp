@@ -61,7 +61,7 @@
 						<button class="btnform7">등록</button>
 						<a href="javascript:history.back();"class="btnform7">목록</a>
 					</div>
-				</div>s
+				</div>
 			</form>
 		</div>
 <script type="text/javascript">

@@ -20,17 +20,25 @@ public interface AdminDao {
 	public int boardReplyCount(int board_no);
 	// 게시글 삭제
 	public void boardDelete(int board_no);
-	// 게시글 선택 삭제
-	public void boardCheckDelete(int board_no);
 	// 게시글 작성 시퀀스 번호 생성
 	public int adminGetBoard_no();
 	// 생성된 시퀀스 번호에 게시글 작성
-	public void adminInsertWrite1(Board_tb board_tb, int board_div);
-	public void adminInsertPhoto(Photo photo, int board_div);
+	public void adminInsertWrite1(@Param("board_tb")Board_tb board_tb, @Param("board_div")int board_div);
+	public void adminInsertPhoto(@Param("photo")Photo photo, @Param("board_div")int board_div);
 	// 로그인 닉네임 가져오기
 	public int getAdminNo(Admin admin);
 	// 관리자 게시판 이미지 파일 없이 글 작성
 	public void adminInsertWrite2(Board_tb board_tb);
+	// 이전 글 가져오기
+	public Board_tb boardUpdate(int board_no);
+	// 이전 파일 가져오기
+	public Photo photoUpdate(Photo photo);
+	//파일첨부 존재 여부
+	public int adminPhotoCheck(int board_no);
+	//수정 글쓰기
+	public void adminBoardWrite(Board_tb board);
+	//수정 파일첨부
+	public void adminPhotoWrite(Photo photo);
 
 
 	

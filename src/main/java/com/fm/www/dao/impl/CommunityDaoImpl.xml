@@ -11,7 +11,7 @@
    <!-- 공지사항 게시글 전체 수 --> 
    <select id="noticeTotalCount" resultType="int">
       select count(*) from board_tb M
-      JOIN USER_TB U ON(U.USER_NO = M.USER_NO)
+      
       where board_div = 1 and delete_yn = 'N'
          <choose>
             <when test="search == 'board_title'">
@@ -29,9 +29,9 @@
    <select id="noticeGetList" parameterType="com.fm.www.util.Paging" resultType="com.fm.www.dto.Board_tb">
       SELECT * FROM (
          SELECT rownum rnum, B.* FROM (
-            SELECT U.USER_nick,  M.*
+            SELECT   M.*
             FROM board_tb M
-            JOIN USER_TB U ON(U.USER_NO = M.USER_NO)
+           
             WHERE delete_yn = 'N'
             <choose>
                <when test="search == 'board_title'">

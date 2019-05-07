@@ -59,7 +59,7 @@
 			</div>
 			
 			
-			<form action="/admin/board/write?board_div=${board_div }" method="post" id="utf_form" enctype="multipart/form-data">
+			<form action="/admin/board/update?board_div=${board_div }&board_no=${board.board_no }" method="post" id="utf_form" enctype="multipart/form-data">
 
 				<div class="table1_wrap">
 					<table>
@@ -69,20 +69,21 @@
 						</colgroup>
 						<!--공지사항 수정 s!-->
 						<tbody>
+						
 							<tr>
 								<td><label for="">제목</label></td>
-								<td><input type="text" class="inputform100p" name="board_title" id=""	placeholder="제목 입력"></input></td>
+								<td><input type="text" class="inputform100p" name="board_title" id=""	placeholder="제목 입력" value="${board.board_title }"></input></td>
 							</tr>
 							<tr>
 								<td><label for="">내용</label></td>
-								<td><textarea name="board_content" id=""	placeholder="내용 입력" class="textareaform100p"></textarea></td>
+								<td><textarea name="board_content" id=""	placeholder="내용 입력" class="textareaform100p">${board.board_content }</textarea><img alt="" src="/uploadImg/${photo.photo_stored }"></td>
 							</tr>
 							<tr>
 								<td>파일첨부</td>
 								<td><input type="file" name="file" id="file"></td>
 							</tr>
-							<tr>
-								<td>이미지</td>
+							<tr>	
+								<td>수정 이미지 미리보기</td>
 								<td><img alt="" src="#" id="foo"></td>
 							</tr>
 						</tbody>

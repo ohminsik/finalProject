@@ -13,30 +13,35 @@
   	</select>
   	<!-- 게시글 전체 수 -->
   	<select id="boardTotalCount" resultType="int">
-		select count(*) from board_tb M
-			JOIN USER_TB U ON(U.USER_NO = M.USER_NO)
-			where board_div = #{board_div }
-			<choose>
-				<when test="search == 'board_title'">
-					AND board_title Like '%' || #{word} || '%'
-				</when>
-				<when test="search == 'board_content'">
-					AND board_content Like '%' || #{word} || '%'
-				</when>
-				<when test="search == 'board_title+board_content'">
-					AND user_nick Like '%' || #{word} || '%'
-				</when>
-			</choose>
+		    SELECT count(*)
+            FROM board_tb left JOIN user_tb
+            on board_tb.user_no= user_tb.user_no
+            left join admin_tb
+            on board_tb.admin_no = admin_tb.admin_no
+         where board_tb.board_div = #{board_div }
+         <choose>
+            <when test="search == 'board_title'">
+               AND board_title Like '%' || #{word} || '%'
+            </when>
+            <when test="search == 'board_content'">
+               AND board_content Like '%' || #{word} || '%'
+            </when>
+            <when test="search == 'board_title+board_content'">
+               AND user_nick Like '%' || #{word} || '%'
+            </when>
+         </choose>
   	</select>
   	
   	<!-- 게시판 페이징 리스트 처리 -->
-  	<select id="boardGetList" parameterType="com.fm.www.util.Paging" resultType="com.fm.www.dto.Board_tb">
-  		SELECT * FROM (
+  	<select id="boardGetList" resultType="com.fm.www.dto.Board_tb">
+  		 SELECT * FROM (
          SELECT rownum rnum, B.* FROM (
-            SELECT U.USER_nick,  M.*
-            FROM board_tb M
-            JOIN USER_TB U ON(U.USER_NO = M.USER_NO)
-            
+              SELECT *
+            FROM board_tb left JOIN user_tb
+            on board_tb.user_no= user_tb.user_no
+            left join admin_tb
+            on board_tb.admin_no = admin_tb.admin_no
+            where 1=1
             <choose>
                <when test="search == 'board_title'">
                   AND board_title Like '%' || #{word} || '%'
@@ -70,24 +75,21 @@
 		where board_no = #{board_no}
 	</update>
 	
-	<!-- 게시글 선택 삭제 -->
-  	<update id="boardCheckDelete"></update>
-  	
   	<!-- 게시글 작성 시퀀스 번호 생성 -->
   	<select id="adminGetBoard_no" resultType="int">
   		SELECT board_tb_seq.nextval FROM dual
   	</select>
   	
 	<!-- 시퀀스 번호에 게시글 작성 -->
-	<insert id="adminInsertWrite1" parameterType="com.fm.www.dto.Board_tb">
+	<insert id="adminInsertWrite1">
 		insert into board_tb
 		(board_no, board_div, board_title, board_content, board_cnt, delete_yn, admin_no, board_date)
-		values(#{board_no}, #{board_div } , #{board_title }, #{board_content } ,0 ,'N' , #{admin_no }, sysdate)
+		values(#{board_tb.board_no}, #{board_div } , #{board_tb.board_title }, #{board_tb.board_content } ,0 ,'N' , #{board_tb.admin_no }, sysdate)
 	</insert>
-	<insert id="adminInsertPhoto" parameterType="com.fm.www.dto.Photo">
+	<insert id="adminInsertPhoto">
 		insert into photo
 		(photo_no, photo_origin, photo_stored, board_fg, board_no, photo_delete_yn )
-		values(photo_seq.nextval, #{photo_origin }, #{photo_stored }, 5, #{board_no }, 'N' ) 
+		values(photo_seq.nextval, #{photo.photo_origin }, #{photo.photo_stored }, #{board_div }, #{photo.board_no }, 'N' ) 
 	</insert>  
 	<!-- 로그인 닉네임 가져오기 -->
 	<select id="getAdminNo" parameterType="com.fm.www.dto.Admin" resultType="int">
@@ -103,8 +105,36 @@
          values(board_tb_seq.nextval, #{board_div }, #{board_title }, #{board_content } , 0 ,'N', #{admin_no }, sysdate )
    </insert>
   	
+	<!-- 이전 파일 가/져오기 -->
+  	<select id="boardUpdate" parameterType="com.fm.www.dto.Board_tb" resultType="com.fm.www.dto.Board_tb">
+  		select * from board_tb
+  		where board_no = #{board_no }
+  	</select>
   	
+  	<!-- 이전 파일 가져오기 -->
+  	<select id="photoUpdate" parameterType="com.fm.www.dto.Photo" resultType="com.fm.www.dto.Photo">
+  		select * from Photo
+  		where board_no = #{board_no }
+  	</select>
+  	<!-- 파일첨부 존재 여부 -->
+  	<select id="adminPhotoCheck" parameterType="int" resultType="int">
+  		select * from Photo
+  		where board_no = #{board_no}
+  	</select>
+  	<!-- 수정 글쓰기 -->
+  	<update id="adminBoardWrite" parameterType="com.fm.www.dto.Board_tb">
+  		update Board_tb
+  		 set board_title = #{board_title}
+  		 , board_content = #{board_content}
+  		where board_no = #{board_no}
+  	</update>
   	
-  	
+  	<!-- 수정 파일첨부 -->
+  	<update id="adminPhotoWrite" parameterType="com.fm.www.dto.Photo">
+  		update Photo
+  			set  photo_origin = #{photo_origin}
+         	, photo_stored = #{photo_stored}
+         	where board_no = #{board_no}
+  	</update>
   	
   </mapper>
