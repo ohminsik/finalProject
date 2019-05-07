@@ -13,12 +13,20 @@ public class Team {
 	private String team_mark;
 	private String team_hello;
 	private Character team_YN;
-	private int team_entire;
+	private int team_etire;
 	private int team_win;
 	private int team_lose;
 	private int team_tie;
 	private int team_rating;
-	
+	@Override
+	public String toString() {
+		return "Team [team_no=" + team_no + ", team_name=" + team_name + ", team_cnt=" + team_cnt + ", team_region="
+				+ team_region + ", team_age=" + team_age + ", team_type=" + team_type + ", team_level=" + team_level
+				+ ", team_uniform=" + team_uniform + ", team_field=" + team_field + ", team_mark=" + team_mark
+				+ ", team_hello=" + team_hello + ", team_YN=" + team_YN + ", team_etire=" + team_etire + ", team_win="
+				+ team_win + ", team_lose=" + team_lose + ", team_tie=" + team_tie + ", team_rating=" + team_rating
+				+ "]";
+	}
 	public int getTeam_no() {
 		return team_no;
 	}
@@ -61,7 +69,6 @@ public class Team {
 	public void setTeam_level(String team_level) {
 		this.team_level = team_level;
 	}
-	
 	public String getTeam_uniform() {
 		return team_uniform;
 	}
@@ -92,11 +99,11 @@ public class Team {
 	public void setTeam_YN(Character team_YN) {
 		this.team_YN = team_YN;
 	}
-	public int getTeam_entire() {
-		return team_entire;
+	public int getTeam_etire() {
+		return team_etire;
 	}
-	public void setTeam_entire(int team_entire) {
-		this.team_entire = team_entire;
+	public void setTeam_etire(int team_etire) {
+		this.team_etire = team_etire;
 	}
 	public int getTeam_win() {
 		return team_win;
@@ -121,15 +128,6 @@ public class Team {
 	}
 	public void setTeam_rating(int team_rating) {
 		this.team_rating = team_rating;
-	}
-	@Override
-	public String toString() {
-		return "Team [team_no=" + team_no + ", team_name=" + team_name + ", team_cnt=" + team_cnt + ", team_region="
-				+ team_region + ", team_age=" + team_age + ", team_type=" + team_type + ", team_level=" + team_level
-				+ ", team_uniform=" + team_uniform + ", team_field=" + team_field + ", team_mark=" + team_mark
-				+ ", team_hello=" + team_hello + ", team_YN=" + team_YN + ", team_entire=" + team_entire + ", team_win="
-				+ team_win + ", team_lose=" + team_lose + ", team_tie=" + team_tie + ", team_rating=" + team_rating
-				+ "]";
 	}
 	
 	

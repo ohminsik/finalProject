@@ -15,7 +15,7 @@
 		</div>
 		<!-- sub_banner e -->
 		
-		<!-- nav s -->
+		<!-- nav s -->	
 		<div class="nav_wrap">
 			<div class="nav">
 				<ul>
@@ -100,7 +100,7 @@
 				<div class="match_btn_list">
 					<ul>
 						<li><button class="btnform1" id="btnEnroll">등록</button></li>
-						<li><a href="/match/matchBoard" class="btnform1">목록</a></li>
+						<li><a href="/match/matchBoard?selectRegion=0" class="btnform1">목록</a></li>
 					</ul>
 				</div>
 			</div>
@@ -110,6 +110,8 @@
 	</div>
 </body>
 <script>
+
+//datePicker 추가
 $( function() {
 	$( "#selDate" ).datepicker();
 	$( "#selDate" ).datepicker( "option", "dateFormat", "yy/mm/dd" );

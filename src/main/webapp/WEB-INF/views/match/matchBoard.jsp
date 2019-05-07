@@ -62,27 +62,27 @@
 					<li>
 						<div class="title mb10">매치등록은 신중하게 작성하여 주시기 바랍니다.</div>
 						<div class="region">
-							<ul>
-								<li><a href="#">전체 지역</a></li>
+							<ul class="ul-element">
+								<li><a href="javascript:void(0)">전체 지역</a></li>
 								<li>
-									<ul>
-										<li><a href="#">서울</a></li>
-										<li><a href="#">인천</a></li>
-										<li><a href="#">대전</a></li>
-										<li><a href="#">대구</a></li>
-										<li><a href="#">울산</a></li>
-										<li><a href="#">부산</a></li>
-										<li><a href="#">세종</a></li>
-										<li><a href="#">광주</a></li>
-										<li><a href="#">경기</a></li>
-										<li><a href="#">강원</a></li>
-										<li><a href="#">충북</a></li>
-										<li><a href="#">충남</a></li>
-										<li><a href="#">전북</a></li>
-										<li><a href="#">전남</a></li>
-										<li><a href="#">경북</a></li>
-										<li><a href="#">경남</a></li>
-										<li><a href="#">제주</a></li>
+									<ul class="ul-element1">
+										<li><input type="hidden" value="서울"><a href="javascript:void(0)">서울</a></li>
+										<li><input type="hidden" value="인천"><a href="javascript:void(0)">인천</a></li>
+										<li><input type="hidden" value="대전"><a href="javascript:void(0)">대전</a></li>
+										<li><input type="hidden" value="대구"><a href="javascript:void(0)">대구</a></li>
+										<li><input type="hidden" value="울산"><a href="javascript:void(0)">울산</a></li>
+										<li><input type="hidden" value="부산"><a href="javascript:void(0)">부산</a></li>
+										<li><input type="hidden" value="세종"><a href="javascript:void(0)">세종</a></li>
+										<li><input type="hidden" value="광주"><a href="javascript:void(0)">광주</a></li>
+										<li><input type="hidden" value="경기"><a href="javascript:void(0)">경기</a></li>
+										<li><input type="hidden" value="강원"><a href="javascript:void(0)">강원</a></li>
+										<li><input type="hidden" value="충북"><a href="javascript:void(0)">충북</a></li>
+										<li><input type="hidden" value="충남"><a href="javascript:void(0)">충남</a></li>
+										<li><input type="hidden" value="전북"><a href="javascript:void(0)">전북</a></li>
+										<li><input type="hidden" value="전남"><a href="javascript:void(0)">전남</a></li>
+										<li><input type="hidden" value="경북"><a href="javascript:void(0)">경북</a></li>
+										<li><input type="hidden" value="경남"><a href="javascript:void(0)">경남</a></li>
+										<li><input type="hidden" value="제주"><a href="javascript:void(0)">제주</a></li>
 									</ul>
 								</li>
 							</ul>
@@ -115,6 +115,7 @@
 			                <%
 			                    int newLine = 0;
 			                    //1일이 어느 요일에서 시작하느냐에 따른 빈칸 삽입
+			                    //매치 등록되면 캘린더에 추가
 			                    out.println("<tr>");
 			                    for(int i=1; i<w; i++)
 			                    {
@@ -152,12 +153,31 @@
 				</ul>
 
 				<div class="match_btn_list">
-									
+					<form id="matchSearch"  method="get">	
+					<input type="hidden" id="regionItem" name="selectRegion"/>			
 					<ul>
-						<li><a href="/match/matchBoard" class="btnform0">매치검색</a></li>
-						<!-- <li><a href="/match/matchRegister" class="btnform0" id="team_enroll">매치등록</a></li> -->
-					    <li><a href="/match/matchRegister" class="btnform0" id="match_enroll">매치등록</a></li>
+						<li><button onclick="matchSearch()" class="btnform0">매치검색</button></li>
+						<!-- 로그인 안되어 있을 경우 -->
+						<c:if test="${empty login }">
+						<!-- 로그인 하기 -->
+					    <li><a onclick="notlogin();" class="btnform0" id="match_enroll">매치등록</a></li>
+					    </c:if>
+					    <!-- 로그인 된 경우 -->
+					    <c:if test="${login }">
+						    <c:if test="${teamYN eq false}">
+						    	<script>
+						    		function noteam(){
+						    			alert("팀이 없습니다. 팀을 만드세요");
+						    		}
+					    		</script>
+					    		<li><a href="/mypage/teamInformation" onclick="noteam();" class="btnform0" id="match_enroll">매치등록</a></li>
+					    	</c:if>
+					    	<c:if test="${teamYN eq true}">
+					    		<li><a href="/match/matchRegister" class="btnform0" id="match_enroll">매치등록</a></li>
+					    	</c:if>
+					    </c:if>
 					</ul>
+					</form>
 				</div>
 				<div class="match_diary">
 					<ul>
@@ -178,9 +198,16 @@
 										<td><img src="/resources/img/logo.png"></td>
 										<td>${match.team_name }<br>${match.team_etire }전 ${match.team_win }승 ${match.team_tie }무 ${match.team_lose }패</td>
 										<td><fmt:formatDate value="${match.fight_date }" pattern="yyyy/MM/dd"/> <br>매치 요청합니다</td>
-										<td>지역 : ${match.team_region }<br>팀원 : ${match.team_cnt }명<br>장소 : ${match.match_ground }</td>
+										<td>지역 : ${match.match_region }<br>팀원 : ${match.team_cnt }명<br>장소 : ${match.match_ground }</td>
 										<td>남기는 한마디 : ${match.match_content }</td>
+										<!-- match_ground_yn 있을 때/없을 떄 >> 구장 있음, 구장없음 -->
+										<!-- fight_date : 경기일 지나면 ::기간만료 출력:: -->
+										<c:if test="${match.match_ground_yn }">
 										<td><span class="btnform7 mb10">구장있음</span><a href="/match/matchApply" class="btnform7">매치신청</a></td>
+										</c:if>
+										<c:if test="${empty match.match_ground_yn }">
+										<td><span class="btnform7 mb10">구장없음</span><a href="/match/matchApply" class="btnform7">매치신청</a></td>
+										</c:if>
 									</tr>
 									</c:forEach>
 								</tbody>
@@ -192,6 +219,38 @@
 		</div>
 		<jsp:include page="../common/footer.jsp" />
 	</div>
-	
 </body>
+<script>
+	
+	//지역선택 시 담을 변수 초기값 0
+	var selectRegion = 0;
+
+	//ul태그의 자식태그인 li태그 클릭 시 selectRegion에 값 담기
+	$(document).ready(function(){
+		$(".ul-element1 li").click(function(){
+			/* console.log($(this).val());
+			alert($(this).find("input").val()); */
+			
+			//li 태그 클릭시 값 변수에 담기
+			selectRegion = $(this).find("input").val();
+		});
+
+	});
+	
+	//선택된 li태그의 값을 /match/matchBoard 컨트롤러로 전달
+	function matchSearch(){
+		
+		var matchSearch = document.getElementById("matchSearch");
+		$("#regionItem").val(selectRegion);
+		matchSearch.action = "/match/matchBoard";
+		matchSearch.submit();
+	}
+	
+	
+	
+	
+</script>
 </html>
+
+
+

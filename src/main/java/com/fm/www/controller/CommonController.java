@@ -46,10 +46,24 @@ public class CommonController {
 		
 		//로그인한 유저 넘버값 가져오기
 		int user_no = memberService.getUserNo(user);
+
+		
 		User user1 = new User();
 		user1.setUser_no(user_no);
+		
 		// 로그인한 유저 닉네임 가져오기
 		String user_nick = memberService.getuserNick(user);
+		
+		//team_no받아오기
+		String team_no = memberService.getTeamNo(user);
+		System.out.println("팀넘버:"+team_no);
+		//team_no null값 여부
+		if(team_no==null || team_no.equals("")  ) {
+			session.setAttribute("teamYN", false);
+		}else {
+			session.setAttribute("teamYN", true);
+		}
+		
 		
 		session.setAttribute("loginYn", loginYn);
 		session.setAttribute("login", true);

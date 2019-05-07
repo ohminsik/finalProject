@@ -88,7 +88,7 @@
 				<li>
 					<a href="#">매치보드</a>
 					<ul>
-						<li><a href="/match/matchBoard">매치신청</a></li>
+						<li><a href="/match/matchBoard?selectRegion=0">매치신청</a></li>
 					</ul>
 				</li>
 				<li>
