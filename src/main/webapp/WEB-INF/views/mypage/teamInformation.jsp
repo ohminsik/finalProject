@@ -40,7 +40,7 @@
 						<li><a href="/mypage/teamBoard">팀 게시판</a></li>
 					</ul>
 				</div>
-				
+				<!-- 팀 없음 -->
 				<c:if test="${teamYN eq false }">
 				<div class="team111 mt50">
 					<p>현재 소속된 팀이 없습니다.<br>새로운 팀을 생성하거나 다른 팀에 가입 신청을 하세요</p>
@@ -51,6 +51,7 @@
 				</div>
 				</c:if>
 				
+				<!-- 팀 있음 -->
 				<c:if test="${teamYN eq true }">
 				<div class="teaminfo mt50">
 					<ul>
@@ -58,7 +59,7 @@
 							<div class="top">
 								<p class="img mb30"><img src="/uploadImg/${team.team_mark }"></p>
 								<p class="title mb10">${team.team_name }</p>
-								<p class="score">${team.team_entire }전 ${team.team_win }승 ${team.team_tie }무 ${team.team_lose }패</p>
+								<p class="score">${team.team_etire }전 ${team.team_win }승 ${team.team_tie }무 ${team.team_lose }패</p>
 							</div>
 							<div class="bot mt20">
 								<table class="j_table_form1">

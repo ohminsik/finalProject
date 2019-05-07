@@ -315,6 +315,7 @@ public class MypageController {
 			team = mypageService.selectTeamInfoMation(user);
 			List<User> userList = mypageService.selectTeamUserList(team.getTeam_no());
 			
+			System.out.println("mypageTeamInformation:"+team);
 			model.addAttribute("userList",userList);
 			model.addAttribute("team",team);
 			session.setAttribute("teamYN", teamYN);
