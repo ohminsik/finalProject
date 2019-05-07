@@ -41,7 +41,9 @@ public class TournamentController {
 		// 대회 페이징 리스트 처리
 		List <Tournament> list = tournamentService.tournamentRegionGetList(paging2);
 		
-	
+		
+		
+		
 		model.addAttribute("paging2",paging2);
 		model.addAttribute("list", list);
 	}

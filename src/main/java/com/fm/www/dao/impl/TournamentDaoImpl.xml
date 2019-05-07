@@ -30,15 +30,15 @@
             	AND bt.board_div = 9
             	AND bt.board_no = c.board_no
             	<choose>
-            		 <when test="#{word} != null and #{word} != '')">
-		               AND c.CON_REGION like '%' || #{word} || '%'
+            		 <when test="p1.word != null and !p1.word.equals('')">
+		               AND c.CON_REGION like '%' || #{p1.word} || '%'
 		             </when>
             	</choose>
             	ORDER BY bt.board_no desc
         	 ) B
     	     ORDER BY rnum
 	      ) R
-    	WHERE rnum BETWEEN #{startNo} AND #{endNo}
+    	WHERE rnum BETWEEN #{p1.startNo} AND #{p1.endNo}
 	</select>
 	
   </mapper>
