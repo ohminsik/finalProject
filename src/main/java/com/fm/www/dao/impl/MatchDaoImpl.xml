@@ -26,14 +26,32 @@
   </select>
   
   <!-- 등록된 이달의 매치 정보 List -->
-  <select id="selectMatchOnThisMonth" resultType="com.fm.www.dto.Match">
+<!--   <select id="selectMatchOnThisMonth" resultType="com.fm.www.dto.Match">
   	SELECT mth.*, 
   	tm.team_mark, tm.team_win, tm.team_name, tm.team_etire,
   	tm.team_lose, tm.team_tie, tm.team_cnt, tm.team_region
   	FROM match mth
   	inner join team_tb tm
   	on mth.blueteam_no = tm.team_no
+  </select> -->
+  
+  <select id="selectMatchOnThisMonth" resultType="com.fm.www.dto.Match" >
+  	SELECT mth.*, 
+  	tm.team_mark, tm.team_win, tm.team_name, tm.team_etire,
+  	tm.team_lose, tm.team_tie, tm.team_cnt, tm.team_region
+  	FROM match mth
+  	inner join team_tb tm
+  	on mth.blueteam_no = tm.team_no
+  	where 1=1
+  	<choose>
+  	
+	  	<when test="selectRegion!=null and !selectRegion.equals('')">
+	  		and match_region=#{selectRegion}
+	  	</when>
+  	
+  	</choose>
   </select>
+  
   
   <!-- 매치등록여부 검사, 개수반환 -->
   <select id="selectCntMatch" parameterType="com.fm.www.dto.Match" resultType="int">

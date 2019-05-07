@@ -15,4 +15,7 @@ public interface MemberService {
 	// 로그인한 유저 닉네임 받아오기
 	public String getuserNick(User user);
 	
+	//팀넘버(매치등록시)
+	public String getTeamNo(User user);
+	
 }

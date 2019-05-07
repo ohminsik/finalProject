@@ -19,5 +19,7 @@ public interface MemberDao {
 	//로그인한 유저 닉네임 가져오기
 	public String getUserNick(User user);
 
+	//팀넘버(매치등록)
+	public String getTeamNo(User user);
 	
 }

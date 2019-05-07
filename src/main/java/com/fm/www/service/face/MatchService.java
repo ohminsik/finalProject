@@ -14,8 +14,10 @@ public interface MatchService {
 	public User selectUserByuserNo(int user_no);
 	
 	//매치 정보 리스트
-	public List<Match> selectMatchOnThisMonth();
+//	public List<Match> selectMatchOnThisMonth();
 	
 	//매치있는지 여부검사
 	public boolean isEnrolled(int user_no);
+
+	public List<Match> selectMatchOnThisMonth(String selectRegion);
 }

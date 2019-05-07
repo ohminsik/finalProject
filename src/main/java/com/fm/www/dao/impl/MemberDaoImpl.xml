@@ -36,5 +36,11 @@
   		WHERE user_id=#{user_id}
   		AND user_pw=#{user_pw}
   	</select>
+  	
+  	<!-- 팀 번호 -->
+  	<select id="getTeamNo" parameterType="com.fm.www.dto.User" resultType="String">
+  		SELECT team_no FROM user_tb
+  		WHERE user_id=#{user_id}
+  	</select>
   
   </mapper>

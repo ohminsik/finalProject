@@ -28,10 +28,10 @@ public class MatchServiceImpl implements MatchService {
 		return matchDao.selectUserByuserNo(user_no);
 	}
 
-	@Override
-	public List<Match> selectMatchOnThisMonth() {
-		return matchDao.selectMatchOnThisMonth();
-	}
+//	@Override
+//	public List<Match> selectMatchOnThisMonth() {
+//		return matchDao.selectMatchOnThisMonth();
+//	}
 
 	// 등록여부 검사
 	@Override
@@ -46,6 +46,11 @@ public class MatchServiceImpl implements MatchService {
 		} else {
 			return false;// 등록 안되있으면 false반환
 		}
+	}
+
+	@Override
+	public List<Match> selectMatchOnThisMonth(String selectRegion) {
+		return matchDao.selectMatchOnThisMonth(selectRegion);
 	}
 
 }

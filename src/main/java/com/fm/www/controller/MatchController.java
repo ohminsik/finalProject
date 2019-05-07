@@ -26,23 +26,34 @@ import com.fm.www.service.face.MemberService;
 public class MatchController {
 	private static final Logger logger = LoggerFactory.getLogger(MatchController.class);
 
+	
 	@Autowired
 	MemberService memberService;
 
 	@Autowired
 	MatchService matchService;
 
-	/*
+	/*2019.05.01추가
 	 * 매치정보 매치정보 창 띄우기 GET
 	 */
 	@RequestMapping(value = "/match/matchBoard", method = RequestMethod.GET)
-	public void matchBoardGet(Model model, HttpSession session) {
+	public void matchBoardGet(Model model, HttpServletRequest req, String selectRegion) {
+		System.out.println("match/matchBoard:"+selectRegion);
 		
+		//0일 때 & 빈칸일 때 >> 전체 조회
+		if(selectRegion.equals("0") || selectRegion.equals("")) {
+			selectRegion = "";
+			
+		}
 		
-		List<Match> matchList = matchService.selectMatchOnThisMonth();
+		//2019.05.01 조건 부분 여기서 처리
+		//이달의 매치정보 가져오기(matchBoard.jsp)
+		List<Match> matchList = matchService.selectMatchOnThisMonth(selectRegion);
+		
 		model.addAttribute("matchList", matchList);
 		
-
+		
+		
 	}
 
 	/*
@@ -169,7 +180,8 @@ public class MatchController {
 		// 등록하면 Match 테이블에 넣기
 		matchService.enrollMatch(match);
 
-		return "redirect:/match/matchBoard";
+		
+		return "redirect:/match/matchBoard?selectRegion=0";
 
 	}
 }

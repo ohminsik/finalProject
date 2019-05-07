@@ -47,6 +47,11 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.getUserNick(user);
 	}
 
+	@Override
+	public String getTeamNo(User user) {
+		return memberDao.getTeamNo(user);
+	}
+
 	
 
 }
