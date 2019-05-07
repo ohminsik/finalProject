@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fm.www.dto.Board_tb;
 import com.fm.www.dto.Tournament;
 import com.fm.www.service.face.TournamentService;
 import com.fm.www.util.Paging2;
@@ -43,7 +44,7 @@ public class TournamentController {
 		
 		
 		
-		
+		model.addAttribute("region",region);
 		model.addAttribute("paging2",paging2);
 		model.addAttribute("list", list);
 	}
@@ -59,13 +60,16 @@ public class TournamentController {
 	}
 	
 	/*
-	 * Admin 컨트롤러
-	 * Admin 창 띄우기
+	 * 대회일정 뷰 컨트롤러
+	 * 대회일정 상세페이지 창 띄우기
 	 * GET
 	 * */
 	@RequestMapping(value = "/tournament/tournamentView", method = RequestMethod.GET)
-	public void tournamentViewGet() {		
+	public void tournamentViewGet(Tournament tournment,int board_no,Model model) {	
 		
+		tournment = tournamentService.tournamentView(board_no);
+		
+		model.addAttribute("tournment" ,tournment);
 		
 	}
 	

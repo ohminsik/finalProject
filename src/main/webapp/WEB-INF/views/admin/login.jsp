@@ -51,9 +51,15 @@
 // 				return false;
 				
 			}
-		} 
-	})
+
+	});
 	});
 	</script>
+	 </c:if>
+	 
+	 <c:if test="${loginYN eq false }">
+		<script type="text/javascript">
+			alert("로그인실패");
+		</script>	 
 	 </c:if>
 </html>

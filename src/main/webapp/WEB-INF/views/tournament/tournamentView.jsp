@@ -38,17 +38,17 @@
 							<img alt="" src="/resources/img/defalutimg.png">
 						</li>
 						<li>
-							<p class="title">포카리 스웨트와 함께하는 ~~</p>						
-							<p class="text">신청 기간 : 2019/02/02 ~ 2019/02/02</p>
-							<p class="text">대회 기간 : 2019/02/02 ~ 2019/02/02</p>
-							<p class="text">대회 지역 : 서울</p>	
-							<p class="text">대회 설명 : ㅁㄴㅇㄻㄴㅇㄻㄴㅇㄹ</p>	
+							<p class="title">${tournment.board_title }</p>						
+							<p class="text">신청 기간 : ${tournment.con_reg_dates } ~ ${tournment.con_reg_datee }</p>
+							<p class="text">대회 기간 : ${tournment.con_con_dates } ~ ${tournment.con_con_datee }</p>
+							<p class="text">대회 지역 : ${tournment.con_region }</p>	
+							<p class="text">대회 설명 : ${tournment.board_content }</p>	
 						</li>
 					</ul>
 					
 					<ul class="mt50 mb50 btnform123123">
 						<li><a href="#" class="btnform0">대회 바로가기</a></li>
-						<li><a href="#" class="btnform0">목록</a></li>
+						<li><a href="/tournament/tournamentRegion" class="btnform0">목록</a></li>
 					</ul>
 					
 					

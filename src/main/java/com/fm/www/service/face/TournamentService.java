@@ -13,5 +13,8 @@ public interface TournamentService {
 	public List<Tournament> tournamentRegionGetList(Paging2 paging2);
 	//현제 페이지 번호 받기
 	public int getcurPage(String curPage);
+	// 지정 게시글 정보 가져오기
+	public Tournament tournamentView(int board_no);
+
 
 }

@@ -38,32 +38,32 @@
 				</ul>
 				
 				<ul class="tournament_region_ul">
-					<li><a href="/tournament/tournamentRegion" class="btnform3">전체</a></li>
-					<li><a href="/tournament/tournamentRegion?region=서울" class="btnform3">서울</a></li>
-					<li><a href="/tournament/tournamentRegion?region=인천" class="btnform3">인천</a></li>
-					<li><a href="/tournament/tournamentRegion?region=대전" class="btnform3">대전</a></li>
-					<li><a href="/tournament/tournamentRegion?region=대구" class="btnform3">대구</a></li>
-					<li><a href="/tournament/tournamentRegion?region=울산" class="btnform3">울산</a></li>
-					<li><a href="/tournament/tournamentRegion?region=부산" class="btnform3">부산</a></li>
-					<li><a href="/tournament/tournamentRegion?region=세종" class="btnform3">세종</a></li>
-					<li><a href="/tournament/tournamentRegion?region=광주" class="btnform3">광주</a></li>
-					<li><a href="/tournament/tournamentRegion?region=경기" class="btnform3">경기</a></li>
-					<li><a href="/tournament/tournamentRegion?region=강원" class="btnform3">강원</a></li>
-					<li><a href="/tournament/tournamentRegion?region=충청" class="btnform3">충청</a></li>
-					<li><a href="/tournament/tournamentRegion?region=전라" class="btnform3">전라</a></li>
-					<li><a href="/tournament/tournamentRegion?region=경상" class="btnform3">경상</a></li>
-					<li><a href="/tournament/tournamentRegion?region=제주" class="btnform3">제주</a></li>
+					<li><a href="/tournament/tournamentRegion" class="btnform3 <c:if test="${empty region }">on</c:if>">전체</a></li>
+					<li><a href="/tournament/tournamentRegion?region=서울" class="btnform3 <c:if test="${region == '서울' }">on</c:if>">서울</a></li>
+					<li><a href="/tournament/tournamentRegion?region=인천" class="btnform3 <c:if test="${region == '인천' }">on</c:if>">인천</a></li>
+					<li><a href="/tournament/tournamentRegion?region=대전" class="btnform3 <c:if test="${region == '대전' }">on</c:if>">대전</a></li>
+					<li><a href="/tournament/tournamentRegion?region=대구" class="btnform3 <c:if test="${region == '대구' }">on</c:if>">대구</a></li>
+					<li><a href="/tournament/tournamentRegion?region=울산" class="btnform3 <c:if test="${region == '울산' }">on</c:if>">울산</a></li>
+					<li><a href="/tournament/tournamentRegion?region=부산" class="btnform3 <c:if test="${region == '부산' }">on</c:if>">부산</a></li>
+					<li><a href="/tournament/tournamentRegion?region=세종" class="btnform3 <c:if test="${region == '세종' }">on</c:if>">세종</a></li>
+					<li><a href="/tournament/tournamentRegion?region=광주" class="btnform3 <c:if test="${region == '광주' }">on</c:if>">광주</a></li>
+					<li><a href="/tournament/tournamentRegion?region=경기" class="btnform3 <c:if test="${region == '경기' }">on</c:if>">경기</a></li>
+					<li><a href="/tournament/tournamentRegion?region=강원" class="btnform3 <c:if test="${region == '강원' }">on</c:if>">강원</a></li>
+					<li><a href="/tournament/tournamentRegion?region=충청" class="btnform3 <c:if test="${region == '충청' }">on</c:if>">충청</a></li>
+					<li><a href="/tournament/tournamentRegion?region=전라" class="btnform3 <c:if test="${region == '전라' }">on</c:if>">전라</a></li>
+					<li><a href="/tournament/tournamentRegion?region=경상" class="btnform3 <c:if test="${region == '경상' }">on</c:if>">경상</a></li>
+					<li><a href="/tournament/tournamentRegion?region=제주" class="btnform3 <c:if test="${region == '제주' }">on</c:if>">제주</a></li>
 				</ul>
 			
 				<ul class="tournament_list">
 				<c:forEach items="${list }" var="list">
 					<li>
-						<a href="#">
+						<a href="/tournament/tournamentView?board_no=${list.board_no }">
 							<img alt="" src="/resources/img/defalutimg.png">
 							<p class="title">${list.board_title }</p>						
 							<p class="text">신청 기간 : ${list.con_reg_dates } ~ ${list.con_reg_datee }</p>
 							<p class="text">대회 기간 : ${list.con_con_dates } ~ ${list.con_con_datee }</p>
-							<p class="text">대회 지역 : ${list.con_region }</p>		
+							<p class="text">대회 지역 : ${list.con_region }</p>	
 						</a>				
 					</li>
 				</c:forEach>	
@@ -77,7 +77,7 @@
 			            <c:if test="${paging2.curPage eq 1 }">
 			            </c:if>
 			            <c:if test="${paging2.curPage ne 1 }">
-			               <li><a href="/tournament/tournamentRegion?curPage=${paging2.curPage-1}&search_div=${search_div}">&lt;</a></li>
+			               <li><a href="/tournament/tournamentRegion?curPage=${paging2.curPage-1}">&lt;</a></li>
 			            </c:if>
 			
 			

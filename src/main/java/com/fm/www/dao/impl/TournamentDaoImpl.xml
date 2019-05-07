@@ -41,4 +41,10 @@
     	WHERE rnum BETWEEN #{p1.startNo} AND #{p1.endNo}
 	</select>
 	
+	<select id="tournamentView" parameterType="com.fm.www.dto.Tournament" resultType="com.fm.www.dto.Tournament">
+	 select * from congress C, board_tb B
+             where C.board_no = B.board_no
+             and C.board_no = #{board_no}
+	</select>
+	
   </mapper>

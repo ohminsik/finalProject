@@ -38,4 +38,9 @@ public class TournamentServiceImpl implements TournamentService{
 		//null이나 ""면 0으로 반환하기
 		return 1;
 	}
+	// 지정 게시글 정보 가져오기
+	@Override
+	public Tournament tournamentView(int board_no) {
+		return tournamentDao.tournamentView(board_no);
+	}
 }
