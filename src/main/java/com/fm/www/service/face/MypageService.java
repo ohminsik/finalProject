@@ -101,6 +101,22 @@ public interface MypageService {
 	//댓글리스트 가졍오기
 	public List<Board_Reply> ReplyList(Board_Reply board_reply);
 	
+	//파일첨부 존재 여부
+	public int teamBoardcntphoto(int board_no);
+	//수정 글쓰기
+	public void teamBoardupdate(Board_tb board_tb);
+	//수정 파일첨부
+	public void teamBoardphotoupdate(Photo photo);
+	//팀게시글 삭제
+	public void teamBoardDelete(int board_no);
+	
+	//팀 게시판 댓글 등록
+	public void teamBoardCommentInsert(Board_Reply board_reply);
+	//팀 게시판 조회수 내리기
+	public void DownHit(int board_no);
+	//댓글삭제
+	public void teamBoardReplyDelete(int reply_no);
+	
 	
 	
 	

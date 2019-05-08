@@ -78,7 +78,7 @@
 							<c:if test="${ i.delete_yn eq 'N'}">
 								<tr>
 									<td><%=no-- %></td>
-									<td class="title"><a href="/community/teamIntroView?board_no=${i.board_no }">${i.board_title }<span class="fb chs">[ ${i.board_reply_cnt } ]</span></a></td>
+									<td class="title"><a href="/community/teamIntroView?board_no=${i.board_no }">${i.board_title } 팀입니다.<span class="fb chs">[ ${i.board_reply_cnt } ]</span></a></td>
 									<td>${i.user_nick }</td>
 									<td><fmt:formatDate value="${i.board_date }" pattern="yyyy-MM-dd"></fmt:formatDate></td>
 									<td>${i.board_cnt }</td>

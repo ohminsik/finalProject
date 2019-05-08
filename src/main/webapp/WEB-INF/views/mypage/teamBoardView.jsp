@@ -50,11 +50,18 @@
 					</colgroup>
 					<tbody>
 						<tr>
-							<td class="fb">${board.board_no }</td>
+							<td class="fb">${board.board_title }</td>
 							<td class="fb"><fmt:formatDate value="${board.board_date }" pattern="yyyy-MM-dd"/></td>
 						</tr>
 						<tr>
-							<td colspan="2"><img src="/uploadImg/${photo.photo_stored }" alt="${photo.photo_stored }"><br>${board.board_content }</td>						
+							<td colspan="2">
+								<c:if test="${empty photo.photo_stored }">
+									${board.board_content }
+								</c:if>
+								<c:if test="${!empty photo.photo_stored }">
+									<img src="/uploadImg/${photo.photo_stored }" alt="${photo.photo_stored }"><br>${board.board_content }
+								</c:if>
+							</td>						
 						</tr>
 		
 					</tbody>
@@ -73,10 +80,10 @@
 									<br><fmt:formatDate value="${l.reply_date }" pattern="yyyy-MM-dd"/>
 							
 								</td>
-								<td>
+								<td class="tal">
 									${l.reply_content }
 									<c:if test="${user_no eq l.user_no }">
-									<a href="/community/noticeCommentDelete?reply_no=${l.reply_no }&board_no=${board.board_no }"><i class="xi-close deleteBtn"></i></a>
+									<a href="/mypage/teamBoardCommentDelete?reply_no=${l.reply_no }&board_no=${board.board_no }"><i class="xi-close deleteBtn"></i></a>
 									</c:if>
 								</td>
 							</tr>
@@ -84,7 +91,7 @@
 					</tbody>
 				</table>
 				
-				<form action="/mypage/teamBoardCommentInsert" method="POST">
+				<form action="/mypage/teamBoardCommentInsert?board_no=${board.board_no }" method="POST">
 					<table class="board_table board_table1 mt30">
 						<colgroup>
 							<col width="10%">
@@ -114,8 +121,8 @@
 				
 				
 				<div class="j_button mt20 mb20 tac">
-					<a href="/mypage/teamBoardUpdate"class="btnform7">수정</a>
-					<a href="/mypage/teamBoardDelete"class="btnform7">삭제</a>
+					<a href="/mypage/teamBoardUpdate?board_no=${board.board_no }"class="btnform7">수정</a>
+					<a href="/mypage/teamBoardDelete?board_no=${board.board_no }"class="btnform7">삭제</a>
 					<a href="/mypage/teamBoard"class="btnform7">목록</a>
 				</div>
 			</div>

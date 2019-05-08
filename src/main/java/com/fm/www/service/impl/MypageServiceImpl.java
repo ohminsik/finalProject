@@ -227,6 +227,49 @@ public class MypageServiceImpl implements MypageService{
 	public List<Board_Reply> ReplyList(Board_Reply board_reply) {
 		return mypageDao.ReplyList(board_reply);
 	}
+
+	//파일첨부 존재 여부
+	@Override
+	public int teamBoardcntphoto(int board_no) {
+		return mypageDao.teamBoardcntphoto(board_no);
+	}
+	
+	//수정글쓰기
+	@Override
+	public void teamBoardupdate(Board_tb board_tb) {
+		mypageDao.teamBoardupdate(board_tb);
+		
+	}
+	//수정 파일첨부
+	@Override
+	public void teamBoardphotoupdate(Photo photo) {
+		mypageDao.teamBoardphotoupdate(photo);
+		
+	}
+	//팀게시글삭제
+	@Override
+	public void teamBoardDelete(int board_no) {
+		mypageDao.teamBoardDelete(board_no);
+		
+	}
+	
+	//팀게시판 댓글 등록
+	@Override
+	public void teamBoardCommentInsert(Board_Reply board_reply) {
+		mypageDao.teamBoardCommentInsert(board_reply);
+		
+	}
+	//팀 게시글 조회수 감소
+	@Override
+	public void DownHit(int board_no) {
+		mypageDao.DownHit(board_no);
+	}
+	//댓글삭제
+	@Override
+	public void teamBoardReplyDelete(int reply_no) {
+		mypageDao.teamBoardReplyDelete(reply_no);
+		
+	}
 	
 	
 

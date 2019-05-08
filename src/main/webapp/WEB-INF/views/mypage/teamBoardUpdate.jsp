@@ -41,7 +41,7 @@
 					</ul>
 				</div>
 				
-			<form action="/mypage/teamBoardUpdate" method="POST">
+			<form action="/mypage/teamBoardUpdate?board_no=${board.board_no }" method="POST" enctype="multipart/form-data">
 				<div class="board_form">
 					<table class="board_table board_table1">
 						<colgroup>
@@ -51,15 +51,19 @@
 						<tbody>
 							<tr>
 								<td>제목</td>
-								<td><input type="text" name="" id="" class="inputform100p"></td>
+								<td><input type="text" name="board_title" id="board_title" class="inputform100p" value="${board.board_title }"></td>
 							</tr>
 							<tr>
 								<td>내용</td>
-								<td><textarea name="" id="" class="textareaform100p"></textarea></td>								
+								<td><textarea name="board_content" id="board_content" class="textareaform100p">${board.board_content }</textarea><img alt="" src="/uploadImg/${photo.photo_stored    }"></td>								
 							</tr>
 							<tr>
 								<td>파일첨부</td>
-								<td><input type="file" name="" id=""></td>
+								<td><input type="file" name="file" id="file"></td>
+							</tr>
+							<tr>
+								<td>이미지</td>
+								<td><img alt="" src="#" id="foo"></td>
 							</tr>
 						</tbody>
 					</table>
@@ -73,4 +77,19 @@
 		<jsp:include page="../common/footer.jsp" />
 	</div>
 </body>
+<script type="text/javascript">
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('#foo').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#file").change(function() {
+        readURL(this);
+    });
+</script>
 </html>

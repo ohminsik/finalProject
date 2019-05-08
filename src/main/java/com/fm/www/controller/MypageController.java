@@ -27,6 +27,7 @@ import com.fm.www.dto.Message;
 import com.fm.www.dto.Photo;
 import com.fm.www.dto.Team;
 import com.fm.www.dto.User;
+import com.fm.www.service.face.CommunityService;
 import com.fm.www.service.face.MypageService;
 import com.fm.www.util.Paging;
 
@@ -35,6 +36,7 @@ public class MypageController {
 	private static final Logger logger = LoggerFactory.getLogger(MypageController.class);
 	@Autowired ServletContext context;
 	@Autowired MypageService mypageService;
+	@Autowired CommunityService communityService;
 	/*----------------------------------------------Mypage mypage Start----------------------------------------------*/
 	
 	/*
@@ -315,7 +317,7 @@ public class MypageController {
 			team = mypageService.selectTeamInfoMation(user);
 			List<User> userList = mypageService.selectTeamUserList(team.getTeam_no());
 			
-			System.out.println("mypageTeamInformation:"+team);
+            System.out.println("mypageTeamInformation:"+team);
 			model.addAttribute("userList",userList);
 			model.addAttribute("team",team);
 			session.setAttribute("teamYN", teamYN);
@@ -394,6 +396,20 @@ public class MypageController {
 		//팀번호를 유저번호에 업데이트		
 		mypageService.updateTeamNo(user);
 		System.out.println("완료");
+		
+		Board_tb board_tb = new Board_tb();
+		int board_no =communityService.teamIntrogetboard_no();
+		int user_no = (int) session.getAttribute("user_no");
+		board_tb.setUser_no(user_no);
+		board_tb.setBoard_no(board_no);
+		board_tb.setBoard_title(team.getTeam_name());
+		board_tb.setBoard_content(team.getTeam_hello());
+		
+		communityService.teamIntrowrite(board_tb);
+		
+		
+		
+		
 		
 		return "redirect:/mypage/teamInformation";
 		
@@ -592,6 +608,7 @@ public class MypageController {
 			// 유저 번호 받아오기
 			board_tb.setUser_no((int)session.getAttribute("user_no"));
 			// 이미지 파일 없이 글 작성
+			board_tb.setBoard_no(board_no);
 			mypageService.teamBoardInsertWrite2(board_tb);
 		}	
 		mypageService.teamBoardInsertTeamBoard(board_tb,user);
@@ -605,8 +622,15 @@ public class MypageController {
 	 * GET
 	 * */
 	@RequestMapping(value = "/mypage/teamBoardUpdate", method = RequestMethod.GET)
-	public void teamBoardUpdateGet() {		
-		
+	public void teamBoardUpdateGet(Board_tb board, int board_no, Model model, Photo photo) {		
+		// 지정 게시글 정보 가져오기
+		board = mypageService.teamBoardView(board_no);
+		// 사진 가져오기
+		photo = mypageService.teamBoardPhotoView(board_no);
+
+		model.addAttribute("photo", photo);
+		model.addAttribute("board", board);
+
 	}
 	
 	/*
@@ -615,18 +639,118 @@ public class MypageController {
 	 * POST
 	 * */
 	@RequestMapping(value = "/mypage/teamBoardUpdate", method = RequestMethod.POST)
-	public void teamBoardUpdatePost() {		
+	public String teamBoardUpdatePost(int board_no,Photo photo,Board_tb board_tb ,HttpSession session,HttpServletRequest request, MultipartFile file) {		
+		try {
+			request.setCharacterEncoding("utf-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		//파일첨부 존재 여부
+		int photo_no = mypageService.teamBoardcntphoto(board_no);
 		
+		if(!"".equals(file.getOriginalFilename())&& file.getOriginalFilename()!=null) {
+			if(photo_no!=0) {
+				//고유식별자
+				String uId = UUID.randomUUID().toString().split("-")[0];
+		
+				//저장될 파일 이름
+				String stored_name = null;
+				stored_name =file.getOriginalFilename()+"_"+uId;
+				
+								
+				//파일 저장 경로		
+				String path = context.getRealPath("uploadImg");
+				
+				//저장될 파일
+				File dest = new File(path, stored_name);
+				System.out.println("파일경로"+dest);
+				//파일업로드
+				try {
+					file.transferTo(dest);
+				} catch (IllegalStateException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					
+					e.printStackTrace();
+				}
+				photo.setPhoto_origin(file.getOriginalFilename());
+				photo.setPhoto_stored(stored_name);
+			
+				board_tb.setBoard_no(board_no);
+				photo.setBoard_no(board_no);
+				//세션번호넣어주기
+				int user_no = (int) session.getAttribute("user_no");
+				board_tb.setUser_no(user_no);
+			
+			
+				//수정 글쓰기
+				//mypageService.teamIntroupdate(board_tb);
+				mypageService.teamBoardupdate(board_tb);
+			
+				//수정 파일첨부
+				//mypageService.teamIntrophotoupdate(photo);
+				mypageService.teamBoardphotoupdate(photo);
+				
+			}else if(photo_no==0){
+				//고유식별자
+				String uId = UUID.randomUUID().toString().split("-")[0];
+		
+				//저장될 파일 이름
+				String stored_name = null;
+				stored_name =file.getOriginalFilename()+"_"+uId;
+				
+								
+				//파일 저장 경로		
+				String path = context.getRealPath("uploadImg");
+				
+				//저장될 파일
+				File dest = new File(path, stored_name);
+				System.out.println("파일경로"+dest);
+				//파일업로드
+				try {
+					file.transferTo(dest);
+				} catch (IllegalStateException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					
+					e.printStackTrace();
+				}
+				photo.setPhoto_origin(file.getOriginalFilename());
+				photo.setPhoto_stored(stored_name);
+			
+				board_tb.setBoard_no(board_no);
+				photo.setBoard_no(board_no);
+				board_tb.setBoard_no(board_no);
+				//세션번호넣어주기
+				int user_no = (int) session.getAttribute("user_no");
+				board_tb.setUser_no(user_no);
+			
+				//수정 글쓰기
+				mypageService.teamBoardupdate(board_tb);
+				//파일첨부
+				mypageService.teamBoardInsertPhoto(photo);
+			}
+		}else {
+			board_tb.setBoard_no(board_no);
+			mypageService.teamBoardupdate(board_tb);			
+		}
+		
+		
+		return "redirect:/mypage/teamBoard";
 	}
 	
 	/*
 	 * 팀게시판 삭제폼
 	 * 팀게시판 삭제 처리
-	 * POST
+	 * GET
 	 * */
 	@RequestMapping(value = "/mypage/teamBoardDelete", method = RequestMethod.GET)
-	public void teamBoardDeleteGet() {		
-		
+	public String teamBoardDeleteGet(int board_no) {		
+		mypageService.teamBoardDelete(board_no);		
+		return "redirect:/mypage/teamBoard";
 	}
 	
 	/*
@@ -634,8 +758,14 @@ public class MypageController {
 	 * 팀게시판 댓글 등록 처리 폼
 	 * */
 	@RequestMapping(value="/mypage/teamBoardCommentInsert", method = RequestMethod.POST)
-	public void teamBoardCommentInsertPost() {
+	public String teamBoardCommentInsertPost(Board_Reply board_reply, int board_no, HttpSession session) {
+		board_reply.setBoard_no(board_no);
+		board_reply.setUser_no((int)session.getAttribute("user_no"));
+		// 댓글 등록
+		mypageService.teamBoardCommentInsert(board_reply);
+		mypageService.DownHit(board_no);
 		
+		return "redirect:/mypage/teamBoardView?board_no="+board_no;
 	}
 	
 	/*
@@ -643,14 +773,13 @@ public class MypageController {
 	 * 팀게시판 댓글 삭제 처리 폼
 	 * */
 	@RequestMapping(value="/mypage/teamBoardCommentDelete", method = RequestMethod.GET)
-	public void teamBoardCommentDeleteGet() {
-		
+	public String teamBoardCommentDeleteGet(int reply_no, int board_no) {
+		mypageService.teamBoardReplyDelete(reply_no);
+		mypageService.DownHit(board_no);
+		return "redirect:/mypage/teamBoardView?board_no="+board_no;		
 	}
+}
 	
 	
 	
 	/*----------------------------------------------Mypage team End----------------------------------------------*/
-	
-	
-	
-}

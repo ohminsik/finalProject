@@ -40,7 +40,7 @@
 					</colgroup>
 					<tbody>
 						<tr>
-							<td class="fb">${board_tb.board_title }</td>
+							<td class="fb">${board_tb.board_title } 팀 입니다.</td>
 							<td class="fb"><fmt:formatDate value="${board_tb.board_date }" pattern="yyyy-MM-dd"></fmt:formatDate></td>
 						</tr>
 						<tr>
@@ -50,7 +50,7 @@
 							<c:if test="${photo ne null}">
 								<img src="/uploadImg/${photo.photo_stored }" alt="${photo.photo_stored }"><br>
 							</c:if>
-							 ${board.board_content } </td>			
+							 남기는 한마디 : ${board_tb.board_content } </td>			
 						</tr>
 					
 					

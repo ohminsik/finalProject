@@ -21,7 +21,7 @@
   	<!-- 팀넘버 가져오기 -->
   	<select id="selectTeamNo" resultType="int" parameterType="com.fm.www.dto.Team">
   		SELECT team_no from team_tb
-  		WHERE team_name Like #{team_name}
+  		WHERE team_name = #{team_name}
   	</select>
   	<!-- 유저번호에 팀가입 날짜 넣어주기 -->
   	<update id="updateTeamDate" parameterType="com.fm.www.dto.User">
@@ -177,6 +177,7 @@
 		)tb
 		WHERE 1=1
 		AND board_div = 8
+		AND delete_yn = 'N'
 		<choose>
          <when test="p2 == '제목'">
 		 	AND board_title Like '%' || #{p3} || '%'
@@ -203,6 +204,7 @@
 		                )tb
 		                    WHERE 1=1
 		                    AND board_div = 8
+		                    AND delete_yn = 'N'
 		                   <choose>
 					         <when test="p3 == '제목'">
 							 	AND board_title Like '%' || #{p4} || '%'
@@ -244,7 +246,7 @@
   	<!-- 팀게시글 포토 없을때 -->
   	<insert id="teamBoardInsertWrite2" parameterType="com.fm.www.dto.Board_tb">
       insert into board_tb (board_no, board_div, board_title, board_content, board_cnt, delete_yn, user_no, board_date)
-         values(board_tb_seq.nextval,  8, #{board_title }, #{board_content } , 0 ,'N', #{user_no }, sysdate )
+         values( #{board_no}, 8, #{board_title }, #{board_content } , 0 ,'N', #{user_no }, sysdate )
     </insert>
     <!-- teamBoard 추가 -->
     <insert id="teamBoardInsertTeamBoard">
@@ -278,6 +280,49 @@
       JOIN USER_TB U ON(U.USER_NO = B.USER_NO)
       where reply_delete_yn = 'N'
       and board_no = #{board_no}
-   </select>
-
+      order by REPLY_DATE asc
+   </select>   
+   
+   <!-- 파일첨부 존재 여부 -->
+   <select id="teamBoardcntphoto" parameterType="int" resultType="int">
+        select count(*) from photo
+        where board_no = #{board_no}
+     </select>
+     
+	<!-- 수정 글 쓰기 -->
+     <update id="teamBoardupdate" parameterType="com.fm.www.dto.Board_tb">
+        update board_tb set board_title = #{board_title}, board_content = #{board_content}
+           where board_no= #{board_no} 
+     </update>
+     <!-- 수정 파일첨부 -->
+     <update id="teamBoardphotoupdate" parameterType="com.fm.www.dto.Photo">
+           update photo  set  photo_origin = #{photo_origin} , photo_stored = #{photo_stored}
+         where board_no = #{board_no}
+     </update>
+     
+     <!-- 팀게시글삭제 -->
+      <update id="teamBoardDelete" parameterType="int">
+       update board_tb set delete_yn= 'Y' where board_no = #{board_no}
+     </update>
+     
+     
+     <!-- //팀게시판 댓글 등록 -->
+	<insert id="teamBoardCommentInsert" parameterType="com.fm.www.dto.Board_Reply">
+        insert into board_reply
+         (REPLY_NO,BOARD_FG,REPLY_CONTENT,REPLY_DATE,REPLY_DELETE_YN, board_no , user_no)
+         values(board_reply_seq.nextval,  8, #{reply_content},  sysdate,'N', #{board_no}, #{user_no})
+     </insert>
+     
+	<!-- //팀게시판 조회글 삭제 -->
+	<update id="DownHit" parameterType="int">
+		update board_tb set board_cnt = board_cnt -1
+ 		 where board_no = #{board_no} 
+	</update>
+	<!-- 댓글삭제 -->
+	<update id="teamBoardReplyDelete" parameterType="int">
+	  	UPDATE board_reply SET REPLY_DELETE_YN = 'Y'
+	  	WHERE reply_no = #{reply_no }
+	 </update>
+   		
+   		
   </mapper>
