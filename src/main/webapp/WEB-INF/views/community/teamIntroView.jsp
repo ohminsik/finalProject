@@ -46,12 +46,11 @@
 						<tr>
 							<td colspan="2">
 							<c:if test="${empty photo.photo_stored }">
-								<img src="/uploadImg/${photo.photo_stored }" alt="${photo.photo_stored }"><br>
 							</c:if>
 							<c:if test="${photo ne null}">
 								<img src="/uploadImg/${photo.photo_stored }" alt="${photo.photo_stored }"><br>
 							</c:if>
-							 ${board.board_content } </td>	
+							 ${board.board_content } </td>			
 						</tr>
 					
 					

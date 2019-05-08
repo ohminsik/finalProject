@@ -95,12 +95,7 @@
 				</table>
 				
 				<div class="j_button fr mt20 mb20">
-						<c:if test="${empty login }">
-							<a href="#" class="login btnform7">글쓰기</a>
-						</c:if>
-						<c:if test="${login }">
-							<a href="/community/teamIntroWrite" class="btnform7">글쓰기</a>
-						</c:if>
+						
 				</div>
 				<div class="cb"></div>
 				
