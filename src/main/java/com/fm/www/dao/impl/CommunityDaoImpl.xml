@@ -107,6 +107,7 @@
       JOIN USER_TB U ON(U.USER_NO = B.USER_NO)
       where reply_delete_yn = 'N'
       and board_no = #{board_no}
+       ORDER BY reply_no asc
    </select>
    
    <update id="noticeReplyDelete" parameterType="int">
@@ -273,7 +274,7 @@
       where B.user_no = U.user_no
       and reply_delete_yn= 'N'
       and board_no=#{board_no}
-     
+        ORDER BY reply_no asc
      </select>
      <!-- 팀 가입 인사 댓글 삭제 -->
      <update id="teamIntroCommentDelete" parameterType="int">
@@ -379,6 +380,7 @@
       JOIN USER_TB U ON(U.USER_NO = B.USER_NO)
       where reply_delete_yn = 'N'
       and board_no = #{board_no}
+       ORDER BY reply_no asc
    </select>
    
    <!--자유 수정 전 글 가져오기   -->
@@ -812,7 +814,7 @@
 			and reply_delete_yn= 'N'
 			and board_fg= 3
 			and board_no=#{board_no}
-			ORDER BY reply_no desc
+			ORDER BY reply_no asc
 	  	</select>
 	  	<!-- 팀 모집 게시판 댓글 삭제 -->
 	  	<update id="teamAddCommentDelete" parameterType="int">
