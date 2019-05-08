@@ -126,20 +126,20 @@
    
    <!--팀 가입 인사 리스트 총 개수  -->
       <select id="teamIntrototalCount" resultType="int">
-      select count(*) from board_tb B, user_tb U
-      where board_div = 2 and delete_yn = 'N'
-         <choose>
-            <when test="search == 'board_title'">
-               AND board_title Like '%' || #{word} || '%'
-            </when>
-            <when test="search == 'board_content'">
-               AND board_content Like '%' || #{word} || '%'
-            </when>
-              <when test="search == 'user_nick'">
-               and B.user_no= U.user_no
-               AND user_nick Like '%' || #{word} || '%'
-            </when>
-         </choose>
+      select count(*) from board_tb M
+         JOIN USER_TB U ON(U.USER_NO = M.USER_NO)
+            where board_div = 2 and delete_yn = 'N'
+            <choose>
+               <when test="search == 'board_title'">
+                  AND board_title Like '%' || #{word} || '%'
+               </when>
+               <when test="search == 'board_content'">
+                  AND board_content Like '%' || #{word} || '%'
+               </when>
+               <when test="search == 'user_nick'">
+                  AND user_nick Like '%' || #{word} || '%'
+               </when>
+            </choose>
    </select>
     <!--팀 가입 인사 리스트 페이징 처리 및 출력-->
     <select id="teamIntrogetList" parameterType="com.fm.www.util.Paging" resultType="com.fm.www.dto.Board_tb">
