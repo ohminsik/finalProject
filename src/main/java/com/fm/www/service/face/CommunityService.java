@@ -222,6 +222,8 @@ public interface CommunityService {
 	public Photo teamAddUpdatephoto(int board_no);
 	//수정전 글 가져오기
 	public Board_tb teamAddUpdateView(int board_no);
+	// 조회수 감소
+	public void DownHit(int board_no);
 
 
 	

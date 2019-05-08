@@ -201,6 +201,7 @@ public class CommunityController {
 		board_reply.setUser_no((int)session.getAttribute("user_no"));
 		// 댓글 등록
 		communityService.noticeCommentInsert(board_reply);
+		communityService.DownHit(board_no);
 		
 		
 		
@@ -213,7 +214,7 @@ public class CommunityController {
 	@RequestMapping(value="/community/noticeCommentDelete", method = RequestMethod.GET)
 	public String noticeCommentDeleteGet(int reply_no, int board_no) {
 		communityService.noticeReplyDelete(reply_no);
-		
+		communityService.DownHit(board_no);
 		return "redirect:/community/noticeView?board_no="+board_no;
 	}
 	/*
@@ -488,7 +489,7 @@ public class CommunityController {
 	
 		//팀 가입 인사 댓글 등록
 		communityService.teamIntroCommentInsert(board_reply);
-		
+		communityService.DownHit(board_no);
 		return "redirect:/community/teamIntroView?board_no="+board_no;
 	}
 	
@@ -500,7 +501,7 @@ public class CommunityController {
 	public String teamIntroCommentDeleteGet(int reply_no , int board_no) {
 		//팀 가입 인사 댓글 삭제
 		communityService.teamIntroCommentDelete(reply_no);
-		
+		communityService.DownHit(board_no);
 		return "redirect:/community/teamIntroView?board_no="+board_no;
 		
 	}
@@ -759,7 +760,7 @@ public class CommunityController {
 	
 		// 자유 댓글 등록
 		communityService.freeCommentInsert(board_reply);
-		
+		communityService.DownHit(board_no);
 		return "redirect:/community/freeView?board_no="+board_no;
 	}	
 	
@@ -771,7 +772,7 @@ public class CommunityController {
 	public String freeCommentDeleteGet(int reply_no , int board_no) {
 		//자유 댓글 삭제
 		communityService.freeCommentDelete(reply_no);
-		
+		communityService.DownHit(board_no);
 		return "redirect:/community/freeView?board_no="+board_no;
 	}
 	
@@ -1031,7 +1032,7 @@ public class CommunityController {
 	
 		// 자유 댓글 등록
 		communityService.reviewCommentInsert(board_reply);
-		
+		communityService.DownHit(board_no);
 		return "redirect:/community/reviewView?board_no="+board_no;
 	}	
 	
@@ -1043,7 +1044,7 @@ public class CommunityController {
 	public String reviewCommentDeleteGet(int reply_no , int board_no) {
 		//자유 댓글 삭제
 		communityService.freeCommentDelete(reply_no);
-		
+		communityService.DownHit(board_no);
 		return "redirect:/community/reviewView?board_no="+board_no;
 	}
 	
@@ -1303,7 +1304,7 @@ public class CommunityController {
 	
 		// 중고장터 댓글 등록
 		communityService.usedCommentInsert(board_reply);
-		
+		communityService.DownHit(board_no);
 		return "redirect:/community/usedView?board_no="+board_no;
 	}	
 	
@@ -1315,7 +1316,7 @@ public class CommunityController {
 	public String usedCommentDeleteGet(int reply_no , int board_no) {
 		//중고장터 댓글 삭제
 		communityService.freeCommentDelete(reply_no);
-		
+		communityService.DownHit(board_no);
 		return "redirect:/community/usedView?board_no="+board_no;
 	}
 	/*
@@ -1428,7 +1429,7 @@ public class CommunityController {
 	
 		//축구 동영상 댓글 등록
 		communityService.soccerVideoCommentInsert(board_reply);
-		
+		communityService.DownHit(board_no);
 		return "redirect:/community/soccerVideoView?board_no="+board_no;
 	}
 	
@@ -1440,7 +1441,7 @@ public class CommunityController {
 	public String soccerVideoCommentDeleteGet(int reply_no , int board_no) {
 		//축구 동영상 댓글 삭제
 		communityService.teamIntroCommentDelete(reply_no);
-		
+		communityService.DownHit(board_no);
 		return "redirect:/community/soccerVideoView?board_no="+board_no;
 		
 	}
@@ -1719,7 +1720,7 @@ public class CommunityController {
 		
 		//팀 모집 게시판 댓글 등록
 		communityService.teamAddCommentInsert(board_reply);
-		
+		communityService.DownHit(board_no);
 		return "redirect:/community/teamAddView?board_no="+board_no;
 				
 	}
@@ -1732,7 +1733,7 @@ public class CommunityController {
 	public String teamAddCommentDeleteGet(int reply_no, int board_no) {
 		//팀 모집 게시판 댓글 삭제
 		communityService.teamAddCommentDelete(reply_no);
-		
+		communityService.DownHit(board_no);
 		return "redirect:/community/teamAddView?board_no="+board_no;
 	}
 	

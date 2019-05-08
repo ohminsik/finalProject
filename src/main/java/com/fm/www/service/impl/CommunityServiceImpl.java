@@ -561,6 +561,11 @@ public class CommunityServiceImpl implements CommunityService{
 	public Board_tb teamAddUpdateView(int board_no) {
 		return communityDao.teamAddUpdateView(board_no);
 	}
+	// 조회수 감소
+	@Override
+	public void DownHit(int board_no) {
+		communityDao.DownHit(board_no);
+	}
 		
 	
 
