@@ -23,6 +23,18 @@
 	</repositories>
 	
 	<dependencies>
+	     <!-- 웹소캣 javax -->
+	    <dependency>
+		<groupId>javax.websocket</groupId>	      
+		<artifactId>javax.websocket-api</artifactId>
+		<version>1.1</version>
+		</dependency>
+		<!-- 스프링워크 웹소캣 -->
+		<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-websocket</artifactId>
+		<version>5.1.6.RELEASE</version>
+		</dependency>
 		<!-- Jackson Databind (Jackson Mapper를 포함하고 있음) -->
 		
 		<dependency>

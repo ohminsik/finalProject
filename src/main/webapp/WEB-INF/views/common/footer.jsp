@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!-- 푸터 s -->
 <div id="footer">				
 	<div id="footer_top">
@@ -67,4 +68,91 @@
 	 </div>	
 	 <div class="footer_bg"></div>
 </div>
+
+<c:if test="${login }">
+	<div class="container" style="width: 500px;">
+		<div class="cnt" id="cnt" style="    margin: 0 0 0 150px;   width: 500px;  height: 18px;"></div>
+		<div >
+			<div id="chatAreabox"	style="   margin: 0 0 0 150px;   overflow: scroll; width: 500px; height: 500px; padding: 10px; border: 1px solid #333;">
+			<div id="chatArea">
+		</div>
+		</div>
+			<div style="margin: 0 0 0 150px;   width: 500px;  height: 18px;" >
+				 <input type="text" id="chatInput"/>
+				 <input type="button" id="sendBtn" value="전송" 	/>
+			</div>
+		</div>
+	</div>
+</c:if>
+	
 <!-- 푸터 e -->
+<script type="text/javascript">
+//sockjs 를 이용한 서버와 연결되는 객체
+var ws = null;
+var user_nick= null;
+
+
+function showMessage(message) {
+	
+    console.log(message);
+    var jsonMessage = JSON.parse(message);
+    if(jsonMessage.cnt !==0){
+	    $("#cnt").html('현재 접속자 수 :'+jsonMessage.cnt);
+    }
+   
+    if('${user_nick}' == jsonMessage.name){
+    	
+   		$("#chatArea").append("<p style='text-align: right;  color: burlywood;' >"+"나"+":"+ jsonMessage.message+'</p>' + '<br>');
+    }else{
+    	$("#chatArea").append("<p>"+jsonMessage.name +":"+ jsonMessage.message +"</p>" +'<br>');
+    }
+//     var textArea = $('#chatArea');
+//     textArea.scrollTop( textArea[0].scrollHeight - textArea.height()   );
+
+}
+
+
+function connect() {
+    // SockJS라이브러리를 이용하여 서버에 연결
+    ws = new WebSocket("ws://localhost:8088/chatEcho");
+  
+
+    // 서버가 메시지를 보내주면 함수가 호출된다.
+    ws.onmessage = function(message) {
+        showMessage(message.data);
+    }
+}
+
+function disconnect() {
+    if (ws != null) {
+        ws.close();
+    }
+    setConnected(false);
+    console.log("Disconnected");
+}
+
+function send() {
+    // 웹소켓 서버에 메시지를 전송
+    ws.send(JSON.stringify({'message': $("#chatInput").val()}));
+    // 채팅입력창을 지우고 포커싱하라.
+    $("#chatInput").val('');
+    $("#chatInput").focus();
+}
+
+
+// $(함수(){ 함수내용 });  // jquery에서 문서가 다 읽어들이면 함수()를 호출한다.
+$(function () {
+	if('${login}'){
+   	 connect();
+	}
+    // 채팅입력창에서 키가 눌리면 함수가 호출
+    // 엔터를 입력하면 send()함수가 호출
+    $("#chatInput").keypress(function(e) {
+        if (e.keyCode == 13){
+            send();
+        }
+    });
+
+    $( "#sendBtn" ).click(function() { send(); });
+});
+</script>
