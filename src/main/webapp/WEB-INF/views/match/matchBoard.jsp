@@ -129,6 +129,7 @@
 			                        
 			                        fc = (newLine == 0)?"red":(newLine==6?"blue":"#000000");
 			                        bg = "#ffffff";
+			                        /* 2019/05/07등록된 매치일정 추가 */
 			                        out.println("<td><a color=" + fc + " href='#'>"
 			                                + i + "</a></td>");
 			                        newLine++;
@@ -200,15 +201,103 @@
 										<td><fmt:formatDate value="${match.fight_date }" pattern="yyyy/MM/dd"/> <br>매치 요청합니다</td>
 										<td>지역 : ${match.match_region }<br>팀원 : ${match.team_cnt }명<br>장소 : ${match.match_ground }</td>
 										<td>남기는 한마디 : ${match.match_content }</td>
+									
 										<!-- match_ground_yn 있을 때/없을 떄 >> 구장 있음, 구장없음 -->
 										<!-- fight_date : 경기일 지나면 ::기간만료 출력:: -->
-										<c:if test="${match.match_ground_yn }">
-										<td><span class="btnform7 mb10">구장있음</span><a href="/match/matchApply" class="btnform7">매치신청</a></td>
+										<!-- 매치신청 시 match_no 전달 -->
+										<!-- 여기서부터 아래 쭉 2019/05/08 로그인 했을 경우 안했을 경우 -->
+										<c:if test="${empty login }">
+										<c:choose>
+											<c:when test="${match.match_ground_yn eq 'Y'}">
+												<c:if test="${match.curDateYn eq false}">
+													<td><span class="btnform7 mb10">구장있음</span><a href="javascript:void(0)" id="finish1" class="btnform8">기간만료</a></td>
+												</c:if>
+													<c:if test="${match.curDateYn eq true}">
+													<td><span class="btnform7 mb10">구장있음</span><a onclick="notlogin();" class="btnform7">매치신청</a></td>
+												</c:if>
+											</c:when>
+											<c:when test="${match.match_ground_yn eq 'N'}">
+												<c:if test="${match.curDateYn eq false }">
+													<td><span class="btnform7 mb10">구장없음</span><a href="javascript:void(0)" id="finish1"  class="btnform8">기간만료</a></td>
+												</c:if>
+												<c:if test="${match.curDateYn eq true}">
+													<td><span class="btnform7 mb10">구장없음</span><a onclick="notlogin();" class="btnform7">매치신청</a></td>
+												</c:if>
+											</c:when>
+										</c:choose>
 										</c:if>
-										<c:if test="${empty match.match_ground_yn }">
-										<td><span class="btnform7 mb10">구장없음</span><a href="/match/matchApply" class="btnform7">매치신청</a></td>
+										<!-- 로그인 된 경우 -->
+										<!-- 로그인해서 팀이 없는 경우도 처리 -->
+										<c:if test="${login}">
+										<!-- 팀 없는 경우  -->
+											<c:if test="${teamYN eq false}">
+						    					<script>
+						    						function noteam2(){
+						    							alert("매치를 신청하려면 팀을 만들어야합니다");
+						    								}
+					    						</script>
+					    						
+					    						<c:choose>
+											<c:when test="${match.match_ground_yn eq 'Y'}">
+												<c:if test="${match.curDateYn eq false}">
+													<td><span class="btnform7 mb10">구장있음</span><a href="javascript:void(0)" id="finish1" class="btnform8">기간만료</a></td>
+												</c:if>
+												<c:if test="${match.curDateYn eq true}">
+													<td><span class="btnform7 mb10">구장있음</span><a onclick="noteam2();" href="/mypage/teamInformation" class="btnform7">매치신청</a></td>
+												</c:if>
+											</c:when>
+											<c:when test="${match.match_ground_yn eq 'N'}">
+												<c:if test="${match.curDateYn eq false }">
+													<td><span class="btnform7 mb10">구장없음</span><a href="javascript:void(0)" id="finish1"  class="btnform8">기간만료</a></td>
+												</c:if>
+												<c:if test="${match.curDateYn eq true}">
+													<td><span class="btnform7 mb10">구장없음</span><a onclick="noteam2();" href="/mypage/teamInformation" class="btnform7">매치신청</a></td>
+												</c:if>
+											</c:when>
+										</c:choose>
+					    					</c:if>w
+					    					<!-- 팀 있을 경우 -->
+					    					<c:if test="${teamYN eq true}">
+										<c:choose>
+											<c:when test="${match.match_ground_yn eq 'Y'}">
+												<c:if test="${match.curDateYn eq false}">
+												
+													<td><span class="btnform7 mb10">구장있음</span><a href="javascript:void(0)" class="btnform8">기간만료</a></td>
+												</c:if>
+													<c:if test="${match.curDateYn eq true}">
+													<td>
+														<span class="btnform7 mb10">구장있음</span>
+														<c:if test="${match.purpleteam_no == ''  }">
+														<a href="/match/matchApply?match_no=${match.match_no }" class="btnform7">매치신청</a>
+														</c:if>
+														<c:if test="${match.purpleteam_no != ''  }">
+														<a href="javascript:void(0)" class="btnform8">매치마감</a>
+														</c:if>
+													</td>
+												</c:if>
+											</c:when>
+											<c:when test="${match.match_ground_yn eq 'N'}">
+												<c:if test="${match.curDateYn eq false }">
+													<td><span class="btnform7 mb10">구장없음</span><a href="javascript:void(0)" class="btnform8">기간만료</a></td>
+												</c:if>
+												<c:if test="${match.curDateYn eq true}">
+													<td>
+														<span class="btnform7 mb10">구장없음</span>
+														<c:if test="${match.purpleteam_no == ''  }">
+														<a href="/match/matchApply?match_no=${match.match_no }" class="btnform7">매치신청</a>
+														</c:if>
+														<c:if test="${match.purpleteam_no != ''}">
+														<a href="#" class="btnform8">매치마감</a>
+														</c:if>
+													</td>
+												</c:if>
+											</c:when>
+										</c:choose>
 										</c:if>
-									</tr>
+										<!-- 팀있을 경우 끝 -->
+										</c:if>
+										<!-- 로그인 된 경우 끝 -->
+										</tr>
 									</c:forEach>
 								</tbody>
 							</table>
@@ -220,14 +309,51 @@
 		<jsp:include page="../common/footer.jsp" />
 	</div>
 </body>
+	
+
 <script>
 	
 	//지역선택 시 담을 변수 초기값 0
 	var selectRegion = 0;
 
-	//ul태그의 자식태그인 li태그 클릭 시 selectRegion에 값 담기
 	$(document).ready(function(){
-		$(".ul-element1 li").click(function(){
+		var date = new Date();
+		var fullYear = date.getFullYear();
+		var month = date.getMonth();
+		var date = date.getDate();
+		
+		/* 안됨
+		var hour = date.getHour();
+		var minute = date.getMinute(); */
+		
+		//날짜 합치기(str)
+		var full = fullYear +""+month +""+date;
+		//숫자로 변형
+		console.log(typeof Number(full));
+/* 		var time = date.getTime();*/		
+		/* console.log(Number(time)); */
+		/* console.log(fullYear);
+		console.log(month);
+		console.log(date);
+		
+		var str = "2019/05/20";
+		console.log(typeof str);
+		
+		var str2 = Number(str);
+		console.log(typeof str2); */
+		
+			//배열
+		 	var sp = new Array();
+			sp = $(".btnform8");
+			//반복
+			$(".btnform8").each(function(sp,element){
+					//기간만료 부분 CSS 바꾸기
+					$(this).css({'background-color':'#cecece'});
+					$(this).css({'color':'#c62266'});
+			});
+			
+			//ul태그의 자식태그인 li태그 클릭 시 selectRegion에 값 담기
+			$(".ul-element1 li").click(function(){
 			/* console.log($(this).val());
 			alert($(this).find("input").val()); */
 			
@@ -245,10 +371,11 @@
 		matchSearch.action = "/match/matchBoard";
 		matchSearch.submit();
 	}
-	
-	
-	
-	
+	//테스트 a태그 클릭하면 클릭한 부분 css 변함(기간만료 부분)
+	/*  $("a").click(function(){
+		$(this).css({'background-color':'#cecece'});
+		$(this).css({'color':'#c62266'});
+	});  */
 </script>
 </html>
 

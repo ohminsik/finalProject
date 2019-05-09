@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
 <jsp:include page="../common/meta.jsp"/>
 <body>
 	<div id="wrap">
@@ -37,12 +38,12 @@
 						<div class="match_apply_div">
 							<p class="blue">
 								<img src="/resources/img/logo.png">
-								<span>블루팀</span>
+								<span>${match.team_name }</span>
 							</p>
 							<p class="vs">VS</p>
 							<p class="purple">
 								<img src="/resources/img/logo.png">
-								<span>퍼플팀</span>
+								<span>여기는 신청한 팀 if문으로 나눠야함</span>
 							</p>
 						</div>
 						<table class="match_apply_table">
@@ -53,42 +54,52 @@
 							<tbody>
 								<tr>
 									<td>지역 :</td>
-									<td>서울 - 은평</td>
+									<td>${match.match_region } - ${match.team_region }</td>
 								</tr>
 								<tr>
 									<td>구장 :</td>
-									<td>토트넘 스타디움</td>
+									<td>${match.match_ground }</td>
 								</tr>
 								<tr>
 									<td>날짜 :</td>
-									<td>2019-04-25 16:00</td>
+									<td><fmt:formatDate value="${match.fight_date }" pattern="yyyy/MM/dd"/></td>
 								</tr>
 								<tr>
 									<td>연락처 :</td>
-									<td>010-0000-0000</td>
+									<td>${match.user_phone }</td>
 								</tr>
 								<tr>
 									<td>비용 :</td>
-									<td>0 원</td>
+									<td>${match.match_money } 원</td>
 								</tr>
 								<tr>
 									<td>개설자 :</td>
-									<td>김준환</td>
+									<td>${match.user_name }</td>
 								</tr>
 								<tr>
 									<td>유니폼색상 :</td>
-									<td>레알마드리드 홈팀 색</td>
+									<td>${match.match_uniform }</td>
 								</tr>
 							</tbody>
 						</table>
 					</li>
 					<li>
 						<div class="title mb10">남기는 한마디</div>
-						<div class="memo">남기는 한마디</div>
+						<div class="memo">${match.match_content }</div>
 						<div class="match_btn_list">
 							<ul>
-								<li><a href="#" class="btnform1">매치신청</a></li>
-								<li><a href="/match/matchBoard" class="btnform1">목록</a></li>
+								<li>
+								<form action="/match/matchApply" method="POST">
+									<input type="hidden" name="match_no" value="${match.match_no }"/>
+									<button id="matchAppl" onclick="clickBtnMthApp();" class="btnform1">매치신청</button>
+									<script>
+										 function clickBtnMthApp(){
+											 alert("신청완료 되었습니다");
+										}
+									</script>
+								</form>
+								</li>
+								<li><a href="/match/matchBoard?selectRegion=0" class="btnform1">목록</a></li>
 							</ul>
 						</div>
 					</li>
