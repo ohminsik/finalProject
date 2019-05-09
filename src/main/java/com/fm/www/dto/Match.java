@@ -17,8 +17,8 @@ public class Match {
 	private String match_uniform;
 	private String match_region;
 	private String match_content;
-	private int blueteam_no;
-	private int purpleteam_no;
+	private int blueteam_no;//매치등록 팀
+	private int purpleteam_no;//매치신청 팀
 	private int user_no;
 	private int blueteam_score;
 	private int purpleteam_score;
@@ -32,6 +32,16 @@ public class Match {
 	private int team_tie;//무승부
 	private int team_cnt;//팀원수
 	private String team_region;//팀지역
+	private String team_filed;//팀 활동구장
+	
+	//2019/05/07 user_tb 컬럼 추가
+	private String user_name;//개설자
+	private String user_phone;//개설자 연락처
+	private String user_region;
+	
+	private String dateComment;
+	private boolean curDateYn;//현재날짜 여부 판단
+	private boolean pickYn;//신청한 매치인지 여부 
 	
 	public Match() {
 		
@@ -46,7 +56,9 @@ public class Match {
 				+ purpleteam_no + ", user_no=" + user_no + ", blueteam_score=" + blueteam_score + ", purpleteam_score="
 				+ purpleteam_score + ", team_mark=" + team_mark + ", team_name=" + team_name + ", team_etire="
 				+ team_etire + ", team_win=" + team_win + ", team_lose=" + team_lose + ", team_tie=" + team_tie
-				+ ", team_cnt=" + team_cnt + ", team_region=" + team_region + "]";
+				+ ", team_cnt=" + team_cnt + ", team_region=" + team_region + ", team_filed=" + team_filed
+				+ ", user_name=" + user_name + ", user_phone=" + user_phone + ", user_region=" + user_region
+				+ ", dateComment=" + dateComment + ", curDateYn=" + curDateYn + ", pickYn=" + pickYn + "]";
 	}
 
 	public int getMatch_no() {
@@ -225,5 +237,60 @@ public class Match {
 		this.team_region = team_region;
 	}
 
+	public String getTeam_filed() {
+		return team_filed;
+	}
+
+	public void setTeam_filed(String team_filed) {
+		this.team_filed = team_filed;
+	}
+
+	public String getUser_name() {
+		return user_name;
+	}
+
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
+	}
+
+	public String getUser_phone() {
+		return user_phone;
+	}
+
+	public void setUser_phone(String user_phone) {
+		this.user_phone = user_phone;
+	}
+
+	public String getUser_region() {
+		return user_region;
+	}
+
+	public void setUser_region(String user_region) {
+		this.user_region = user_region;
+	}
+
+	public String getDateComment() {
+		return dateComment;
+	}
+
+	public void setDateComment(String dateComment) {
+		this.dateComment = dateComment;
+	}
+
+	public boolean isCurDateYn() {
+		return curDateYn;
+	}
+
+	public void setCurDateYn(boolean curDateYn) {
+		this.curDateYn = curDateYn;
+	}
+
+	public boolean isPickYn() {
+		return pickYn;
+	}
+
+	public void setPickYn(boolean pickYn) {
+		this.pickYn = pickYn;
+	}
 
 }

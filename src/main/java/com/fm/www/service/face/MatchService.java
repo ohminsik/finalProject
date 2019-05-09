@@ -1,5 +1,6 @@
 package com.fm.www.service.face;
 
+import java.util.Date;
 import java.util.List;
 
 import com.fm.www.dto.Match;
@@ -20,4 +21,18 @@ public interface MatchService {
 	public boolean isEnrolled(int user_no);
 
 	public List<Match> selectMatchOnThisMonth(String selectRegion);
+	
+	//신청할 매치 조회
+	public Match selectMatchByMatchNo(int match_no);
+	
+	//매치 신청 DB update
+	public void applyMatch(User user, int match_no);
+	
+	//현재 날짜 조회
+	public Date selectCurDate();
+	
+//	//이미 신청한 매치인지 검사
+//	public boolean pickYn(Match match);
+
+	
 }

@@ -10,11 +10,11 @@
   <!-- 매치등록 -->
   <insert id="enrollMatch" parameterType="com.fm.www.dto.Match">
   	INSERT INTO match(match_no,match_date,fight_date,match_ground,
-  	 match_money,match_uniform,match_region,match_content,
+  	 match_ground_yn, match_money,match_uniform,match_region,match_content,
   	blueteam_no,user_no) 
   	VALUES 
   	(match_SEQ.nextval,sysdate,#{fight_date}, #{match_ground},
-  	 #{match_money}, #{match_uniform}, 
+  	#{match_ground_yn}, #{match_money}, #{match_uniform}, 
   	#{match_region}, #{match_content},#{blueteam_no},
   	#{user_no})
   </insert>
@@ -35,6 +35,7 @@
   	on mth.blueteam_no = tm.team_no
   </select> -->
   
+  <!-- matchList 꺼내오기::전체조회 및 조건 검색:: -->
   <select id="selectMatchOnThisMonth" resultType="com.fm.www.dto.Match" >
   	SELECT mth.*, 
   	tm.team_mark, tm.team_win, tm.team_name, tm.team_etire,
@@ -44,12 +45,11 @@
   	on mth.blueteam_no = tm.team_no
   	where 1=1
   	<choose>
-  	
 	  	<when test="selectRegion!=null and !selectRegion.equals('')">
 	  		and match_region=#{selectRegion}
 	  	</when>
-  	
   	</choose>
+  	order by match_date
   </select>
   
   
@@ -58,5 +58,33 @@
   	SELECT COUNT(*) FROM match
 	WHERE user_no=#{user_no}  	
   </select>
+  
+  <!-- 2019/05/07 신청할 매치정보 조회 -->
+  <select id="selectMatchByMatchNo" parameterType="int" resultType="com.fm.www.dto.Match">
+	select mth.*, us.user_name, us.user_phone, tm.team_name, tm.team_field, tm.team_region,us.user_region
+	from match mth
+	inner join user_tb us on mth.blueteam_no = us.user_no
+	inner join team_tb tm on mth.blueteam_no = tm.team_no
+	where match_no = #{match_no} 
+  </select>
+  
+  <!-- 2019/05/07 매치신청 클릭시 DB업뎃 -->
+  <update id="applyMatch">
+  	UPDATE match
+  	SET purpleteam_no=#{user.team_no}
+  	WHERE match_no=#{mno}
+  </update>
+  
+  <!-- 2019/05/08 현재날짜 조회 -->
+  <select id="selectCurDate" resultType="java.util.Date">
+  	SELECT sysdate FROM dual
+  </select>
+  
+  <!-- 2019/05/09 신청한 팀있는지 cnt -->
+  <!-- <select id="cntPickedMatch" parameterType="com.fm.www.dto.Match" resultType="int">
+  	select count(*) 
+	from match M
+	JOIN USER_TB U ON(U.team_no = M.purpleteam_no)
+  </select> -->
   </mapper>
   
