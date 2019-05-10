@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.fm.www.dto.Board_Reply;
 import com.fm.www.dto.Board_tb;
+import com.fm.www.dto.Match;
 import com.fm.www.dto.Message;
 import com.fm.www.dto.Photo;
 import com.fm.www.dto.Team;
@@ -113,6 +114,27 @@ public interface MypageDao {
 	public void DownHit(int board_no);
 	//댓글삭제
 	public void teamBoardReplyDelete(int reply_no);
+	
+	//팀넘버로 매치조회
+	public List<Match> selectMatchList(int team_no);
+	
+	//매치번호로 매치 조회
+	public Match selectMatch(int match_no);
+	
+	//총전적수 추가
+	public void updateEtire(int team_no);
+
+	//승수 증가
+	public void updateWin(int team_no);
+	
+	//패수 증가
+	public void updateLose(int team_no);
+	
+	//무승부 증가
+	public void updateTie(int team_no);
+	
+	//레이팅 변경
+	public void updateRating(@Param("team_no") int team_no, @Param("rating") int rating);
 		
 
 	

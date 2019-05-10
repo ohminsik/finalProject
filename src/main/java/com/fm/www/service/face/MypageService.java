@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fm.www.dto.Board_Reply;
 import com.fm.www.dto.Board_tb;
+import com.fm.www.dto.Match;
 import com.fm.www.dto.Message;
 import com.fm.www.dto.Photo;
 import com.fm.www.dto.Team;
@@ -116,6 +117,26 @@ public interface MypageService {
 	public void DownHit(int board_no);
 	//댓글삭제
 	public void teamBoardReplyDelete(int reply_no);
+	
+	//팀넘버로 매치리스트 조회
+	public List<Match> selectMatchList(int team_no);
+	//매치넘버로 경기 조회
+	public Match selectMatch(int match_no);
+	
+	//총전적수 추가
+	public void updateEtire(int team_no);
+	
+	//승수 증가
+	public void updateWin(int team_no);
+	
+	//패수 증가
+	public void updateLose(int team_no);
+	
+	//무승부 증가
+	public void updateTie(int team_no);
+
+	//레이팅 업데이트
+	public void updateRating(int team_no, int rating);
 	
 	
 	

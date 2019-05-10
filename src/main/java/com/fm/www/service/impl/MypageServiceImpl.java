@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.fm.www.dao.face.MypageDao;
 import com.fm.www.dto.Board_Reply;
 import com.fm.www.dto.Board_tb;
+import com.fm.www.dto.Match;
 import com.fm.www.dto.Message;
 import com.fm.www.dto.Photo;
 import com.fm.www.dto.Team;
@@ -269,6 +270,50 @@ public class MypageServiceImpl implements MypageService{
 	public void teamBoardReplyDelete(int reply_no) {
 		mypageDao.teamBoardReplyDelete(reply_no);
 		
+	}
+	
+	//팀넘버로 매치리스트 조회
+	@Override
+	public List<Match> selectMatchList(int team_no) {		
+		return mypageDao.selectMatchList(team_no);
+	}
+
+	//매치넘버로 경기 조회
+	@Override
+	public Match selectMatch(int match_no) {
+		return mypageDao.selectMatch(match_no);
+	}
+	
+	//총 전적수 추가
+	@Override
+	public void updateEtire(int team_no) {
+		mypageDao.updateEtire(team_no);
+		
+	}
+
+	//승수 증가
+	@Override
+	public void updateWin(int team_no) {
+		mypageDao.updateWin(team_no);
+		
+	}
+
+	//패수 증가
+	@Override
+	public void updateLose(int team_no) {
+		mypageDao.updateLose(team_no);
+		
+	}
+
+	@Override
+	public void updateTie(int team_no) {
+		mypageDao.updateTie(team_no);
+		
+	}
+
+	@Override
+	public void updateRating(int team_no, int rating) {
+		mypageDao.updateRating(team_no, rating);
 	}
 	
 	

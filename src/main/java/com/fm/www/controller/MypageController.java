@@ -3,6 +3,7 @@ package com.fm.www.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fm.www.dto.Board_Reply;
 import com.fm.www.dto.Board_tb;
+import com.fm.www.dto.Match;
 import com.fm.www.dto.Message;
 import com.fm.www.dto.Photo;
 import com.fm.www.dto.Team;
@@ -350,9 +352,8 @@ public class MypageController {
 			e1.printStackTrace();
 		}
 		
-		String team_region1 = request.getParameter("team_region1");
-		String team_region2 = request.getParameter("team_region2");
-		String team_region = team_region1 + "-" + team_region2;
+		String team_region1 = request.getParameter("team_region1");	
+		String team_region = team_region1;
 		team.setTeam_region(team_region);
 		
 		//고유식별자
@@ -457,8 +458,17 @@ public class MypageController {
 	 * GET
 	 * */
 	@RequestMapping(value = "/mypage/teamMatchInfo", method = RequestMethod.GET)
-	public void teamMatchInfoGet() {		
+	public void teamMatchInfoGet(HttpSession session, Model model) {		
+		User user = new User();
+		user.setUser_no((int)(session.getAttribute("user_no")));
 		
+		//유저넘버로 팀넘버 가져오기
+		int team_no = mypageService.selectTeamNoUserNo(user);
+		
+		//팀 넘버로 매치보드 조회
+		List<Match> matchList = mypageService.selectMatchList(team_no);
+		
+		model.addAttribute("matchList", matchList);
 	}
 	
 	/*
@@ -467,8 +477,11 @@ public class MypageController {
 	 * GET
 	 * */
 	@RequestMapping(value = "/mypage/teamScoreInsert", method = RequestMethod.GET)
-	public void teamScoreInsertGet() {		
+	public void teamScoreInsertGet(int match_no, HttpSession session, Model model) {		
+		//매치넘버로 경기 조회
+		Match match = mypageService.selectMatch(match_no);
 		
+		model.addAttribute("match", match);
 	}
 	
 	/*
@@ -477,8 +490,157 @@ public class MypageController {
 	 * POST
 	 * */
 	@RequestMapping(value = "/mypage/teamScoreInsert", method = RequestMethod.POST)
-	public void teamScoreInsertPost() {		
+	public void teamScoreInsertPost(Match match, Board_tb board_tb, HttpSession session, HttpServletRequest request, MultipartFile file) {		
+		System.out.println(match.getBlueteam_score());
+		System.out.println(match.getPurpleteam_score());
 		
+		//-------------------------------점수에 따른 승,패,무, 총전적수 추가.-------------------------------
+		
+		//매치넘버로 경기 조회
+		Match matchInfo = mypageService.selectMatch(match.getMatch_no());
+		int b_rating = matchInfo.getBlue_rating();
+		int p_rating = matchInfo.getPurple_rating();
+		
+		int[] rating_sort = new int[] {b_rating, p_rating};
+		
+		Arrays.sort(rating_sort);
+		System.out.println(rating_sort[0]);
+		System.out.println(rating_sort[1]);
+		
+		
+		int rating_gab = rating_sort[1] - rating_sort[0];	//레이팅 차이
+		int standard_score = 0;//기준 점수
+		Double Exception_shift_High = 0.0;//기대 승률
+		Double Exception_shift_Low = 0.0;//기대 승률
+		
+		//매치 등록팀이 더 잘할 때
+		if(b_rating >= p_rating || b_rating == p_rating) {
+			//레이팅 차이가 0 일때
+			if(rating_gab == 0) {
+				standard_score = 10;
+				Exception_shift_High = 0.5;
+				Exception_shift_Low = 0.5;
+			}
+			//레이팅 차이가 50 이하 일 때
+			else if(rating_gab > 0 && rating_gab <= 50) {
+				standard_score = 15;
+				Exception_shift_High = 0.45;
+				Exception_shift_Low = 0.55;
+			}
+			//레이팅 차이가 50~100이하일때
+			else if(rating_gab > 50 && rating_gab <= 100) {
+				standard_score = 20;
+				Exception_shift_High = 0.4;
+				Exception_shift_Low = 0.6;
+			}
+			//레이팅 차이가 100~200이하 일 때 
+			else if(rating_gab > 100 && rating_gab <= 200) {
+				standard_score = 25;
+				Exception_shift_High = 0.35;
+				Exception_shift_Low = 0.65;
+			}
+			//레이팅 차이가 200보다 높을때
+			else if(rating_gab > 200 ) {
+				standard_score = 30;
+				Exception_shift_High = 0.3;
+				Exception_shift_Low = 0.7;
+			}
+			//매치 등록팀이 더 잘하는데 매치등록팀이 이길경우 (standard_score)x(1-Exception_shift_Low)
+			//매치 등록팀이 더 잘하는데 매치등록팀이 질경우 (standard_score)x(1-Exception_shift_High)
+		}
+		//매치 신청팀이 더 잘할 때
+		else if(b_rating < p_rating) {
+			//레이팅 차이가 0 일때
+			if(rating_gab == 0) {
+				standard_score = 10;
+				Exception_shift_High = 0.5;
+				Exception_shift_Low = 0.5;
+			}
+			//레이팅 차이가 50 이하 일 때
+			else if(rating_gab > 0 && rating_gab <= 50) {
+				standard_score = 15;
+				Exception_shift_High = 0.45;
+				Exception_shift_Low = 0.55;
+			}
+			//레이팅 차이가 50~100이하일때
+			else if(rating_gab > 50 && rating_gab <= 100) {
+				standard_score = 20;
+				Exception_shift_High = 0.4;
+				Exception_shift_Low = 0.6;
+			}
+			//레이팅 차이가 100~200이하 일 때 
+			else if(rating_gab > 100 && rating_gab <= 200) {
+				standard_score = 25;
+				Exception_shift_High = 0.35;
+				Exception_shift_Low = 0.65;
+			}
+			//레이팅 차이가 200보다 높을때
+			else if(rating_gab > 200 ) {
+				standard_score = 30;
+				Exception_shift_High = 0.3;
+				Exception_shift_Low = 0.7;
+			}
+			//매치 신청팀이 더 잘하는데 매치신청팀이 이길경우 (standard_score)x(1-Exception_shift_Low)
+			//매치 신청팀이 더 잘하는데 매치신청팀이 질경우 (standard_score)x(1-Exception_shift_High)
+		}
+		
+		System.out.println("레이팅 갭 " +rating_gab);
+		System.out.println("Exception_shift_High 갭 " +Exception_shift_High);
+		System.out.println("Exception_shift_Low 갭 " +Exception_shift_Low);
+
+		
+		
+		
+		//총전적수 +1
+		mypageService.updateEtire(matchInfo.getBlueteam_no());
+		mypageService.updateEtire(matchInfo.getPurpleteam_no());
+		
+		//블루팀이 이겼을때
+		if(match.getBlueteam_score() > match.getPurpleteam_score()) {
+			//승 패 수 증가
+			mypageService.updateWin(matchInfo.getBlueteam_no());
+			mypageService.updateLose(matchInfo.getPurpleteam_no());
+			//블루팀이 더 잘하는데 이겼을때
+			if(b_rating >= p_rating) {
+				b_rating += (int) ((standard_score)*(1-Exception_shift_Low));
+				p_rating -= (int) ((standard_score)*(1-Exception_shift_Low));
+			}
+			//블루팀이 더 못하는데 이겼을때
+			else {
+				b_rating += (int) ((standard_score)*(1-Exception_shift_High));
+				p_rating -= (int) ((standard_score)*(1-Exception_shift_High));
+			}
+			mypageService.updateRating(matchInfo.getBlueteam_no(), b_rating);
+			mypageService.updateRating(matchInfo.getPurpleteam_no(), p_rating);
+		}
+		//블루팀 퍼플팀 비겻을때
+		else if(match.getBlueteam_score() == match.getPurpleteam_score()) {
+			mypageService.updateTie(matchInfo.getBlueteam_no());
+			mypageService.updateTie(matchInfo.getPurpleteam_no());
+		}
+		//퍼플팀이 이겼을때
+		else if(match.getBlueteam_score() < match.getPurpleteam_score()) {
+			mypageService.updateWin(matchInfo.getPurpleteam_no());
+			mypageService.updateLose(matchInfo.getBlueteam_no());
+			
+			//퍼플팀이 더 잘하는데 이겼을때
+			if(b_rating <= p_rating) {
+				p_rating += (int) ((standard_score)*(1-Exception_shift_Low));
+				b_rating -= (int) ((standard_score)*(1-Exception_shift_Low));
+			}
+			//퍼플팀이 더 못하는데 이겼을때
+			else {
+				p_rating += (int) ((standard_score)*(1-Exception_shift_High));
+				b_rating -= (int) ((standard_score)*(1-Exception_shift_High));
+			}
+			mypageService.updateRating(matchInfo.getBlueteam_no(), b_rating);
+			mypageService.updateRating(matchInfo.getPurpleteam_no(), p_rating);
+		}
+		
+		System.out.println("블루팀 레이팅" + b_rating);
+		System.out.println("퍼플팀 레이팅" + p_rating);
+		System.out.println(matchInfo.getBlueteam_no());
+		System.out.println(matchInfo.getPurpleteam_no());
 	}
 	
 	/*

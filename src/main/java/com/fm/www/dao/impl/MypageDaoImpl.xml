@@ -324,5 +324,57 @@
 	  	WHERE reply_no = #{reply_no }
 	 </update>
    		
+   <!-- 팀 넘버로 매치리스트 조회 -->		
+   	<select id="selectMatchList" parameterType="int" resultType="com.fm.www.dto.Match">
+   		select m.*, 
+   			t1.team_name AS blue_name, t1.team_etire AS blue_etire, t1.team_win AS blue_win, t1.team_lose AS blue_lose, t1.team_tie AS blue_tie,t1.team_mark AS blue_mark, t1.team_rating AS blue_rating, 
+   			t2.team_name AS purple_name, t2.team_etire AS purple_etire, t2.team_win AS purple_win, t2.team_lose AS purple_lose, t2.team_tie AS purple_tie,t2.team_mark AS purple_mark, t2.team_rating AS purple_rating  
+   			from match m, team_tb t1, team_tb t2
+	    WHERE 1=1
+	    AND t1.team_no = m.blueteam_no
+	    AND t2.team_no = m.purpleteam_no
+   		AND m.blueteam_no = #{team_no} 
+   	</select>
+   	
+   	<!-- 매치 넘버로 매치 조회 -->
+   	<select id="selectMatch" parameterType="int" resultType="com.fm.www.dto.Match">
+   		select m.*, 
+   			t1.team_name AS blue_name, t1.team_etire AS blue_etire, t1.team_win AS blue_win, t1.team_lose AS blue_lose, t1.team_tie AS blue_tie,t1.team_mark AS blue_mark,  t1.team_rating AS blue_rating, 
+   			t2.team_name AS purple_name, t2.team_etire AS purple_etire, t2.team_win AS purple_win, t2.team_lose AS purple_lose, t2.team_tie AS purple_tie,t2.team_mark AS purple_mark ,t2.team_rating AS purple_rating
+   			from match m, team_tb t1, team_tb t2
+	    WHERE 1=1
+	    AND t1.team_no = m.blueteam_no
+	    AND t2.team_no = m.purpleteam_no
+   		AND m.match_no = #{match_no} 
+   	</select>
+   	
+   	<!-- 총전적 증가 -->
+   	<update id="updateEtire" parameterType="int">
+   		UPDATE team_tb SET team_etire = team_etire + 1
+	  	WHERE team_no = #{team_no }
+   	</update>
+   	
+   	<!-- 승 증가 -->
+   	<update id="updateWin" parameterType="int">
+   		UPDATE team_tb SET team_win = team_win + 1
+	  	WHERE team_no = #{team_no }
+   	</update>
+   	
+   	<!-- 패 증가 -->
+   	<update id="updateLose" parameterType="int">
+   		UPDATE team_tb SET team_lose = team_lose + 1
+	  	WHERE team_no = #{team_no }
+   	</update>
    		
+   	<!-- 무승부 증가 -->
+   	<update id="updateTie" parameterType="int">
+   		UPDATE team_tb SET team_tie = team_tie + 1
+	  	WHERE team_no = #{team_no }
+   	</update>
+   	
+   	<update id="updateRating">
+   		UPDATE team_tb SET team_rating = #{rating}
+	  	WHERE team_no = #{team_no }
+   	</update>
+   	
   </mapper>
