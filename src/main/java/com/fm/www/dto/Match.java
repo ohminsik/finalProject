@@ -46,7 +46,7 @@ public class Match {
 	//매치보드용
 	private String blue_name;
 	private String blue_mark;
-	private int blue_erite;
+	private int blue_etire;
 	private int blue_win;
 	private int blue_lose;
 	private int blue_tie;
@@ -54,7 +54,7 @@ public class Match {
 	
 	private String purple_name;
 	private String purple_mark;
-	private int purple_erite;
+	private int purple_etire;
 	private int purple_win;
 	private int purple_lose;
 	private int purple_tie;
@@ -62,139 +62,6 @@ public class Match {
 		
 	public Match() {
 		
-	}
-
-	@Override
-	public String toString() {
-		return "Match [match_no=" + match_no + ", match_date=" + match_date + ", fight_date=" + fight_date
-				+ ", match_ground=" + match_ground + ", match_ground_yn=" + match_ground_yn + ", match_money="
-				+ match_money + ", match_uniform=" + match_uniform + ", match_region=" + match_region
-				+ ", match_content=" + match_content + ", blueteam_no=" + blueteam_no + ", purpleteam_no="
-				+ purpleteam_no + ", user_no=" + user_no + ", blueteam_score=" + blueteam_score + ", purpleteam_score="
-				+ purpleteam_score + ", team_mark=" + team_mark + ", team_name=" + team_name + ", team_etire="
-				+ team_etire + ", team_win=" + team_win + ", team_lose=" + team_lose + ", team_tie=" + team_tie
-				+ ", team_cnt=" + team_cnt + ", team_region=" + team_region + ", team_filed=" + team_filed
-				+ ", user_name=" + user_name + ", user_phone=" + user_phone + ", user_region=" + user_region
-				+ ", dateComment=" + dateComment + ", curDateYn=" + curDateYn + ", pickYn=" + pickYn + ", blue_name="
-				+ blue_name + ", blue_mark=" + blue_mark + ", blue_erite=" + blue_erite + ", blue_win=" + blue_win
-				+ ", blue_lose=" + blue_lose + ", blue_tie=" + blue_tie + ", blue_rating=" + blue_rating
-				+ ", purple_name=" + purple_name + ", purple_mark=" + purple_mark + ", purple_erite=" + purple_erite
-				+ ", purple_win=" + purple_win + ", purple_lose=" + purple_lose + ", purple_tie=" + purple_tie
-				+ ", purple_rating=" + purple_rating + "]";
-	}
-
-	
-	
-	public String getBlue_name() {
-		return blue_name;
-	}
-
-	public void setBlue_name(String blue_name) {
-		this.blue_name = blue_name;
-	}
-
-	public String getBlue_mark() {
-		return blue_mark;
-	}
-
-	public void setBlue_mark(String blue_mark) {
-		this.blue_mark = blue_mark;
-	}
-
-	public int getBlue_erite() {
-		return blue_erite;
-	}
-
-	public void setBlue_erite(int blue_erite) {
-		this.blue_erite = blue_erite;
-	}
-
-	public int getBlue_win() {
-		return blue_win;
-	}
-
-	public void setBlue_win(int blue_win) {
-		this.blue_win = blue_win;
-	}
-
-	public int getBlue_lose() {
-		return blue_lose;
-	}
-
-	public void setBlue_lose(int blue_lose) {
-		this.blue_lose = blue_lose;
-	}
-
-	public int getBlue_tie() {
-		return blue_tie;
-	}
-
-	public void setBlue_tie(int blue_tie) {
-		this.blue_tie = blue_tie;
-	}
-
-	public int getBlue_rating() {
-		return blue_rating;
-	}
-
-	public void setBlue_rating(int blue_rating) {
-		this.blue_rating = blue_rating;
-	}
-
-	public String getPurple_name() {
-		return purple_name;
-	}
-
-	public void setPurple_name(String purple_name) {
-		this.purple_name = purple_name;
-	}
-
-	public String getPurple_mark() {
-		return purple_mark;
-	}
-
-	public void setPurple_mark(String purple_mark) {
-		this.purple_mark = purple_mark;
-	}
-
-	public int getPurple_erite() {
-		return purple_erite;
-	}
-
-	public void setPurple_erite(int purple_erite) {
-		this.purple_erite = purple_erite;
-	}
-
-	public int getPurple_win() {
-		return purple_win;
-	}
-
-	public void setPurple_win(int purple_win) {
-		this.purple_win = purple_win;
-	}
-
-	public int getPurple_lose() {
-		return purple_lose;
-	}
-
-	public void setPurple_lose(int purple_lose) {
-		this.purple_lose = purple_lose;
-	}
-
-	public int getPurple_tie() {
-		return purple_tie;
-	}
-
-	public void setPurple_tie(int purple_tie) {
-		this.purple_tie = purple_tie;
-	}
-
-	public int getPurple_rating() {
-		return purple_rating;
-	}
-
-	public void setPurple_rating(int purple_rating) {
-		this.purple_rating = purple_rating;
 	}
 
 	public int getMatch_no() {
@@ -429,7 +296,137 @@ public class Match {
 		this.pickYn = pickYn;
 	}
 
-}
+	public String getBlue_name() {
+		return blue_name;
+	}
 
+	public void setBlue_name(String blue_name) {
+		this.blue_name = blue_name;
+	}
+
+	public String getBlue_mark() {
+		return blue_mark;
+	}
+
+	public void setBlue_mark(String blue_mark) {
+		this.blue_mark = blue_mark;
+	}
+
+	public int getBlue_etire() {
+		return blue_etire;
+	}
+
+	public void setBlue_etire(int blue_etire) {
+		this.blue_etire = blue_etire;
+	}
+
+	public int getBlue_win() {
+		return blue_win;
+	}
+
+	public void setBlue_win(int blue_win) {
+		this.blue_win = blue_win;
+	}
+
+	public int getBlue_lose() {
+		return blue_lose;
+	}
+
+	public void setBlue_lose(int blue_lose) {
+		this.blue_lose = blue_lose;
+	}
+
+	public int getBlue_tie() {
+		return blue_tie;
+	}
+
+	public void setBlue_tie(int blue_tie) {
+		this.blue_tie = blue_tie;
+	}
+
+	public int getBlue_rating() {
+		return blue_rating;
+	}
+
+	public void setBlue_rating(int blue_rating) {
+		this.blue_rating = blue_rating;
+	}
+
+	public String getPurple_name() {
+		return purple_name;
+	}
+
+	public void setPurple_name(String purple_name) {
+		this.purple_name = purple_name;
+	}
+
+	public String getPurple_mark() {
+		return purple_mark;
+	}
+
+	public void setPurple_mark(String purple_mark) {
+		this.purple_mark = purple_mark;
+	}
+
+	public int getPurple_etire() {
+		return purple_etire;
+	}
+
+	public void setPurple_etire(int purple_etire) {
+		this.purple_etire = purple_etire;
+	}
+
+	public int getPurple_win() {
+		return purple_win;
+	}
+
+	public void setPurple_win(int purple_win) {
+		this.purple_win = purple_win;
+	}
+
+	public int getPurple_lose() {
+		return purple_lose;
+	}
+
+	public void setPurple_lose(int purple_lose) {
+		this.purple_lose = purple_lose;
+	}
+
+	public int getPurple_tie() {
+		return purple_tie;
+	}
+
+	public void setPurple_tie(int purple_tie) {
+		this.purple_tie = purple_tie;
+	}
+
+	public int getPurple_rating() {
+		return purple_rating;
+	}
+
+	public void setPurple_rating(int purple_rating) {
+		this.purple_rating = purple_rating;
+	}
+
+	@Override
+	public String toString() {
+		return "Match [match_no=" + match_no + ", match_date=" + match_date + ", fight_date=" + fight_date
+				+ ", match_ground=" + match_ground + ", match_ground_yn=" + match_ground_yn + ", match_money="
+				+ match_money + ", match_uniform=" + match_uniform + ", match_region=" + match_region
+				+ ", match_content=" + match_content + ", blueteam_no=" + blueteam_no + ", purpleteam_no="
+				+ purpleteam_no + ", user_no=" + user_no + ", blueteam_score=" + blueteam_score + ", purpleteam_score="
+				+ purpleteam_score + ", team_mark=" + team_mark + ", team_name=" + team_name + ", team_etire="
+				+ team_etire + ", team_win=" + team_win + ", team_lose=" + team_lose + ", team_tie=" + team_tie
+				+ ", team_cnt=" + team_cnt + ", team_region=" + team_region + ", team_filed=" + team_filed
+				+ ", user_name=" + user_name + ", user_phone=" + user_phone + ", user_region=" + user_region
+				+ ", dateComment=" + dateComment + ", curDateYn=" + curDateYn + ", pickYn=" + pickYn + ", blue_name="
+				+ blue_name + ", blue_mark=" + blue_mark + ", blue_etire=" + blue_etire + ", blue_win=" + blue_win
+				+ ", blue_lose=" + blue_lose + ", blue_tie=" + blue_tie + ", blue_rating=" + blue_rating
+				+ ", purple_name=" + purple_name + ", purple_mark=" + purple_mark + ", purple_etire=" + purple_etire
+				+ ", purple_win=" + purple_win + ", purple_lose=" + purple_lose + ", purple_tie=" + purple_tie
+				+ ", purple_rating=" + purple_rating + "]";
+	}
 
 	
+	
+}
