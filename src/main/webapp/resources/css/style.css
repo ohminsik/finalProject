@@ -218,7 +218,8 @@
 			.board_form .board_table tbody tr:nth-child(2n-1) td{background:#f5f6f7}
 			.board_form .board_table tbody tr td.title{text-align:left;}
 			.board_form .board_table tbody tr td.title a{font-size:14px;}
-			.board_form .search_form{float:right; margin-bottom:20px;}
+			.board_form .search_form{float:right; margin-bottom:20px; text-align: left;}
+			.board_form .search_form form{display: inline-block;}
 			.board_form .search_form ul{overflow: hidden;}
 			.board_form .search_form ul li{float:left; margin-left:5px;}
 			.board_form .search_form ul li button{font-size:14px;}

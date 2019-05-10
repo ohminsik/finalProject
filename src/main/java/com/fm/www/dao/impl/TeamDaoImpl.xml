@@ -6,6 +6,85 @@
   
   <!-- 매퍼 설정 -->
   <mapper namespace="com.fm.www.dao.face.TeamDao">
-  
+  	<select id="teamTotalCount" resultType="int" parameterType="String">
+  		  select count(*) from team_tb   
+		  WHERE 1=1 
+		  <if test="i == 1">
+          <choose>
+            <when test="w != null and !w.equals('')">
+               AND team_name Like '%' || #{w} || '%'
+            </when>
+          </choose>
+          </if>
+          
+          <if test="i == 2">
+          <choose>
+            <when test="w != null and !w.equals('')">
+               AND team_region Like '%' || #{w} || '%'
+            </when>
+          </choose>
+          </if>
+          
+          <if test="i == 3">
+          <choose>
+            <when test="w != null and !w.equals('')">
+               AND team_age Like '%' || #{w} || '%'
+            </when>
+          </choose>
+          </if>
+          
+          <if test="i == 4">
+          <choose>
+            <when test="w != null and !w.equals('')">
+               AND team_type Like '%' || #{w} || '%'
+            </when>
+          </choose>
+          </if>
+  	</select>
+  	
+  	<select id="teamGetList" resultType="com.fm.www.dto.Team">
+  		 SELECT * FROM (
+         SELECT rownum rnum, B.* FROM (
+            	 select * from team_tb   
+		  		WHERE 1=1 
+		  		<if test="i == 1">
+            	<choose>
+            		<when test="w != null and !w.equals('')">
+		               AND team_name Like '%' || #{w} || '%'
+		            </when>
+            	</choose>
+            	</if>
+            	
+            	<if test="i == 2">
+		          <choose>
+		            <when test="w != null and !w.equals('')">
+		               AND team_region Like '%' || #{w} || '%'
+		            </when>
+		          </choose>
+		         </if>
+		         
+		         <if test="i == 3">
+		          <choose>
+		            <when test="w != null and !w.equals('')">
+		               AND team_age Like '%' || #{w} || '%'
+		            </when>
+		          </choose>
+		          </if>
+		          
+		          <if test="i == 4">
+		          <choose>
+		            <when test="w != null and !w.equals('')">
+		               AND team_type Like '%' || #{w} || '%'
+		            </when>
+		          </choose>
+		          </if>
+            	
+            	ORDER BY team_rating desc
+        	 ) B
+    	     ORDER BY rnum
+	      ) R
+    	WHERE rnum BETWEEN #{p.startNo} AND #{p.endNo}
+  	
+  	</select>
   </mapper>
   

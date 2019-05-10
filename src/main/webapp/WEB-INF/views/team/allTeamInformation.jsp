@@ -29,14 +29,16 @@
 				</ul>
 			</div>
 		</div>
+		
 		<!-- nav e -->	
 		<div id="container">
 			<div class="board_form">
-				<form method="GET" action="/team/allTeamInformation">
+				
 					<div class="search_form">
+					<form method="GET" action="/team/allTeamInformationRegion" id="allTeamInformationRegion">
 						<ul>
 							<li>
-								<select name="" class="selectform1">
+								<select name="region" class="selectform1" id="regionSelect" onchange="javascript:searchRegion();">
 									<option value="">전체</option>
 									<option value="서울">서울</option>
 									<option value="인천">인천</option>
@@ -57,8 +59,13 @@
 									<option value="제주">제주</option>
 								</select>
 							</li>
+						</ul>
+					</form>
+					
+					<form method="GET" action="/team/allTeamInformationAge" id="allTeamInformationAge">
+						<ul>
 							<li>
-								<select name="" class="selectform1">
+								<select name="age" class="selectform1" id="ageSelect" onchange="javascript:searchAge();">
 									<option value="">전체연령</option>
 									<option value="10대">10대</option>
 									<option value="20대">20대</option>
@@ -68,8 +75,12 @@
 									<option value="60대이상">60대이상</option>
 								</select>
 							</li>
+						</ul>
+					</form>
+					<form method="GET" action="/team/allTeamInformationType" id="allTeamInformationType">
+						<ul>
 							<li>
-								<select name="" class="selectform1">
+								<select name="type" class="selectform1" id="typeSelect" onchange="javascript:searchType();">
 									<option value="">소속유형</option>
 									<option value="청소년">청소년</option>
 									<option value="데학생">대학생</option>
@@ -79,14 +90,19 @@
 									<option value="기타단체">기타단체</option>
 								</select>
 							</li>
+						</ul>
+					</form>
+					<form method="GET" action="/team/allTeamInformation">
+						<ul>
 							<li>
-								<input type="text" name="" id="" class="inputform250" placeholder="팀명을 입력해주세요">
+								<input type="text" name="word" id="" class="inputform250" placeholder="팀명을 입력해주세요">
 							</li>
 							<li><button class="btnform7">검색</button></li>
 							<li><button type="reset" class="btnform8">초기화</button></li>
 						</ul>
+					</form>
 					</div>
-				</form>
+				
 				<div class="cb"></div>
 				<table class="board_table">
 					<colgroup>
@@ -105,21 +121,28 @@
 						</tr>
 					</thead>
 					<tbody>
+						<c:set var="tableNum" value="${tableNum}"/>
+							<%
+								String tableNum = pageContext.getAttribute("tableNum").toString();
+								int no = Integer.parseInt(tableNum);
+							%>
+						<c:forEach items="${list }" var="list">
 						<tr>
-							<td>1</td>
-							<td>FC 김준환</td>
-							<td>1503</td>
+							<td><%=no++ %></td>
+							<td>${list.team_name }</td>
+							<td>${list.team_rating }</td>
 							<td>
-								지역 : 서울-강남<br>
-								연령대 : 20대<br>
-								실력 : 하
+								지역 : ${list.team_region }<br>
+								연령대 : ${list.team_age }<br>
+								실력 : ${list.team_level }
 							</td>
 							<td>
-								소속유형 : 대학생<br>
-								팀원수 : 19명<br>
-								경기유형 : 축구
+								소속유형 : ${list.team_type }<br>
+								팀원수 : ${list.team_cnt }명<br>
+								경기수 : ${list.team_etire }
 							</td>
 						</tr>
+						</c:forEach>
 						<tr>
 							<td colspan="5">등록된 팀이 없습니다.</td>
 						</tr>
@@ -167,4 +190,35 @@
 		<jsp:include page="../common/footer.jsp" />
 	</div>
 </body>
+<script>
+	function searchRegion(n){
+		var consultForm = document.getElementById('allTeamInformationRegion');
+		consultForm.action="/team/allTeamInformationRegion";
+		consultForm.submit();
+	}
+	
+	function searchAge(n){
+		var consultForm = document.getElementById('allTeamInformationAge');
+		consultForm.action="/team/allTeamInformationAge";
+		consultForm.submit();
+	}
+	
+	function searchType(n){
+		var consultForm = document.getElementById('allTeamInformationType');
+		consultForm.action="/team/allTeamInformationType";
+		consultForm.submit();
+	}
+	
+	function viewYnSearchFunc(){
+		var region = $("#regionSelect").val();
+		searchRegion(region);
+		
+		var age = $("#ageSelect").val();
+		searchAge(age);
+		
+		var type = $("#typeSelect").val();							
+		searchType(type);						
+		
+	}
+</script>
 </html>
