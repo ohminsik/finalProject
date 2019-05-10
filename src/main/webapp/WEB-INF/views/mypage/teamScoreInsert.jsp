@@ -41,7 +41,7 @@
 					</ul>
 				</div>
 				
-				<form action="/mypage/teamScoreInsert" method="post">
+				<form action="/mypage/teamScoreInsert" method="post" enctype="multipart/form-data">
 				<table class="j_table_form mt50">
 					<colgroup>
 						<col width="20%">
@@ -51,25 +51,27 @@
 						<tr>
 							<td>스코어 입력</td>
 							<td>
-								퍼플팀 : <input type="text" name="" id="" class="inputform100">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;블루팀 : <input type="text" name="" id="" class="inputform100">
+								${match.blue_name }팀 : <input type="text" name="blueteam_score" id="blueteam_score" class="inputform100">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${match.purple_name }팀 : <input type="text" name="purpleteam_score" id="purpleteam_score" class="inputform100">
 							</td>
 						</tr>
 						
 						<tr>
 							<td>매치 내용 입력</td>
 							<td>
-								<textarea class="textareaform100p"></textarea>
+								<textarea class="textareaform100p" name="board_content" id="board_content"></textarea>
 							</td>
 						</tr>
 						<tr>
 							<td>매치사진 업로드</td>
-							<td><input type="file" name="" id=""></td>
+							<td><input type="file" name="file" id="file"></td>
 						</tr>
 						
 					</tbody>
 				</table>
 				<div class="j_button mt50">
-					<a class="btnform0">결과 입력</a>
+					<input type="hidden" name="board_title" id="board_title" value="${match.blue_name }팀 vs ${match.purple_name }팀">
+					<input type="hidden" name="match_no" id="match_no" value="${match.match_no }">
+					<button class="btnform0">결과 입력</button>
 				</div>
 				</form>
 			</div>

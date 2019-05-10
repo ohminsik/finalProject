@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%> 
 <jsp:include page="../common/meta.jsp"/>
 <body>
 	<div id="wrap">
@@ -43,40 +44,41 @@
 				
 				<div class="teammatchinfo mt50">
 					<ul>
+						<c:forEach items="${matchList }" var="matchList">
 						<li>
 							<div class="wrapppppppp">
 								<div class="left">
-									<p class="img mb30"><img src="/resources/img/logo.png"></p>
-									<p class="title mb10">팀이름</p>
-									<p class="score">0전 0승 0무 0패</p>
+									<p class="img mb30"><img src="/uploadImg/${matchList.blue_mark }"></p>
+									<p class="title mb10">${matchList.blue_name }</p>
+									<p class="score">${matchList.blue_erite }전 ${matchList.blue_win }승 ${matchList.blue_tie }무 ${matchList.blue_lose }패</p>
 								</div>
 								<div class="right">
-									<p class="img mb30"><img src="/resources/img/logo.png"></p>
-									<p class="title mb10">팀이름</p>
-									<p class="score">0전 0승 0무 0패</p>
+									<p class="img mb30"><img src="/uploadImg/${matchList.purple_mark }"></p>
+									<p class="title mb10">${matchList.purple_name }</p>
+									<p class="score">${matchList.purple_erite }전 ${matchList.purple_win }승 ${matchList.purple_tie }무 ${matchList.purple_lose }패</p>
 								</div>	
 								<div class="center">
 									<p>VS</p>
 								</div>
 								
 								<div class="leftscore">
-									<p>1</p>
+									<p>${matchList.blueteam_score }</p>
 								</div>
 								
 								<div class="rightscore">
-									<p>5</p>
+									<p>${matchList.purpleteam_score }</p>
 								</div>	
 								
 							</div>
 							<div class="timetable">
-								<p class="mb10">장소 : 토트넘스타디움</p>
-								<p>날짜 : 2019-02-02, 시간 : 13:00</p>
+								<p class="mb10">장소 : ${matchList.match_ground }</p>
+								<p>날짜, 시간 : <fmt:formatDate value="${matchList.fight_date }" pattern="yyyy-MM-dd , HH:mm"/></p>
 							</div>
 							<div class="tac mt20">
-								<a href="/mypage/teamScoreInsert" class="btnform0 oh1">매치결과입력</a>
+								<a href="/mypage/teamScoreInsert?match_no=${matchList.match_no }" class="btnform0 oh1">매치결과입력</a>
 							</div>					
 						</li>
-						
+						</c:forEach>
 					</ul>
 				</div>
 			</div>
