@@ -31,7 +31,7 @@
 		</div>
 		<!-- nav e -->	
 		<div id="container">
-			<form action="/community/teamAddUpdate?board_no=${Board_tbview.board_no }" method="POST">
+			<form action="/community/teamAddUpdate?board_no=${board_no }" method="POST" enctype="multipart/form-data">
 				<div class="board_form">
 					<table class="board_table board_table1">
 						<colgroup>
