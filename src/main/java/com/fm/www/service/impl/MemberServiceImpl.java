@@ -82,6 +82,17 @@ public class MemberServiceImpl implements MemberService{
 	public void up_pw(User user) {
 		memberDao.up_pw(user);
 	}
+	
+	// 카카오톡 로그인 유저 넘버 생성
+	@Override
+	public void kkoNo(User user) {
+		memberDao.kkoNo(user);
+	}
+	// 카카오 가입 조회
+	@Override
+	public int kkoCheck(User user) {
+		return memberDao.kkoCheck(user);
+	}
 
 	
 

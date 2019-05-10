@@ -157,4 +157,36 @@ public class CommonController {
 		return "jsonView";
 	}
 	
+	// 카카오 로그인
+	@RequestMapping(value="/kko", method=RequestMethod.GET)
+	public String kkoo(HttpSession session, String userNickName, HttpServletRequest request) {
+
+		return "redirect:/main";
+	}
+	@RequestMapping(value="/kko", method=RequestMethod.POST)
+	public String kko(HttpSession session, String userNickName, String userID, HttpServletRequest request, User user) {
+		user.setUser_nick(userNickName);
+		user.setUser_id(userID);
+//			System.out.println(userNickName);
+//			System.out.println(userID);
+		String user_nick = userNickName;
+		
+		// 카카오 가입 조회
+		int kkoCheck = memberService.kkoCheck(user);
+		
+		if(kkoCheck == 1) {
+			session.setAttribute("login", true);
+			session.setAttribute("user_nick", user_nick);
+		} else  {
+			// 카카오톡 로그인 유저 넘버 생성
+			memberService.kkoNo(user);
+			session.setAttribute("login", true);
+			session.setAttribute("user_nick", user_nick);
+		}
+		
+		
+		
+		return"jsonView";
+	}
+	
 }

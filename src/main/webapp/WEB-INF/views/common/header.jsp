@@ -2,7 +2,12 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-
+<!-- 카카오 로그인  s -->
+<meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width"/>
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+<!-- 카카오 로그인  e -->
 <div id="header">
 	<div class="h_top_wrap">
 		<div class="h_top">
@@ -146,7 +151,11 @@
 	                <li><a class="find_pw_btn">비밀번호찾기</a></li>
 	            </ul>
 	            <div class="cb"></div>
-	            <div class="button" onclick="login_btn();">로그인</div>
+	            <div class="button" onclick="login_btn();">로그인</div><br>
+	            <style>
+					#kakao-login-btn img{width:100%}	            
+	            </style>
+	            <div><a id="kakao-login-btn" class="kko" onclick="login_kko();"></a></div>
 	           <!--  <div class="line"></div>	
 	            <ul class="sns">
 	                <li class="n"><a class="cp"><i class="xi-naver-square"></i>네이버</a></li>
@@ -220,6 +229,54 @@
 	</script>
 </c:if>
 
+
+<!-- 카카오 로그인 s -->
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type='text/javascript'>
+var userNickName =null;
+    // 사용할 앱의 JavaScript 키를 설정해 주세요.
+    Kakao.init('bb438f14804322b4ec156a7f31cd1b46');
+    // 카카오 로그인 버튼을 생성합니다.
+    Kakao.Auth.createLoginButton({
+      container: '#kakao-login-btn',
+      success: function(authObj) {
+    	  // 로그인 성공시, API를 호출합니다
+    	  Kakao.API.request({
+    		  url: '/v1/user/me',
+    		  success: function(res){
+    			  /* alert(JSON.stringify(res)); res에 담겨있는 json 값을 모두 볼수있다 */
+        		  alert(res.properties.nickname+'님 환영합니다.');
+    		  
+    			  // 사용자 정보 가져와서 출력
+    			  var userID = res.id;      //유저의 카카오톡 고유 id
+    		      userNickName = res.properties.nickname; //유저가 등록한 별명
+    		      console.log(userID);
+    		      console.log(userNickName);
+    		      
+    		      $.ajax({
+    		          type: "post"
+    		          , url: "/kko"
+//     		          , data: JSON.stringify(userNickName)
+    		          , data: {"userNickName":userNickName, "userID":userID}	         
+    		          , dataType: "html"
+    		          , success: function (data){
+    		        	 location.href="/kko";
+    		             console.log("성공");
+    		          }
+    		       }); 
+    		  },
+    		   fail: function(err) {
+    		   		alert(JSON.stringify(err));
+    		   }
+    	  });
+      },
+      fail: function(err) {
+         alert(JSON.stringify(err));
+      }
+    });
+</script>
+<!-- 카카오 로그인 e -->
 <script>
 	
 	

@@ -27,4 +27,9 @@ public interface MemberService {
 	//비밀번호 변경
 	public void up_pw(User user);
 	
+	// 카카오톡 로그인 유저 넘버 생성
+	public void kkoNo(User user);
+	// 카카오 가입 조회
+	public int kkoCheck(User user);
+	
 }

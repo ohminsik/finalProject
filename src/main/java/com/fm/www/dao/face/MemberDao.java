@@ -32,4 +32,9 @@ public interface MemberDao {
 	public int find_Pw(@Param("p1") String user_id, @Param("p2")String user_email);
 	//비밀번호 변경
 	public void up_pw(User user);
+	
+	// 카카오톡 로그인 유저 넘버 생성
+	public void kkoNo(User user);
+	// 카카오 가입 조회
+	public int kkoCheck(User user);
 }

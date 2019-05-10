@@ -63,4 +63,17 @@
 		WHERE user_id = #{user_id} AND user_email= #{user_email}
 	</update>
 	
+	<!-- 카카오톡 로그인 유저 넘버 생성 -->
+  	<insert id="kkoNo" parameterType="com.fm.www.dto.User">
+  		INSERT INTO user_tb (user_no, user_id, user_nick) 
+      	VALUES (user_tb_SEQ.nextVal,#{user_id}, #{user_nick})
+  	</insert>
+  
+	<!-- 카카오 가입 조회 -->
+  	<select id="kkoCheck" parameterType="com.fm.www.dto.User" resultType="int">
+  		SELECT COUNT(*) FROM user_tb
+  		WHERE user_id=#{user_id }
+  		AND user_nick=#{user_nick }
+  	</select>
+	
   </mapper>
