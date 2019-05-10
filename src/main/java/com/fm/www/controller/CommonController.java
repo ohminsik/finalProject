@@ -175,13 +175,21 @@ public class CommonController {
 		int kkoCheck = memberService.kkoCheck(user);
 		
 		if(kkoCheck == 1) {
+			//로그인한 유저 넘버값 가져오기
+			int user_no = memberService.getUserNokko(user);
 			session.setAttribute("login", true);
 			session.setAttribute("user_nick", user_nick);
+			session.setAttribute("user_no", user_no);
+			
+			System.out.println(user_no);
 		} else  {
 			// 카카오톡 로그인 유저 넘버 생성
 			memberService.kkoNo(user);
+			//로그인한 유저 넘버값 가져오기
+			int user_no = memberService.getUserNokko(user);
 			session.setAttribute("login", true);
 			session.setAttribute("user_nick", user_nick);
+			session.setAttribute("user_no", user_no);
 		}
 		
 		

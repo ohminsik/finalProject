@@ -75,5 +75,10 @@
   		WHERE user_id=#{user_id }
   		AND user_nick=#{user_nick }
   	</select>
-	
+	<!-- 카카오 유저 번호 가져오기 -->
+	<select id="getUserNokko" parameterType="com.fm.www.dto.User" resultType="int">
+    	SELECT user_no FROM user_tb
+  		WHERE user_id=#{user_id}
+  		AND user_nick=#{user_nick }
+	</select>
   </mapper>

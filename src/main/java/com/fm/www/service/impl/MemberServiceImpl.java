@@ -93,6 +93,11 @@ public class MemberServiceImpl implements MemberService{
 	public int kkoCheck(User user) {
 		return memberDao.kkoCheck(user);
 	}
+	// 카카오 유저 넘버 가져오기
+	@Override
+	public int getUserNokko(User user) {
+		return memberDao.getUserNokko(user);
+	}
 
 	
 

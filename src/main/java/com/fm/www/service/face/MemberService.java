@@ -31,5 +31,7 @@ public interface MemberService {
 	public void kkoNo(User user);
 	// 카카오 가입 조회
 	public int kkoCheck(User user);
+	// 카카오 유저 넘버 가져오기
+	public int getUserNokko(User user);
 	
 }
