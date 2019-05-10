@@ -18,4 +18,13 @@ public interface MemberService {
 	//팀넘버(매치등록시)
 	public String getTeamNo(User user);
 	
+	//아이디 확인여부
+	public boolean find_Id(String user_name, String user_email);
+	//아이디 찾기
+	public String findId(String user_name, String user_email);
+	//비밀번호  확인 여부
+	public int find_Pw(String user_id, String user_email);
+	//비밀번호 변경
+	public void up_pw(User user);
+	
 }

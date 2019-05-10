@@ -307,9 +307,9 @@
 					url:'/idChk',
 					type:"post",
 					success:function(data){
-						if(data != "N"){
+						if(data.data != "N"){
 							var dataText="";							
-							dataText ='<p class="mt20 tac lh20 f16 fb c333">'+data.user_id+'</p><br>';								
+							dataText ='<p class="mt20 tac lh20 f16 fb c333">'+data.findid+'</p><br>';								
 							
 							$("#dixBox").html(dataText);
 							$(".find_id_show").stop().fadeOut(200)
@@ -344,10 +344,10 @@
 						url:'/idChk',
 						type:"post",
 						success:function(data){
-							if(data != "N"){
+							if(data.data != "N"){
 								var dataText="";
 								var dataText="";							
-								dataText ='<p class="mt20 tac lh20 f16 fb c333">'+data.user_id+'</p><br>';	
+								dataText ='<p class="mt20 tac lh20 f16 fb c333">'+data.findid+'</p><br>';	
 								$("#dixBox").html(dataText);
 								$(".find_id_show").stop().fadeOut(200)
 								$(".find_id_ok_show").stop().fadeIn(300)
@@ -378,7 +378,7 @@
 				url:'/pwChk',
 				type:"post",
 				success:function(data){
-					if(data.chknum >= 1){						
+					if(data.data >= 1){						
 						 $('#findEmail1').val('');
 						 $('#findId').val('');
 						 $('.find_pw_show').fadeOut();
@@ -409,7 +409,7 @@
 					url:'/pwChk',
 					type:"post",
 					success:function(data){						
-						if(data.chknum >= 1){						
+						if(data.data >= 1){						
 							 $('#findEmail1').val('');
 							 $('#findId').val('');
 							 $('.find_pw_show').fadeOut();

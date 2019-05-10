@@ -1,5 +1,7 @@
 package com.fm.www.dao.face;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.fm.www.dto.User;
 
 public interface MemberDao {
@@ -22,4 +24,12 @@ public interface MemberDao {
 	//팀넘버(매치등록)
 	public String getTeamNo(User user);
 	
+	//아이디 확인여부
+	public int find_Id(@Param("p1") String user_name, @Param("p2")String user_email);
+	//아이디 찾기
+	public String findId(@Param("p1") String user_name, @Param("p2")String user_email);
+	//비밀번호  확인여부
+	public int find_Pw(@Param("p1") String user_id, @Param("p2")String user_email);
+	//비밀번호 변경
+	public void up_pw(User user);
 }

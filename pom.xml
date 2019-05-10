@@ -23,20 +23,30 @@
 	</repositories>
 	
 	<dependencies>
-	     <!-- 웹소캣 javax -->
-	    <dependency>
-		<groupId>javax.websocket</groupId>	      
-		<artifactId>javax.websocket-api</artifactId>
-		<version>1.1</version>
-		</dependency>
-		<!-- 스프링워크 웹소캣 -->
-		<dependency>
-		<groupId>org.springframework</groupId>
-		<artifactId>spring-websocket</artifactId>
-		<version>5.1.6.RELEASE</version>
-		</dependency>
+	         <!-- 웹소캣 javax -->
+        <dependency>
+        <groupId>javax.websocket</groupId>          
+        <artifactId>javax.websocket-api</artifactId>
+        <version>1.1</version>
+        </dependency>
+        <!-- 스프링워크 웹소캣 -->
+        <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-websocket</artifactId>
+        <version>5.1.6.RELEASE</version>
+        </dependency>
+	
+	<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-email -->
+<dependency>
+    <groupId>org.apache.commons</groupId>
+    <artifactId>commons-email</artifactId>
+    <version>1.5</version>
+</dependency>
+	
 		<!-- Jackson Databind (Jackson Mapper를 포함하고 있음) -->
 		
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+
 		<dependency>
 		    <groupId>com.fasterxml.jackson.core</groupId>
 		    <artifactId>jackson-databind</artifactId>
@@ -192,7 +202,12 @@
 			<artifactId>junit</artifactId>
 			<version>4.7</version>
 			<scope>test</scope>
-		</dependency>        
+		</dependency>
+		<dependency>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>javax.mail</artifactId>
+			<version>1.5.6</version>
+		</dependency>
 	</dependencies>
     <build>
         <plugins>

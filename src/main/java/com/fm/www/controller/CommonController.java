@@ -1,16 +1,23 @@
 package com.fm.www.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.fm.www.dto.User;
 import com.fm.www.service.face.MemberService;
+import com.fm.www.util.MailUtil;
 
 @Controller
 public class CommonController {
@@ -88,17 +95,66 @@ public class CommonController {
 		return"redirect:/main";
 	}
 	
+	/*
+	 * 아이디 찾기 AJAX로 처리
+	 * */
+	@RequestMapping(value="/idChk", method=RequestMethod.POST)
+	public String FindId(HttpServletRequest request,Model model) throws Exception {
+		String user_name = request.getParameter("name");
+		String user_email = request.getParameter("email");
+		logger.info(user_name);
+		logger.info(user_email);
+		// 아이디 확인 여부 받아오기
+		boolean find_id = memberService.find_Id(user_name,user_email);
+		//아이디 찾기
+		String findid = memberService.findId(user_name,user_email); 
+		
+		Map map = new HashMap();
+		if (find_id == false) {
+			map.put("data", "N");
+		}
+		model.addAttribute("findid",findid);
+		model.addAllAttributes(map);
+		return "jsonView";
+	}
+	/*
+	 * 비밀번호 찾기 AJAX로 처리
+	 * */
+	@RequestMapping(value="/pwChk", method=RequestMethod.POST)
+	public String FindPw(User user,HttpServletRequest request,
+			MailUtil mail,
+			Model model) throws Exception{
+		String user_id = request.getParameter("id");
+		String user_email = request.getParameter("email");
+		
+		//비밀번호 확인 여부
+		int find_pw = memberService.find_Pw(user_id,user_email);
+		logger.info(""+find_pw);
+		logger.info(""+user);
+		//비밀번호 변경
+		if(find_pw == 1) {
+			user.setUser_id(user_id);
+			user.setUser_email(user_email);
+			String user_pw_New = UUID.randomUUID().toString().replaceAll("-","").substring(0,10);
+			user.setUser_pw(user_pw_New);
+			System.out.println(user.getUser_pw());
+			memberService.up_pw(user);
+			logger.info("qweqewadsadszxvcg12444444444444444444"+user);
+			
+			String subject = "지금까지 이런 매치는 없었다 [Final Match]에서 임시 비밀번호 발급 안내";
+			String msg = "";
+			msg += "<div align='center' style='border:1ps solid blue; font-family:verdana'>";
+			msg += "<h4 style='coler: black;'><strong>" + user_id + " 님</Strong>의 임시 비밀번호 입니다. 로그인 후 비밀번호를 변경하세요.</h3>";
+			msg += "<p>임시 비밀번호 : <strong>" + user_pw_New + "</strong></p></div>";
+			
+			mail.sendMail(user_email, subject, msg);
+		}
+		Map map = new HashMap();
+		map.put("data", find_pw);
+		model.addAllAttributes(map);
+		
+		
+		return "jsonView";
+	}
+	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

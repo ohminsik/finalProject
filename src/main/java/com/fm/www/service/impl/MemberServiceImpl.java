@@ -52,6 +52,39 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.getTeamNo(user);
 	}
 
+	//아이디 확인여부
+	@Override
+	public boolean find_Id(String user_name, String user_email) {
+		//이름과 이메일로 찾은 아이디 개수 반환
+		int cnt = memberDao.find_Id(user_name,user_email);
+		
+		if(cnt ==1) {
+			return true;
+		}
+		return false;
+	}
+
+	//아이디 찾기
+	@Override
+	public String findId(String user_name, String user_email) {
+		return memberDao.findId(user_name,user_email);
+	}
+
+	//비밀번호 확인 여부
+	@Override
+	public int find_Pw(String user_id, String user_email) {
+		return memberDao.find_Pw(user_id,user_email);
+	}
+
+	//비밀번호 변경
+
+	@Override
+	public void up_pw(User user) {
+		memberDao.up_pw(user);
+	}
+
+	
+
 	
 
 }

@@ -42,5 +42,25 @@
   		SELECT team_no FROM user_tb
   		WHERE user_id=#{user_id}
   	</select>
-  
+  	
+  	<!-- 아이디 확인 여부 -->
+  	<select id="find_Id" resultType="int">
+  		SELECT COUNT(*) FROM user_tb
+		WHERE user_name = #{p1} AND user_email = #{p2}
+  	</select>
+  	<!-- 아이디 찾기 -->
+  	<select id="findId" resultType="String">
+  		SELECT user_id FROM user_tb
+		WHERE user_name = #{p1} AND user_email = #{p2}
+  	</select>
+  	<!-- 비밀번호 확인 여부 -->
+  	<select id="find_Pw" resultType="int">
+		SELECT COUNT(*) FROM user_tb
+		WHERE user_id = #{p1} AND user_email = #{p2}
+	</select>
+	<update id="up_pw" parameterType="com.fm.www.dto.User">
+		UPDATE user_tb SET user_pw = #{user_pw}
+		WHERE user_id = #{user_id} AND user_email= #{user_email}
+	</update>
+	
   </mapper>
