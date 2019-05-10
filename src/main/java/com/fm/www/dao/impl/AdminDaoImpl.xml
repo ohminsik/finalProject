@@ -60,7 +60,7 @@
       ) R
       WHERE rnum BETWEEN #{paging.startNo} AND #{paging.endNo}
   	</select>
-  	
+
   	<!-- 댓글 갯수 구하기 -->
 	<select id="boardReplyCount" parameterType="int" resultType="int">
 		select COUNT(*) from board_reply 
@@ -118,7 +118,7 @@
   	</select>
   	<!-- 파일첨부 존재 여부 -->
   	<select id="adminPhotoCheck" parameterType="int" resultType="int">
-  		select * from Photo
+  		select count(*) from Photo
   		where board_no = #{board_no}
   	</select>
   	<!-- 수정 글쓰기 -->

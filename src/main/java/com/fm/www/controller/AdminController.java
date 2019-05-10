@@ -238,7 +238,7 @@ public class AdminController {
 	  //파일첨부 존재 여부
       int photo_no = adminService.adminPhotoCheck(board_no);
       if(!"".equals(file.getOriginalFilename())&& file.getOriginalFilename()!=null) {
-         if(photo_no!=0) {
+         if(photo_no==1) {
             //고유식별자
             String uId = UUID.randomUUID().toString().split("-")[0];
       
@@ -306,14 +306,12 @@ public class AdminController {
             board.setBoard_no(board_no);
             photo.setBoard_no(board_no);
             board.setBoard_no(board_no);
-            //세션번호넣어주기
-            int user_no = (int) session.getAttribute("user_no");
-            board.setUser_no(user_no);
+            
          
             //수정 글쓰기
             adminService.adminBoardWrite(board);
             //파일첨부
-            adminService.adminPhotoWrite(photo);
+            adminService.adminInsertPhoto(photo, board_div);
          }
       }else {
             //수정 글쓰기

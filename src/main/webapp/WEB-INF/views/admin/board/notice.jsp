@@ -77,7 +77,13 @@
             <ul class="ul_form2">
             <c:if test="${board_div eq 1 }">
                <li><a href="/admin/board/write?board_div=${board_div }" class="btnform3">등록</a></li>
-            </c:if>   
+            </c:if> 
+            <c:if test="${board_div eq 9 }">
+               <li><a href="/admin/board/write?board_div=${board_div }" class="btnform3">등록</a></li>
+            </c:if>
+            <c:if test="${board_div eq 10 }">
+               <li><a href="/admin/board/write?board_div=${board_div }" class="btnform3">등록</a></li>
+            </c:if>  
                <li><a href="#" class="btnform4" onclick="alldelete();">삭제</a></li>
             </ul>
          </div>
