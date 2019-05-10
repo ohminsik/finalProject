@@ -37,7 +37,7 @@
 					<ul>
 						<li><a href="/mypage/teamInformation">팀 정보</a></li>
 						<li class="on"><a href="/mypage/teamMatchInfo">팀 매치 정보</a></li>
-						<li><a href="#">팀 매치 결과</a></li>
+						<li><a href="/mypage/teamMatchResult">팀 매치 결과</a></li>
 						<li><a href="/mypage/teamBoard">팀 게시판</a></li>
 					</ul>
 				</div>
@@ -50,12 +50,12 @@
 								<div class="left">
 									<p class="img mb30"><img src="/uploadImg/${matchList.blue_mark }"></p>
 									<p class="title mb10">${matchList.blue_name }</p>
-									<p class="score">${matchList.blue_erite }전 ${matchList.blue_win }승 ${matchList.blue_tie }무 ${matchList.blue_lose }패</p>
+									<p class="score">${matchList.blue_etire }전 ${matchList.blue_win }승 ${matchList.blue_tie }무 ${matchList.blue_lose }패</p>
 								</div>
 								<div class="right">
 									<p class="img mb30"><img src="/uploadImg/${matchList.purple_mark }"></p>
 									<p class="title mb10">${matchList.purple_name }</p>
-									<p class="score">${matchList.purple_erite }전 ${matchList.purple_win }승 ${matchList.purple_tie }무 ${matchList.purple_lose }패</p>
+									<p class="score">${matchList.purple_etire }전 ${matchList.purple_win }승 ${matchList.purple_tie }무 ${matchList.purple_lose }패</p>
 								</div>	
 								<div class="center">
 									<p>VS</p>

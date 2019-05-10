@@ -377,4 +377,10 @@
 	  	WHERE team_no = #{team_no }
    	</update>
    	
+   	<update id="updateScore">
+   		UPDATE match SET blueteam_score = #{blueteam_score}, purpleteam_score = #{purpleteam_score}
+	  	WHERE match_no = #{match_no }
+   	</update>
+   	
+   	
   </mapper>

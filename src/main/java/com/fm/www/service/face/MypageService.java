@@ -138,6 +138,9 @@ public interface MypageService {
 	//레이팅 업데이트
 	public void updateRating(int team_no, int rating);
 	
+	//스코어 업데이트
+	public void updateScore(Match match);
+	
 	
 	
 	

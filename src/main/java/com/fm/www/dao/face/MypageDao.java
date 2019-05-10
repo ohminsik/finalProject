@@ -135,6 +135,9 @@ public interface MypageDao {
 	
 	//레이팅 변경
 	public void updateRating(@Param("team_no") int team_no, @Param("rating") int rating);
+	
+	//매치 스코어 업데이트
+	public void updateScore(Match match);
 		
 
 	

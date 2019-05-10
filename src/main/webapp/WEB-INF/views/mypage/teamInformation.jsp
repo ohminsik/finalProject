@@ -36,7 +36,7 @@
 					<ul>
 						<li class="on"><a href="/mypage/teamInformation">팀 정보</a></li>
 						<li><a href="/mypage/teamMatchInfo">팀 매치 정보</a></li>
-						<li><a href="#">팀 매치 결과</a></li>
+						<li><a href="/mypage/teamMatchResult">팀 매치 결과</a></li>
 						<li><a href="/mypage/teamBoard">팀 게시판</a></li>
 					</ul>
 				</div>
@@ -60,6 +60,7 @@
 								<p class="img mb30"><img src="/uploadImg/${team.team_mark }"></p>
 								<p class="title mb10">${team.team_name }</p>
 								<p class="score">${team.team_etire }전 ${team.team_win }승 ${team.team_tie }무 ${team.team_lose }패</p>
+								<p class="title mt10">Rating : ${team.team_rating }</p>
 							</div>
 							<div class="bot mt20">
 								<table class="j_table_form1">

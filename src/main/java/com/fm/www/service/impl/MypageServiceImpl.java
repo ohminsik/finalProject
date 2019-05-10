@@ -315,6 +315,12 @@ public class MypageServiceImpl implements MypageService{
 	public void updateRating(int team_no, int rating) {
 		mypageDao.updateRating(team_no, rating);
 	}
+
+	@Override
+	public void updateScore(Match match) {
+		mypageDao.updateScore(match);
+		
+	}
 	
 	
 

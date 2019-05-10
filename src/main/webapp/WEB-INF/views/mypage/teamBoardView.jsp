@@ -37,7 +37,7 @@
 					<ul>
 						<li><a href="/mypage/teamInformation">팀 정보</a></li>
 						<li><a href="/mypage/teamMatchInfo">팀 매치 정보</a></li>
-						<li><a href="#">팀 매치 결과</a></li>
+						<li><a href="/mypage/teamMatchResult">팀 매치 결과</a></li>
 						<li class="on"><a href="/mypage/teamBoard">팀 게시판</a></li>
 					</ul>
 				</div>

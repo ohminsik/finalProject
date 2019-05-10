@@ -37,7 +37,7 @@
 					<ul>
 						<li class="on"><a href="/mypage/teamInformation">팀 정보</a></li>
 						<li><a href="/mypage/teamMatchInfo">팀 매치 정보</a></li>
-						<li><a href="#">팀 매치 결과</a></li>
+						<li><a href="/mypage/teamMatchResult">팀 매치 결과</a></li>
 						<li><a href="/mypage/teamBoard">팀 게시판</a></li>
 					</ul>
 				</div>
@@ -101,7 +101,7 @@
 							<td>								
 								<select name="team_type" id="team_type" class="selectform1">											
 									<option value="청소년">청소년</option>
-									<option value="데학생">대학생</option>
+									<option value="대학생">대학생</option>
 									<option value="직장인">직장인</option>
 									<option value="일반동호회">일반동호회</option>
 									<option value="여성팀">여성팀</option>

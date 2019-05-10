@@ -588,8 +588,8 @@ public class MypageController {
 		System.out.println("Exception_shift_High 갭 " +Exception_shift_High);
 		System.out.println("Exception_shift_Low 갭 " +Exception_shift_Low);
 
-		
-		
+		//스코어 업데이트
+		mypageService.updateScore(match);
 		
 		//총전적수 +1
 		mypageService.updateEtire(matchInfo.getBlueteam_no());
@@ -642,6 +642,29 @@ public class MypageController {
 		System.out.println(matchInfo.getBlueteam_no());
 		System.out.println(matchInfo.getPurpleteam_no());
 	}
+	
+	/*
+	 * 
+	 * 매치 결과 페이지
+	 * GET
+	 * teamMatchResult
+	 * */
+	
+	@RequestMapping(value = "/mypage/teamMatchResult", method = RequestMethod.GET)
+	public void teamMatchResultGet(HttpSession session, Model model) {		
+		User user = new User();
+		user.setUser_no((int)(session.getAttribute("user_no")));
+		
+		//유저넘버로 팀넘버 가져오기
+		int team_no = mypageService.selectTeamNoUserNo(user);
+		
+		//팀 넘버로 매치보드 조회
+		List<Match> matchList = mypageService.selectMatchList(team_no);
+		
+		model.addAttribute("matchList", matchList);
+		
+	}
+	
 	
 	/*
 	 * 팀게시판
