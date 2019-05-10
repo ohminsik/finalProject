@@ -484,6 +484,21 @@
 	
 	.btnform123123{text-align: center;}
 	.btnform123123 li{display: inline-block;}
+	
+	.chat_wrap{position: fixed; bottom:5px; right:5px; width:500px; height:420px; background: #fff;  border:1px solid #955dff;   padding: 10px;    box-sizing: border-box;    border-radius: 15px; transition:all,.5s;}
+		.chat_wrap .cnt{font-size:20px; font-weight: bold; margin-bottom:5px;}
+		.chat_wrap .chatArea_wrap{height:300px; width:100%;border:1px solid #e1e1e1;}
+		.chat_wrap .chatArea_wrap #chatAreabox{height:300px; width:100%; overflow-y:auto; background: url("/resources/img/bgbg.png") no-repeat;     background-size: 100% 100%;}
+		.chat_wrap .chatArea_wrap #chatArea {    padding: 10px;    box-sizing: border-box;}
+		.chat_wrap .chatArea_wrap #chatArea .myp { float:right;   font-size: 14px;   display: inline-block;     padding: 5px 10px;    box-sizing: border-box;    background: #5382ff;  border:1px solid #5382ff;  margin-bottom: 10px;    color: #fff !important;    border-radius: 5px;}
+		.chat_wrap .chatArea_wrap #chatArea .youp {  float:left;  font-size: 14px;   display: inline-block;     padding: 5px 10px;    box-sizing: border-box;    background: #955dff; border:1px solid #955dff;    margin-bottom: 10px;    color: #fff !important;    border-radius: 5px;}
+		
+		.close_btnnnnnn{position: absolute; top:11px; right:10px; font-size:24px; cursor:pointer}
+		
+	.chat_wrap.hide{width:50px; height:50px; border-radius:50%; transition:all,.5s; background: #955dff;  border:1px solid #fff; bottom:15px; right:15px;}
+	.chat_wrap.hide > *{display: none;}
+	.chat_wrap > .xi-plus{display: none;}
+	.chat_wrap.hide > .xi-plus{display: block; font-size:27px; cursor:pointer; color:#fff;}
 			
 		
 		

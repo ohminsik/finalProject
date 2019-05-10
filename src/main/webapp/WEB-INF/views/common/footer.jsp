@@ -70,23 +70,34 @@
 </div>
 
 <c:if test="${login }">
-	<div class="container" style="width: 500px;">
-		<div class="cnt" id="cnt" style="    margin: 0 0 0 150px;   width: 500px;  height: 18px;"></div>
-		<div >
-			<div id="chatAreabox"	style="   margin: 0 0 0 150px;   overflow: scroll; width: 500px; height: 500px; padding: 10px; border: 1px solid #333;">
-			<div id="chatArea">
-		</div>
-		</div>
-			<div style="margin: 0 0 0 150px;   width: 500px;  height: 18px;" >
-				 <input type="text" id="chatInput"/>
-				 <input type="button" id="sendBtn" value="전송" 	/>
+	<div class="container chat_wrap hide">
+		<div class="cnt" id="cnt"></div>
+		<div class="chatArea_wrap">
+			<div id="chatAreabox">
+				<div id="chatArea"></div>
+				
 			</div>
 		</div>
-	</div>
+		<div class="mt20">
+			 <input type="text" id="chatInput" class="inputform250" style="width:375px; height:35px;"/>
+			 <input type="button" id="sendBtn" value="전송" class="btnform7"	/>
+		</div>
+		<i class="xi-close close_btnnnnnn"></i>
+		<i class="xi-plus"></i>
+	</div>	
 </c:if>
 	
 <!-- 푸터 e -->
 <script type="text/javascript">
+$(document).ready(function(){
+	$(".close_btnnnnnn").click(function(){
+		$(".chat_wrap").addClass("hide");
+	});
+	
+	$(".chat_wrap .xi-plus").click(function(){
+		$(".chat_wrap").removeClass("hide");
+	});
+})
 //sockjs 를 이용한 서버와 연결되는 객체
 var ws = null;
 var user_nick= null;
@@ -102,19 +113,19 @@ function showMessage(message) {
    
     if('${user_nick}' == jsonMessage.name){
     	
-   		$("#chatArea").append("<p style='text-align: right;  color: burlywood;' >"+"나"+":"+ jsonMessage.message+'</p>' + '<br>');
+   		$("#chatArea").append("<p class='myp'>"+jsonMessage.message+'</p>'+'<p class="cb"></p>');
     }else{
-    	$("#chatArea").append("<p>"+jsonMessage.name +":"+ jsonMessage.message +"</p>" +'<br>');
+    	$("#chatArea").append("<p class='youp'>"+jsonMessage.name +" : "+ jsonMessage.message +"</p>"+'<p class="cb"></p>');
     }
-//     var textArea = $('#chatArea');
-//     textArea.scrollTop( textArea[0].scrollHeight - textArea.height()   );
+     var textArea = $('#chatAreabox');
+     textArea.scrollTop( textArea[0].scrollHeight - textArea.height()   );
 
 }
 
 
 function connect() {
     // SockJS라이브러리를 이용하여 서버에 연결
-    ws = new WebSocket("ws://localhost:8088/chatEcho");
+    ws = new WebSocket("ws://192.168.20.18:8088/chatEcho");
   
 
     // 서버가 메시지를 보내주면 함수가 호출된다.
