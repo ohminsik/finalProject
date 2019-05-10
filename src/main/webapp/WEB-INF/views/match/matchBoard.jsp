@@ -129,7 +129,7 @@
 			                        
 			                        fc = (newLine == 0)?"red":(newLine==6?"blue":"#000000");
 			                        bg = "#ffffff";
-			                        /* 2019/05/07등록된 매치일정 추가 */
+			                        /* 2019/05/10등록된 매치일정 추가 */
 			                        out.println("<td><a color=" + fc + " href='#'>"
 			                                + i + "</a></td>");
 			                        newLine++;
@@ -255,7 +255,7 @@
 												</c:if>
 											</c:when>
 										</c:choose>
-					    					</c:if>w
+					    					</c:if>
 					    					<!-- 팀 있을 경우 -->
 					    					<c:if test="${teamYN eq true}">
 										<c:choose>
@@ -317,30 +317,10 @@
 	var selectRegion = 0;
 
 	$(document).ready(function(){
-		var date = new Date();
-		var fullYear = date.getFullYear();
-		var month = date.getMonth();
-		var date = date.getDate();
-		
-		/* 안됨
-		var hour = date.getHour();
-		var minute = date.getMinute(); */
-		
-		//날짜 합치기(str)
-		var full = fullYear +""+month +""+date;
-		//숫자로 변형
-		console.log(typeof Number(full));
-/* 		var time = date.getTime();*/		
-		/* console.log(Number(time)); */
-		/* console.log(fullYear);
-		console.log(month);
-		console.log(date);
-		
-		var str = "2019/05/20";
-		console.log(typeof str);
-		
-		var str2 = Number(str);
-		console.log(typeof str2); */
+		 
+		var d = new Date();
+		console.log(d);
+		console.log(typeof d);
 		
 			//배열
 		 	var sp = new Array();

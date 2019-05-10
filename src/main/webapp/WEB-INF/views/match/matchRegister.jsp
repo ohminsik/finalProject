@@ -136,44 +136,63 @@ function focusFunc2(){
 }
 
 $("#btnEnroll").click(function(){
-	
-		//선택한 날짜 및 시간 <= 현재날짜  ::등록되지 않게 설정::
-		//현재날짜 받아오고
-		//selDate, selHours, selMinute과 비교
+		//====================== 현재 날짜 ============================
+		//Date 객체
 		var date = new Date();
-		/*console.log(compareDate); */		
 		
-		//[연도, 월, 일::문자], [시, 분::숫자]
+		//1.년, 월, 일
 		var fullYear = date.getFullYear();
 		var month = date.getMonth();
-		var date = date.getDate();
+		var day = date.getDate();
+			
+		//2.시, 분, 초, 밀리초까지 :: 타입 숫자
+		var hours = date.getHours();
+		var minutes = date.getMinutes();
+		var seconds = date.getSeconds();
+		var milsec = date.getMilliseconds();
 		
-	/* 	var hour = date.getHour();
-		var minute = date.getMinute();
-		 */
-		//날짜 합치기(str)
-/* 		var full = fullYear +""+month +""+date+""+hour+""+minute;
- */		//숫자로 변형
-/* 		console.log(typeof Number(full));
- *//* 		var time = date.getTime();*/		
-		/* console.log(Number(time)); */
-		/* console.log(fullYear);
-		console.log(month);
-		console.log(date);
+		//3.합치면 문자형 ( 현재 날짜, 현재 시간 분 초 밀리초 )
+		var mulDate = fullYear+""+month+""+day+""+hours+""+minutes;
 		
-		var str = "2019/05/20";
-		console.log(typeof str);
+		//4.숫자형으로 변환 >> 새 변수로
+		var parseMulDate = parseInt(mulDate);
 		
-		var str2 = Number(str);
-		console.log(typeof str2); */
+		//============================ 선택날짜 =================================
 		
-	if($("#selectHours").val()==''){
+		//1.select :: 날짜선택, 시간, 분 숫자형으로 타입 변환
+	 /* 	var pDate = $("#selDate").val();//달력에서 선택한 날짜
+		var pHour = $("#selectHours").val();//옵션에서 선택한 시간
+		var pMinu = $("#selectMinute").val();//옵션에서 선택한 분
+		
+		//2.선택한 각 변수 date형으로 변환
+		var cDate = new Date(pDate);//정해지지 않은 date
+		var cHour = new Date(pHour);//표준시 ("사용 ㄱ")
+		var cMin = new Date(pMinu);//정해지지 않은 date
+		
+		var nn = new Date(parseMulDate);
+		console.log("aaa"+nn);
+		
+		//값 및 타입 테스트
+		console.log("cDate:"+cDate);
+		console.log("cDate타입:"+typeof cDate);
+		console.log("cHour:"+cHour);
+		console.log("cHour타입:"+typeof cHour);//표준시
+		console.log("cMin:"+cMin);
+		console.log("cMin타입:"+typeof cMin); */
+		console.log("===============================");
+	/* 	console.log("내가 사용해야할 myDate:"+myDate);
+		console.log("내가 사용해야할 myDate 타입:"+typeof myDate); */
+		
+		 
+		//유효성 검사 다시
+		
+	if($("#selDate").val()==''){
+		alert("날짜를 선택해주세요");
+		$("#selDate").focus();
+		return false;
+	}else if($("#selectHours").val()==0){
 		alert("시간을 선택해주세요");
 		$("#selectHours").focus();
-		return false;
-	}else if($("#selectMinute").val()==''){
-		alert("분을 선택해주세요");
-		$("#selectMinute").focus();
 		return false;
 	}else if($("#match_money").val()==''){
 		alert("구장비가 없으면 0을 입력해주세요");
@@ -190,11 +209,11 @@ $("#btnEnroll").click(function(){
 	}else if($("#match_content").val()==''){
 		alert("남기는 한마디를 입력해주세요");
 		$("#match_content").focus();
-		return false;
-	}else{
-		alert("정말 제출하시겠습니까?");
+		return false; 
+	 }else{
+		alert("정말 등록하시겠습니까?");
 		return true;
-	}
+	} 
 	
 	});  
 			
