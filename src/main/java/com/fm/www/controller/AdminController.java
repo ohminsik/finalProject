@@ -26,6 +26,8 @@ import com.fm.www.dto.Admin;
 import com.fm.www.dto.Board_tb;
 import com.fm.www.dto.Ground;
 import com.fm.www.dto.Photo;
+import com.fm.www.dto.Team;
+import com.fm.www.dto.User;
 import com.fm.www.service.face.AdminService;
 import com.fm.www.util.Paging;
 
@@ -399,6 +401,91 @@ public class AdminController {
 	   
 	   return "redirect:/admin/board?board_div=" + board_div;
    }
+   /*
+    * Admin adminMemManagement 컨트롤러
+    * 관리자 유저 관리
+    * GET
+    * */
+   @RequestMapping(value = "/admin/memManagement", method = RequestMethod.GET)
+   public void adminManagementGET(User user, String search, String word, Model model, @RequestParam(defaultValue = "1")int curPage) {
+	
+	   // 유저 토탈 카운트
+	   int totalCount = adminService.memTotalCount(search, word, user);
+	   if(totalCount == 0) {
+		   model.addAttribute("totalCount", totalCount);
+	   }
+	   //게시글 페이징 처리
+	   Paging paging = new Paging(totalCount, curPage);
+
+	   // 게시판 페이징 리스트 처리
+	   List <User> list = adminService.userGetList(paging, search, word);
+	   
+	   model.addAttribute("list", list);
+	   model.addAttribute("search", search);
+	   model.addAttribute("word", word);
+	   model.addAttribute("paging", paging);
+   }
+
+   /*
+	* Admin memTManagement Delete 컨트롤러
+	* 관리자 유저 삭제 처리
+	* GET
+	* */
+   @RequestMapping(value = "/admin/memManagement/delete", method = RequestMethod.GET)
+   public String adminManagementDeleteGET(String user_no) {
+	   String[] user_no1 = user_no.toString().split(",");
+       for (int i = 0; i < user_no1.length; i++) {
+           
+             adminService.userDelete(Integer.parseInt(user_no1[i]));
+       }
+       return "redirect:/admin/memManagement";
+   }
+	
+	
+   /*
+    * Admin adminTeamManagement 컨트롤러
+    * 관리자 유저 관리
+    * GET
+    * */
+   @RequestMapping(value = "/admin/teamManagement", method = RequestMethod.GET)
+   public void adminTeamManagementGET(Team team, String search, String word, Model model, @RequestParam(defaultValue = "1")int curPage) {
+	
+	   // 유저 토탈 카운트
+	   int totalCount = adminService.teamTotalCount(search, word, team);
+	   if(totalCount == 0) {
+		   model.addAttribute("totalCount", totalCount);
+	   }
+	   //게시글 페이징 처리
+	   Paging paging = new Paging(totalCount, curPage);
+
+	   // 게시판 페이징 리스트 처리
+	   List <Team> list = adminService.teamGetList(paging, search, word);
+	   
+	   model.addAttribute("list", list);
+	   model.addAttribute("search", search);
+	   model.addAttribute("word", word);
+	   model.addAttribute("paging", paging);
+   }
+   
+   /*
+  	* Admin teamTManagement Delete 컨트롤러
+  	* 관리자 유저 삭제 처리
+  	* GET
+  	* */
+     @RequestMapping(value = "/admin/teamManagement/delete", method = RequestMethod.GET)
+     public String adminTeamManagementDeleteGET(String team_no) {
+  	   String[] team_no1 = team_no.toString().split(",");
+  	  
+         for (int i = 0; i < team_no1.length; i++) {
+             
+               adminService.teamDelete(Integer.parseInt(team_no1[i]));
+         }
+         return "redirect:/admin/teamManagement";
+     }
+   
+   
+   
+   
 }
 
 

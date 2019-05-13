@@ -27,7 +27,7 @@
                AND board_content Like '%' || #{word} || '%'
             </when>
             <when test="search == 'board_title+board_content'">
-               AND user_nick Like '%' || #{word} || '%'
+               AND board_title || board_content Like '%' || #{word} || '%'
             </when>
          </choose>
   	</select>
@@ -50,7 +50,7 @@
                   AND board_content Like '%' || #{word} || '%'
                </when>
                <when test="search == 'board_title+board_content'">
-                  AND user_nick Like '%' || #{word} || '%'
+                  AND board_title || board_content Like '%' || #{word} || '%'
                </when>
             </choose>
             and board_div = #{board_div }
@@ -143,5 +143,124 @@
 			(board_no, board_fg, ground_addr, ground_name)
 			values(#{ground.board_no}, #{board_div }, #{ground.ground_addr }, #{ground.ground_name })
   	</insert>
+  	
+  	<!-- 유저 토탈 카운트  -->
+  	<select id="memTotalCounnt" resultType="int">
+		SELECT count(*) FROM user_tb 
+			where 1 = 1
+			<choose>
+			   <when test="search == 'user_no'">
+			      AND user_no Like '%' || #{word} || '%'
+			   </when>
+			   <when test="search == 'user_name'">
+			      AND user_name Like '%' || #{word} || '%'
+			   </when>
+			   <when test="search == 'user_id'">
+			      AND user_id Like '%' || #{word} || '%'
+			   </when>
+			   <when test="search == 'user_email'">
+			      AND user_email Like '%' || #{word} || '%'
+			   </when>
+			   <when test="search == 'user_phone'">
+			      AND user_phone Like '%' || #{word} || '%'
+			   </when>
+			</choose>
+  	</select>
+  	
+  	<!-- 유저 페이징 처리 -->
+  	<select id="userGetList" resultType="com.fm.www.dto.User">
+  		SELECT * FROM (
+         SELECT rownum rnum, B.* FROM (
+              SELECT * FROM user_tb
+            where 1=1
+            <choose>
+			   <when test="search == 'user_no'">
+			      AND user_no Like '%' || #{word} || '%'
+			   </when>
+			   <when test="search == 'user_name'">
+			      AND user_name Like '%' || #{word} || '%'
+			   </when>
+			   <when test="search == 'user_id'">
+			      AND user_id Like '%' || #{word} || '%'
+			   </when>
+			   <when test="search == 'user_email'">
+			      AND user_email Like '%' || #{word} || '%'
+			   </when>
+			   <when test="search == 'user_phone'">
+			      AND user_phone Like '%' || #{word} || '%'
+			   </when>
+			</choose>
+            ORDER BY user_no desc
+         ) B
+         ORDER BY rnum
+      ) R
+      WHERE rnum BETWEEN #{paging.startNo} AND #{paging.endNo}
+  	</select>
+  	
+  	<!-- 유저 삭제 -->
+  	<delete id="userDelete" parameterType="int">
+  		delete from user_tb
+		where user_no = #{user_no}
+  	</delete>
+  	
+  	<!-- 팀 토탈 카운트  -->
+  	<select id="teamTotalCount" resultType="int">
+		SELECT count(*) FROM team_tb 
+			where 1 = 1
+			<choose>
+			   <when test="search == 'team_no'">
+			      AND team_no Like '%' || #{word} || '%'
+			   </when>
+			   <when test="search == 'team_name'">
+			      AND team_name Like '%' || #{word} || '%'
+			   </when>
+			   <when test="search == 'team_region'">
+			      AND team_region Like '%' || #{word} || '%'
+			   </when>
+			   <when test="search == 'team_field'">
+			      AND team_field Like '%' || #{word} || '%'
+			   </when>
+			   <when test="search == 'team_cnt'">
+			      AND team_cnt Like '%' || #{word} || '%'
+			   </when>
+			</choose>
+  	</select>
+  	
+  	<!-- 팀 페이징 처리 -->
+  	<select id="teamGetList" resultType="com.fm.www.dto.Team">
+  		SELECT * FROM (
+         SELECT rownum rnum, B.* FROM (
+              SELECT * FROM team_tb
+            where 1=1
+            <choose>
+			   <when test="search == 'team_no'">
+			      AND team_no Like '%' || #{word} || '%'
+			   </when>
+			   <when test="search == 'team_name'">
+			      AND team_name Like '%' || #{word} || '%'
+			   </when>
+			   <when test="search == 'team_region'">
+			      AND team_region Like '%' || #{word} || '%'
+			   </when>
+			   <when test="search == 'team_field'">
+			      AND team_field Like '%' || #{word} || '%'
+			   </when>
+			   <when test="search == 'team_cnt'">
+			      AND team_cnt Like '%' || #{word} || '%'
+			   </when>
+			</choose>
+            ORDER BY team_no desc
+         ) B
+         ORDER BY rnum
+      ) R
+      WHERE rnum BETWEEN #{paging.startNo} AND #{paging.endNo}
+  	</select>
+  	
+  	<!-- 유저 삭제 -->
+  	<delete id="teamDelete" parameterType="int">
+  		delete from team_tb
+		where team_no = #{team_no}
+  	</delete>
+  	
   	
   </mapper>

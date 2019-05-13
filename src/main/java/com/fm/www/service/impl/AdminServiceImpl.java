@@ -11,6 +11,8 @@ import com.fm.www.dto.Admin;
 import com.fm.www.dto.Board_tb;
 import com.fm.www.dto.Ground;
 import com.fm.www.dto.Photo;
+import com.fm.www.dto.Team;
+import com.fm.www.dto.User;
 import com.fm.www.service.face.AdminService;
 import com.fm.www.util.Paging;
 
@@ -101,6 +103,37 @@ public class AdminServiceImpl implements AdminService{
 	public void adminInsertGround(Ground ground, int board_div) {
 		adminDao.adminInsertGround(ground, board_div);
 	}
+	// 유저 토탈 카운트 
+	@Override
+	public int memTotalCount(String search, String word, User user) {
+		return adminDao.memTotalCounnt(search, word, user);
+	}
+	// 유저 페이징 처리
+	@Override
+	public List<User> userGetList(Paging paging, String search, String word) {
+		return adminDao.userGetList(paging, search, word);
+	}
+	// 유저 삭제
+	@Override
+	public void userDelete(int parseInt) {
+		adminDao.userDelete(parseInt);
+	}
+	// 팀 토탈 카운트
+	@Override
+	public int teamTotalCount(String search, String word, Team team) {
+		return adminDao.teamTotalCount(search, word, team);
+	}
+	// 팀 페이징 처리
+	@Override
+	public List<Team> teamGetList(Paging paging, String search, String word) {
+		return adminDao.teamGetList(paging, search, word);
+	}
+	// 팀 삭제
+	@Override
+	public void teamDelete(int parseInt) {
+		adminDao.teamDelete(parseInt);
+	}
+
 	
 	
 

@@ -8,6 +8,8 @@ import com.fm.www.dto.Admin;
 import com.fm.www.dto.Board_tb;
 import com.fm.www.dto.Ground;
 import com.fm.www.dto.Photo;
+import com.fm.www.dto.Team;
+import com.fm.www.dto.User;
 import com.fm.www.util.Paging;
 
 public interface AdminDao {
@@ -42,6 +44,18 @@ public interface AdminDao {
 	public void adminPhotoWrite(Photo photo);
 	// 경기장 게시글 주소 등록
 	public void adminInsertGround(@Param("ground")Ground ground, @Param("board_div")int board_div);
+	// 유저 토탈 카운트 
+	public int memTotalCounnt(@Param("search")String search, @Param("word")String word, @Param("user")User user);
+	// 유저 페이징 처리
+	public List<User> userGetList(@Param("paging")Paging paging, @Param("search")String search, @Param("word")String word);
+	// 유저 삭제
+	public void userDelete(int parseInt);
+	// 팀 토탈 카운트
+	public int teamTotalCount(@Param("search")String search, @Param("word")String word, @Param("team")Team team);
+	// 팀 페이징 처리
+	public List<Team> teamGetList(@Param("paging")Paging paging, @Param("search")String search, @Param("word")String word);
+	// 팀 삭제
+	public void teamDelete(int parseInt);
 	
 
 	
