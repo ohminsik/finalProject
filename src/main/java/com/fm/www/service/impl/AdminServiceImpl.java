@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.fm.www.dao.face.AdminDao;
 import com.fm.www.dto.Admin;
 import com.fm.www.dto.Board_tb;
+import com.fm.www.dto.Ground;
 import com.fm.www.dto.Photo;
 import com.fm.www.service.face.AdminService;
 import com.fm.www.util.Paging;
@@ -94,6 +95,11 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public void adminPhotoWrite(Photo photo) {
 		adminDao.adminPhotoWrite(photo);
+	}
+	// 경기장 게시글 주소 등록
+	@Override
+	public void adminInsertGround(Ground ground, int board_div) {
+		adminDao.adminInsertGround(ground, board_div);
 	}
 	
 	

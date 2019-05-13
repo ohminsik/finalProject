@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.fm.www.dto.Admin;
 import com.fm.www.dto.Board_tb;
+import com.fm.www.dto.Ground;
 import com.fm.www.dto.Photo;
 import com.fm.www.util.Paging;
 
@@ -39,7 +40,9 @@ public interface AdminDao {
 	public void adminBoardWrite(Board_tb board);
 	//수정 파일첨부
 	public void adminPhotoWrite(Photo photo);
-
+	// 경기장 게시글 주소 등록
+	public void adminInsertGround(@Param("ground")Ground ground, @Param("board_div")int board_div);
+	
 
 	
 }

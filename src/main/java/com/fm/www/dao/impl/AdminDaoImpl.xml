@@ -137,4 +137,11 @@
          	where board_no = #{board_no}
   	</update>
   	
+  	<!-- 경기장 게시글 주소 등록 -->
+  	<insert id="adminInsertGround">
+  		insert into ground
+			(board_no, board_fg, ground_addr, ground_name)
+			values(#{ground.board_no}, #{board_div }, #{ground.ground_addr }, #{ground.ground_name })
+  	</insert>
+  	
   </mapper>
