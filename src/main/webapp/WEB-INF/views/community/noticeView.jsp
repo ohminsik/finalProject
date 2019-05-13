@@ -40,7 +40,7 @@
 					</colgroup>
 					<tbody>
 						<tr>
-							<td class="fb">${board.board_no }</td>
+							<td class="fb">${board.board_title }</td>
 							<td class="fb"><fmt:formatDate value="${board.board_date }" pattern="yyyy-MM-dd"/></td>
 						</tr>
 						<tr>
