@@ -143,50 +143,55 @@ public class AdminController {
 	@RequestMapping(value = "/admin/board/write", method = RequestMethod.POST)
 	public String noticeWritePost(Model model, Admin admin, MultipartFile file, HttpSession session, Board_tb board_tb, Photo photo, int board_div) {		
 		
-		if (!"".equals(file.getOriginalFilename()) && file.getOriginalFilename() != null) {
-			// 고유식별자
-			String uId = UUID.randomUUID().toString().split("-")[0];
+		if(board_div != 10){
+			if (!"".equals(file.getOriginalFilename()) && file.getOriginalFilename() != null) {
+				// 고유식별자
+				String uId = UUID.randomUUID().toString().split("-")[0];
 
-			// 저장될 파일 이름
-			String stored_name = null;
-			stored_name = file.getOriginalFilename() + "_" + uId;
-			// stored_name =file.getOriginalFilename();
+				// 저장될 파일 이름
+				String stored_name = null;
+				stored_name = file.getOriginalFilename() + "_" + uId;
+				// stored_name =file.getOriginalFilename();
 
-			// 파일 저장 경로
-			String path = context.getRealPath("uploadImg");
+				// 파일 저장 경로
+				String path = context.getRealPath("uploadImg");
 
-			// 저장될 파일
-			File dest = new File(path, stored_name);
+				// 저장될 파일
+				File dest = new File(path, stored_name);
 
-			// 파일업로드
-			try {
-				file.transferTo(dest);
-			} catch (IllegalStateException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				// 파일업로드
+				try {
+					file.transferTo(dest);
+				} catch (IllegalStateException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				photo.setPhoto_origin(file.getOriginalFilename());
+				photo.setPhoto_stored(stored_name);
+
+				// 관리자 게시판 글 번호 생성하기
+				int board_no = adminService.adminGetBoard_no();
+				
+				// 관리자 게시판 관라지 번호 받아오기
+				board_tb.setAdmin_no((int) session.getAttribute("admin_no"));
+				board_tb.setBoard_no(board_no);
+				photo.setBoard_no(board_no);
+				adminService.adminInsertWrite1(board_tb, board_div);
+				adminService.adminInsertPhoto(photo, board_div);
+			} else {
+				// 관리자 게시판 관리자 번호 받아오기
+				board_tb.setAdmin_no((int) session.getAttribute("admin_no"));
+				// 관리자 게시판 이미지 파일 없이 글 작성
+				adminService.adminInsertWrite2(board_tb);
 			}
-			photo.setPhoto_origin(file.getOriginalFilename());
-			photo.setPhoto_stored(stored_name);
-
-			// 관리자 게시판 글 번호 생성하기
-			int board_no = adminService.adminGetBoard_no();
+		} else if(board_div == 10) {
 			
-			// 관리자 게시판 관라지 번호 받아오기
-			board_tb.setAdmin_no((int) session.getAttribute("admin_no"));
-			board_tb.setBoard_no(board_no);
-			photo.setBoard_no(board_no);
-			adminService.adminInsertWrite1(board_tb, board_div);
-			adminService.adminInsertPhoto(photo, board_div);
-		} else {
-			// 관리자 게시판 관리자 번호 받아오기
-			board_tb.setAdmin_no((int) session.getAttribute("admin_no"));
-			// 관리자 게시판 이미지 파일 없이 글 작성
-			adminService.adminInsertWrite2(board_tb);
 		}
-		System.out.println(board_tb);
+		
+	
 
 		return "redirect:/admin/board?board_div=" + board_div;
 	}
