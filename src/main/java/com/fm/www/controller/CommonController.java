@@ -1,5 +1,6 @@
 package com.fm.www.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -14,10 +15,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fm.www.dto.User;
 import com.fm.www.service.face.MemberService;
 import com.fm.www.util.MailUtil;
+import com.github.scribejava.core.model.OAuth2AccessToken;
+
+
 
 @Controller
 public class CommonController {
@@ -31,7 +36,17 @@ public class CommonController {
 	 * GET
 	 * */
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
-	public String mainGet() {		
+	public String mainGet(Model model, HttpSession session) {		
+		
+		/* 네이버아이디로 인증 URL을 생성하기 위하여 naverLoginBO클래스의 getAuthorizationUrl메소드 호출 */
+		String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
+		
+		//https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=sE***************&
+		//redirect_uri=http%3A%2F%2F211.63.89.90%3A8090%2Flogin_project%2Fcallback&state=e68c269c-5ba9-4c31-85da-54c16c658125
+		System.out.println("네이버:" + naverAuthUrl);
+		
+		//네이버 
+		model.addAttribute("url", naverAuthUrl);
 		return "common/main";
 	}
 	
@@ -171,6 +186,66 @@ public class CommonController {
 //			System.out.println(userID);
 		String user_nick = userNickName;
 		
+		// 카카오 가입 조회
+		int kkoCheck = memberService.kkoCheck(user);
+		
+		if(kkoCheck == 1) {
+			//로그인한 유저 넘버값 가져오기
+			int user_no = memberService.getUserNokko(user);
+			session.setAttribute("login", true);
+			session.setAttribute("user_nick", user_nick);
+			session.setAttribute("user_no", user_no);
+			
+			System.out.println(user_no);
+		} else  {
+			// 카카오톡 로그인 유저 넘버 생성
+			memberService.kkoNo(user);
+			//로그인한 유저 넘버값 가져오기
+			int user_no = memberService.getUserNokko(user);
+			session.setAttribute("login", true);
+			session.setAttribute("user_nick", user_nick);
+			session.setAttribute("user_no", user_no);
+		}
+		
+		
+		
+		return"jsonView";
+	}
+	//네이버
+	/* NaverLoginBO */
+	private NaverLoginBO naverLoginBO;
+	private String apiResult = null;
+	private OAuth2AccessToken oauthToken;
+	@Autowired
+	private void setNaverLoginBO(NaverLoginBO naverLoginBO) {
+		this.naverLoginBO = naverLoginBO;
+	}
+
+
+	//네이버 로그인 성공시 callback호출 메소드
+	@RequestMapping(value = "/login_protect/callback", method = { RequestMethod.GET, RequestMethod.POST })
+	public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session)
+			throws IOException {
+		System.out.println("여기는 callback");
+		
+        oauthToken = naverLoginBO.getAccessToken(session, code, state);
+        //로그인 사용자 정보를 읽어온다.
+	    apiResult = naverLoginBO.getUserProfile(oauthToken);
+	    model.addAttribute("result", apiResult);
+	    session.setAttribute("login", true);
+	
+        /* 네이버 로그인 성공 페이지 View 호출 */
+		return "common/main";
+	}
+	@RequestMapping(value="/naver", method=RequestMethod.POST)
+	public String naver(HttpSession session, String nickname, String userID, User user) {
+		user.setUser_nick(nickname);
+		user.setUser_id(userID);
+//			System.out.println(userNickName);
+//			System.out.println(userID);
+		String user_nick = nickname;
+		System.out.println(user_nick);
+		System.out.println(userID);
 		// 카카오 가입 조회
 		int kkoCheck = memberService.kkoCheck(user);
 		

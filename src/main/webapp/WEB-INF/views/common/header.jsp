@@ -153,9 +153,10 @@
 	            <div class="cb"></div>
 	            <div class="button" onclick="login_btn();">로그인</div><br>
 	            <style>
-					#kakao-login-btn img{width:100%}	            
+					#kakao-login-btn img{width:100% }	            
 	            </style>
 	            <div><a id="kakao-login-btn" class="kko" onclick="login_kko();"></a></div>
+	            <div id="naver_id_login" style="text-align:center"><a href="${url}" onclick="naverfuc();"><img height="75.03" width="340" src="${pageContext.request.contextPath}/resources/img/네이버 아이디로 로그인_완성형_Green.PNG"/></a></div>
 	           <!--  <div class="line"></div>	
 	            <ul class="sns">
 	                <li class="n"><a class="cp"><i class="xi-naver-square"></i>네이버</a></li>
@@ -234,6 +235,7 @@
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type='text/javascript'>
+
 var userNickName =null;
     // 사용할 앱의 JavaScript 키를 설정해 주세요.
     Kakao.init('bb438f14804322b4ec156a7f31cd1b46');
@@ -483,5 +485,30 @@ var userNickName =null;
 		}
 	}
 	//비밀번호 찾기 엔터:e
+
+	
+
+
+</script>
+
+<script type="text/javascript">
+var userID = null;
+var nickname = null;
+//네이버 정보
+	$(document).ready(function() {
+		var userID = ${result}.response.id;
+		var nickname = ${result}.response.nickname;
+// 		console.log('nickname :'+nickname);확인
+	    $.ajax({
+	        type: "post"
+	        , url: "/naver"
+	        , data: {"nickname":nickname, "userID":userID}	         
+	        , dataType: "html"
+	        , success: function (data){
+	        	location.href="/main"
+	           console.log("성공");
+	        }
+	     });
+	  });
 
 </script>
