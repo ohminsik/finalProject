@@ -258,7 +258,7 @@ public class AdminController {
 				// 경기장 주소 받아오기
 				String address1 = request.getParameter("user_address1");
 				String address2 = request.getParameter("user_address2");
-				String address = address1 + " " + address2;
+				String address = address2 + " " + address1;
 				String groundName = request.getParameter("user_address3");
 				System.out.println(address + groundName);
 				ground.setGround_addr(address);
