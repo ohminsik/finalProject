@@ -12,6 +12,7 @@ import com.fm.www.dto.Match;
 import com.fm.www.dto.Message;
 import com.fm.www.dto.Photo;
 import com.fm.www.dto.Team;
+import com.fm.www.dto.TeamApply;
 import com.fm.www.dto.User;
 import com.fm.www.service.face.MypageService;
 import com.fm.www.util.Paging;
@@ -277,6 +278,11 @@ public class MypageServiceImpl implements MypageService{
 	public List<Match> selectMatchList(int team_no) {		
 		return mypageDao.selectMatchList(team_no);
 	}
+	@Override
+	public List<Match> selectMatchList1(int team_no) {
+		return mypageDao.selectMatchList1(team_no);
+	}
+	
 
 	//매치넘버로 경기 조회
 	@Override
@@ -304,23 +310,59 @@ public class MypageServiceImpl implements MypageService{
 		mypageDao.updateLose(team_no);
 		
 	}
-
+	//무승부증가
 	@Override
 	public void updateTie(int team_no) {
 		mypageDao.updateTie(team_no);
 		
 	}
-
+	//레이팅 업데이트
 	@Override
 	public void updateRating(int team_no, int rating) {
 		mypageDao.updateRating(team_no, rating);
 	}
-
+	//스코어 업데이트
 	@Override
 	public void updateScore(Match match) {
 		mypageDao.updateScore(match);
 		
 	}
+	//팀 가입신청
+	@Override
+	public void teamApplyInsert(TeamApply teamApply) {
+		mypageDao.teamApplyInsert(teamApply);
+	}
+	//팀 가입신청 했는지 구분
+	@Override
+	public boolean teamApplyYN(TeamApply teamApply) {
+		if(mypageDao.teamApplyYN(teamApply) == 1) {
+			return false;
+		}else {
+			return true;
+		}
+		
+	}
+	
+	//팀 번호로 팀 가입리스트 조회
+	@Override
+	public List<TeamApply> selectTeamApplyList(int team_no) {
+		return mypageDao.selectTeamApplyList(team_no);
+	}
+
+	//팀 신청 내역 삭제
+	@Override
+	public void deleteTeamApply(TeamApply teamApply) {
+		mypageDao.deleteTeamApply(teamApply);
+		
+	}
+	
+	//팀 신청내역 전체 삭제
+	@Override
+	public void deleteAllTeamApply(TeamApply teamApply) {
+		mypageDao.deleteAllTeamApply(teamApply);
+		
+	}
+
 	
 	
 

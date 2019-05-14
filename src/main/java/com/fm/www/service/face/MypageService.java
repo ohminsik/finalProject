@@ -8,6 +8,7 @@ import com.fm.www.dto.Match;
 import com.fm.www.dto.Message;
 import com.fm.www.dto.Photo;
 import com.fm.www.dto.Team;
+import com.fm.www.dto.TeamApply;
 import com.fm.www.dto.User;
 import com.fm.www.util.Paging;
 
@@ -120,6 +121,8 @@ public interface MypageService {
 	
 	//팀넘버로 매치리스트 조회
 	public List<Match> selectMatchList(int team_no);
+	public List<Match> selectMatchList1(int team_no);
+	
 	//매치넘버로 경기 조회
 	public Match selectMatch(int match_no);
 	
@@ -140,6 +143,22 @@ public interface MypageService {
 	
 	//스코어 업데이트
 	public void updateScore(Match match);
+	
+	//팀 가입 신청
+	public void teamApplyInsert(TeamApply teamApply);
+	
+	//팀 가입 신청했는지 구분
+	public boolean teamApplyYN(TeamApply teamApply);
+	
+	//팀 번호로 팀 가입신청 리스트 조회
+	public List<TeamApply> selectTeamApplyList(int team_no);
+	
+	//팀 신청 내역 삭제
+	public void deleteTeamApply(TeamApply teamApply);
+	//팀 신청 내역 전체 삭제
+	public void deleteAllTeamApply(TeamApply teamApply);
+
+	
 	
 	
 	

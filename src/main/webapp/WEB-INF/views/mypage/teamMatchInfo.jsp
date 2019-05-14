@@ -43,8 +43,50 @@
 				</div>
 				
 				<div class="teammatchinfo mt50">
+					<p>내가 등록한 매치</p>
 					<ul>
 						<c:forEach items="${matchList }" var="matchList">
+						<li>
+							<div class="wrapppppppp">
+								<div class="left">
+									<p class="img mb30"><img src="/uploadImg/${matchList.blue_mark }"></p>
+									<p class="title mb10">${matchList.blue_name }</p>
+									<p class="score">${matchList.blue_etire }전 ${matchList.blue_win }승 ${matchList.blue_tie }무 ${matchList.blue_lose }패</p>
+								</div>
+								<div class="right">
+									<p class="img mb30"><img src="/uploadImg/${matchList.purple_mark }"></p>
+									<p class="title mb10">${matchList.purple_name }</p>
+									<p class="score">${matchList.purple_etire }전 ${matchList.purple_win }승 ${matchList.purple_tie }무 ${matchList.purple_lose }패</p>
+								</div>	
+								<div class="center">
+									<p>VS</p>
+								</div>
+								
+								<div class="leftscore">
+									<p>${matchList.blueteam_score }</p>
+								</div>
+								
+								<div class="rightscore">
+									<p>${matchList.purpleteam_score }</p>
+								</div>	
+								
+							</div>
+							<div class="timetable">
+								<p class="mb10">장소 : ${matchList.match_ground }</p>
+								<p>날짜, 시간 : <fmt:formatDate value="${matchList.fight_date }" pattern="yyyy-MM-dd , HH:mm"/></p>
+							</div>
+							<div class="tac mt20">
+								<a href="/mypage/teamScoreInsert?match_no=${matchList.match_no }" class="btnform0 oh1">매치결과입력</a>
+							</div>					
+						</li>
+						</c:forEach>
+					</ul>
+				</div>
+				
+				<div class="teammatchinfo mt50">
+					<p>내가 신청한 매치</p>
+					<ul>
+						<c:forEach items="${matchList1 }" var="matchList">
 						<li>
 							<div class="wrapppppppp">
 								<div class="left">

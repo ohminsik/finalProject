@@ -28,6 +28,7 @@ import com.fm.www.dto.Match;
 import com.fm.www.dto.Message;
 import com.fm.www.dto.Photo;
 import com.fm.www.dto.Team;
+import com.fm.www.dto.TeamApply;
 import com.fm.www.dto.User;
 import com.fm.www.service.face.CommunityService;
 import com.fm.www.service.face.MypageService;
@@ -319,9 +320,12 @@ public class MypageController {
 			team = mypageService.selectTeamInfoMation(user);
 			List<User> userList = mypageService.selectTeamUserList(team.getTeam_no());
 			
-            System.out.println("mypageTeamInformation:"+team);
+			//팀넘버로 팀가입신청 테이블 조회
+			List<TeamApply> teamApplyList = mypageService.selectTeamApplyList(team.getTeam_no());
+			
 			model.addAttribute("userList",userList);
 			model.addAttribute("team",team);
+			model.addAttribute("teamApplyList", teamApplyList);
 			session.setAttribute("teamYN", teamYN);
 		}else {
 			session.setAttribute("teamYN", teamYN);			
@@ -467,8 +471,10 @@ public class MypageController {
 		
 		//팀 넘버로 매치보드 조회
 		List<Match> matchList = mypageService.selectMatchList(team_no);
+		List<Match> matchList1 = mypageService.selectMatchList1(team_no);
 		
 		model.addAttribute("matchList", matchList);
+		model.addAttribute("matchList1", matchList1);
 	}
 	
 	/*
@@ -963,6 +969,55 @@ public class MypageController {
 		mypageService.DownHit(board_no);
 		return "redirect:/mypage/teamBoardView?board_no="+board_no;		
 	}
+	
+	
+	@RequestMapping(value="/mypage/teamApplyInsert", method = RequestMethod.POST)
+	public String teamApplyInsertPost(TeamApply teamApply, HttpSession session, Model model) {
+		teamApply.setUser_no((int)session.getAttribute("user_no"));		
+		User user = new User();
+		Team team = new Team();
+		user.setTeam_no(teamApply.getTeam_no());
+		Map map = new HashMap();
+		
+		boolean applyYN = mypageService.teamApplyYN(teamApply);
+		team = mypageService.selectTeamInfoMation(user);
+		
+		//신청 안한 팀일때 신청
+		if(applyYN) {
+			mypageService.teamApplyInsert(teamApply);
+			map.put("teamName",team.getTeam_name()+"팀에 가입신청이 되었습니다.");
+		}else {
+			map.put("teamName",team.getTeam_name()+"팀에 이미 신청하셨습니다.");
+		}		
+					
+		
+		model.addAllAttributes(map);
+		
+		return "jsonView";
+	}
+	
+	@RequestMapping(value="/mypage/teamApplyOk", method = RequestMethod.POST)
+	public String teamApplyOkPost(TeamApply teamApply) {
+		User user = new User();
+		user.setUser_no(teamApply.getUser_no());
+		user.setTeam_no(teamApply.getTeam_no());
+		
+		mypageService.updateTeamDate(user);
+		mypageService.updateTeamNo(user);
+		
+		//신청내역 삭제
+		mypageService.deleteAllTeamApply(teamApply);
+		return "redirect:/mypage/teamInformation";
+	}
+	
+	@RequestMapping(value="/mypage/teamApplyNo", method = RequestMethod.POST)
+	public String teamApplyNoPost(TeamApply teamApply) {
+		
+		mypageService.deleteTeamApply(teamApply);
+		return "redirect:/mypage/teamInformation";
+	}
+	
+	
 }
 	
 	

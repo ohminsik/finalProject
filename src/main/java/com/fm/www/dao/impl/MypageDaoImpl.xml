@@ -336,6 +336,17 @@
    		AND m.blueteam_no = #{team_no} 
    	</select>
    	
+   	<select id="selectMatchList1" parameterType="int" resultType="com.fm.www.dto.Match">
+   		select m.*, 
+   			t1.team_name AS blue_name, t1.team_etire AS blue_etire, t1.team_win AS blue_win, t1.team_lose AS blue_lose, t1.team_tie AS blue_tie,t1.team_mark AS blue_mark, t1.team_rating AS blue_rating, 
+   			t2.team_name AS purple_name, t2.team_etire AS purple_etire, t2.team_win AS purple_win, t2.team_lose AS purple_lose, t2.team_tie AS purple_tie,t2.team_mark AS purple_mark, t2.team_rating AS purple_rating  
+   			from match m, team_tb t1, team_tb t2
+	    WHERE 1=1
+	    AND t1.team_no = m.blueteam_no
+	    AND t2.team_no = m.purpleteam_no
+   		AND m.purpleteam_no = #{team_no} 
+   	</select>
+   	
    	<!-- 매치 넘버로 매치 조회 -->
    	<select id="selectMatch" parameterType="int" resultType="com.fm.www.dto.Match">
    		select m.*, 
@@ -381,6 +392,44 @@
    		UPDATE match SET blueteam_score = #{blueteam_score}, purpleteam_score = #{purpleteam_score}
 	  	WHERE match_no = #{match_no }
    	</update>
+   	
+   	<!-- 팀 가입신청  -->
+   	<insert id="teamApplyInsert" parameterType="com.fm.www.dto.TeamApply">
+   		INSERT INTO team_apply(apply_no, team_no, user_no)
+   		VALUES(team_apply_SEQ.nextVal, #{team_no}, #{user_no})
+   	</insert>
+   	
+   	<!-- 팀 가입신청 유무 -->
+   	<select id="teamApplyYN" parameterType="com.fm.www.dto.TeamApply" resultType="int">
+   		select count(*) from team_apply
+   		WHERE 1=1
+   		AND team_no = #{team_no}
+   		AND user_no = #{user_no}
+   	</select>
+   	
+   	<!-- 팀번호로 팀 가입신청 리스트 조회 -->
+   	<select id="selectTeamApplyList" parameterType="int" resultType="com.fm.www.dto.TeamApply">
+   		select ta.*, u.user_name, u.user_id, u.user_position, u.user_region, u.user_birth from team_apply ta, user_tb u
+   		WHERE 1=1
+   		AND ta.team_no = #{team_no}
+   		AND ta.user_no = u.user_no
+   	</select>
+   	
+   	<!-- 팀 신청 내역 삭제 -->
+   	<delete id="deleteTeamApply" parameterType="com.fm.www.dto.TeamApply">
+   		delete team_apply
+   		WHERE 1=1
+   		AND team_no = #{team_no}
+   		AND user_no = #{user_no}
+   	</delete>
+   	
+   	<!-- 팀 신청 전체내역 삭제 -->
+   	<delete id="deleteAllTeamApply" parameterType="com.fm.www.dto.TeamApply">
+   		delete team_apply
+   		WHERE 1=1
+   		AND user_no = #{user_no}
+   	</delete>
+   	
    	
    	
   </mapper>
