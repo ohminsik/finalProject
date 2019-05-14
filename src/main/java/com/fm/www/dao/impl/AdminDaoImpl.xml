@@ -262,5 +262,9 @@
 		where team_no = #{team_no}
   	</delete>
   	
-  	
+  	<!-- 대회게시글 작성  -->
+  	<insert id="tournamentInsert1" parameterType="com.fm.www.dto.Tournament">
+  		INSERT INTO congress(BOARD_FG,BOARD_NO,CON_REG_DATES,CON_CON_DATES,CON_REG_DATEE,CON_CON_DATEE,CON_REGION)
+  		VALUES (9,#{board_no},#{con_reg_dates},#{con_con_dates},#{con_reg_datee},#{con_con_datee},#{con_region})
+  	</insert>
   </mapper>

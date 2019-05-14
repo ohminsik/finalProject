@@ -9,6 +9,7 @@ import com.fm.www.dto.Board_tb;
 import com.fm.www.dto.Ground;
 import com.fm.www.dto.Photo;
 import com.fm.www.dto.Team;
+import com.fm.www.dto.Tournament;
 import com.fm.www.dto.User;
 import com.fm.www.util.Paging;
 
@@ -56,7 +57,8 @@ public interface AdminDao {
 	public List<Team> teamGetList(@Param("paging")Paging paging, @Param("search")String search, @Param("word")String word);
 	// 팀 삭제
 	public void teamDelete(int parseInt);
-	
+	//대회 게시글 작성
+	public void tournamentInsert1(Tournament tournament);
 
 	
 }

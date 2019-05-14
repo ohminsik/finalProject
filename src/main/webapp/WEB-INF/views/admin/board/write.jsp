@@ -73,6 +73,57 @@
 								<td><label for="">제목</label></td>
 								<td><input type="text" class="inputform100p" name="board_title" id=""	placeholder="제목 입력"></input></td>
 							</tr>
+							
+							<c:if test="${board_div eq 9 }">
+								<tr>
+									<td><label for="">신청기간</label></td>
+									<td>
+										<input type="text" name="con_reg_dates" id="selDate1" placeholder="날짜선택" class="inputform200" readonly>
+										<i class="xi-calendar-list" onclick="focusFunc1()"></i>
+										~
+										<input type="text" name="con_reg_datee" id="selDate2" placeholder="날짜선택" class="inputform200" readonly>
+										<i class="xi-calendar-list" onclick="focusFunc2()"></i>
+									</td>
+								</tr>
+								
+								<tr>
+									<td><label for="">대회기간</label></td>
+									<td>
+										<input type="text" name="con_con_dates" id="selDate3" placeholder="날짜선택" class="inputform200" readonly>
+										<i class="xi-calendar-list" onclick="focusFunc3()"></i>
+										~
+										<input type="text" name="con_con_datee" id="selDate4" placeholder="날짜선택" class="inputform200" readonly>
+										<i class="xi-calendar-list" onclick="focusFunc4()"></i>
+									</td>
+								</tr>
+								
+								<tr>
+									<td><label for="">대회지역</label></td>
+									<td>
+										<select name="con_region" id="con_region" class="selectform1">
+											<option value="서울" selected="selected">서울</option>
+											<option value="인천">인천</option>
+											<option value="대전">대전</option>
+											<option value="대구">대구</option>
+											<option value="울산">울산</option>
+											<option value="부산">부산</option>
+											<option value="세종">세종</option>
+											<option value="광주">광주</option>
+											<option value="경기">경기</option>
+											<option value="강원">강원</option>
+											<option value="충북">충북</option>
+											<option value="충남">충남</option>
+											<option value="전북">전북</option>
+											<option value="전남">전남</option>
+											<option value="경북">경북</option>
+											<option value="경남">경남</option>
+											<option value="제주">제주</option>
+										</select>
+									</td>
+									
+								</tr>
+							</c:if>
+							
 							<c:if test="${board_div eq 10 }">
 								<tr>
 									<td><label for="">주소</label></td>
@@ -132,6 +183,92 @@
     $("#file").change(function() {
         readURL(this);
     });
+//datePicker 추가
+    $( function() {
+    	$( "#selDate1" ).datepicker();
+    	$( "#selDate1" ).datepicker( "option", "dateFormat", "yy/mm/dd" );
+    	$.datepicker.setDefaults({
+            dateFormat: 'yy/mm/dd',
+            prevText: '이전 달',
+            nextText: '다음 달',
+            monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+            monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+            dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+            dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+            dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+            showMonthAfterYear: true,
+            yearSuffix: '년'
+        });
+    	
+    });
+    function focusFunc1(){
+    	$( "#selDate1" ).focus();		
+    }
+    
+    $( function() {
+    	$( "#selDate2" ).datepicker();
+    	$( "#selDate2" ).datepicker( "option", "dateFormat", "yy/mm/dd" );
+    	$.datepicker.setDefaults({
+            dateFormat: 'yy/mm/dd',
+            prevText: '이전 달',
+            nextText: '다음 달',
+            monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+            monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+            dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+            dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+            dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+            showMonthAfterYear: true,
+            yearSuffix: '년'
+        });
+    	
+    });
+    function focusFunc2(){
+    	$( "#selDate2" ).focus();		
+    }
+    
+    $( function() {
+    	$( "#selDate3" ).datepicker();
+    	$( "#selDate3" ).datepicker( "option", "dateFormat", "yy/mm/dd" );
+    	$.datepicker.setDefaults({
+            dateFormat: 'yy/mm/dd',
+            prevText: '이전 달',
+            nextText: '다음 달',
+            monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+            monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+            dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+            dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+            dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+            showMonthAfterYear: true,
+            yearSuffix: '년'
+        });
+    	
+    });
+    function focusFunc3(){
+    	$( "#selDate3" ).focus();		
+    }
+    
+    $( function() {
+    	$( "#selDate4" ).datepicker();
+    	$( "#selDate4" ).datepicker( "option", "dateFormat", "yy/mm/dd" );
+    	$.datepicker.setDefaults({
+            dateFormat: 'yy/mm/dd',
+            prevText: '이전 달',
+            nextText: '다음 달',
+            monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+            monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+            dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+            dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+            dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+            showMonthAfterYear: true,
+            yearSuffix: '년'
+        });
+    	
+    });
+    function focusFunc4(){
+    	$( "#selDate4" ).focus();		
+    }
+    
+
 </script>	
 <!-- 우편 주소 s -->
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>

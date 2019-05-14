@@ -12,6 +12,7 @@ import com.fm.www.dto.Board_tb;
 import com.fm.www.dto.Ground;
 import com.fm.www.dto.Photo;
 import com.fm.www.dto.Team;
+import com.fm.www.dto.Tournament;
 import com.fm.www.dto.User;
 import com.fm.www.service.face.AdminService;
 import com.fm.www.util.Paging;
@@ -133,7 +134,11 @@ public class AdminServiceImpl implements AdminService{
 	public void teamDelete(int parseInt) {
 		adminDao.teamDelete(parseInt);
 	}
-
+	//대회 게시글 작성
+	@Override
+	public void tournamentInsert1(Tournament tournament) {
+		adminDao.tournamentInsert1(tournament);
+	}
 	
 	
 

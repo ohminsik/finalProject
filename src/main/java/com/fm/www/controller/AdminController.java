@@ -2,8 +2,9 @@ package com.fm.www.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.lang.ProcessBuilder.Redirect;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,9 +28,11 @@ import com.fm.www.dto.Board_tb;
 import com.fm.www.dto.Ground;
 import com.fm.www.dto.Photo;
 import com.fm.www.dto.Team;
+import com.fm.www.dto.Tournament;
 import com.fm.www.dto.User;
 import com.fm.www.service.face.AdminService;
 import com.fm.www.util.Paging;
+
 
 @Controller
 public class AdminController {
@@ -147,9 +150,9 @@ public class AdminController {
 	 * POST
 	 * */
 	@RequestMapping(value = "/admin/board/write", method = RequestMethod.POST)
-	public String noticeWritePost(Model model, Admin admin, MultipartFile file, HttpSession session, Board_tb board_tb, Photo photo, int board_div, HttpServletRequest request, Ground ground) {		
+	public String noticeWritePost(Model model, Admin admin, MultipartFile file, HttpSession session, Board_tb board_tb, Photo photo, int board_div, HttpServletRequest request, Ground ground,Tournament tournament) {		
 		
-		if(board_div != 10){
+		if(board_div != 10 && board_div != 9 ){
 			if (!"".equals(file.getOriginalFilename()) && file.getOriginalFilename() != null) {
 				// 고유식별자
 				String uId = UUID.randomUUID().toString().split("-")[0];
@@ -265,13 +268,113 @@ public class AdminController {
 				adminService.adminInsertGround(ground, board_div);
 				
 			}
-		}
-		
-	
+		}else if(board_div == 9) {
+			if (!"".equals(file.getOriginalFilename()) && file.getOriginalFilename() != null) {
+				// 고유식별자
+				String uId = UUID.randomUUID().toString().split("-")[0];
 
-		return "redirect:/admin/board?board_div=" + board_div;
+				// 저장될 파일 이름
+				String stored_name = null;
+				stored_name = file.getOriginalFilename() + "_" + uId;
+
+				// 파일 저장 경로
+				String path = context.getRealPath("uploadImg");
+
+				// 저장될 파일
+				File dest = new File(path, stored_name);
+
+				// 파일업로드
+				try {
+					file.transferTo(dest);
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				photo.setPhoto_origin(file.getOriginalFilename());
+				photo.setPhoto_stored(stored_name);
+
+				// 관리자 게시판 글 번호 생성하기
+				int board_no = adminService.adminGetBoard_no();
+				
+				// 관리자 게시판 관라지 번호 받아오기
+				board_tb.setAdmin_no((int) session.getAttribute("admin_no"));
+				board_tb.setBoard_no(board_no);
+				photo.setBoard_no(board_no);
+				tournament.setBoard_no(board_no);
+				// DateFormate 함수 선언
+			    SimpleDateFormat fmt = new SimpleDateFormat("yyyy/MM/dd");
+			    Date con_reg_dates = new Date();
+			    Date con_reg_datee = new Date();
+			    Date con_con_dates = new Date();
+			    Date con_con_datee = new Date();
+				// parameter 값 받기
+				String selDate1 = request.getParameter("con_reg_dates");
+				String selDate2 = request.getParameter("con_reg_datee");
+				String selDate3 = request.getParameter("con_con_dates");
+				String selDate4 = request.getParameter("con_con_datee");
+				// date로 변환
+				try {
+					con_reg_dates = fmt.parse(selDate1);
+					con_reg_datee = fmt.parse(selDate2);
+					con_con_dates = fmt.parse(selDate3);
+					con_con_datee = fmt.parse(selDate4);
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+				//대회 일정 내용 등록
+				tournament.setCon_reg_dates(con_reg_dates);
+				tournament.setCon_reg_datee(con_reg_datee);
+				tournament.setCon_con_dates(con_con_dates);
+				tournament.setCon_con_datee(con_con_datee);
+				
+				adminService.adminInsertWrite1(board_tb, board_div);
+				adminService.adminInsertPhoto(photo, board_div);
+				adminService.tournamentInsert1(tournament);
+				
+			} else {
+				// 관리자 게시판 관리자 번호 받아오기
+				board_tb.setAdmin_no((int) session.getAttribute("admin_no"));
+				int board_no = adminService.adminGetBoard_no();
+				board_tb.setBoard_no(board_no);
+				tournament.setBoard_no(board_no);
+				
+				// DateFormate 함수 선언
+			    SimpleDateFormat fmt = new SimpleDateFormat("yyyy/MM/dd");
+			    Date con_reg_dates = new Date();
+			    Date con_reg_datee = new Date();
+			    Date con_con_dates = new Date();
+			    Date con_con_datee = new Date();
+				// parameter 값 받기
+				String selDate1 = request.getParameter("con_reg_dates");
+				String selDate2 = request.getParameter("con_reg_datee");
+				String selDate3 = request.getParameter("con_con_dates");
+				String selDate4 = request.getParameter("con_con_datee");
+				logger.info(selDate1);
+				// date로 변환
+				try {
+					con_reg_dates = fmt.parse(selDate1);
+					con_reg_datee = fmt.parse(selDate2);
+					con_con_dates = fmt.parse(selDate3);
+					con_con_datee = fmt.parse(selDate4);
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+				//대회 일정 내용 등록
+				tournament.setCon_reg_dates(con_reg_dates);
+				tournament.setCon_reg_datee(con_reg_datee);
+				tournament.setCon_con_dates(con_con_dates);
+				tournament.setCon_con_datee(con_con_datee);
+				
+				// 관리자 게시판 이미지 파일 없이 글 작성
+				adminService.adminInsertWrite1(board_tb,board_div);
+				adminService.tournamentInsert1(tournament);
+		
+			}
+
 	}
-	
+		return "redirect:/admin/board?board_div=" + board_div;
+}	
 
 	   /*
 		* Admin BoardDelete 컨트롤러
