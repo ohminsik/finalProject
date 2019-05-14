@@ -1,6 +1,6 @@
 package com.fm.www.dto;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Tournament {
 
@@ -14,12 +14,22 @@ public class Tournament {
 	private int board_div;
 	private String board_title;
 	private String board_content;
+	
+	private String photo_stored;
+	
+	
+	public String getPhoto_stored() {
+		return photo_stored;
+	}
+	public void setPhoto_stored(String photo_stored) {
+		this.photo_stored = photo_stored;
+	}
 	@Override
 	public String toString() {
 		return "Tournament [board_fg=" + board_fg + ", board_no=" + board_no + ", con_reg_dates=" + con_reg_dates
 				+ ", con_con_dates=" + con_con_dates + ", con_reg_datee=" + con_reg_datee + ", con_con_datee="
 				+ con_con_datee + ", con_region=" + con_region + ", board_div=" + board_div + ", board_title="
-				+ board_title + ", board_content=" + board_content + "]";
+				+ board_title + ", board_content=" + board_content + ", photo_stored=" + photo_stored + "]";
 	}
 	public int getBoard_fg() {
 		return board_fg;
