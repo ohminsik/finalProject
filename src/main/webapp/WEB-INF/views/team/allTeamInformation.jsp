@@ -83,7 +83,7 @@
 								<select name="type" class="selectform1" id="typeSelect" onchange="javascript:searchType();">
 									<option value="">소속유형</option>
 									<option value="청소년">청소년</option>
-									<option value="데학생">대학생</option>
+									<option value="대학생">대학생</option>
 									<option value="직장인">직장인</option>
 									<option value="일반동호회">일반동호회</option>
 									<option value="여성팀">여성팀</option>
@@ -109,8 +109,11 @@
 						<col width="10%">
 						<col width="20%">
 						<col width="15%">
-						<col width="27.5%">
 						<col width="*">
+						<col width="*">
+						<c:if test="${teamYN eq false }">
+							<col width="10%">
+						</c:if>
 					</colgroup>
 					<thead>
 						<tr>
@@ -118,6 +121,9 @@
 							<th>팀명</th>
 							<th>점수</th>
 							<th colspan="2">팀정보</th>
+							<c:if test="${teamYN eq false }">
+								<th>가입신청</th>
+							</c:if>
 						</tr>
 					</thead>
 					<tbody>
@@ -141,11 +147,21 @@
 								팀원수 : ${list.team_cnt }명<br>
 								경기수 : ${list.team_etire }
 							</td>
+							<c:if test="${teamYN eq false }">
+								<td>
+									<form action="/mypage/teamApplyInsert" method="POST">
+										<input type="hidden" id="team_no" name="team_no" value="${list.team_no }">
+										<button type="button" onclick="teamApply(${list.team_no });" class="btnform1">가입신청</button>
+									</form> 
+								</td>
+							</c:if>
 						</tr>
 						</c:forEach>
+						<c:if test="${empty list }">
 						<tr>
 							<td colspan="5">등록된 팀이 없습니다.</td>
 						</tr>
+						</c:if>
 					</tbody>
 				</table>
 
@@ -159,7 +175,7 @@
 			            <c:if test="${paging.curPage eq 1 }">
 			            </c:if>
 			            <c:if test="${paging.curPage ne 1 }">
-			               <li><a href="/board/list?cur=${paging.curPage-1}&search_div=${search_div}&search_word=${search_word}">&lt;</a></li>
+			               <li><a href="/team/allTeamInformation?cur=${paging.curPage-1}&search_div=${search_div}&search_word=${search_word}">&lt;</a></li>
 			            </c:if>
 			
 			
@@ -168,10 +184,10 @@
 			               var="i">
 			
 			               <c:if test="${paging.curPage eq i}">
-			                  <li class="on"><a href="/board/list?cur=${i }&search_div=${search_div}&search_word=${search_word}">${i }</a></li>
+			                  <li class="on"><a href="/team/allTeamInformation?cur=${i }&search_div=${search_div}&search_word=${search_word}">${i }</a></li>
 			               </c:if>
 			               <c:if test="${paging.curPage ne i}">
-			                  <li><a href="/board/list?cur=${i }&search_div=${search_div}&search_word=${search_word}">${i }</a></li>
+			                  <li><a href="/team/allTeamInformation?cur=${i }&search_div=${search_div}&search_word=${search_word}">${i }</a></li>
 			               </c:if>
 			            </c:forEach>
 			
@@ -179,7 +195,7 @@
 			            <c:if test="${paging.curPage eq paging.totalPage }">
 			            </c:if>
 			            <c:if test="${paging.curPage ne paging.totalPage }">
-			               <li><a href="/board/list?cur=${paging.curPage+1}&search_div=${search_div}&search_word=${search_word}">&gt;</a></li>
+			               <li><a href="/team/allTeamInformation?cur=${paging.curPage+1}&search_div=${search_div}&search_word=${search_word}">&gt;</a></li>
 			            </c:if>
 			         </ul>
 			    </c:if>
@@ -219,6 +235,21 @@
 		var type = $("#typeSelect").val();							
 		searchType(type);						
 		
+	}
+	
+	function teamApply(n) {
+		$.ajax({
+			type : "post",
+			data : {
+				team_no : n
+			},
+			url : "/mypage/teamApplyInsert",
+			success : function(data) {
+				alert(data.teamName);
+			}
+		});
+		
+	    
 	}
 </script>
 </html>
