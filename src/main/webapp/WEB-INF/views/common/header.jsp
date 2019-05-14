@@ -83,10 +83,20 @@
 					<ul>
 						<li><a href="/mypage/mypageInformation">내 정보</a></li>
 						<li><a href="/mypage/teamInformation">팀 정보</a></li>
-						<li><a href="/mypage/teamBoard">팀 게시판</a></li>
+						<c:if test="${teamYN eq false }">
+							<li><a href="#" onclick="javascript:notTeam();">팀 게시판</a></li>
+						</c:if>
+						<c:if test="${teamYN eq true }">
+							<li><a href="/mypage/teamBoard">팀 게시판</a></li>
+						</c:if>
 						<li><a href="/mypage/mypagepersonalMessage">개인 메세지</a></li>
 						<li><a href="/mypage/mypageBoardList">내가 쓴 게시글</a></li>
-						<li><a href="/mypage/mypageMatchList">내가 쓴 매치글</a></li>
+						<c:if test="${teamYN eq false }">
+							<li><a href="#" onclick="javascript:notTeam();">내가 쓴 매치글</a></li>
+						</c:if>
+						<c:if test="${teamYN eq true }">
+							<li><a href="/mypage/mypageMatchList">내가 쓴 매치글</a></li>
+						</c:if>
 					</ul>
 				</li>
 				</c:if>
@@ -151,12 +161,18 @@
 	                <li><a class="find_pw_btn">비밀번호찾기</a></li>
 	            </ul>
 	            <div class="cb"></div>
-	            <div class="button" onclick="login_btn();">로그인</div><br>
+	            <button class="button mb10" onclick="login_btn();" style="width: 100%; border: 1px solid #000;">로그인</button><br>
 	            <style>
-					#kakao-login-btn img{width:100% }	            
+					#kakao-login-btn img{width:100% }	
+					.snsbtn_wrap{overflow: hidden}
+					.snsbtn{float:left; width: 50%;}
+					.snsbtn a{width:100%;}
+					.snsbtn a img{width:100%;}            
 	            </style>
-	            <div><a id="kakao-login-btn" class="kko" onclick="login_kko();"></a></div>
-	            <div id="naver_id_login" style="text-align:center"><a href="${url}" onclick="naverfuc();"><img height="75.03" width="340" src="${pageContext.request.contextPath}/resources/img/네이버 아이디로 로그인_완성형_Green.PNG"/></a></div>
+	            <div class="snsbtn_wrap">
+	            	<div class="snsbtn"><a id="kakao-login-btn" class="kko" onclick="login_kko();"></a></div>
+	            	<div class="snsbtn" id="naver_id_login" style="text-align:center"><a href="${url}" onclick="naverfuc();"><img src="${pageContext.request.contextPath}/resources/img/네이버 아이디로 로그인_완성형_Green.PNG"/></a></div>
+	            </div>
 	           <!--  <div class="line"></div>	
 	            <ul class="sns">
 	                <li class="n"><a class="cp"><i class="xi-naver-square"></i>네이버</a></li>
@@ -511,4 +527,11 @@ var nickname = null;
 	     });
 	  });
 
+</script>
+
+<script>
+	function notTeam(){
+		alert("팀이 없습니다. 팀을 만들거나 다른 팀에 가입해주세요");
+		location.href="/mypage/teamInformation";
+	}
 </script>
