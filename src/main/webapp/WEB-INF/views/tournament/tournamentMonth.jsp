@@ -1,6 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
+<%@page import="java.util.Calendar"%>
+<%
+    request.setCharacterEncoding("utf-8");
+    
+    Calendar now = Calendar.getInstance();
+    int year = now.get(Calendar.YEAR);
+    int month = now.get(Calendar.MONTH)+1;
+    
+    String _year = request.getParameter("year");
+    String _month = request.getParameter("month");
+    
+    if(_year != null)
+        year = Integer.parseInt(_year);
+    
+    if(_month != null)
+        month = Integer.parseInt(_month);
+    
+    now.set(year, month-1, 1);    //출력할 년도, 월로 설정
+    
+    year = now.get(Calendar.YEAR);    //변화된 년, 월
+    month = now.get(Calendar.MONTH) + 1;
+%> 
 <jsp:include page="../common/meta.jsp"/>
 <body>
 	<div id="wrap">
@@ -37,17 +60,29 @@
 					<li><a href="/tournament/tournamentMonth" class="btnform0 on">월별 일정</a></li>
 				</ul>
 				
+				<ul class="tournament_region_ul">
+					<li><a href="/tournament/tournamentMonth?year=<%=year%>&month=<%=month-1%>">◀</a></li>
+                    <li><span><%=year %>년 <%=month %>월</span></li>
+                    <li><a href="/tournament/tournamentMonth?year=<%=year%>&month=<%=month+1%>">▶</a></li>
+				</ul>
+				
 				<ul class="tournament_list">
+				<c:forEach items="${list }" var="list">
 					<li>
-						<a href="#">
+						<a href="/tournament/tournamentMonth?board_no=${list.board_no }">
+							<c:if test="${empty list.photo_stored }">
 							<img alt="" src="/resources/img/defalutimg.png">
+							</c:if>
+							<c:if test="${list.photo_stored ne null}">
+							<img alt="${list.photo_stored }" src="/uploadImg/${list.photo_stored }">
+							</c:if>
 							<p class="title">${list.board_title }</p>						
-							<p class="text">신청 기간 : ${list.con_reg_dates } ~ ${list.con_reg_datee }</p>
-							<p class="text">대회 기간 : ${list.con_con_dates } ~ ${list.con_con_datee }</p>
+							<p class="text">신청 기간 :<fmt:formatDate value="${list.con_reg_dates }" pattern="yyyy-MM-dd"/> ~ <fmt:formatDate value="${list.con_reg_datee }" pattern="yyyy-MM-dd"/></p>
+							<p class="text">대회 기간 :<fmt:formatDate value="${list.con_con_dates }" pattern="yyyy-MM-dd"/> ~ <fmt:formatDate value="${list.con_con_datee }" pattern="yyyy-MM-dd"/></p>
 							<p class="text">대회 지역 : ${list.con_region }</p>		
 						</a>				
 					</li>
-					
+				</c:forEach>
 				</ul>
 				
 				<div class="paging_wrap">

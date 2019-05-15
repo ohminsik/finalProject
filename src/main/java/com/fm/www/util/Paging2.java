@@ -1,5 +1,7 @@
 package com.fm.www.util;
 
+import java.util.Date;
+
 public class Paging2 {
 
 	private int curPage;
@@ -15,7 +17,6 @@ public class Paging2 {
 	private int startNo;
 	private int endNo;
 
-	private String search;
 	private String word;
 	
 	
@@ -104,7 +105,7 @@ public class Paging2 {
 	public String toString() {
 		return "Paging [curPage=" + curPage + ", totalCount=" + totalCount + ", listCount=" + listCount + ", totalPage="
 				+ totalPage + ", pageCount=" + pageCount + ", startPage=" + startPage + ", endPage=" + endPage
-				+ ", startNo=" + startNo + ", endNo=" + endNo + ", search=" + search + ", word=" + word + "]";
+				+ ", startNo=" + startNo + ", endNo=" + endNo + ",  word=" + word + "]";
 	}
 
 	public int getCurPage() {
@@ -179,14 +180,6 @@ public class Paging2 {
 		this.endNo = endNo;
 	}
 
-	public String getSearch() {
-		return search;
-	}
-
-	public void setSearch(String search) {
-		this.search = search;
-	}
-
 	public String getWord() {
 		return word;
 	}
@@ -194,8 +187,6 @@ public class Paging2 {
 	public void setWord(String word) {
 		this.word = word;
 	}
-
-
 
 
 }

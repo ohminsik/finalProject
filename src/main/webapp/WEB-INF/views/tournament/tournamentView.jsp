@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
 <jsp:include page="../common/meta.jsp"/>
 <body>
 	<div id="wrap">
@@ -35,19 +36,18 @@
 				<div class="tournamentView_div">
 					<ul class="tournamentView">
 						<li>
-							<img alt="" src="/resources/img/defalutimg.png">
+							<img alt="${photo.photo_stored }" src="/uploadImg/${photo.photo_stored }">
 						</li>
 						<li>
 							<p class="title">${tournment.board_title }</p>						
-							<p class="text">신청 기간 : ${tournment.con_reg_dates } ~ ${tournment.con_reg_datee }</p>
-							<p class="text">대회 기간 : ${tournment.con_con_dates } ~ ${tournment.con_con_datee }</p>
+							<p class="text">신청 기간 :<fmt:formatDate value="${tournment.con_reg_dates }" pattern="yyyy-MM-dd"/> ~ <fmt:formatDate value="${tournment.con_reg_datee }" pattern="yyyy-MM-dd"/></p>
+							<p class="text">대회 기간 :<fmt:formatDate value="${tournment.con_con_dates }" pattern="yyyy-MM-dd"/> ~ <fmt:formatDate value="${tournment.con_con_datee }" pattern="yyyy-MM-dd"/></p>
 							<p class="text">대회 지역 : ${tournment.con_region }</p>	
 							<p class="text">대회 설명 : ${tournment.board_content }</p>	
 						</li>
 					</ul>
 					
 					<ul class="mt50 mb50 btnform123123">
-						<li><a href="#" class="btnform0">대회 바로가기</a></li>
 						<li><a href="/tournament/tournamentRegion" class="btnform0">목록</a></li>
 					</ul>
 					

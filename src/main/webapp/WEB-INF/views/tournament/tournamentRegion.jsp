@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
 <jsp:include page="../common/meta.jsp"/>
 <body>
 	<div id="wrap">
@@ -56,17 +57,22 @@
 				</ul>
 			
 				<ul class="tournament_list">
-				<c:forEach items="${list }" var="list">
+					<c:forEach items="${list }" var="list">
 					<li>
 						<a href="/tournament/tournamentView?board_no=${list.board_no }">
+							<c:if test="${empty list.photo_stored }">
 							<img alt="" src="/resources/img/defalutimg.png">
+							</c:if>
+							<c:if test="${list.photo_stored ne null}">
+							<img alt="${list.photo_stored }" src="/uploadImg/${list.photo_stored }">
+							</c:if>							
 							<p class="title">${list.board_title }</p>						
-							<p class="text">신청 기간 : ${list.con_reg_dates } ~ ${list.con_reg_datee }</p>
-							<p class="text">대회 기간 : ${list.con_con_dates } ~ ${list.con_con_datee }</p>
+							<p class="text">신청 기간 :<fmt:formatDate value="${list.con_reg_dates }" pattern="yyyy-MM-dd"/> ~ <fmt:formatDate value="${list.con_reg_datee }" pattern="yyyy-MM-dd"/></p>
+							<p class="text">대회 기간 :<fmt:formatDate value="${list.con_con_dates }" pattern="yyyy-MM-dd"/> ~ <fmt:formatDate value="${list.con_con_datee }" pattern="yyyy-MM-dd"/></p>
 							<p class="text">대회 지역 : ${list.con_region }</p>	
 						</a>				
 					</li>
-				</c:forEach>	
+					</c:forEach>	
 				</ul>
 				
 				<div class="paging_wrap">
@@ -82,8 +88,7 @@
 			
 			
 			            <%-- 페이징 리스트 --%>
-			            <c:forEach begin="${paging2.startPage }" end="${paging2.endPage }"
-			               var="i">
+			            <c:forEach begin="${paging2.startPage }" end="${paging2.endPage }" var="i">
 			
 			               <c:if test="${paging2.curPage eq i}">
 			                  <li class="on"><a href="/tournament/tournamentRegion?curPage=${i }">${i }</a></li>

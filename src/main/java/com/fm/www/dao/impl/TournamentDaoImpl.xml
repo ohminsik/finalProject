@@ -8,9 +8,8 @@
   <mapper namespace="com.fm.www.dao.face.TournamentDao">
   	
   	<!-- 대회 게시글 전체 수 -->
-  	<select id="tournamentTotalCount" resultType="int" parameterType="String">
+  	<select id="tournamentTotalCount1" parameterType="String" resultType="int">
 		SELECT COUNT(*) FROM congress
-		
       	WHERE board_fg = 9
       	<choose>
        		 <when test="_parameter != null and !_parameter.equals('')">
@@ -41,10 +40,62 @@
     	WHERE rnum BETWEEN #{p1.startNo} AND #{p1.endNo}
 	</select>
 	
+	<!-- 지정 게시글 정보 가져오기 -->
 	<select id="tournamentView" parameterType="com.fm.www.dto.Tournament" resultType="com.fm.www.dto.Tournament">
 	 select * from congress C, board_tb B
              where C.board_no = B.board_no
              and C.board_no = #{board_no}
 	</select>
 	
+	<!-- 사진 가져오기 -->
+	<select id="PhotoView" parameterType="com.fm.www.dto.Photo" resultType="com.fm.www.dto.Photo">
+		SELECT * FROM PHOTO
+		WHERE board_no = #{board_no}
+	</select>
+	<!-- board_no로 게시글 사진 조회 -->
+	<select id="photoStoredName" parameterType="int" resultType="String">
+		SELECT photo_stored FROM PHOTO
+		WHERE board_no = #{board_no}
+	</select>
+	
+	<!-- 대회 게시글 전체 수 condates 조회 -->
+	<select id="tournamentTotalCount2" parameterType="String"  resultType="int">
+		SELECT COUNT(*) FROM congress
+      	WHERE board_fg = 9
+      	<choose>
+       		 <when test="_parameter != null and !_parameter.equals('')">
+           	AND CON_CON_DATES Like '%' || #{condates} || '%'
+          </when>
+       	</choose>
+	</select>
+	<!-- 대회 페이징 리스트 처리 -->
+	<select id="tournamentMonthGetList" parameterType="com.fm.www.util.Paging2" resultType="com.fm.www.dto.Tournament">
+		SELECT * FROM (
+         SELECT rownum rnum, B.* FROM (
+            	select bt.*, c.con_con_datee, c.con_con_dates, c.con_reg_datee, c.con_reg_dates, c.con_region from board_tb bt, congress c
+            	WHERE 1=1
+            	AND bt.board_div = 9
+            	AND bt.board_no = c.board_no
+            	<choose>
+            		 <when test="p1.word != null and !p1.word.equals('')">
+		               AND c.con_con_dates Like '%' || #{p1.word} || '%'
+		             </when>
+            	</choose>
+            	ORDER BY bt.board_no desc
+        	 ) B
+    	     ORDER BY rnum
+	      ) R
+    	WHERE rnum BETWEEN #{p1.startNo} AND #{p1.endNo}
+	</select>
+	<!-- 현제 날짜 받기 -->
+	<select id="selectDate" resultType="java.util.Date">
+  	SELECT sysdate FROM dual
+ 	 </select>
+ 	 <!-- 대회시작날짜 받기 -->
+ 	 <select id="selectcon_con_dates" parameterType="String" resultType="java.util.Date">
+ 	 	select con_con_dates from 
+		(select con_con_dates, rownum as rnum from congress  
+		WHERE con_con_dates Like '%' || #{con_dates} || '%')
+		where rnum = 1 
+ 	 </select>
   </mapper>
