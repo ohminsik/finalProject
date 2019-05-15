@@ -82,6 +82,7 @@ public class AdminController {
 			
 		}else{
 			System.out.println("로그인실패");
+			session.setAttribute("AdminloginYN", false);
 			return "redirect:/admin/login";
 		}
 	}
