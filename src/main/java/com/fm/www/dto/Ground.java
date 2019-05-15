@@ -6,10 +6,18 @@ public class Ground {
 	private int board_no;
 	private String ground_addr;
 	private String ground_name;
+	private String photo_stored;
+	
 	@Override
 	public String toString() {
 		return "Ground [board_fg=" + board_fg + ", board_no=" + board_no + ", ground_addr=" + ground_addr
-				+ ", ground_name=" + ground_name + "]";
+				+ ", ground_name=" + ground_name + ", photo_stored=" + photo_stored + "]";
+	}
+	public String getPhoto_stored() {
+		return photo_stored;
+	}
+	public void setPhoto_stored(String photo_stored) {
+		this.photo_stored = photo_stored;
 	}
 	public int getBoard_fg() {
 		return board_fg;

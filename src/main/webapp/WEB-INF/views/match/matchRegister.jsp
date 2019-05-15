@@ -66,7 +66,7 @@
 							<td>구장</td>
 							<td>
 								<input type="text" name="match_ground" id="match_ground" class="inputform200 vm oh1">
-								<a href="#" class="btnform1 vm oh1">구장검색</a>
+								<a href="#" class="ground_change btnform1 vm oh1">구장검색</a>
 							</td>
 						</tr>
 						<tr>
@@ -217,6 +217,37 @@ $("#btnEnroll").click(function(){
 	
 	});  
 			
+	</script>
+	<script>
+		$(document).ready(function(){
+			$(".ground_change").click(function(e){
+				e.preventDefault();
+				//화면크기 구하기
+				var w = screen.availWidth;
+				var h = screen.availHeight;
+				
+				//팝업 띄우기
+				var popup = window.open(
+						"",
+						"",
+						"status=no" //하단 상태바
+						+",menubar=no" //상단 메뉴
+						+",scrollbars=no" //스크롤바
+						+",resizable=no" //사이즈변경
+						+",width=1000" //너비
+						+",height=600" //높이
+						+",left="+(w-500)/2 //x 위치
+						+",top="+(h-500)/2 ); //y 위치
+				
+				//팝업 url 설정
+				popup.location = "/ground/groundSearch";
+			});
+			
+			
+		})
+		function sendData(g_name) {
+			$("#match_ground").val(g_name); 
+		}
 	</script>
 </html>
 

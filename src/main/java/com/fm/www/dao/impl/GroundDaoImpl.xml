@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 마이바티스 3 Mapper DOCTYPE -->
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <!-- 매퍼 설정 -->
+  <mapper namespace="com.fm.www.dao.face.GroundDao">
+  	
+  	<select id="groundTotalCount" parameterType="String" resultType="int">
+  		select count(*) from board_tb b, ground g
+        WHERE 1=1
+        AND board_div=10
+        AND delete_yn = 'N'
+        AND b.board_no = g.board_no
+        <choose>
+        	<when test="_parameter=='충청'">
+          		AND (g.ground_addr Like '%' || '충남' || '%'
+          		OR g.ground_addr Like '%' || '충북' || '%')		               
+             </when>
+             <when test="_parameter=='전라'">
+         	 	AND (g.ground_addr Like '%' || '전남' || '%'
+       		 	OR g.ground_addr Like '%' || '전북' || '%')	               
+             </when>
+             <when test="_parameter=='경상'">
+       		 	AND (g.ground_addr Like '%' || '경북' || '%'
+       		 	OR g.ground_addr Like '%' || '경남' || '%')		               
+             </when>
+       		 <when test="_parameter != null and !_parameter.equals('')">
+	           	AND g.ground_addr Like '%' || #{region} || '%'
+	         </when>
+	         
+       	</choose>	
+  	</select>
+  	
+  	<select id="groundTotalCountWord" parameterType="String" resultType="int">
+  		select count(*) from board_tb b, ground g
+        WHERE 1=1
+        AND board_div=10
+        AND delete_yn = 'N'
+        AND b.board_no = g.board_no
+        <choose>
+       		 <when test="_parameter != null and !_parameter.equals('')">
+	           	AND g.ground_name Like '%' || #{word} || '%'
+	         </when>	         
+       	</choose>	
+  	</select>
+  	
+  	<select id="groundGetList" resultType="com.fm.www.dto.Ground">
+  		 SELECT * FROM (
+	         SELECT rownum rnum, C.* FROM (
+	            	select b.*,g.ground_addr,g.ground_name from board_tb b, ground g
+	                WHERE 1=1
+	            	AND board_div=10
+	                AND delete_yn = 'N'
+	                AND b.board_no = g.board_no
+	                <choose>
+	                	<when test="p2=='충청'">
+	            		 	AND( g.ground_addr Like '%' || '충남' || '%'
+	            		 	OR g.ground_addr Like '%' || '충북' || '%'	)	               
+			             </when>
+			             <when test="p2=='전라'">
+	            		 	AND( g.ground_addr Like '%' || '전남' || '%'
+	            		 	OR g.ground_addr Like '%' || '전북' || '%'	)	               
+			             </when>
+			             <when test="p2=='경상'">
+	            		 	AND( g.ground_addr Like '%' || '경북' || '%'
+	            		 	OR g.ground_addr Like '%' || '경남' || '%'	)	               
+			             </when>
+	            		 <when test="p2 != null and !p2.equals('')">
+	            		 	AND g.ground_addr Like '%' || #{p2} || '%'		               
+			             </when>
+			             
+	            	</choose>	
+	            	ORDER BY b.board_no desc
+	        	 ) C
+	    	     ORDER BY rnum
+		      ) R
+	    	WHERE rnum BETWEEN #{p1.startNo} AND #{p1.endNo}
+  	</select>
+  	
+  	<select id="groundGetListWord" resultType="com.fm.www.dto.Ground">
+  		SELECT * FROM (
+	         SELECT rownum rnum, C.* FROM (
+	            	select b.*,g.ground_addr,g.ground_name from board_tb b, ground g
+	                WHERE 1=1
+	            	AND board_div=10
+	                AND delete_yn = 'N'
+	                AND b.board_no = g.board_no
+	                <choose>
+	            		 <when test="p2 != null and !p2.equals('')">
+	            		 	AND g.ground_name Like '%' || #{p2} || '%'		               
+			             </when>
+			             
+	            	</choose>	
+	            	ORDER BY b.board_no desc
+	        	 ) C
+	    	     ORDER BY rnum
+		      ) R
+	    	WHERE rnum BETWEEN #{p1.startNo} AND #{p1.endNo}
+  	</select>
+  	
+  	<select id="groundGetList1" resultType="com.fm.www.dto.Ground">
+  			select b.*,g.ground_addr,g.ground_name from board_tb b, ground g
+            WHERE 1=1
+        	AND board_div=10
+            AND delete_yn = 'N'
+            AND b.board_no = g.board_no
+        	ORDER BY b.board_no desc
+  	</select>
+  	
+  	<select id="getPhotoStored" resultType="String" parameterType="int">
+  		select photo_stored from photo
+        WHERE board_no = #{board_no}
+  	</select>
+  </mapper>

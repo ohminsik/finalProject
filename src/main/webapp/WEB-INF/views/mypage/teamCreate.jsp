@@ -128,7 +128,7 @@
 							<td>
 								※ 주로 경기하는 구장명을 넣어주세요. 검색이 안되면 그냥 입력해주세요.<br>
 								<input type="text" name="team_field" id="team_field" class="inputform200 vm mt5">
-								<a href="#" class="btnform1 oh1 vm mt5">구장검색</a>
+								<a class="ground_change btnform1 oh1 vm mt5">구장검색</a>
 							</td>
 						</tr>
 						<tr>
@@ -152,9 +152,44 @@
 					<button class="btnform0">팀 생성</button>
 				</div>
 				</form>
+				
+				
 			</div>
 		</div>
 		<jsp:include page="../common/footer.jsp" />
 	</div>
+<script>
+	$(document).ready(function(){
+		$(".ground_change").click(function(e){
+			e.preventDefault();
+			//화면크기 구하기
+			var w = screen.availWidth;
+			var h = screen.availHeight;
+			
+			//팝업 띄우기
+			var popup = window.open(
+					"",
+					"",
+					"status=no" //하단 상태바
+					+",menubar=no" //상단 메뉴
+					+",scrollbars=no" //스크롤바
+					+",resizable=no" //사이즈변경
+					+",width=1000" //너비
+					+",height=600" //높이
+					+",left="+(w-500)/2 //x 위치
+					+",top="+(h-500)/2 ); //y 위치
+			
+			//팝업 url 설정
+			popup.location = "/ground/groundSearch";
+		});
+		
+		
+	})
+	function sendData(g_name) {
+		$("#team_field").val(g_name); 
+	}
+	
+	
+</script>
 </body>
 </html>
