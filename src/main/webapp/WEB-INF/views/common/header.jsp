@@ -241,11 +241,6 @@
 </div>
 <!-- 비밀번호찾기:e -->
 
-<c:if test="${loginYn == false }">
-	<script>
-		alert("로그인에 실패했습니다");
-	</script>
-</c:if>
 
 
 <!-- 카카오 로그인 s -->
