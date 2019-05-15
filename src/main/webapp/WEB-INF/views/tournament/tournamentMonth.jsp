@@ -60,7 +60,7 @@
 					<li><a href="/tournament/tournamentMonth" class="btnform0 on">월별 일정</a></li>
 				</ul>
 				
-				<ul class="tournament_region_ul">
+				<ul class="tournament_region_ul tournament_region_ul1">
 					<li><a href="/tournament/tournamentMonth?year=<%=year%>&month=<%=month-1%>">◀</a></li>
                     <li><span><%=year %>년 <%=month %>월</span></li>
                     <li><a href="/tournament/tournamentMonth?year=<%=year%>&month=<%=month+1%>">▶</a></li>
