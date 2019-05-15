@@ -104,7 +104,7 @@
 					<a href="#">매치보드</a>
 					<ul>
 						<li><a href="/match/matchBoard?selectRegion=0">매치신청</a></li>
-						<li><a href="/match/recommndOpponent">오늘의 추천 상대</a></li>
+						<li><a href="/match/reommndOpponent">오늘의 추천 상대</a></li>
 					</ul>
 				</li>
 				<li>

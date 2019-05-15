@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.fm.www.dao.face.MypageDao;
 import com.fm.www.dto.Match;
+import com.fm.www.dto.Team;
 import com.fm.www.dto.User;
 import com.fm.www.service.face.MatchService;
 import com.fm.www.service.face.MemberService;
+import com.fm.www.service.face.MypageService;
 
 @Controller
 public class MatchController {
@@ -36,6 +38,9 @@ public class MatchController {
 	
 	@Autowired
 	MypageDao mypageDao;
+	
+	@Autowired
+	MypageService mypageService;
 
 	/*2019.05.01추가
 	 * 매치정보 매치정보 창 띄우기 GET
@@ -332,4 +337,33 @@ public class MatchController {
 		return "redirect:/match/matchBoard?selectRegion=0";
 
 	}
+	
+	
+	
+	@RequestMapping(value = "/match/reommndOpponent", method = RequestMethod.GET)
+	public void reommndOpponentGet(Model model, HttpSession session) {
+		User user = new User();
+		user.setUser_no((int) session.getAttribute("user_no"));
+		
+		int team_no = mypageService.selectTeamNoUserNo(user);
+		
+		user.setTeam_no(team_no);
+		Team team = mypageService.selectTeamInfoMation(user);
+		
+		List<Team> matchTeamList = matchService.selectRandomMatchList(team);
+		
+		double randomValue = Math.random();	 
+		 
+        int ran = (int)(randomValue * matchTeamList.size()) -1;
+ 
+ 
+ 
+        Team RandomTeam = matchTeamList.get(ran);
+        
+        System.out.println(RandomTeam);
+        
+        model.addAttribute("team",RandomTeam);
+	}
+	
+	
 }

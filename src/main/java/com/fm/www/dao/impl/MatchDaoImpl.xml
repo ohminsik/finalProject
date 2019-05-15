@@ -86,5 +86,15 @@
 	from match M
 	JOIN USER_TB U ON(U.team_no = M.purpleteam_no)
   </select> -->
+  
+  
+  <!-- 랜덤 매칭 팀 리스트 조회 -->
+  <select id="selectRandomMatchList" resultType="com.fm.www.dto.Team" parameterType="com.fm.www.dto.Team">
+  <![CDATA[ 
+  	 select * from team_tb  	 
+     WHERE team_rating >= #{team_rating}-50 
+     and team_rating <= #{team_rating}+50
+     ]]>
+  </select>
   </mapper>
   

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.fm.www.dao.face.MatchDao;
 import com.fm.www.dto.Match;
+import com.fm.www.dto.Team;
 import com.fm.www.dto.User;
 import com.fm.www.service.face.MatchService;
 
@@ -69,6 +70,12 @@ public class MatchServiceImpl implements MatchService {
 	@Override
 	public Date selectCurDate() {
 		return matchDao.selectCurDate();
+	}
+	
+	//랜덤 매칭 팀 리스트 조회
+	@Override
+	public List<Team> selectRandomMatchList(Team team) {
+		return matchDao.selectRandomMatchList(team);
 	}
 
 //	@Override

@@ -157,40 +157,40 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:if test="${empty teamApplyList }">						
-							<c:forEach items="${teamApplyList }" var="teamApplyList">
-							<c:set var="now" value="<%=new java.util.Date()%>" />
-							<c:set var="sysYear"><fmt:formatDate value="${now}" pattern="yyyy" /></c:set>	
-							<c:set var="myYear" value="${teamApplyList.user_birth}"/>
-							 <%
-		                        String sysYear = pageContext.getAttribute("sysYear").toString();
-							 	String myYear = (pageContext.getAttribute("myYear").toString()).substring(0,4);
-		                        int pYear = Integer.parseInt(sysYear);
-		                        int mYear = Integer.parseInt(myYear);
-		                        int result = pYear - mYear;
-		                     %>
-							<tr>
-								<td>${teamApplyList.user_name }(${teamApplyList.user_id })</td>
-								<td>${teamApplyList.user_position }</td>
-								<td><%=result+1 %></td>
-								<td>${teamApplyList.user_region }</td>
-								<td><fmt:formatDate value="${teamApplyList.apply_date }" pattern="yyyy-MM-dd"/></td>
-								<td>
-									<div style="text-align: center;">
-										<form action="/mypage/teamApplyOk" method="POST" class="oh1">
-											<input type="hidden" name="team_no" value="${teamApplyList.team_no }">
-											<input type="hidden" name="user_no" value="${teamApplyList.user_no }">
-											<button class="btnform1" style="display: inline-block;">승인</button>
-										</form>
-										<form action="/mypage/teamApplyNo" method="POST" class="oh1">
-											<input type="hidden" name="team_no" value="${teamApplyList.team_no }">
-											<input type="hidden" name="user_no" value="${teamApplyList.user_no }">
-											<button class="btnform2" style="display: inline-block;">거절</button>
-										</form>
-									</div>
-								</td>
-							</tr>
-							</c:forEach>
+							<c:if test="${!empty teamApplyList }">						
+								<c:forEach items="${teamApplyList }" var="teamApplyList">
+									<c:set var="now" value="<%=new java.util.Date()%>" />
+									<c:set var="sysYear"><fmt:formatDate value="${now}" pattern="yyyy" /></c:set>	
+									<c:set var="myYear" value="${teamApplyList.user_birth}"/>
+									 <%
+				                        String sysYear = pageContext.getAttribute("sysYear").toString();
+									 	String myYear = (pageContext.getAttribute("myYear").toString()).substring(0,4);
+				                        int pYear = Integer.parseInt(sysYear);
+				                        int mYear = Integer.parseInt(myYear);
+				                        int result = pYear - mYear;
+				                     %>
+									<tr>
+										<td>${teamApplyList.user_name }(${teamApplyList.user_id })</td>
+										<td>${teamApplyList.user_position }</td>
+										<td><%=result+1 %></td>
+										<td>${teamApplyList.user_region }</td>
+										<td><fmt:formatDate value="${teamApplyList.apply_date }" pattern="yyyy-MM-dd"/></td>
+										<td>
+											<div style="text-align: center;">
+												<form action="/mypage/teamApplyOk" method="POST" class="oh1">
+													<input type="hidden" name="team_no" value="${teamApplyList.team_no }">
+													<input type="hidden" name="user_no" value="${teamApplyList.user_no }">
+													<button class="btnform1" style="display: inline-block;">승인</button>
+												</form>
+												<form action="/mypage/teamApplyNo" method="POST" class="oh1">
+													<input type="hidden" name="team_no" value="${teamApplyList.team_no }">
+													<input type="hidden" name="user_no" value="${teamApplyList.user_no }">
+													<button class="btnform2" style="display: inline-block;">거절</button>
+												</form>
+											</div>
+										</td>
+									</tr>
+								</c:forEach>
 							</c:if>
 							<c:if test="${empty teamApplyList }">
 								<tr>

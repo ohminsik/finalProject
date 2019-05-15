@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.fm.www.dto.Match;
+import com.fm.www.dto.Team;
 import com.fm.www.dto.User;
 
 public interface MatchService {
@@ -30,6 +31,9 @@ public interface MatchService {
 	
 	//현재 날짜 조회
 	public Date selectCurDate();
+	
+	//랜덤매칭 팀 리스트 조회
+	public List<Team> selectRandomMatchList(Team team);
 	
 //	//이미 신청한 매치인지 검사
 //	public boolean pickYn(Match match);

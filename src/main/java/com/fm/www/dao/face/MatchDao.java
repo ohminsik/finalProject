@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.fm.www.dto.Match;
+import com.fm.www.dto.Team;
 import com.fm.www.dto.User;
 
 public interface MatchDao {
@@ -31,6 +32,9 @@ public interface MatchDao {
 	
 	//현재날짜 조회
 	public Date selectCurDate();
+	
+	//랜덤 매칭 팀 조회
+	public List<Team> selectRandomMatchList(Team team);
 	
 //	//이미 신청한 팀이 있는지 개수 조회
 //	public int cntPickedMatch(Match match);
