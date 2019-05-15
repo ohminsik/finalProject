@@ -67,26 +67,29 @@
 				</ul>
 				
 				<ul class="tournament_list">
-				<c:forEach items="${list }" var="list">
-					<li>
-						<a href="/tournament/tournamentMonth?board_no=${list.board_no }">
-							<c:if test="${empty list.photo_stored }">
-							<img alt="" src="/resources/img/defalutimg.png">
-							</c:if>
-							<c:if test="${list.photo_stored ne null}">
-							<img alt="${list.photo_stored }" src="/uploadImg/${list.photo_stored }">
-							</c:if>
-							<p class="title">${list.board_title }</p>						
-							<p class="text">신청 기간 :<fmt:formatDate value="${list.con_reg_dates }" pattern="yyyy-MM-dd"/> ~ <fmt:formatDate value="${list.con_reg_datee }" pattern="yyyy-MM-dd"/></p>
-							<p class="text">대회 기간 :<fmt:formatDate value="${list.con_con_dates }" pattern="yyyy-MM-dd"/> ~ <fmt:formatDate value="${list.con_con_datee }" pattern="yyyy-MM-dd"/></p>
-							<p class="text">대회 지역 : ${list.con_region }</p>		
-						</a>				
-					</li>
-				</c:forEach>
+					<c:forEach items="${list }" var="list">
+						<li>
+							<a href="/tournament/tournamentMonth?board_no=${list.board_no }">
+								<c:if test="${empty list.photo_stored }">
+								<img alt="" src="/resources/img/defalutimg.png">
+								</c:if>
+								<c:if test="${list.photo_stored ne null}">
+								<img alt="${list.photo_stored }" src="/uploadImg/${list.photo_stored }">
+								</c:if>
+								<p class="title">${list.board_title }</p>						
+								<p class="text">신청 기간 :<fmt:formatDate value="${list.con_reg_dates }" pattern="yyyy-MM-dd"/> ~ <fmt:formatDate value="${list.con_reg_datee }" pattern="yyyy-MM-dd"/></p>
+								<p class="text">대회 기간 :<fmt:formatDate value="${list.con_con_dates }" pattern="yyyy-MM-dd"/> ~ <fmt:formatDate value="${list.con_con_datee }" pattern="yyyy-MM-dd"/></p>
+								<p class="text">대회 지역 : ${list.con_region }</p>		
+							</a>				
+						</li>
+					</c:forEach>
 				</ul>
 				
 				<div class="paging_wrap">
-			      <c:if test="${paging2.totalPage != 0 }">
+			      <c:if test="${totalCount eq 0 }">
+			      </c:if>
+			      <c:if test="${totalCount ne 0 }">
+			     	 <c:if test="${paging2.totalPage != 0 }">
 			         <ul class="list">
 			
 			            <%-- 이전 페이지 --%>
@@ -116,6 +119,7 @@
 			               <li><a href="/tournament/tournamentMonth?curPage=${paging2.curPage+1}">&gt;</a></li>
 			            </c:if>
 			         </ul>
+			    </c:if>
 			    </c:if>
 			
 			   </div>
