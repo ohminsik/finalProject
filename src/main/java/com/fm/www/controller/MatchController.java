@@ -47,7 +47,7 @@ public class MatchController {
 	 */
 	@RequestMapping(value = "/match/matchBoard", method = RequestMethod.GET)
 	public void matchBoardGet(Model model, HttpServletRequest req, String selectRegion, Match match, User user, HttpSession session) {
-		System.out.println("match/matchBoard:"+selectRegion);
+System.out.println("match/matchBoard:"+selectRegion);
 		
 		//0일 때 & 빈칸일 때 >> 전체 조회
 		if(selectRegion.equals("0") || selectRegion.equals("")) {
@@ -63,88 +63,32 @@ public class MatchController {
 		boolean curDateYn = false;
 		String dateComment="";
 		
-		//1.date 변수 초기화
-		Date curDate = matchService.selectCurDate();
-		
-		//2.simpleDateFormat으로 형식지정
-		SimpleDateFormat translate1 = new SimpleDateFormat("yyyyMMdd");
-		
-		String compareDate="";//현재날짜 담을 STR변수
-		//3. date를 String 변환(현재 시간)
-		if(compareDate.equals("")) {//빈값일 때 예외처리
-			 compareDate="";
-		}
-		compareDate=translate1.format(curDate);
-		
-		//4. int형으로(현재시간) 
-		int IntegerCompareDate = Integer.parseInt(compareDate);
-		
-		//MatchList 반복하면서 값 비교
 		for(int i = 0; i<matchList.size(); i++) {
-			
-			//5. 경기날짜 date 변수로 담기
-			Date match_date = matchList.get(i).getFight_date();
-			
-			//6. simpleDateFormat으로 형식지정
-			SimpleDateFormat translate2 = new SimpleDateFormat("yyyyMMdd");
-			
-			//7. fight_date에 담기
-			String fight_Date = "";
-			if(fight_Date.equals("")) {//빈값일 때 예외처리
-				fight_Date = "";
-			}
-			
-			fight_Date=translate2.format(match_date);
-			
-			//8. int형으로 변환(경기날짜)
-			int integerFight_date = Integer.parseInt(fight_Date);
-			
-			if(integerFight_date <= IntegerCompareDate) {//현재날짜가 더 크거나 같으면( 경기날짜보다 오래됨 )
-				curDateYn = false;
-				
-				try {
-					//date형으로 다시 변환
-					match_date = translate2.parse(fight_Date);
-					curDate = translate1.parse(compareDate);
-				} catch (ParseException e) {
-					e.printStackTrace();
-				}
-				dateComment = "기간만료";
-//				System.out.println("match/matchBoard dateComment : "+dateComment);
-				matchList.get(i).setCurDateYn(curDateYn);
-				
-			}else {
-				curDateYn = true;
-				
-				try {
-					//date형으로 다시 변환
-					match_date = translate2.parse(fight_Date);
-					curDate = translate1.parse(compareDate);
-				} catch (ParseException e) {
-					e.printStackTrace();
-				}
-				
-				dateComment = "매치신청";
-
-				//불린값 리스트에 넣어주기
-				matchList.get(i).setCurDateYn(curDateYn);
-			}
+		//date객체로 현재시간
+		Date nowDate = matchService.selectCurDate();
+		Date fightDate = matchList.get(i).getFight_date();
+		
+		System.out.println("fightDate:"+fightDate);
+		System.out.println("nowDate:"+nowDate);
+		
+		//compareDate(현재날짜)가 크거나 같으면 0이나 양수 반환
+		int compareDate = nowDate.compareTo(fightDate);
+		
+		if(compareDate>=0) {//현재날짜가 더 크거나 같으면
+			curDateYn = false;//기간만료
+			matchList.get(i).setCurDateYn(curDateYn);
+			dateComment = "기간만료";
+		}else {
+			curDateYn = true;//매치신청
+			matchList.get(i).setCurDateYn(curDateYn);
+			dateComment = "매치신청";
 		}
-		//2019.05.09 신청한 팀 이미 있는지 여부검사
-		//이미 신청한 매치인지 여부 판단
-//		boolean pickYn = false;
-//		pickYn= matchService.pickYn(match);
-//				
-//		System.out.println("매치여부 판단 user넘버  : "+match);
-//		System.out.println("pickedMatch : "+pickYn);
-//		if(pickYn==true) {
-//			match.setPickYn(pickYn);
-//			model.addAttribute("pickYn", pickYn);
-//		}else {
-//			match.setPickYn(pickYn);
-//			model.addAttribute("pickYn", pickYn);
-//				}
+		
+
 		model.addAttribute("matchList", matchList);
+
+		}
+		
 	}
 
 	/*

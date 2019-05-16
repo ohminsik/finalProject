@@ -4,6 +4,12 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
 <jsp:include page="../common/meta.jsp"/>
 <%@page import="java.util.Calendar"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.fm.www.dao.face.MypageDao"%>
+<%@page import="com.fm.www.dto.Match"%>
+<%@page import="com.fm.www.service.face.MatchService"%>
+
 <%
     request.setCharacterEncoding("utf-8");
     
@@ -92,9 +98,9 @@
 						<table class="week">
 			                <tr height="30">
 			                    <td align="center">
-			                        <a href="/match/matchBoard?year=<%=year%>&month=<%=month-1%>">◀</a>
+			                        <a href="/match/matchBoard?selectRegion=0&year=<%=year%>&month=<%=month-1%>">◀</a>
 			                        <span><%=year %>년 <%=month %>월</span>
-			                        <a href="/match/matchBoard?year=<%=year%>&month=<%=month+1%>">▶</a>
+			                        <a href="/match/matchBoard?selectRegion=0&year=<%=year%>&month=<%=month+1%>">▶</a>
 			                    </td>
 			                </tr>
 			            </table>
@@ -112,7 +118,11 @@
 			                </tr>
 			               </thead>
 			               <tbody>
+<%-- 			               <c:set value="${matchCnt }" var="matchCnt"></c:set>
+ --%>			               
+<!-- 			                	int matchCntt = Integer.parseInt(pageContext.getAttribute("matchCnt").toString()); -->
 			                <%
+			                
 			                    int newLine = 0;
 			                    //1일이 어느 요일에서 시작하느냐에 따른 빈칸 삽입
 			                    //매치 등록되면 캘린더에 추가
@@ -130,9 +140,11 @@
 			                        fc = (newLine == 0)?"red":(newLine==6?"blue":"#000000");
 			                        bg = "#ffffff";
 			                        /* 2019/05/10등록된 매치일정 추가 */
-			                        out.println("<td><a color=" + fc + " href='#'>"
+			                        
+			                        out.println("<td><a color=" + fc + " href='javascript:void(0)'>"
 			                                + i + "</a></td>");
 			                        newLine++;
+			                        
 			                        if(newLine == 7 && i != end)
 			                        {
 			                            out.println("</tr>");
@@ -198,7 +210,7 @@
 									<tr>
 										<td><img src="/resources/img/logo.png"></td>
 										<td>${match.team_name }<br>${match.team_etire }전 ${match.team_win }승 ${match.team_tie }무 ${match.team_lose }패</td>
-										<td><fmt:formatDate value="${match.fight_date }" pattern="yyyy/MM/dd"/> <br>매치 요청합니다</td>
+										<td><fmt:formatDate value="${match.fight_date }" pattern="yyyy/MM/dd"/><br>매치 요청합니다</td>
 										<td>지역 : ${match.match_region }<br>팀원 : ${match.team_cnt }명<br>장소 : ${match.match_ground }</td>
 										<td>남기는 한마디 : ${match.match_content }</td>
 									

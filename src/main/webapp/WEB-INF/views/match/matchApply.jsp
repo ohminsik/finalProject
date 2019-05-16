@@ -62,7 +62,7 @@
 								</tr>
 								<tr>
 									<td>날짜 :</td>
-									<td><fmt:formatDate value="${match.fight_date }" pattern="yyyy/MM/dd"/></td>
+									<td>${match.fight_date }</td>
 								</tr>
 								<tr>
 									<td>연락처 :</td>
