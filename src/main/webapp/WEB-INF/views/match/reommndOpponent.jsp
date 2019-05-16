@@ -93,7 +93,7 @@
 						<li class="oh1"><a href="/match/reommndOpponent" class="btnform0">다른 상대 찾기</a></li>
 					</ul>
 			</div>
-		<jsp:include page="../common/footer.jsp" />
+		<jsp:include page="../common/footer.jsp"/>
 		</div>
 	</div>
 </body>
