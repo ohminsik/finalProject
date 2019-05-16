@@ -138,53 +138,39 @@ function focusFunc2(){
 $("#btnEnroll").click(function(){
 		//====================== 현재 날짜 ============================
 		//Date 객체
-		var date = new Date();
+		var nowDate = new Date();//현재 날짜 반환
 		
-		//1.년, 월, 일
-		var fullYear = date.getFullYear();
-		var month = date.getMonth();
-		var day = date.getDate();
-			
-		//2.시, 분, 초, 밀리초까지 :: 타입 숫자
-		var hours = date.getHours();
-		var minutes = date.getMinutes();
-		var seconds = date.getSeconds();
-		var milsec = date.getMilliseconds();
+		var year = nowDate.getFullYear();
+		var month = nowDate.getMonth()+1;
+		var day = nowDate.getDate();
 		
-		//3.합치면 문자형 ( 현재 날짜, 현재 시간 분 초 밀리초 )
-		var mulDate = fullYear+""+month+""+day+""+hours+""+minutes;
+		if((day+"").length<2){//한자리이면 앞에 0 붙여줌
+			day = "0" +day;
+		}
 		
-		//4.숫자형으로 변환 >> 새 변수로
-		var parseMulDate = parseInt(mulDate);
+		if((month+"").length<2){//한자리이면 앞에 0 붙여줌
+			month = "0"+month;
+		}
 		
-		//============================ 선택날짜 =================================
+		var comNow = year+"/"+month+"/"+day;
+		console.log("comNow값:"+comNow);
+		console.log("comNow타입:"+typeof comNow);
+		//======================== 받은 날짜 ================================
 		
-		//1.select :: 날짜선택, 시간, 분 숫자형으로 타입 변환
-	 /* 	var pDate = $("#selDate").val();//달력에서 선택한 날짜
-		var pHour = $("#selectHours").val();//옵션에서 선택한 시간
-		var pMinu = $("#selectMinute").val();//옵션에서 선택한 분
+		var selectDate = $("#selDate").val();
+		var selectHour = $("#selectHours").val();
+		var selectMinute = $("#selectMinute").val();
 		
-		//2.선택한 각 변수 date형으로 변환
-		var cDate = new Date(pDate);//정해지지 않은 date
-		var cHour = new Date(pHour);//표준시 ("사용 ㄱ")
-		var cMin = new Date(pMinu);//정해지지 않은 date
+	/* 	console.log("selectDate값:"+selectDate);
+		console.log("selectHour값:"+selectHour);
+		console.log("selectMinute값:"+selectMinute); */
 		
-		var nn = new Date(parseMulDate);
-		console.log("aaa"+nn);
+		var combineDate = selectDate;
+		/* console.log("combineDate값:"+combineDate);
+		console.log("combineDate타입:"+typeof combineDate);
+		 */
+		/* console.log(comNow < combineDate);//true false반환 */
 		
-		//값 및 타입 테스트
-		console.log("cDate:"+cDate);
-		console.log("cDate타입:"+typeof cDate);
-		console.log("cHour:"+cHour);
-		console.log("cHour타입:"+typeof cHour);//표준시
-		console.log("cMin:"+cMin);
-		console.log("cMin타입:"+typeof cMin); */
-		console.log("===============================");
-	/* 	console.log("내가 사용해야할 myDate:"+myDate);
-		console.log("내가 사용해야할 myDate 타입:"+typeof myDate); */
-		
-		 
-		//유효성 검사 다시
 		
 	if($("#selDate").val()==''){
 		alert("날짜를 선택해주세요");
@@ -210,6 +196,10 @@ $("#btnEnroll").click(function(){
 		alert("남기는 한마디를 입력해주세요");
 		$("#match_content").focus();
 		return false; 
+	 }else if(comNow >= combineDate){//지난날짜, 당일날짜는 등록 x
+		 alert("지난 날짜, 당일은 매치 등록을 할 수 없습니다.");
+		 $("#selDate").focus();
+		 return false;
 	 }else{
 		alert("정말 등록하시겠습니까?");
 		return true;
