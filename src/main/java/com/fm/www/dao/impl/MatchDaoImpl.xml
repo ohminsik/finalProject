@@ -25,18 +25,8 @@
   	WHERE user_no=#{user_no}
   </select>
   
-  <!-- 등록된 이달의 매치 정보 List -->
-<!--   <select id="selectMatchOnThisMonth" resultType="com.fm.www.dto.Match">
-  	SELECT mth.*, 
-  	tm.team_mark, tm.team_win, tm.team_name, tm.team_etire,
-  	tm.team_lose, tm.team_tie, tm.team_cnt, tm.team_region
-  	FROM match mth
-  	inner join team_tb tm
-  	on mth.blueteam_no = tm.team_no
-  </select> -->
-  
   <!-- matchList 꺼내오기::전체조회 및 조건 검색:: -->
-  <select id="selectMatchOnThisMonth" resultType="com.fm.www.dto.Match" >
+  <select id="selectMatchOnThisMonth" resultType="com.fm.www.dto.Match" parameterType="hashmap" >
   	SELECT mth.*, 
   	tm.team_mark, tm.team_win, tm.team_name, tm.team_etire,
   	tm.team_lose, tm.team_tie, tm.team_cnt, tm.team_region
@@ -49,9 +39,10 @@
 	  		and match_region=#{selectRegion}
 	  	</when>
   	</choose>
-  	order by match_date
+  	<!-- 해당달의 매치만  -->
+  	AND to_char(fight_date, 'yyyy/mm') = trim(to_char(#{year }, '0000')) || '/' || trim(to_char(#{month }, '00'))
+  	order by fight_date
   </select>
-  
   
   <!-- 매치등록여부 검사, 개수반환 -->
   <select id="selectCntMatch" parameterType="com.fm.www.dto.Match" resultType="int">
@@ -63,7 +54,7 @@
   <select id="selectMatchByMatchNo" parameterType="int" resultType="com.fm.www.dto.Match">
 	select mth.*, us.user_name, us.user_phone, tm.team_name, tm.team_field, tm.team_region,us.user_region
 	from match mth
-	inner join user_tb us on mth.blueteam_no = us.user_no
+	inner join user_tb us on mth.blueteam_no = us.team_no
 	inner join team_tb tm on mth.blueteam_no = tm.team_no
 	where match_no = #{match_no} 
   </select>
@@ -80,13 +71,18 @@
   	SELECT sysdate FROM dual
   </select>
   
-  <!-- 2019/05/09 신청한 팀있는지 cnt -->
-  <!-- <select id="cntPickedMatch" parameterType="com.fm.www.dto.Match" resultType="int">
-  	select count(*) 
-	from match M
-	JOIN USER_TB U ON(U.team_no = M.purpleteam_no)
-  </select> -->
-  
+<!--   <select id="selectMatchCnt" resultType="int" parameterType="com.fm.www.dto.Match"> -->
+<!--   	SELECT COUNT(*) FROM match -->
+<!--   	WHERE to_char(fight_date,'yyyy/MM/dd')=to_char(#{fight_date},'yyyy/MM/dd') -->
+<!--   </select> -->
+  <select id="selectMatchCnt" resultType="hashmap" parameterType="com.fm.www.dto.Match">
+	SELECT date_fight_date, count(*) cnt FROM (
+	    SELECT to_char(fight_date, 'dd') date_fight_date FROM match
+	 	WHERE to_char(fight_date, 'yyyy/mm') = to_char(#{fight_date }, 'yyyy/mm')
+	 ) M
+	GROUP BY date_fight_date
+	ORDER BY date_fight_date
+  </select>
   
   <!-- 랜덤 매칭 팀 리스트 조회 -->
   <select id="selectRandomMatchList" resultType="com.fm.www.dto.Team" parameterType="com.fm.www.dto.Team">

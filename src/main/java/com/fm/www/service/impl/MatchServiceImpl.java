@@ -1,6 +1,7 @@
 package com.fm.www.service.impl;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,9 +52,13 @@ public class MatchServiceImpl implements MatchService {
 
 	//매치정보가져오기(조건검색 & 전체검색)
 	@Override
-	public List<Match> selectMatchOnThisMonth(String selectRegion) {
-		return matchDao.selectMatchOnThisMonth(selectRegion);
+	public List<Match> selectMatchOnThisMonth(HashMap param) {
+		return matchDao.selectMatchOnThisMonth(param);
 	}
+//	@Override
+//	public List<Match> selectMatchOnThisMonth(String selectRegion) {
+//		return matchDao.selectMatchOnThisMonth(selectRegion);
+//	}
 
 	//신청할 매치정보
 	@Override
@@ -77,6 +82,23 @@ public class MatchServiceImpl implements MatchService {
 	public List<Team> selectRandomMatchList(Team team) {
 		return matchDao.selectRandomMatchList(team);
 	}
+
+	@Override
+	public List selectMatchCnt(Match match) {
+		
+		List list = matchDao.selectMatchCnt(match);
+//		System.out.println(list);
+		
+		return list;
+	}
+//	@Override
+//	public int selectMatchCnt(Match match) {
+//		
+//		List list = matchDao.selectMatchCnt(match);
+//		System.out.println(list);
+//		
+//		return 0;
+//	}
 
 //	@Override
 //	public boolean pickYn(Match match) {

@@ -3,7 +3,10 @@ package com.fm.www.controller;
 import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fm.www.dao.face.MypageDao;
 import com.fm.www.dto.Match;
@@ -46,8 +50,9 @@ public class MatchController {
 	 * 매치정보 매치정보 창 띄우기 GET
 	 */
 	@RequestMapping(value = "/match/matchBoard", method = RequestMethod.GET)
-	public void matchBoardGet(Model model, HttpServletRequest req, String selectRegion, Match match, User user, HttpSession session) {
-System.out.println("match/matchBoard:"+selectRegion);
+	public void matchBoardGet(Model model, HttpServletRequest req, String selectRegion, Match match, User user, HttpSession session
+			, @RequestParam(defaultValue="0") int year, @RequestParam(defaultValue="0") int month) {
+		System.out.println("match/matchBoard:"+selectRegion);
 		
 		//0일 때 & 빈칸일 때 >> 전체 조회
 		if(selectRegion.equals("0") || selectRegion.equals("")) {
@@ -55,40 +60,59 @@ System.out.println("match/matchBoard:"+selectRegion);
 			
 		}
 		
+		HashMap param = new HashMap<>();
+		param.put("selectRegion", selectRegion);
+		param.put("year", year);
+		param.put("month", month);
+		
 		//2019.05.01 조건 부분 여기서 처리
 		//이달의 매치정보 가져오기(matchBoard.jsp)
-		List<Match> matchList = matchService.selectMatchOnThisMonth(selectRegion);
+		List<Match> matchList = matchService.selectMatchOnThisMonth(param);
 	
-		//2019/05/08 날짜 비교
+		//2019/05/16 날짜 비교
 		boolean curDateYn = false;
 		String dateComment="";
 		
-		for(int i = 0; i<matchList.size(); i++) {
-		//date객체로 현재시간
+		//경기수 반환
+		List cntList = null;
+		if( matchList.size() > 0 ) {
+			cntList = matchService.selectMatchCnt(matchList.get(0));//경기잡힌 날짜 숫자 반환
+			System.out.println( Arrays.toString(cntList.toArray()) );
+			model.addAttribute("cntList", cntList);
+		}
+		//현재날짜
 		Date nowDate = matchService.selectCurDate();
-		Date fightDate = matchList.get(i).getFight_date();
-		
-		System.out.println("fightDate:"+fightDate);
-		System.out.println("nowDate:"+nowDate);
-		
-		//compareDate(현재날짜)가 크거나 같으면 0이나 양수 반환
-		int compareDate = nowDate.compareTo(fightDate);
-		
-		if(compareDate>=0) {//현재날짜가 더 크거나 같으면
-			curDateYn = false;//기간만료
-			matchList.get(i).setCurDateYn(curDateYn);
-			dateComment = "기간만료";
-		}else {
-			curDateYn = true;//매치신청
-			matchList.get(i).setCurDateYn(curDateYn);
-			dateComment = "매치신청";
-		}
-		
+		for(int i = 0; i<matchList.size(); i++) {
+			//date객체로 현재시간
+			Date fightDate = matchList.get(i).getFight_date();
+			
+	//		System.out.println("fightDate:"+fightDate);
+	//		System.out.println("nowDate:"+nowDate);
+			
+			//compareDate(현재날짜)가 크거나 같으면 0이나 양수 반환
+			int compareDate = nowDate.compareTo(fightDate);
+			
+			if(compareDate>=0) {//현재날짜가 더 크거나 같으면
+				curDateYn = false;//기간만료
+				matchList.get(i).setCurDateYn(curDateYn);
+				dateComment = "기간만료";
+			}else {
+				curDateYn = true;//매치신청
+				matchList.get(i).setCurDateYn(curDateYn);
+				dateComment = "매치신청";
+			}
 
+			//경기날짜 조회 >> 달력
+			SimpleDateFormat transform  = new SimpleDateFormat("yyyy/MM/dd");
+			String fight_date ="";
+			if(fight_date.equals("")) {
+				fight_date="";
+			}
+			
+			fight_date = transform.format(fightDate);
+			match.setFight_date(fightDate);
+		}
 		model.addAttribute("matchList", matchList);
-
-		}
-		
 	}
 
 	/*
@@ -190,7 +214,7 @@ System.out.println("match/matchBoard:"+selectRegion);
 	 * 매치등록 매치등록 처리 띄우기 POST
 	 */
 	@RequestMapping(value = "/match/matchRegister", method = RequestMethod.POST)
-	public String matchRegisterPost(Match match, HttpServletRequest request, HttpSession session, Model model) {
+	public String matchRegisterPost(Match match, HttpServletRequest request, HttpSession session, Model model) {	
 		User user = new User();
 		user.setUser_no((int) session.getAttribute("user_no"));
 
@@ -278,7 +302,7 @@ System.out.println("match/matchBoard:"+selectRegion);
 			// 등록하면 Match 테이블에 넣기
 			matchService.enrollMatch(match);
 		}
-		return "redirect:/match/matchBoard?selectRegion=0";
+		return "redirect:/match/matchBoard?selectRegion=0&year=2019&month=5";
 
 	}
 	

@@ -1,6 +1,7 @@
 package com.fm.www.dao.face;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -22,7 +23,8 @@ public interface MatchDao {
 	public int selectCntMatch(int user_no);
 	
 	//조건검사 및 전체검사
-	public List<Match> selectMatchOnThisMonth(@Param ("selectRegion")String selectRegion);
+	public List<Match> selectMatchOnThisMonth(HashMap param);
+//	public List<Match> selectMatchOnThisMonth(@Param ("selectRegion")String selectRegion);
 	
 	//신청할 매치정보 조회
 	public Match selectMatchByMatchNo(int match_no);
@@ -36,6 +38,8 @@ public interface MatchDao {
 	//랜덤 매칭 팀 조회
 	public List<Team> selectRandomMatchList(Team team);
 	
+//	public int selectMatchCnt(Match match);
+	public List<HashMap<String, Integer>> selectMatchCnt(Match match);
 //	//이미 신청한 팀이 있는지 개수 조회
 //	public int cntPickedMatch(Match match);
 

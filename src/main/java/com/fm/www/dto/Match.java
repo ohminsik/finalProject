@@ -23,6 +23,8 @@ public class Match {
 	private int blueteam_score;
 	private int purpleteam_score;
 	
+	private int calendar;
+	
 	//조인용(team_tb테이블)
 	private String team_mark;//팀마크
 	private String team_name;//팀명

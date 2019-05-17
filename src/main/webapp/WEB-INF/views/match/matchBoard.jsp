@@ -1,3 +1,5 @@
+<%@page import="java.math.BigDecimal"%>
+<%@page import="java.util.HashMap"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
@@ -8,7 +10,6 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.fm.www.dao.face.MypageDao"%>
 <%@page import="com.fm.www.dto.Match"%>
-<%@page import="com.fm.www.service.face.MatchService"%>
 
 <%
     request.setCharacterEncoding("utf-8");
@@ -118,11 +119,12 @@
 			                </tr>
 			               </thead>
 			               <tbody>
-<%-- 			               <c:set value="${matchCnt }" var="matchCnt"></c:set>
- --%>			               
-<!-- 			                	int matchCntt = Integer.parseInt(pageContext.getAttribute("matchCnt").toString()); -->
+			               
 			                <%
-			                
+
+								List cntList = (List)request.getAttribute("cntList");
+								
+								
 			                    int newLine = 0;
 			                    //1일이 어느 요일에서 시작하느냐에 따른 빈칸 삽입
 			                    //매치 등록되면 캘린더에 추가
@@ -141,8 +143,31 @@
 			                        bg = "#ffffff";
 			                        /* 2019/05/10등록된 매치일정 추가 */
 			                        
-			                        out.println("<td><a color=" + fc + " href='javascript:void(0)'>"
-			                                + i + "</a></td>");
+// 			                        out.println("<td><a style='color: " + fc + ";' href='javascript:void(0)'>"
+// 			                                + i + "</a>"+"("+calendar+")"+"</td>");
+			                        out.println("<td><a style='color: " + fc + ";' href='javascript:void(0)'>"
+			                                + i + "</a>");
+			                        int cnt=0;
+			                        for(int j=0; cntList!=null && j<cntList.size(); j++) {
+
+										HashMap<String, Object> map = (HashMap<String, Object>)cntList.get(j);
+// 										System.out.println(map);
+										
+										String d = (String)map.get("DATE_FIGHT_DATE");
+// 										System.out.println( d );
+										
+										cnt = ((BigDecimal)map.get("CNT")).intValue();
+										
+										int date_fight_date = Integer.parseInt(d);
+										
+										if( j > date_fight_date ) break;
+										
+			                        	if( date_fight_date == i) {
+// 											System.out.println( i + " : " + date_fight_date + " : " + cnt);
+			                        		out.println("("+cnt+")"+"</td>");//경기수
+			                        	}
+			                        }
+			                                
 			                        newLine++;
 			                        
 			                        if(newLine == 7 && i != end)
@@ -168,6 +193,8 @@
 				<div class="match_btn_list">
 					<form id="matchSearch"  method="get">	
 					<input type="hidden" id="regionItem" name="selectRegion"/>			
+					<input type="hidden" name="year" value="<%=year %>"/>			
+					<input type="hidden" name="month"value="<%=month %>"/>			
 					<ul>
 						<li><button onclick="matchSearch()" class="btnform0">매치검색</button></li>
 						<!-- 로그인 안되어 있을 경우 -->
@@ -329,19 +356,14 @@
 	var selectRegion = 0;
 
 	$(document).ready(function(){
-		 
-		var d = new Date();
-		console.log(d);
-		console.log(typeof d);
-		
 			//배열
 		 	var sp = new Array();
 			sp = $(".btnform8");
 			//반복
 			$(".btnform8").each(function(sp,element){
 					//기간만료 부분 CSS 바꾸기
-					$(this).css({'background-color':'#cecece'});
-					$(this).css({'color':'#c62266'});
+					$(this).css({'background-color':'#333'});
+					$(this).css({'color':'#fe0069'});
 			});
 			
 			//ul태그의 자식태그인 li태그 클릭 시 selectRegion에 값 담기

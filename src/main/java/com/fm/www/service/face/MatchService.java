@@ -1,6 +1,7 @@
 package com.fm.www.service.face;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import com.fm.www.dto.Match;
@@ -21,7 +22,8 @@ public interface MatchService {
 	//매치있는지 여부검사
 	public boolean isEnrolled(int user_no);
 
-	public List<Match> selectMatchOnThisMonth(String selectRegion);
+	public List selectMatchOnThisMonth(HashMap param);
+//	public List<Match> selectMatchOnThisMonth(String selectRegion);
 	
 	//신청할 매치 조회
 	public Match selectMatchByMatchNo(int match_no);
@@ -34,6 +36,9 @@ public interface MatchService {
 	
 	//랜덤매칭 팀 리스트 조회
 	public List<Team> selectRandomMatchList(Team team);
+	
+	public List selectMatchCnt(Match match);
+//	public int selectMatchCnt(Match match);
 	
 //	//이미 신청한 매치인지 검사
 //	public boolean pickYn(Match match);
