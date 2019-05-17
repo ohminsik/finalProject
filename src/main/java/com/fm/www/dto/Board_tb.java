@@ -15,12 +15,21 @@ public class Board_tb {
 	private String delete_yn;		//게시글 삭제여부
 	private int board_reply_cnt;	//게시글 댓글갯수
 	private int admin_no; 			//관리자 번호
+	
+	private String photo_stored;    //사진 변경명
+	
+	public String getPhoto_stored() {
+		return photo_stored;
+	}
+	public void setPhoto_stored(String photo_stored) {
+		this.photo_stored = photo_stored;
+	}
 	@Override
 	public String toString() {
 		return "Board_tb [board_no=" + board_no + ", user_no=" + user_no + ", user_nick=" + user_nick + ", board_div="
 				+ board_div + ", board_title=" + board_title + ", board_content=" + board_content + ", board_date="
 				+ board_date + ", board_cnt=" + board_cnt + ", delete_yn=" + delete_yn + ", board_reply_cnt="
-				+ board_reply_cnt + ", admin_no=" + admin_no + "]";
+				+ board_reply_cnt + ", admin_no=" + admin_no + ", photo_stored=" + photo_stored + "]";
 	}
 	public int getBoard_no() {
 		return board_no;

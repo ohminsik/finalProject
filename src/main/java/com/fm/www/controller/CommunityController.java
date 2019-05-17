@@ -957,6 +957,7 @@ public class CommunityController {
 			
 				// 경기 후기 이미지 존재 할 때 수정 파일첨부
 				communityService.reviewPhotoUpdate(photo);
+								
 				
 			}else if(photo_no==0){
 				//고유식별자
@@ -1071,6 +1072,7 @@ public class CommunityController {
 		// 중고장터 댓글 갯수 구하기
 		for (int i = 0; i < list.size(); i++) {
 			list.get(i).setBoard_reply_cnt(communityService.freeReplyCount(list.get(i).getBoard_no()));
+			list.get(i).setPhoto_stored(communityService.photoStoredName(list.get(i).getBoard_no()));
 		}
 
 		// 중고장터 게시글 번호 생성

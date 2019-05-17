@@ -49,51 +49,23 @@
 							<li><button class="btnform7">검색</button></li>
 						</ul>
 					</div>
+					<div class="cb"></div>
 				</form>
-				<div class="cb"></div>
-				<table class="board_table">
-					<colgroup>
-						<col width="10%">
-						<col width="*">
-						<col width="12%">
-						<col width="10%">
-						<col width="8%">
-					</colgroup>
-					<thead>
-						<tr>
-							<th>번호</th>
-							<th>제목</th>
-							<th>글쓴이</th>
-							<th>등록일</th>
-							<th>조회수</th>
-						</tr>
-					</thead>
-					<tbody>
-					         <c:set var="tableNum" value="${tableNum}"/>
-                     <%
-                        String tableNum = pageContext.getAttribute("tableNum").toString();
-                        int no = Integer.parseInt(tableNum);
-                     %>
-						<c:forEach items="${list }" var="i">
-							<c:if test="${ i.delete_yn eq 'N'}">
-								<tr>
-									<td><%=no-- %></td>
-									<td class="title"><a href="/community/usedView?board_no=${i.board_no }">${i.board_title }<span class="fb chs">[ ${i.board_reply_cnt } ]</span></a></td>
-									<td>${i.user_nick }</td>
-									<td><fmt:formatDate value="${i.board_date }" pattern="yyyy-MM-dd"></fmt:formatDate></td>
-									<td>${i.board_cnt }</td>
-								</tr>
+				<ul class="tournament_list">
+					<c:forEach items="${list }" var="list">
+					<li>
+						<a href="/community/usedView?board_no=${list.board_no }">
+							<c:if test="${empty list.photo_stored }">
+							<img alt="" src="/resources/img/defalutimg.png">
 							</c:if>
-							
-						</c:forEach>
-						<c:if test="${totalCount eq 0 }">
-							<tr>
-								<td colspan="5">등록된 내용이 없습니다.</td>
-							</tr>
-						</c:if>
-					</tbody>
-				</table>
-				
+							<c:if test="${list.photo_stored ne null}">
+							<img alt="${list.photo_stored }" src="/uploadImg/${list.photo_stored }">
+							</c:if>		
+							<p class="title"><a href="/community/usedView?board_no=${list.board_no }">${list.board_title }<span class="fb chs">[ ${list.board_reply_cnt } ]</span></a></td>					
+							</a>				
+					</li>
+					</c:forEach>	
+				</ul>
 				<div class="j_button fr mt20 mb20">
 						<c:if test="${empty login }">
 							<a href="#" class="login btnform7">글쓰기</a>
@@ -102,6 +74,55 @@
 							<a href="/community/usedWrite" class="btnform7">글쓰기</a>
 						</c:if>
 				</div>
+				
+			</div>
+			
+		</div>
+			
+					
+<!-- 				<div class="cb"></div> -->
+<!-- 				<table class="board_table"> -->
+<%-- 					<colgroup> --%>
+<%-- 						<col width="10%"> --%>
+<%-- 						<col width="*"> --%>
+<%-- 						<col width="12%"> --%>
+<%-- 						<col width="10%"> --%>
+<%-- 						<col width="8%"> --%>
+<%-- 					</colgroup> --%>
+<!-- 					<thead> -->
+<!-- 						<tr> -->
+<!-- 							<th>번호</th> -->
+<!-- 							<th>제목</th> -->
+<!-- 							<th>글쓴이</th> -->
+<!-- 							<th>등록일</th> -->
+<!-- 							<th>조회수</th> -->
+<!-- 						</tr> -->
+<!-- 					</thead> -->
+<!-- 					<tbody> -->
+<%-- 					         <c:set var="tableNum" value="${tableNum}"/> --%>
+<%--                      <% --%>
+<!--                         String tableNum = pageContext.getAttribute("tableNum").toString(); -->
+<!--                         int no = Integer.parseInt(tableNum); -->
+<%--                      %> --%>
+<%-- 						<c:forEach items="${list }" var="i"> --%>
+<%-- 							<c:if test="${ i.delete_yn eq 'N'}"> --%>
+<!-- 								<tr> -->
+<%-- 									<td><%=no-- %></td> --%>
+<%-- 									<td class="title"><a href="/community/usedView?board_no=${i.board_no }">${i.board_title }<span class="fb chs">[ ${i.board_reply_cnt } ]</span></a></td> --%>
+<%-- 									<td>${i.user_nick }</td> --%>
+<%-- 									<td><fmt:formatDate value="${i.board_date }" pattern="yyyy-MM-dd"></fmt:formatDate></td> --%>
+<%-- 									<td>${i.board_cnt }</td> --%>
+<!-- 								</tr> -->
+<%-- 							</c:if> --%>
+							
+<%-- 						</c:forEach> --%>
+<%-- 						<c:if test="${totalCount eq 0 }"> --%>
+<!-- 							<tr> -->
+<!-- 								<td colspan="5">등록된 내용이 없습니다.</td> -->
+<!-- 							</tr> -->
+<%-- 						</c:if> --%>
+<!-- 					</tbody> -->
+<!-- 				</table> -->
 				<div class="cb"></div>
 				
 				<div class="paging_wrap">
@@ -138,9 +159,7 @@
 			    </c:if>
 			
 			   </div>
-			</div>
 		</div>
 		<jsp:include page="../common/footer.jsp" />
-	</div>
 </body>
 </html>
