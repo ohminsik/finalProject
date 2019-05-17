@@ -95,4 +95,20 @@
         readURL(this);
     });				
 </script> 
+<script>
+    
+    $(function(){
+    	var editorConfig = { filebrowserUploadUrl : "/Editor/upload" };
+        
+        var ck = null;
+
+        window.onload = function(){
+            ck = CKEDITOR.replace("board_content" , editorConfig);
+        };
+    });
+
+
+
+</script>
+
 </html>

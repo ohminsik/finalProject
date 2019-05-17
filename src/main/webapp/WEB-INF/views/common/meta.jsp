@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="/resources/css/style.css">
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript" src="/resources/ckeditor/ckeditor.js"></script>
 
 <title>Final Project</title>
 </head>
