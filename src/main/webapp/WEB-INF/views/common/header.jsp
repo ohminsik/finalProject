@@ -2,6 +2,12 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@page import="java.util.Calendar"%>
+<%
+Calendar now = Calendar.getInstance();
+int year = now.get(Calendar.YEAR);
+int month = now.get(Calendar.MONTH)+1;
+%>
 <!-- 카카오 로그인  s -->
 <meta charset="utf-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -103,7 +109,7 @@
 				<li>
 					<a href="#">매치보드</a>
 					<ul>
-						<li><a href="/match/matchBoard?selectRegion=0">매치신청</a></li>
+						<li><a href="/match/matchBoard?selectRegion=0&year=<%=year %>&month=<%=month %>">매치신청</a></li>
 						<li><a href="/match/reommndOpponent">오늘의 추천 상대</a></li>
 					</ul>
 				</li>
