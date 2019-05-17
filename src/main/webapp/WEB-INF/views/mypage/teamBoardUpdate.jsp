@@ -57,14 +57,7 @@
 								<td>내용</td>
 								<td><textarea name="board_content" id="board_content" class="textareaform100p">${board.board_content }</textarea><img alt="" src="/uploadImg/${photo.photo_stored    }"></td>								
 							</tr>
-							<tr>
-								<td>파일첨부</td>
-								<td><input type="file" name="file" id="file"></td>
-							</tr>
-							<tr>
-								<td>이미지</td>
-								<td><img alt="" src="#" id="foo"></td>
-							</tr>
+							
 						</tbody>
 					</table>
 					<div class="j_button mt20 mb20 tac">
@@ -91,5 +84,20 @@
     $("#file").change(function() {
         readURL(this);
     });
+</script>
+<script>
+    
+    $(function(){
+    	var editorConfig = { filebrowserUploadUrl : "/Editor/upload" };
+        
+        var ck = null;
+
+        window.onload = function(){
+            ck = CKEDITOR.replace("board_content" , editorConfig);
+        };
+    });
+
+
+
 </script>
 </html>

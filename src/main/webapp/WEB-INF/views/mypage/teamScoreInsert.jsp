@@ -61,10 +61,7 @@
 								<textarea class="textareaform100p" name="board_content" id="board_content"></textarea>
 							</td>
 						</tr>
-						<tr>
-							<td>매치사진 업로드</td>
-							<td><input type="file" name="file" id="file"></td>
-						</tr>
+						
 						
 					</tbody>
 				</table>
@@ -79,4 +76,19 @@
 		<jsp:include page="../common/footer.jsp" />
 	</div>
 </body>
+<script>
+    
+    $(function(){
+    	var editorConfig = { filebrowserUploadUrl : "/Editor/upload" };
+        
+        var ck = null;
+
+        window.onload = function(){
+            ck = CKEDITOR.replace("board_content" , editorConfig);
+        };
+    });
+
+
+
+</script>
 </html>
