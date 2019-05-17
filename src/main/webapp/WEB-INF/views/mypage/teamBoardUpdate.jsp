@@ -14,7 +14,6 @@
 			</div>
 		</div>
 		<!-- sub_banner e -->
-		
 		<!-- nav s -->
 		<div class="nav_wrap">
 			<div class="nav">
@@ -57,7 +56,10 @@
 								<td>내용</td>
 								<td><textarea name="board_content" id="board_content" class="textareaform100p">${board.board_content }</textarea><img alt="" src="/uploadImg/${photo.photo_stored    }"></td>								
 							</tr>
-							
+								<tr>
+								<td>파일첨부</td>
+								<td><input type="file" name="file" id="file"></td>
+							</tr>
 						</tbody>
 					</table>
 					<div class="j_button mt20 mb20 tac">
