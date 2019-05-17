@@ -37,7 +37,7 @@
 							</tr>
 							<tr>
 								<td><label for="">내용</label></td>
-								<td><textarea name="" id=""	placeholder="내용 입력" class="textareaform100p"></textarea></td>
+								<td><textarea name="notice_content" id="notice_content"	placeholder="내용 입력" class="textareaform100p"></textarea></td>
 							</tr>
 							<tr>
 								<td>파일첨부</td>
@@ -68,7 +68,24 @@
 	
 	
 </body>
+<script type="text/javascript">
+
+    $(function(){
+    	var editorConfig = { filebrowserUploadUrl : "/Editor/upload" };
+        
+        var ck = null;
+
+        window.onload = function(){
+            ck = CKEDITOR.replace("notice_content" , editorConfig);
+        };
+    });
+
+
+
+</script>
+
 </html>
+
 <style>
 /*관리자 1:1문의페이지*/
 .table1_wrap {

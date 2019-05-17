@@ -76,7 +76,7 @@
 							</tr>
 							<tr>
 								<td><label for="">내용</label></td>
-								<td><textarea name="board_content" id=""	placeholder="내용 입력" class="textareaform100p">${board.board_content }</textarea><img alt="" src="/uploadImg/${photo.photo_stored }"></td>
+								<td><textarea name="board_content" id="board_content"	placeholder="내용 입력" class="textareaform100p">${board.board_content }</textarea><img alt="" src="/uploadImg/${photo.photo_stored }"></td>
 							</tr>
 							<tr>
 								<td>파일첨부</td>
@@ -126,6 +126,21 @@
 	
 </body>
 </html>
+<script type="text/javascript">
+
+$(function(){
+	var editorConfig = { filebrowserUploadUrl : "/Editor/upload" };
+    
+    var ck = null;
+
+    window.onload = function(){
+        ck = CKEDITOR.replace("board_content" , editorConfig);
+    };
+});
+
+
+
+</script>
 <style>
 /*관리자 1:1문의페이지*/
 .table1_wrap {

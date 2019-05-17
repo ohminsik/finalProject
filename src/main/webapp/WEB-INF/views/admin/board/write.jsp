@@ -137,7 +137,7 @@
 							</c:if>
 							<tr>
 								<td><label for="">내용</label></td>
-								<td><textarea name="board_content" id=""	placeholder="내용 입력" class="textareaform100p"></textarea></td>
+								<td><textarea name="board_content" id="board_content"	placeholder="내용 입력" class="textareaform100p"></textarea></td>
 							</tr>
 							<tr>
 								<td>파일첨부</td>
@@ -162,13 +162,31 @@
 						</ul>
 					</div>
 				</div>
+
+				
 			</form>
 
 			
 		</div>
 		<!--container s-->
 	</div>
+
+
+
+
+
+	
 <script type="text/javascript">
+$(function(){
+	var editorConfig = { filebrowserUploadUrl : "/Editor/upload" };
+    
+    var ck = null;
+
+    window.onload = function(){
+        ck = CKEDITOR.replace("board_content" , editorConfig);
+    };
+});
+
 	
 	function readURL(input) {
         if (input.files && input.files[0]) {
@@ -270,6 +288,8 @@
     
 
 </script>	
+
+
 <!-- 우편 주소 s -->
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>
