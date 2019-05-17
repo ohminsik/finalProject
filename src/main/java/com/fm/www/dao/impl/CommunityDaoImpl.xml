@@ -882,4 +882,10 @@
      		 where board_no = #{board_no} 
    		</update>
    		
+   		<!-- board_no로 게시글 사진 조회 -->
+		<select id="photoStoredName" parameterType="int" resultType="String">
+			SELECT photo_stored FROM PHOTO
+			WHERE board_no = #{board_no}
+		</select>
+   		
 </mapper>

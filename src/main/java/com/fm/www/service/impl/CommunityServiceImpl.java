@@ -566,6 +566,11 @@ public class CommunityServiceImpl implements CommunityService{
 	public void DownHit(int board_no) {
 		communityDao.DownHit(board_no);
 	}
+	//board_no로 게시글 사진 조회
+	@Override
+	public String photoStoredName(int board_no) {
+		return communityDao.photoStoredName(board_no);
+	}
 		
 	
 

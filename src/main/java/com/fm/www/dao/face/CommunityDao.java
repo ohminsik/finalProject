@@ -226,5 +226,7 @@ public interface CommunityDao {
 	public Board_tb teamAddUpdateView(int board_no);
 	// 조회수 감소
 	public void DownHit(int board_no);
+	//board_no로 게시글 사진 조회
+	public String photoStoredName(int board_no);
 
 }
