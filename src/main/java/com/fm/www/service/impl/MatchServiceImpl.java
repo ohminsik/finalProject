@@ -79,8 +79,8 @@ public class MatchServiceImpl implements MatchService {
 	
 	//랜덤 매칭 팀 리스트 조회
 	@Override
-	public List<Team> selectRandomMatchList(Team team) {
-		return matchDao.selectRandomMatchList(team);
+	public List<Team> selectRandomMatchList(Team team, String team_sport) {
+		return matchDao.selectRandomMatchList(team,team_sport);
 	}
 
 	@Override

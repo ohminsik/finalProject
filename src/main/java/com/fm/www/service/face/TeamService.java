@@ -11,10 +11,10 @@ public interface TeamService {
 	public int getCurPage(String cur);
 	
 	//전체 갯수 가져오기
-	public int teamTotalCount(String word, int i);
+	public int teamTotalCount(String word, int i, String team_sport);
 
 	//팀리스트 가져오기
-	public List<Team> teamGetList(Paging paging, String word, int i);
+	public List<Team> teamGetList(Paging paging, String word, int i, String team_sport);
 
 }
 

@@ -173,7 +173,7 @@
 						<tr class="position_tr">
 							<td>포지션</td>
 							<td>
-								<select name="user_position" class="selectform2">
+								<select name="user_position1" class="selectform2 sel1">
 									<option value="GK">GK - 골키퍼</option>
 									<option value="DF">DF - 수비수</option>
 									<option value="CB">CB - 센터백</option>
@@ -194,6 +194,34 @@
 									<option value="CS">CS - 중앙공격수</option>
 									<option value="SS">SS - 세컨드 스트라이커</option>
 								</select>
+								
+								<select name="user_position2" class="selectform2 sel2">
+									<option value="PG">PG - 포인트가드</option>									
+									<option value="SG">SG - 슈팅가드</option>									
+									<option value="SF">SF - 스몰포워드</option>									
+									<option value="PF">PF - 파워포워드</option>									
+									<option value="C">C - 센터</option>									
+								</select>
+								
+								<select name="user_position3" class="selectform2 sel3">
+									<option value="G">G - 공격수</option>									
+									<option value="C">C - 세터</option>									
+									<option value="LF">LF - 왼쪽수비</option>									
+									<option value="RF">RF - 오른쪽수비</option>									
+								</select>
+								
+								<select name="user_position4" class="selectform2 sel4">
+									<option value="100">에버리지 100이하</option>								
+									<option value="150">에버리지 150이하</option>								
+									<option value="200">에버리지 200이하</option>								
+									<option value="250">에버리지 250이하</option>								
+									<option value="300">에버리지 300</option>								
+								</select>
+								
+								<select name="user_position5" class="selectform2 sel5">
+									<option value="S">S - 단식</option>									
+									<option value="T">T - 복식</option>									
+								</select>
 							</td>
 						</tr>
 					</tbody>
@@ -208,6 +236,9 @@
 		<jsp:include page="../common/footer.jsp" />
 	</div>
 </body>
+<style>
+	.sel1,.sel2,.sel3,.sel4,.sel5{display: none;}
+</style>
 <script>
 	var mail2 = document.getElementById('user_email1');
 	var mail3 = document.getElementById('user_email2');
@@ -221,18 +252,43 @@
 $(document).ready(function(){
 	$(".sport_user > input:eq(0)").click(function(){
 		$(".position_tr").show();
+		$(".position_tr > td > .sel1").show();
+		$(".position_tr > td > .sel2").hide();
+		$(".position_tr > td > .sel3").hide();
+		$(".position_tr > td > .sel4").hide();
+		$(".position_tr > td > .sel5").hide();
 	})
 	$(".sport_user > input:eq(1)").click(function(){
-		$(".position_tr").hide();
+		$(".position_tr").show();
+		$(".position_tr > td > .sel1").hide();
+		$(".position_tr > td > .sel2").show();
+		$(".position_tr > td > .sel3").hide();
+		$(".position_tr > td > .sel4").hide();
+		$(".position_tr > td > .sel5").hide();
 	})
 	$(".sport_user > input:eq(2)").click(function(){
-		$(".position_tr").hide();
+		$(".position_tr").show();
+		$(".position_tr > td > .sel1").hide();
+		$(".position_tr > td > .sel2").hide();
+		$(".position_tr > td > .sel3").show();
+		$(".position_tr > td > .sel4").hide();
+		$(".position_tr > td > .sel5").hide();
 	})
 	$(".sport_user > input:eq(3)").click(function(){
-		$(".position_tr").hide();
+		$(".position_tr").show();
+		$(".position_tr > td > .sel1").hide();
+		$(".position_tr > td > .sel2").hide();
+		$(".position_tr > td > .sel3").hide();
+		$(".position_tr > td > .sel4").show();
+		$(".position_tr > td > .sel5").hide();
 	})
 	$(".sport_user > input:eq(4)").click(function(){
-		$(".position_tr").hide();
+		$(".position_tr").show();
+		$(".position_tr > td > .sel1").hide();
+		$(".position_tr > td > .sel2").hide();
+		$(".position_tr > td > .sel3").hide();
+		$(".position_tr > td > .sel4").hide();
+		$(".position_tr > td > .sel5").show();
 	})
 })
 

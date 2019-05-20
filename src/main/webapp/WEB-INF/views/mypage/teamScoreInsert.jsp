@@ -54,15 +54,6 @@
 								${match.blue_name }팀 : <input type="text" name="blueteam_score" id="blueteam_score" class="inputform100">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${match.purple_name }팀 : <input type="text" name="purpleteam_score" id="purpleteam_score" class="inputform100">
 							</td>
 						</tr>
-						
-						<tr>
-							<td>매치 내용 입력</td>
-							<td>
-								<textarea class="textareaform100p" name="board_content" id="board_content"></textarea>
-							</td>
-						</tr>
-						
-						
 					</tbody>
 				</table>
 				<div class="j_button mt50">
@@ -76,19 +67,5 @@
 		<jsp:include page="../common/footer.jsp" />
 	</div>
 </body>
-<script>
-    
-    $(function(){
-    	var editorConfig = { filebrowserUploadUrl : "/Editor/upload" };
-        
-        var ck = null;
 
-        window.onload = function(){
-            ck = CKEDITOR.replace("board_content" , editorConfig);
-        };
-    });
-
-
-
-</script>
 </html>

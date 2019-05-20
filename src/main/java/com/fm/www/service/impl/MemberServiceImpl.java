@@ -99,6 +99,11 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.getUserNokko(user);
 	}
 
+	@Override
+	public User getUserInfo(User user) {
+		return memberDao.getUserInfo(user);
+	}
+
 	
 
 	

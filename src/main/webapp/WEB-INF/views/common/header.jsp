@@ -34,31 +34,32 @@ int month = now.get(Calendar.MONTH)+1;
 	<div class="h_mid_wrap">
 		<div class="h_mid">
 			<ul>
-				<li class="on">
+				
+				<li class="<c:if test="${userInfo eq '축구'}">on</c:if>">
 					<a href="#">
 						<img alt="" src="/resources/img/top_icon01.png">
 						<p>축구</p>
 					</a>
 				</li>
-				<li>
+				<li class="<c:if test="${userInfo eq '농구'}">on</c:if>">
 					<a href="#">
 						<img alt="" src="/resources/img/top_icon02.png">
 						<p>농구</p>
 					</a>
 				</li>
-				<li>
+				<li class="<c:if test="${userInfo eq '족구'}">on</c:if>">
 					<a href="#">
 						<img alt="" src="/resources/img/top_icon03.png">
 						<p>족구</p>
 					</a>
 				</li>
-				<li>
+				<li class="<c:if test="${userInfo eq '볼링'}">on</c:if>">
 					<a href="#">
 						<img alt="" src="/resources/img/top_icon04.png">
 						<p>볼링</p>
 					</a>
 				</li>
-				<li>
+				<li class="<c:if test="${userInfo eq '탁구'}">on</c:if>">
 					<a href="#">
 						<img alt="" src="/resources/img/top_icon05.png">
 						<p>탁구</p>
@@ -188,7 +189,7 @@ int month = now.get(Calendar.MONTH)+1;
 	                <li class="g"><a class="cp"><i class="xi-google-plus"></i>Google+</a></li>						
 	            </ul>		 -->
 	            <div class="line"></div>
-	            <div class="join_btn">아직 계정이 없으신가요? <a href="/join">회원가입 바로가기</a></div>		            
+	            <div class="join_btn">아직 계정이 없으신가요? <a href="/member/joinStep_1">회원가입 바로가기</a></div>		            
 	        </div>
         </form>
     </div>

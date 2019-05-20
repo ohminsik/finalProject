@@ -363,6 +363,11 @@ public class MypageServiceImpl implements MypageService{
 		
 	}
 
+	@Override
+	public List<Match> mypageMatchList(User user) {
+		return mypageDao.mypageMatchList(user);
+	}
+
 	
 	
 

@@ -273,7 +273,8 @@
 			.team_form .board_form .search_form ul li{float:left; margin-left:5px;}
 			.team_form .board_form .search_form ul li button{font-size:14px;}
 						
-			.board_form .board_table1 tbody tr td:first-child{text-align:center;}
+			.board_form .board_table1 tbody tr td:first-child{text-align:left;}
+			.board_form .board_table1 tbody tr:nth-child(2) td{text-align:left; min-height:200px; height: 200px; vertical-align: top;}
 			.board_form .board_table1 tbody tr td{text-align:left;}
 			
 	.teaminfo{}

@@ -31,14 +31,14 @@ public class TeamServiceImpl implements TeamService {
 	
 	//팀 전체 갯수 가져오기
 	@Override
-	public int teamTotalCount(String word, int i) {
-		return teamDao.teamTotalCount(word, i);
+	public int teamTotalCount(String word, int i, String team_sport) {
+		return teamDao.teamTotalCount(word, i, team_sport);
 	}
 	
 	//팀 전체 긁어오기
 	@Override
-	public List<Team> teamGetList(Paging paging, String word, int i) {
-		return teamDao.teamGetList(paging,word, i);
+	public List<Team> teamGetList(Paging paging, String word, int i, String team_sport) {
+		return teamDao.teamGetList(paging,word, i, team_sport);
 	}
 
 
