@@ -36,7 +36,7 @@
 					<div class="match_help" style="float:left;">
 						<a id="help" class="ground_change1 btnform4 vm oh1" style="color:#dbdde2;font-size:10px; border-radius:40px;margin-bottom:10px;">※등록시 유의사항</a>
 							<!-- 클릭시 input 태그에 도움말 멘트 추가 -->
-							<div class="hiddenClass" style="display:none;">
+							<div class="hiddenClass">
 								<p>※경기일 : 당일등록은 불가능합니다.</p>
 								<p>※구장비 : 구장비가 없으면 반드시 숫자 0을 입력해주세요.</p>
 								<p>※경기가능지역 : 지역명은 [시]또는 [도]명을 두 글자로 입력해주세요.</p>
@@ -95,7 +95,6 @@
 							<td>경기가능지역</td>
 							<td>
 								<input type="text" name="match_region" id="match_region" class="inputform200 vm oh1">
-								<a href="#" class="btnform1 vm oh1">검색</a>
 							</td>
 						</tr>	
 						<tr>
