@@ -32,7 +32,17 @@
 		<!-- nav e -->	
 		<div id="container">
 			<form method="POST" action="/match/matchRegister">
-			<div class="match_wrap">			
+				<div class="match_wrap">
+					<div class="match_help" style="float:left;">
+						<a id="help" class="ground_change1 btnform4 vm oh1" style="color:#dbdde2;font-size:10px; border-radius:40px;margin-bottom:10px;">※등록시 유의사항</a>
+							<!-- 클릭시 input 태그에 도움말 멘트 추가 -->
+							<div class="hiddenClass" style="display:none;">
+								<p>※경기일 : 당일등록은 불가능합니다.</p>
+								<p>※구장비 : 구장비가 없으면 반드시 숫자 0을 입력해주세요.</p>
+								<p>※경기가능지역 : 지역명은 [시]또는 [도]명을 두 글자로 입력해주세요.</p>
+								<p>예)서울, 경기,인천, 대전, 부산 등</p>
+							</div>
+						</div>				
 				<table class="match_register_table">
 					<colgroup>
 						<col width="20%">
@@ -210,6 +220,26 @@ $("#btnEnroll").click(function(){
 	</script>
 	<script>
 		$(document).ready(function(){
+			
+			//도움말 버튼
+			$(".match_help>a").click(function(){
+				var help = $(this).next(".hiddenClass");
+				 
+	            // submenu 가 화면상에 보일때는 위로 부드럽게 접고 아니면 아래로 부드럽게 펼치기
+	            if( help.is(":visible") ){
+	            	$("#help").css({"margin-bottom":"10px"});
+	                $(".hiddenClass").css({"background-color":"#f5f6f7"});
+	                $(".hiddenClass").css({"border-radius":"10px"});
+	                help.slideUp();
+	            }else{
+	            	$("#help").css({"margin-bottom":"10px"});
+	                $(".hiddenClass").css({"background-color":"#f5f6f7"});
+	                $(".hiddenClass").css({"border-radius":"10px"});
+	                help.slideDown();
+	            }
+			});
+			
+			
 			$(".ground_change").click(function(e){
 				e.preventDefault();
 				//화면크기 구하기

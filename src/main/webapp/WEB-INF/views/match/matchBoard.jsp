@@ -124,7 +124,6 @@
 
 								List cntList = (List)request.getAttribute("cntList");
 								
-								
 			                    int newLine = 0;
 			                    //1일이 어느 요일에서 시작하느냐에 따른 빈칸 삽입
 			                    //매치 등록되면 캘린더에 추가
@@ -246,21 +245,31 @@
 										<!-- 매치신청 시 match_no 전달 -->
 										<!-- 여기서부터 아래 쭉 2019/05/08 로그인 했을 경우 안했을 경우 -->
 										<c:if test="${empty login }">
+											
 										<c:choose>
 											<c:when test="${match.match_ground_yn eq 'Y'}">
 												<c:if test="${match.curDateYn eq false}">
-													<td><span class="btnform7 mb10">구장있음</span><a href="javascript:void(0)" id="finish1" class="btnform8">기간만료</a></td>
+													<td><span class="btnform7 mb10">구장있음</span><a href="javascript:void(0)" id="endDate" class="btnform8">기간만료</a></td>
 												</c:if>
 													<c:if test="${match.curDateYn eq true}">
-													<td><span class="btnform7 mb10">구장있음</span><a onclick="notlogin();" class="btnform7">매치신청</a></td>
+													<td>
+													<span class="btnform7 mb10">구장있음</span>
+														<c:if test="${match.purpleteam_no == ''  }">
+														<a href="/match/matchApply?match_no=${match.match_no }" onclick="notlogin();" class="btnform7">매치신청</a>
+														</c:if>
+														<c:if test="${match.purpleteam_no != ''  }">
+														<a href="javascript:void(0)" id="endMatch" class="btnform8">매치마감</a>
+														</c:if>
+													</td>
 												</c:if>
 											</c:when>
 											<c:when test="${match.match_ground_yn eq 'N'}">
 												<c:if test="${match.curDateYn eq false }">
-													<td><span class="btnform7 mb10">구장없음</span><a href="javascript:void(0)" id="finish1"  class="btnform8">기간만료</a></td>
+													<td><span class="btnform7 mb10">구장없음</span><a href="javascript:void(0)" id="endDate"  class="btnform8">기간만료</a></td>
 												</c:if>
 												<c:if test="${match.curDateYn eq true}">
 													<td><span class="btnform7 mb10">구장없음</span><a onclick="notlogin();" class="btnform7">매치신청</a></td>
+													
 												</c:if>
 											</c:when>
 										</c:choose>
@@ -279,15 +288,16 @@
 					    						<c:choose>
 											<c:when test="${match.match_ground_yn eq 'Y'}">
 												<c:if test="${match.curDateYn eq false}">
-													<td><span class="btnform7 mb10">구장있음</span><a href="javascript:void(0)" id="finish1" class="btnform8">기간만료</a></td>
+													<td><span class="btnform7 mb10">구장있음</span><a href="javascript:void(0)" id="endDate" class="btnform8">기간만료</a></td>
 												</c:if>
 												<c:if test="${match.curDateYn eq true}">
 													<td><span class="btnform7 mb10">구장있음</span><a onclick="noteam2();" href="/mypage/teamInformation" class="btnform7">매치신청</a></td>
 												</c:if>
+												
 											</c:when>
 											<c:when test="${match.match_ground_yn eq 'N'}">
 												<c:if test="${match.curDateYn eq false }">
-													<td><span class="btnform7 mb10">구장없음</span><a href="javascript:void(0)" id="finish1"  class="btnform8">기간만료</a></td>
+													<td><span class="btnform7 mb10">구장없음</span><a href="javascript:void(0)" id="finish1" id="endDate" class="btnform8">기간만료</a></td>
 												</c:if>
 												<c:if test="${match.curDateYn eq true}">
 													<td><span class="btnform7 mb10">구장없음</span><a onclick="noteam2();" href="/mypage/teamInformation" class="btnform7">매치신청</a></td>
@@ -301,7 +311,7 @@
 											<c:when test="${match.match_ground_yn eq 'Y'}">
 												<c:if test="${match.curDateYn eq false}">
 												
-													<td><span class="btnform7 mb10">구장있음</span><a href="javascript:void(0)" class="btnform8">기간만료</a></td>
+													<td><span class="btnform7 mb10">구장있음</span><a href="javascript:void(0)" id="endDate" class="btnform8">기간만료</a></td>
 												</c:if>
 													<c:if test="${match.curDateYn eq true}">
 													<td>
@@ -310,14 +320,14 @@
 														<a href="/match/matchApply?match_no=${match.match_no }" class="btnform7">매치신청</a>
 														</c:if>
 														<c:if test="${match.purpleteam_no != ''  }">
-														<a href="javascript:void(0)" class="btnform8">매치마감</a>
+														<a href="javascript:void(0)" id="endMatch" class="btnform8">매치마감</a>
 														</c:if>
 													</td>
 												</c:if>
 											</c:when>
 											<c:when test="${match.match_ground_yn eq 'N'}">
 												<c:if test="${match.curDateYn eq false }">
-													<td><span class="btnform7 mb10">구장없음</span><a href="javascript:void(0)" class="btnform8">기간만료</a></td>
+													<td><span class="btnform7 mb10">구장없음</span><a href="javascript:void(0)" id="endDate" class="btnform8">기간만료</a></td>
 												</c:if>
 												<c:if test="${match.curDateYn eq true}">
 													<td>
@@ -326,7 +336,7 @@
 														<a href="/match/matchApply?match_no=${match.match_no }" class="btnform7">매치신청</a>
 														</c:if>
 														<c:if test="${match.purpleteam_no != ''}">
-														<a href="#" class="btnform8">매치마감</a>
+														<a href="#" id="endMatch" class="btnform8">매치마감</a>
 														</c:if>
 													</td>
 												</c:if>
@@ -364,10 +374,17 @@
 			sp = $(".btnform8");
 			//반복
 			$(".btnform8").each(function(sp,element){
-					//기간만료 부분 CSS 바꾸기
-					$(this).css({'background-color':'#333'});
-					$(this).css({'color':'#fe0069'});
-			});
+				//기간만료 부분 CSS 바꾸기
+				if($("#endDate"))
+/* 						$("#endDate").css({'background-color':'#43434385'}); */
+					$("#endDate").css({'color':'#ffffff'});
+				
+				//매치마감
+				if($("#endMatch"))
+					$("#endMatch").css({'background-color':'#e1e1e1'});
+					$("#endMatch").css({'color':'red'});
+				
+		});
 			
 			//ul태그의 자식태그인 li태그 클릭 시 selectRegion에 값 담기
 			$(".ul-element1 li").click(function(){
@@ -389,11 +406,6 @@
 		matchSearch.action = "/match/matchBoard";
 		matchSearch.submit();
 	}
-	//테스트 a태그 클릭하면 클릭한 부분 css 변함(기간만료 부분)
-	/*  $("a").click(function(){
-		$(this).css({'background-color':'#cecece'});
-		$(this).css({'color':'#c62266'});
-	});  */
 </script>
 </html>
 
