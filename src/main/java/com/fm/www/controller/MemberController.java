@@ -101,6 +101,20 @@ public class MemberController {
 		String user_birth = year+"-"+month+"-"+day;
 		user.setUser_birth(user_birth);
 		
+		if(user.getUser_sport().equals("축구")) {
+			user.setUser_position(request.getParameter("user_position1"));
+		}else if(user.getUser_sport().equals("농구")) {
+			user.setUser_position(request.getParameter("user_position2"));
+		}
+		else if(user.getUser_sport().equals("족구")) {
+			user.setUser_position(request.getParameter("user_position3"));		
+		}
+		else if(user.getUser_sport().equals("볼링")) {
+			user.setUser_position(request.getParameter("user_position4"));
+		}else if(user.getUser_sport().equals("탁구")){
+			user.setUser_position(request.getParameter("user_position5"));
+		}
+		
 		//고유식별자
 		String uId = UUID.randomUUID().toString().split("-")[0];
 

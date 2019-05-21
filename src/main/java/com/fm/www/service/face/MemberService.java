@@ -33,5 +33,7 @@ public interface MemberService {
 	public int kkoCheck(User user);
 	// 카카오 유저 넘버 가져오기
 	public int getUserNokko(User user);
+	//유저정보가져오기
+	public User getUserInfo(User user);
 	
 }

@@ -347,6 +347,9 @@
 		</div>
 		<jsp:include page="../common/footer.jsp" />
 	</div>
+<style>
+	.ul-element1 li a.on{border:1px solid #5383e8; background:#5383e8; color:#fff;}
+</style>
 </body>
 	
 
@@ -370,7 +373,8 @@
 			$(".ul-element1 li").click(function(){
 			/* console.log($(this).val());
 			alert($(this).find("input").val()); */
-			
+			$(this).find('a').addClass('on');
+			$(this).siblings().find('a').removeClass('on');
 			//li 태그 클릭시 값 변수에 담기
 			selectRegion = $(this).find("input").val();
 		});

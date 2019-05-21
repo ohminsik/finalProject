@@ -10,8 +10,8 @@ import com.fm.www.util.Paging;
 public interface TeamDao {
 	
 	//팀 총 갯수 가져오기
-	public int teamTotalCount(@Param("w")String word, @Param("i") int i);
+	public int teamTotalCount(@Param("w")String word, @Param("i") int i,@Param("ts") String team_sport);
 
-	public List<Team> teamGetList(@Param("p")Paging paging, @Param("w") String word, @Param("i") int i);
+	public List<Team> teamGetList(@Param("p")Paging paging, @Param("w") String word, @Param("i") int i,@Param("ts") String team_sport);
 
 }

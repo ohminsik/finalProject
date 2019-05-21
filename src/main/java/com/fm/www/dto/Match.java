@@ -22,6 +22,8 @@ public class Match {
 	private int user_no;
 	private int blueteam_score;
 	private int purpleteam_score;
+	private String match_sport;
+	private String match_score;
 	
 	private int calendar;
 	
@@ -61,7 +63,32 @@ public class Match {
 	private int purple_lose;
 	private int purple_tie;
 	private int purple_rating;
-		
+	
+	
+	public String getMatch_score() {
+		return match_score;
+	}
+
+	public void setMatch_score(String match_score) {
+		this.match_score = match_score;
+	}
+
+	public String getMatch_sport() {
+		return match_sport;
+	}
+
+	public void setMatch_sport(String match_sport) {
+		this.match_sport = match_sport;
+	}
+
+	public int getCalendar() {
+		return calendar;
+	}
+
+	public void setCalendar(int calendar) {
+		this.calendar = calendar;
+	}
+
 	public Match() {
 		
 	}
@@ -417,16 +444,17 @@ public class Match {
 				+ match_money + ", match_uniform=" + match_uniform + ", match_region=" + match_region
 				+ ", match_content=" + match_content + ", blueteam_no=" + blueteam_no + ", purpleteam_no="
 				+ purpleteam_no + ", user_no=" + user_no + ", blueteam_score=" + blueteam_score + ", purpleteam_score="
-				+ purpleteam_score + ", team_mark=" + team_mark + ", team_name=" + team_name + ", team_etire="
-				+ team_etire + ", team_win=" + team_win + ", team_lose=" + team_lose + ", team_tie=" + team_tie
-				+ ", team_cnt=" + team_cnt + ", team_region=" + team_region + ", team_filed=" + team_filed
-				+ ", user_name=" + user_name + ", user_phone=" + user_phone + ", user_region=" + user_region
-				+ ", dateComment=" + dateComment + ", curDateYn=" + curDateYn + ", pickYn=" + pickYn + ", blue_name="
-				+ blue_name + ", blue_mark=" + blue_mark + ", blue_etire=" + blue_etire + ", blue_win=" + blue_win
-				+ ", blue_lose=" + blue_lose + ", blue_tie=" + blue_tie + ", blue_rating=" + blue_rating
-				+ ", purple_name=" + purple_name + ", purple_mark=" + purple_mark + ", purple_etire=" + purple_etire
-				+ ", purple_win=" + purple_win + ", purple_lose=" + purple_lose + ", purple_tie=" + purple_tie
-				+ ", purple_rating=" + purple_rating + "]";
+				+ purpleteam_score + ", match_sport=" + match_sport + ", match_score=" + match_score + ", calendar="
+				+ calendar + ", team_mark=" + team_mark + ", team_name=" + team_name + ", team_etire=" + team_etire
+				+ ", team_win=" + team_win + ", team_lose=" + team_lose + ", team_tie=" + team_tie + ", team_cnt="
+				+ team_cnt + ", team_region=" + team_region + ", team_filed=" + team_filed + ", user_name=" + user_name
+				+ ", user_phone=" + user_phone + ", user_region=" + user_region + ", dateComment=" + dateComment
+				+ ", curDateYn=" + curDateYn + ", pickYn=" + pickYn + ", blue_name=" + blue_name + ", blue_mark="
+				+ blue_mark + ", blue_etire=" + blue_etire + ", blue_win=" + blue_win + ", blue_lose=" + blue_lose
+				+ ", blue_tie=" + blue_tie + ", blue_rating=" + blue_rating + ", purple_name=" + purple_name
+				+ ", purple_mark=" + purple_mark + ", purple_etire=" + purple_etire + ", purple_win=" + purple_win
+				+ ", purple_lose=" + purple_lose + ", purple_tie=" + purple_tie + ", purple_rating=" + purple_rating
+				+ "]";
 	}
 
 	

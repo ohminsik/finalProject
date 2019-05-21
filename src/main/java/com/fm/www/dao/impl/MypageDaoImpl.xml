@@ -14,8 +14,8 @@
   
   	<!-- 팀생성 -->
   	<insert id="insertTeam" parameterType="com.fm.www.dto.Team">
-  		INSERT INTO team_tb(team_no, team_name, team_cnt, team_region, team_age, team_type, team_level, team_uniform, team_field, team_mark, team_hello, team_YN)
-  		VALUES(team_tb_SEQ.nextVal, #{team_name}, #{team_cnt}, #{team_region}, #{team_age}, #{team_type}, #{team_level}, #{team_uniform}, #{team_field}, #{team_mark}, #{team_hello}, #{team_YN})
+  		INSERT INTO team_tb(team_no, team_name, team_cnt, team_region, team_age, team_type, team_level, team_uniform, team_field, team_mark, team_hello, team_YN, team_sport)
+  		VALUES(team_tb_SEQ.nextVal, #{team_name}, #{team_cnt}, #{team_region}, #{team_age}, #{team_type}, #{team_level}, #{team_uniform}, #{team_field}, #{team_mark}, #{team_hello}, #{team_YN}, #{team_sport})
   	</insert>
   	
   	<!-- 팀넘버 가져오기 -->
@@ -429,6 +429,11 @@
    		WHERE 1=1
    		AND user_no = #{user_no}
    	</delete>
+   	
+   	<select id="mypageMatchList" resultType="com.fm.www.dto.Match">
+   		select * from Match
+   		where user_no = #{user_no}
+   	</select>
    	
    	
    	

@@ -18,6 +18,7 @@ public class Team {
 	private int team_lose;
 	private int team_tie;
 	private int team_rating;
+	private String team_sport;
 	@Override
 	public String toString() {
 		return "Team [team_no=" + team_no + ", team_name=" + team_name + ", team_cnt=" + team_cnt + ", team_region="
@@ -25,8 +26,20 @@ public class Team {
 				+ ", team_uniform=" + team_uniform + ", team_field=" + team_field + ", team_mark=" + team_mark
 				+ ", team_hello=" + team_hello + ", team_YN=" + team_YN + ", team_etire=" + team_etire + ", team_win="
 				+ team_win + ", team_lose=" + team_lose + ", team_tie=" + team_tie + ", team_rating=" + team_rating
-				+ "]";
+				+ ", team_sport=" + team_sport + "]";
 	}
+	
+	
+	public String getTeam_sport() {
+		return team_sport;
+	}
+
+
+	public void setTeam_sport(String team_sport) {
+		this.team_sport = team_sport;
+	}
+
+
 	public int getTeam_no() {
 		return team_no;
 	}

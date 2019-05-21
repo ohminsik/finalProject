@@ -63,7 +63,7 @@ public class CommonController {
 	 * POST
 	 * */	
 	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public String loginPost(User user, HttpSession session) {		
+	public String loginPost(User user, HttpSession session, Model model) {		
 		//로그인 여부 받아오기
 		boolean loginYn = memberService.getLoginYn(user);
 		
@@ -79,6 +79,7 @@ public class CommonController {
 		
 		User user1 = new User();
 		user1.setUser_no(user_no);
+		User userInfo = memberService.getUserInfo(user);
 		
 		// 로그인한 유저 닉네임 가져오기
 		String user_nick = memberService.getuserNick(user);
@@ -93,11 +94,12 @@ public class CommonController {
 			session.setAttribute("teamYN", true);
 		}
 		
-		
+		session.setAttribute("userInfo", userInfo.getUser_sport());
 		session.setAttribute("loginYn", loginYn);
 		session.setAttribute("login", true);
 		session.setAttribute("user_no", user1.getUser_no());
 		session.setAttribute("user_nick", user_nick);
+		
 		
 		//로그인 했으면 메인 화면으로 이동
 		return "redirect:/main";

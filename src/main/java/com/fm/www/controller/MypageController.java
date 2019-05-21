@@ -288,8 +288,13 @@ public class MypageController {
 	 * GET
 	 * */
 	@RequestMapping(value = "/mypage/mypageMatchList", method = RequestMethod.GET)
-	public void mypageMatchListGet() {		
+	public void mypageMatchListGet(HttpSession session, Model model) {		
+		User user = new User();
+		user.setUser_no((int)(session.getAttribute("user_no")));
 		
+		List<Match> matchList = mypageService.mypageMatchList(user);
+		
+		model.addAttribute("matchList", matchList);
 	}
 	
 	
@@ -385,6 +390,7 @@ public class MypageController {
 			e.printStackTrace();
 		}
 		team.setTeam_mark(stored_name);
+		team.setTeam_sport((String)session.getAttribute("userInfo"));
 		//세션에서 유저 넘버 받아오기
 		User user = new User();
 		user.setUser_no((int)(session.getAttribute("user_no")));

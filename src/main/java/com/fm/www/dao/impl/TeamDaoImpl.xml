@@ -6,9 +6,10 @@
   
   <!-- 매퍼 설정 -->
   <mapper namespace="com.fm.www.dao.face.TeamDao">
-  	<select id="teamTotalCount" resultType="int" parameterType="String">
+  	<select id="teamTotalCount" resultType="int">
   		  select count(*) from team_tb   
 		  WHERE 1=1 
+		  
 		  <if test="i == 1">
           <choose>
             <when test="w != null and !w.equals('')">
@@ -40,6 +41,8 @@
             </when>
           </choose>
           </if>
+           AND team_sport Like '%' || #{ts} || '%'
+          
   	</select>
   	
   	<select id="teamGetList" resultType="com.fm.www.dto.Team">
@@ -47,6 +50,7 @@
          SELECT rownum rnum, B.* FROM (
             	 select * from team_tb   
 		  		WHERE 1=1 
+		  		
 		  		<if test="i == 1">
             	<choose>
             		<when test="w != null and !w.equals('')">
@@ -78,6 +82,7 @@
 		            </when>
 		          </choose>
 		          </if>
+		          AND team_sport Like '%' || #{ts} || '%'
             	
             	ORDER BY team_rating desc
         	 ) B

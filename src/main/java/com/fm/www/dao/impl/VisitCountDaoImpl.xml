@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 마이바티스 3 Mapper DOCTYPE -->
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <!-- 매퍼 설정 -->
+  <mapper namespace="com.fm.www.dao.face.VisitCountDao">
+  	
+
+	<insert id="setVisitTotalCount">
+		INSERT INTO VISIT (V_DATE) VALUES (sysdate)
+	</insert>
+	
+	<select id="getVisitTotalCount" resultType="int">
+		select count(*) from visit
+	</select>
+	
+	<select id="getVisitTodayCount">
+		select count(*) from visit  
+
+		where substr(to_char(v_date), 1, 9) = to_date(sysdate, 'yy/MM/dd')
+	</select>
+
+
+  </mapper>
+  

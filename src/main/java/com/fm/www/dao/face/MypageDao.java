@@ -155,6 +155,8 @@ public interface MypageDao {
 	//팀 신청내역 전체 삭제
 	public void deleteAllTeamApply(TeamApply teamApply);
 
+	public List<Match> mypageMatchList(User user);
+
 	
 		
 

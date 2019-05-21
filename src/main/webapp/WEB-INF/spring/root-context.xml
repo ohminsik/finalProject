@@ -35,4 +35,6 @@
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="basePackage" value="com.fm.www.dao.face"/>
 	</bean>		
+	
+	
 </beans>

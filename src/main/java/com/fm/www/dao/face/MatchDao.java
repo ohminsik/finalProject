@@ -36,7 +36,7 @@ public interface MatchDao {
 	public Date selectCurDate();
 	
 	//랜덤 매칭 팀 조회
-	public List<Team> selectRandomMatchList(Team team);
+	public List<Team> selectRandomMatchList(@Param("t")Team team,@Param("ts") String team_sport);
 	
 //	public int selectMatchCnt(Match match);
 	public List<HashMap<String, Integer>> selectMatchCnt(Match match);

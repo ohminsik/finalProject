@@ -35,7 +35,7 @@ public interface MatchService {
 	public Date selectCurDate();
 	
 	//랜덤매칭 팀 리스트 조회
-	public List<Team> selectRandomMatchList(Team team);
+	public List<Team> selectRandomMatchList(Team team, String team_sport);
 	
 	public List selectMatchCnt(Match match);
 //	public int selectMatchCnt(Match match);

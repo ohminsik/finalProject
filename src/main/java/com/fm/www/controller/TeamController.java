@@ -2,6 +2,8 @@ package com.fm.www.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,18 +26,20 @@ public class TeamController {
 	 * GET
 	 * */
 	@RequestMapping(value = "/team/allTeamInformation", method = RequestMethod.GET)
-	public void allTeamInformationGet(String cur, String word, Model model) {
+	public void allTeamInformationGet(String cur, String word, Model model, HttpSession session) {
 		int i = 1;
+		String team_sport = (String)session.getAttribute("userInfo");
+		System.out.println(team_sport);
 		//현재페이지 수 가져오기
 		int curPage = teamService.getCurPage(cur);
 		// 공지사항 게시글 전체 수 
-		int totalCount = teamService.teamTotalCount(word, i);
+		int totalCount = teamService.teamTotalCount(word, i, team_sport);
 		
 		// 페이징 처리
 		Paging paging = new Paging(totalCount, curPage);
 		
 		// 페이징 리스트 처리
-		List<Team> list = teamService.teamGetList(paging, word, i);
+		List<Team> list = teamService.teamGetList(paging, word, i, team_sport);
 		
 		
 		// 게시글 번호 생성
@@ -54,19 +58,29 @@ public class TeamController {
 	}
 	
 	@RequestMapping(value = "/team/allTeamInformationRegion", method = RequestMethod.GET)
-	public String allTeamInformationRegionGet(String cur, String region, Model model) {
+	public String allTeamInformationRegionGet(String cur, String region, Model model, HttpSession session) {
 		
 		int i = 2;
+		String team_sport = (String)session.getAttribute("userInfo");
+		if(region.equals("충남") || region.equals("충북")) {
+			region = "충청";
+		}
+		if(region.equals("전남") || region.equals("전북")) {
+			region = "전라";
+		}
+		if(region.equals("경남") || region.equals("경북")) {
+			region = "경상";
+		}
 		//현재페이지 수 가져오기
 		int curPage = teamService.getCurPage(cur);
 		// 공지사항 게시글 전체 수 
-		int totalCount = teamService.teamTotalCount(region, i);
+		int totalCount = teamService.teamTotalCount(region, i, team_sport);
 		
 		// 페이징 처리
 		Paging paging = new Paging(totalCount, curPage);
 		
 		// 페이징 리스트 처리
-		List<Team> list = teamService.teamGetList(paging, region, i);
+		List<Team> list = teamService.teamGetList(paging, region, i, team_sport);
 		
 		
 		// 게시글 번호 생성
@@ -86,19 +100,20 @@ public class TeamController {
 	}
 	
 	@RequestMapping(value = "/team/allTeamInformationAge", method = RequestMethod.GET)
-	public String allTeamInformationAgeGet(String cur, String age, Model model) {		
+	public String allTeamInformationAgeGet(String cur, String age, Model model, HttpSession session) {		
 		
 		int i = 3;
+		String team_sport = (String)session.getAttribute("userInfo");
 		//현재페이지 수 가져오기
 		int curPage = teamService.getCurPage(cur);
 		// 공지사항 게시글 전체 수 
-		int totalCount = teamService.teamTotalCount(age, i);
+		int totalCount = teamService.teamTotalCount(age, i, team_sport);
 		
 		// 페이징 처리
 		Paging paging = new Paging(totalCount, curPage);
 		
 		// 페이징 리스트 처리
-		List<Team> list = teamService.teamGetList(paging, age, i);
+		List<Team> list = teamService.teamGetList(paging, age, i, team_sport);
 		
 		
 		// 게시글 번호 생성
@@ -120,19 +135,20 @@ public class TeamController {
 	}
 	
 	@RequestMapping(value = "/team/allTeamInformationType", method = RequestMethod.GET)
-	public String allTeamInformationTypeGet(String cur, String type, Model model) {		
+	public String allTeamInformationTypeGet(String cur, String type, Model model, HttpSession session) {		
 		
 		int i = 4;
+		String team_sport = (String)session.getAttribute("userInfo");
 		//현재페이지 수 가져오기
 		int curPage = teamService.getCurPage(cur);
 		// 공지사항 게시글 전체 수 
-		int totalCount = teamService.teamTotalCount(type, i);
+		int totalCount = teamService.teamTotalCount(type, i, team_sport);
 		
 		// 페이징 처리
 		Paging paging = new Paging(totalCount, curPage);
 		
 		// 페이징 리스트 처리
-		List<Team> list = teamService.teamGetList(paging, type, i);
+		List<Team> list = teamService.teamGetList(paging, type, i, team_sport);
 		
 		
 		// 게시글 번호 생성

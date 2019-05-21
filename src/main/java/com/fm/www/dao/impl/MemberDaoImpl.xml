@@ -81,4 +81,11 @@
   		WHERE user_id=#{user_id}
   		AND user_nick=#{user_nick }
 	</select>
+	
+	<!-- 유저정보가져오기 -->
+	<select id="getUserInfo" parameterType="com.fm.www.dto.User" resultType="com.fm.www.dto.User">
+		SELECT * FROM user_tb
+  		WHERE user_id=#{user_id}
+  		AND user_pw=#{user_pw}
+	</select>
   </mapper>

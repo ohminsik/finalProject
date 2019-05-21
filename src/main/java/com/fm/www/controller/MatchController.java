@@ -53,6 +53,7 @@ public class MatchController {
 	public void matchBoardGet(Model model, HttpServletRequest req, String selectRegion, Match match, User user, HttpSession session
 			, @RequestParam(defaultValue="0") int year, @RequestParam(defaultValue="0") int month) {
 		System.out.println("match/matchBoard:"+selectRegion);
+		String team_sport = (String)session.getAttribute("userInfo");
 		
 		//0일 때 & 빈칸일 때 >> 전체 조회
 		if(selectRegion.equals("0") || selectRegion.equals("")) {
@@ -64,6 +65,7 @@ public class MatchController {
 		param.put("selectRegion", selectRegion);
 		param.put("year", year);
 		param.put("month", month);
+		param.put("team_sport", team_sport);
 		
 		//2019.05.01 조건 부분 여기서 처리
 		//이달의 매치정보 가져오기(matchBoard.jsp)
@@ -217,6 +219,7 @@ public class MatchController {
 	public String matchRegisterPost(Match match, HttpServletRequest request, HttpSession session, Model model) {	
 		User user = new User();
 		user.setUser_no((int) session.getAttribute("user_no"));
+		String team_sport = (String)session.getAttribute("userInfo");
 
 		// user_no로 user정보 가져오기
 		user = matchService.selectUserByuserNo(user.getUser_no());
@@ -281,6 +284,7 @@ public class MatchController {
 			match.setMatch_content(match_content);
 			match.setBlueteam_no(user.getTeam_no());
 			match.setUser_no(user.getUser_no());
+			match.setMatch_sport(team_sport);
 			// 등록하면 Match 테이블에 넣기
 			matchService.enrollMatch(match);
 		}else{
@@ -299,6 +303,7 @@ public class MatchController {
 			match.setMatch_content(match_content);
 			match.setBlueteam_no(user.getTeam_no());
 			match.setUser_no(user.getUser_no());
+			match.setMatch_sport(team_sport);
 			// 등록하면 Match 테이블에 넣기
 			matchService.enrollMatch(match);
 		}
@@ -312,25 +317,29 @@ public class MatchController {
 	public void reommndOpponentGet(Model model, HttpSession session) {
 		User user = new User();
 		user.setUser_no((int) session.getAttribute("user_no"));
-		
+		String team_sport = (String)session.getAttribute("userInfo");
 		int team_no = mypageService.selectTeamNoUserNo(user);
 		
 		user.setTeam_no(team_no);
 		Team team = mypageService.selectTeamInfoMation(user);
 		
-		List<Team> matchTeamList = matchService.selectRandomMatchList(team);
+		List<Team> matchTeamList = matchService.selectRandomMatchList(team,team_sport);
 		
-		double randomValue = Math.random();	 
+		double randomValue = 0.0;
+		randomValue = Math.random();	 
 		 
-        int ran = (int)(randomValue * matchTeamList.size()) -1;
+        int ran = 0;
+        ran = (int)(randomValue * matchTeamList.size()) -1;
  
- 
- 
-        Team RandomTeam = matchTeamList.get(ran);
+        System.out.println(ran);
         
-        System.out.println(RandomTeam);
-        
-        model.addAttribute("team",RandomTeam);
+    	 Team RandomTeam = matchTeamList.get(ran);
+         
+         System.out.println(RandomTeam);
+         
+         model.addAttribute("team",RandomTeam);
+         model.addAttribute("noTeam",true);
+       
 	}
 	
 	

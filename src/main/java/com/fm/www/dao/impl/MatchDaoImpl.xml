@@ -11,12 +11,12 @@
   <insert id="enrollMatch" parameterType="com.fm.www.dto.Match">
   	INSERT INTO match(match_no,match_date,fight_date,match_ground,
   	 match_ground_yn, match_money,match_uniform,match_region,match_content,
-  	blueteam_no,user_no) 
+  	blueteam_no,user_no,match_sport) 
   	VALUES 
   	(match_SEQ.nextval,sysdate,#{fight_date}, #{match_ground},
   	#{match_ground_yn}, #{match_money}, #{match_uniform}, 
   	#{match_region}, #{match_content},#{blueteam_no},
-  	#{user_no})
+  	#{user_no},#{match_sport})
   </insert>
   
   <!-- user_no로 User정보 조회 -->
@@ -34,6 +34,7 @@
   	inner join team_tb tm
   	on mth.blueteam_no = tm.team_no
   	where 1=1
+  	AND mth.match_sport = #{team_sport}
   	<choose>
 	  	<when test="selectRegion!=null and !selectRegion.equals('')">
 	  		and match_region=#{selectRegion}
@@ -85,11 +86,12 @@
   </select>
   
   <!-- 랜덤 매칭 팀 리스트 조회 -->
-  <select id="selectRandomMatchList" resultType="com.fm.www.dto.Team" parameterType="com.fm.www.dto.Team">
+  <select id="selectRandomMatchList" resultType="com.fm.www.dto.Team">
   <![CDATA[ 
   	 select * from team_tb  	 
-     WHERE team_rating >= #{team_rating}-50 
-     and team_rating <= #{team_rating}+50
+     WHERE team_rating >= #{t.team_rating}-50 
+     and team_rating <= #{t.team_rating}+50
+     and team_sport = #{ts}
      ]]>
   </select>
   </mapper>

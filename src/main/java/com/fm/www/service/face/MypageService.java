@@ -157,6 +157,9 @@ public interface MypageService {
 	public void deleteTeamApply(TeamApply teamApply);
 	//팀 신청 내역 전체 삭제
 	public void deleteAllTeamApply(TeamApply teamApply);
+	
+	
+	public List<Match> mypageMatchList(User user);
 
 	
 	
