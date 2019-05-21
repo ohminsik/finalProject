@@ -1,5 +1,6 @@
 package com.fm.www.dao.face;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -59,6 +60,11 @@ public interface AdminDao {
 	public void teamDelete(int parseInt);
 	//대회 게시글 작성
 	public void tournamentInsert1(Tournament tournament);
+	
+	public int todayJoinCnt(Date currentTime);
+	public int totalJoinCnt();
+	public int todayMatchCnt();
+	public int totalMatchCnt();
 
 	
 }

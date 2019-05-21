@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 import javax.servlet.ServletContext;
@@ -46,8 +47,25 @@ public class AdminController {
 	 * GET
 	 * */
 	@RequestMapping(value = "/admin/index", method = RequestMethod.GET)
-	public void mainGet() {		
+	public void mainGet(Model model) {		
+	
+		SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ( "yyyy.MM.dd HH:mm:ss", Locale.KOREA );
+		Date currentTime = new Date ();
+		String mTime = mSimpleDateFormat.format ( currentTime );
+
+		//오늘 가입 인원
+		int todayJoinCnt = adminService.todayJoinCnt(currentTime);
+		//전체 가입 인원
+		int totalJoinCnt = adminService.totalJoinCnt();
+		//오늘 매치 등 록 수
+		int todayMatchCnt = adminService.todayMatchCnt();
+		//오늘 매칭 된 수
+		int totalMatchCnt = adminService.totalMatchCnt();
 		
+		model.addAttribute("todayJoinCnt",todayJoinCnt);
+		model.addAttribute("totalJoinCnt",totalJoinCnt);
+		model.addAttribute("todayMatchCnt",todayMatchCnt);
+		model.addAttribute("totalMatchCnt",totalMatchCnt);
 		
 	}
 	
@@ -77,7 +95,7 @@ public class AdminController {
 			int admin_no = adminService.getAdminNo(admin);
 			session.setAttribute("AdminloginYN", true);
 			session.setAttribute("admin_no", admin_no);
-			
+			session.setAttribute("admin_id", admin.getAdmin_id());
 			return "redirect:/admin/index";
 			
 		}else{

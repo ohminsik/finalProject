@@ -125,7 +125,7 @@ function showMessage(message) {
 
 function connect() {
     // SockJS라이브러리를 이용하여 서버에 연결
-    ws = new WebSocket("ws://192.168.20.18:8088/chatEcho");
+    ws = new WebSocket("ws://192.168.0.16:8088/chatEcho");
   
 
     // 서버가 메시지를 보내주면 함수가 호출된다.

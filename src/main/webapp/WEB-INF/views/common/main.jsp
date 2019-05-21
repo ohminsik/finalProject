@@ -24,8 +24,8 @@
 				</div>		
 					
 				<!-- 인스타 s -->
-				<div id="instafeed" class="instafeed" style="font-size: 14px; border: 1px solid #DDD; background: #fafafa;
- 				     position: absolute; top: 56%; height: 300px; width: 400px;left: 19%; padding: 0 29px 29px 29px;">INSTAGRAM
+				<div id="instafeed" class="instafeed">
+					<p>Final Match InstaGram</p>
 				</div>
 				<!-- 인스타 e -->
 				
@@ -34,6 +34,11 @@
 		<jsp:include page="footer.jsp" />
 	</div>
 </body>
+<style>
+	.instafeed{overflow: hidden;position: absolute;    top: 75%;    left: 50%;    transform: translateX(-50%) translateY(-50%);}
+	.instafeed p{font-size:14px; color:#fff; font-weight: bold; margin-bottom:10px;}
+	.instafeed a{float:left; margin:0 2px;}
+</style>
 <!-- 인스타 s -->
 <script type="text/javascript" src="/resources/css/instafeed.min.js"></script> <!-- js 파일 로드 -->
 <script type="text/javascript">    

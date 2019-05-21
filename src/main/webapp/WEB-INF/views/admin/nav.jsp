@@ -1,16 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<nav id="sidenav" class="sidenav">
-	<a class="logo" href="#">LOGO</a>
+<nav id="sidenav" class="sidenav" style="top:52px;">
 	<ul class="">
-		<li><a href="/admin" style="background:none;"><i class="xi-home"></i>Home</a></li>
+		<li><a href="/admin/index" style="background:none;"><i class="xi-home" style="color:#fff"></i>Home</a></li>
 	</ul>
 	<ul class="menulist">
-		<li><a href="/admin/board?board_div=1"><i class="xi-layout-column"></i>게시판 관리</a></li>
-		<li><a href="/admin/category"><i class="xi-layout-column"></i>카테고리 등록</a></li>
-		<li><a href="/admin/banner"><i class="xi-layout-column"></i>메인슬라이드 관리</a></li>
-		<li><a href="/admin/memManagement"><i class="xi-layout-column"></i>계정관리</a>
+		<li><a href="/admin/board?board_div=1"><i class="xi-layout-column" style="color:#fff"></i>게시판 관리</a></li>
+		<li><a href="/admin/memManagement"><i class="xi-layout-column" style="color:#fff"></i>계정관리</a>
 			<ul class="nav_detail">
 				<li><a href="#">회원관리</a></li>
 				<li><a href="#">관리자관리</a></li>

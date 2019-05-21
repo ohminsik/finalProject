@@ -1,6 +1,7 @@
 package com.fm.www.service.impl;
 
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -138,6 +139,22 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public void tournamentInsert1(Tournament tournament) {
 		adminDao.tournamentInsert1(tournament);
+	}
+	@Override
+	public int todayJoinCnt(Date currentTime) {
+		return adminDao.todayJoinCnt(currentTime);
+	}
+	@Override
+	public int totalJoinCnt() {
+		return adminDao.totalJoinCnt();
+	}
+	@Override
+	public int todayMatchCnt() {
+		return adminDao.todayMatchCnt();
+	}
+	@Override
+	public int totalMatchCnt() {
+		return adminDao.totalMatchCnt();
 	}
 	
 	

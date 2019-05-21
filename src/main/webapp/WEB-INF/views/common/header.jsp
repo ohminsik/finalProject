@@ -107,19 +107,44 @@ int month = now.get(Calendar.MONTH)+1;
 					</ul>
 				</li>
 				</c:if>
+				<c:if test="${empty login }">
+				<li>
+					<a href="#">매치보드</a>
+					<ul>
+						<li><a onclick="notlogin();"">매치신청</a></li>
+						<li><a onclick="notlogin();"">오늘의 추천 상대</a></li>
+					</ul>
+				</li>
+				
+				<li>
+					<a href="#">팀</a>
+					<ul>
+						<li><a onclick="notlogin();">전국 팀 정보</a></li>
+					</ul>
+				</li>
+				</c:if>
+				<c:if test="${login }">
 				<li>
 					<a href="#">매치보드</a>
 					<ul>
 						<li><a href="/match/matchBoard?selectRegion=0&year=<%=year %>&month=<%=month %>">매치신청</a></li>
-						<li><a href="/match/reommndOpponent">오늘의 추천 상대</a></li>
+						<c:if test="${teamYN eq false }">
+							<li><a href="#" onclick="javascript:notTeam();">오늘의 추천 상대</a></li>
+						</c:if>
+						<c:if test="${teamYN eq true }">
+							<li><a href="/match/reommndOpponent">오늘의 추천 상대</a></li>
+						</c:if>
+						
 					</ul>
 				</li>
+				
 				<li>
 					<a href="#">팀</a>
 					<ul>
 						<li><a href="/team/allTeamInformation">전국 팀 정보</a></li>
 					</ul>
 				</li>
+				</c:if>
 				<li>
 					<a href="/community/noticeList">커뮤니티</a>
 					<ul>
