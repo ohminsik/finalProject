@@ -31,6 +31,44 @@
 	
 	
 
+	
+	<error-page>	
+	    <error-code>307</error-code>	
+	    <location>/error/error307</location>	
+	</error-page>
+	
+	<error-page>	
+	    <error-code>400</error-code>	
+	    <location>/error/error400</location>	
+	</error-page>
+	
+	<error-page>	
+	    <error-code>401</error-code>	
+	    <location>/error/error401</location>	
+	</error-page>
+	
+	<error-page>	
+	    <error-code>404</error-code>	
+	    <location>/error/error404</location>	
+	</error-page>
+	
+	<error-page>	
+	    <error-code>405</error-code>	
+	    <location>/error/error405</location>	
+	</error-page>
+	
+	<error-page>	
+	    <error-code>500</error-code>	
+	    <location>/error/error500</location>	
+	</error-page>
+	
+	<error-page>	
+	    <error-code>503</error-code>	
+	    <location>/error/error503</location>	
+	</error-page>
+
+
+
 
 
 	
