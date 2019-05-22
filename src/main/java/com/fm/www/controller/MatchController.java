@@ -165,9 +165,12 @@ public class MatchController {
 		match = matchService.selectMatchByMatchNo(match_no);
 		System.out.println("매치:"+match.toString());
 //		System.out.println("matchApply 매치번호로 매치정보 조회 (match):"+match);
-			
+		User reciver = mypageDao.selectUserInformation(match.getUser_no());
+		
 		//model 지정
 		model.addAttribute("match", match);
+		model.addAttribute("user_no", user.getUser_no());
+		model.addAttribute("reciver",reciver);
 	}
 
 	/*

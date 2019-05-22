@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"  %> 
 <jsp:include page="../common/meta.jsp"/>
 <body>
 	<div id="wrap">
@@ -43,7 +43,7 @@
 							<p class="vs">VS</p>
 							<p class="purple">
 								<img src="/resources/img/logo.png">
-								<span>여기는 신청한 팀 if문으로 나눠야함</span>
+								<span>? ? ? ? ?</span>
 							</p>
 						</div>
 						<table class="match_apply_table">
@@ -62,7 +62,7 @@
 								</tr>
 								<tr>
 									<td>날짜 :</td>
-									<td>${match.fight_date }</td>
+									<td><fmt:formatDate value="${match.fight_date }" pattern="yyyy-MM-dd"/></td>
 								</tr>
 								<tr>
 									<td>연락처 :</td>
@@ -88,6 +88,7 @@
 						<div class="memo">${match.match_content }</div>
 						<div class="match_btn_list">
 							<ul>
+								<li><a class="btnform1 messageapply">메세지보내기</a></li>
 								<li>
 								<form action="/match/matchApply" method="POST">
 									<input type="hidden" name="match_no" value="${match.match_no }"/>
@@ -109,5 +110,33 @@
 		</div>
 		<jsp:include page="../common/footer.jsp" />
 	</div>
+<div class="messagebg"></div>
+<div class="message_wrap" id="replymessage_wrap" style="text-align:center;">
+	<form action="/mypage/replyMessage" method="POST">
+		<input type="hidden" name="senduser_no" value="${user_no }">
+		<input type="hidden" name="reciveruser_no" value="${reciver.user_no }">
+		<div>
+			<p>받는사람 : ${reciver.user_name }(${reciver.user_id })</p>
+			<i class="xi-close messageclosebtn" style="top:20px; right:20px;"></i>
+			<textarea class="textareaform100p mt20" name="message_content"></textarea>
+			<button class="btnform1 oh1 mt20" >전송</button>
+		</div>	
+	</form>							
+</div>
 </body>
+<script>
+	$(document).ready(function(){	
+		$(".messageapply").click(function(e){
+			e.preventDefault();
+			$(".messagebg").fadeIn();
+			$(".message_wrap").fadeIn();
+		})
+		
+		$(".messageclosebtn").click(function(e){
+			e.preventDefault();
+			$(".messagebg").fadeOut();
+			$(".message_wrap").fadeOut();
+		})
+	})
+</script>
 </html>
