@@ -44,7 +44,7 @@
 							<td class="fb"><fmt:formatDate value="${board.board_date }" pattern="yyyy-MM-dd"/></td>
 						</tr>
 						<tr>
-							<td colspan="2">
+							<td colspan="2" class="content">
 							<c:if test="${empty photo.photo_stored }">
 							</c:if>
 							<c:if test="${photo ne null}">

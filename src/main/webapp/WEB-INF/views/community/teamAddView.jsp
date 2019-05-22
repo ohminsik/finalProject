@@ -46,7 +46,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td colspan="2">
+							<td colspan="2" class="content">
 							<c:if test="${empty photo.photo_stored }">
 							</c:if>
 							<c:if test="${photo ne null}">

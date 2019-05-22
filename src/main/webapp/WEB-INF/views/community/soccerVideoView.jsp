@@ -44,7 +44,7 @@
 							<td class="fb"><fmt:formatDate value="${board_tb.board_date }" pattern="yyyy-MM-dd"></fmt:formatDate></td>
 						</tr>
 						<tr>
-							<td colspan="2"><iframe width="900" height="700" src="https://www.youtube.com/embed/${movie.movie_address }" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe><br>${board_tb.board_content } </td>			
+							<td colspan="2" class="content"><iframe width="900" height="700" src="https://www.youtube.com/embed/${movie.movie_address }" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe><br>${board_tb.board_content } </td>			
 						</tr>
 					
 					
