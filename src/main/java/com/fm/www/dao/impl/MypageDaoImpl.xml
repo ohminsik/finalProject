@@ -435,6 +435,10 @@
    		where user_no = #{user_no}
    	</select>
    	
+   	<update id="updateMatch" parameterType="int">
+   		UPDATE match SET match_score = 'Y'
+	  	WHERE match_no = #{match_no }
+   	</update>
    	
    	
   </mapper>

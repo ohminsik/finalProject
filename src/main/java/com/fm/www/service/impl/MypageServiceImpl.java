@@ -368,6 +368,12 @@ public class MypageServiceImpl implements MypageService{
 		return mypageDao.mypageMatchList(user);
 	}
 
+	@Override
+	public void updateMatch(int match_no) {
+		mypageDao.updateMatch(match_no);
+		
+	}
+
 	
 	
 

@@ -157,6 +157,8 @@ public interface MypageDao {
 
 	public List<Match> mypageMatchList(User user);
 
+	public void updateMatch(int match_no);
+
 	
 		
 

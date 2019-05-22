@@ -492,6 +492,7 @@ public class MypageController {
 	public void teamScoreInsertGet(int match_no, HttpSession session, Model model) {		
 		//매치넘버로 경기 조회
 		Match match = mypageService.selectMatch(match_no);
+		mypageService.updateMatch(match_no);
 		
 		model.addAttribute("match", match);
 	}

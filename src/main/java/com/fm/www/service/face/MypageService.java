@@ -161,6 +161,8 @@ public interface MypageService {
 	
 	public List<Match> mypageMatchList(User user);
 
+	public void updateMatch(int match_no);
+
 	
 	
 	

@@ -75,7 +75,7 @@
 								<p class="mb10">장소 : ${matchList.match_ground }</p>
 								<p>날짜, 시간 : <fmt:formatDate value="${matchList.fight_date }" pattern="yyyy-MM-dd , HH:mm"/></p>
 							</div>
-							<c:if test="${matchList.match_score = 'N' }">
+							<c:if test="${matchList.match_score eq null }">
 							<div class="tac mt20">
 								<a href="/mypage/teamScoreInsert?match_no=${matchList.match_no }" class="btnform0 oh1">매치결과입력</a>
 							</div>			
@@ -118,7 +118,7 @@
 								<p class="mb10">장소 : ${matchList.match_ground }</p>
 								<p>날짜, 시간 : <fmt:formatDate value="${matchList.fight_date }" pattern="yyyy-MM-dd , HH:mm"/></p>
 							</div>
-							<c:if test="${matchList.match_score = 'N' }">
+							<c:if test="${matchList.match_score eq null }">
 							<div class="tac mt20">
 								<a href="/mypage/teamScoreInsert?match_no=${matchList.match_no }" class="btnform0 oh1">매치결과입력</a>
 							</div>					

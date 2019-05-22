@@ -16,8 +16,8 @@
 
 			<div class="category_wrap">
 				<ul class="menuuuuuu">
-					<li><a href="#"><i class="xi-user"></i>오늘 방문자 수 <span>${todayCount }</span></a></li>				
-					<li><a href="#"><i class="xi-users"></i>전체 방문자 수<span>${totalCount }</span></a></li>				
+					<li><a href="#"><i class="xi-user"></i>오늘 방문자 수 <span>${totalCount }</span></a></li>				
+					<li><a href="#"><i class="xi-users"></i>전체 방문자 수<span>${todayCount }</span></a></li>				
 					<li><a href="#"><i class="xi-user-plus"></i>오늘 가입 인원<span>${todayJoinCnt }</span> </a></li>				
 					<li><a href="#"><i class="xi-users-plus"></i>전체 가입 인원<span>${totalJoinCnt }</span></a></li>				
 					<li><a href="#"><i class="xi-bell"></i>오늘 매치 등록 수<span>${todayMatchCnt }</span></a></li>				
