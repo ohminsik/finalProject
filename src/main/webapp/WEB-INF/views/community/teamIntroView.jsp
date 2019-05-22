@@ -118,7 +118,10 @@
 							<a href="/community/teamIntroUpdate?board_no=${board_tb.board_no }"class="btnform7">수정</a>
 							<a href="/community/teamIntroDelete?board_no=${board_tb.board_no }"class="btnform7">삭제</a>
 						</c:if>	
+
+					<a href="/community/teamIntroListPrevious?board_no=${board_tb.board_no }&board_div=${board_tb.board_div }"class="btnform7">이전글</a>
 					<a href="/community/teamIntroList"class="btnform7">목록</a>
+					<a href="/community/teamIntroListNext?board_no=${board_tb.board_no }&board_div=${board_tb.board_div }"class="btnform7">다음글</a>						
 				</div>
 			</div>
 		</div>

@@ -226,6 +226,14 @@ public interface CommunityService {
 	public void DownHit(int board_no);
 	//board_no로 게시글 사진 조회
 	public String photoStoredName(int board_no);
+	//다음글 확인 여부
+	public boolean NextArticle(Board_tb board_tb);
+	//이전글 확인 여부
+	public boolean PreviousArticle(Board_tb board_tb);
+	//다음글 번호 가져오기
+	public int ViewNext(Board_tb board_tb);
+	//이전글 번호 가져오기
+	public int ViewPrevious(Board_tb board_tb);
 
 
 	

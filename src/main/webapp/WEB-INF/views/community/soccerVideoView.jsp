@@ -114,7 +114,10 @@
 						<c:if test="${user_no == board_tb.user_no }">
 							<a href="/community/soccerVideoDelete?board_no=${board_tb.board_no }"class="btnform7">삭제</a>
 						</c:if>	
+
+					<a href="/community/soccerVideoListPrevious?board_no=${board_tb.board_no }&board_div=${board_tb.board_div }"class="btnform7">이전글</a>
 					<a href="/community/soccerVideoList"class="btnform7">목록</a>
+					<a href="/community/soccerVideoListNext?board_no=${board_tb.board_no }&board_div=${board_tb.board_div }"class="btnform7">다음글</a>						
 				</div>
 			</div>
 		</div>

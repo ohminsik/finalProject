@@ -571,6 +571,38 @@ public class CommunityServiceImpl implements CommunityService{
 	public String photoStoredName(int board_no) {
 		return communityDao.photoStoredName(board_no);
 	}
+	//다음글 확인 여부
+	@Override
+	public boolean NextArticle(Board_tb board_tb) {
+		
+		int cnt = communityDao.selectCntNextArticle(board_tb);
+		
+		if(cnt == 1) {
+			return true;
+		}
+		return false;
+	}
+	//이전글 확인 여부
+	@Override
+	public boolean PreviousArticle(Board_tb board_tb) {
+		
+		int cnt = communityDao.selectCntPreviousArticle(board_tb);
+		
+		if(cnt == 1) {
+			return true;
+		}
+		return false;
+	}
+	//다음글 번호 가져오기
+	@Override
+	public int ViewNext(Board_tb board_tb) {
+		return communityDao.ViewNext(board_tb);
+	}
+	//이전글 번호 가져오기
+	@Override
+	public int ViewPrevious(Board_tb board_tb) {
+		return communityDao.ViewPrevious(board_tb);
+	}
 		
 	
 

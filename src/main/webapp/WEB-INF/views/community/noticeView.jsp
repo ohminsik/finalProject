@@ -110,8 +110,10 @@
 				
 				
 				<div class="j_button mt20 mb20 tac">
-			
+
+					<a href="/community/noticeListPrevious?board_no=${board.board_no }&board_div=${board.board_div }"class="btnform7">이전글</a>
 					<a href="/community/noticeList"class="btnform7">목록</a>
+					<a href="/community/noticeListNext?board_no=${board.board_no }&board_div=${board.board_div }"class="btnform7">다음글</a>			
 				</div>
 			</div>
 		</div>

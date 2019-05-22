@@ -117,8 +117,11 @@
 						<c:if test="${user_no == board.user_no }">
 							<a href="/community/freeUpdate?board_no=${board.board_no }"class="btnform7">수정</a>
 							<a href="/community/freeDelete?board_no=${board.board_no }"class="btnform7">삭제</a>
-						</c:if>	
+						</c:if>
+
+					<a href="/community/freeListPrevious?board_no=${board.board_no }&board_div=${board.board_div }"class="btnform7">이전글</a>
 					<a href="/community/freeList"class="btnform7">목록</a>
+					<a href="/community/freeListNext?board_no=${board.board_no }&board_div=${board.board_div }"class="btnform7">다음글</a>							
 				</div>
 			</div>
 		</div>

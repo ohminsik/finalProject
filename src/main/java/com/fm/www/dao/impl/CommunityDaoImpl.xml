@@ -888,4 +888,56 @@
 			WHERE board_no = #{board_no}
 		</select>
    		
+   		<!-- 다음글 확인 여부 -->
+   		<select id="selectCntNextArticle" resultType="int" parameterType="com.fm.www.dto.Board_tb">
+   		<![CDATA[ 
+   		SELECT COUNT(*) FROM board_tb
+		WHERE board_no in (
+            (
+                SELECT MIN(board_no) 
+                FROM board_tb
+                WHERE board_no > #{board_no} AND  board_div = #{board_div} )
+		)
+		]]>
+   		</select>
+   		
+   		<!-- 이전글 확인 여부 -->
+   		<select id="selectCntPreviousArticle" resultType="int" parameterType="int">
+   		<![CDATA[ 
+   		SELECT COUNT(*) FROM board_tb
+		WHERE board_no in (
+            (
+                SELECT MAX(board_no) 
+                FROM board_tb
+                WHERE board_no < #{board_no} AND  board_div = #{board_div} )
+		)
+		]]>
+   		</select>
+   		
+   		<!-- 다음글 번호 가져오기 -->
+   		<select id="ViewNext" resultType="int" parameterType="com.fm.www.dto.Board_tb">
+   		<![CDATA[ 
+   		SELECT board_no FROM board_tb
+		WHERE board_no in (
+            (
+                SELECT MIN(board_no) 
+                FROM board_tb
+                WHERE board_no > #{board_no} AND  board_div = #{board_div} )
+		)
+		]]>
+   		</select>
+   		
+   		<!-- 이전글 번호 가져오기 -->
+   		<select id="ViewPrevious" resultType="int" parameterType="com.fm.www.dto.Board_tb">
+   		<![CDATA[ 
+   		SELECT board_no FROM board_tb
+		WHERE board_no in (
+            (
+                SELECT MAX(board_no) 
+                FROM board_tb
+                WHERE board_no < #{board_no} AND board_div = #{board_div} )
+		)
+		]]>
+   		</select>
+   		
 </mapper>

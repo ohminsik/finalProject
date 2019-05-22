@@ -116,7 +116,10 @@
 						<a href="/community/teamAddUpdate?board_no=${Board_tbview.board_no }"class="btnform7">수정</a>
 						<a href="/community/teamAddDelete?board_no=${Board_tbview.board_no }"class="btnform7">삭제</a>
 					</c:if>
+
+					<a href="/community/teamAddListPrevious?board_no=${Board_tbview.board_no }&board_div=${Board_tbview.board_div }"class="btnform7">이전글</a>
 					<a href="/community/teamAddList"class="btnform7">목록</a>
+					<a href="/community/teamAddListNext?board_no=${Board_tbview.board_no }&board_div=${Board_tbview.board_div }"class="btnform7">다음글</a>					
 				</div>
 			</div>
 		</div>

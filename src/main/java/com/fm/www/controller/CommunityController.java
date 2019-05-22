@@ -96,6 +96,43 @@ public class CommunityController {
 	}
 	
 	/*
+	 * NoticeViewPrevious GET
+	 * 공지사항 상세페이지 다음글 조회 폼
+	 * */
+	@RequestMapping(value="/community/noticeListNext", method = RequestMethod.GET)
+	public String noticeViewNextGet(int board_no ,int board_div,Board_tb board_tb) {
+		logger.info(""+board_no);
+		logger.info(""+board_div);
+		board_tb.setBoard_no(board_no);
+		board_tb.setBoard_div(board_div);
+			boolean board_noYN = communityService.NextArticle(board_tb);
+			if(board_noYN == false) {
+				return "redirect:/community/noticeView?board_no="+board_no;
+			}
+			int board_no1 = communityService.ViewNext(board_tb);
+			logger.info(""+board_no1);
+			return "redirect:/community/noticeView?board_no="+board_no1;
+			
+	}
+	/*
+	 * NoticeViewPrevious GET
+	 * 공지사항 상세페이지 이전글 조회 폼
+	 * */
+	@RequestMapping(value="/community/noticeListPrevious", method = RequestMethod.GET)
+	public String noticeViewPreviousGet(int board_no ,int board_div,Board_tb board_tb) {
+		logger.info(""+board_no+"+"+board_div);
+		    boolean board_noYN = communityService.PreviousArticle(board_tb);
+			int board_no1 = 0;
+			logger.info(""+board_no1);
+			if(board_noYN == false) {
+				return "redirect:/community/noticeView?board_no="+board_no;
+			}
+			board_no1 = communityService.ViewPrevious(board_tb);
+			return "redirect:/community/noticeView?board_no="+board_no1;
+			
+	}
+	
+	/*
 	 * NoticeWrite GET
 	 * 공지사항 글쓰기 폼
 	 * */
@@ -271,6 +308,44 @@ public class CommunityController {
 		List<Board_Reply> replaylist= communityService.teamIntrogetreplylist(board_no);
 		model.addAttribute("replaylist", replaylist);
 		
+	}
+	
+	/*
+	 * teamIntroViewPrevious GET
+	 * 팀 가입 인사 상세페이지 다음글 조회 폼
+	 * */
+	@RequestMapping(value="/community/teamIntroListNext", method = RequestMethod.GET)
+	public String teamIntroViewNextGet(int board_no ,int board_div,Board_tb board_tb) {
+		logger.info(""+board_no);
+		logger.info(""+board_div);
+		board_tb.setBoard_no(board_no);
+		board_tb.setBoard_div(board_div);
+			boolean board_noYN = communityService.NextArticle(board_tb);
+			if(board_noYN == false) {
+				return "redirect:/community/teamIntroView?board_no="+board_no;
+			}
+			int board_no1 = communityService.ViewNext(board_tb);
+			logger.info(""+board_no1);
+			return "redirect:/community/teamIntroView?board_no="+board_no1;
+			
+	}
+	
+	/*
+	 * teamIntroViewPrevious GET
+	 * 팀 가입 인사 상세페이지 이전글 조회 폼
+	 * */
+	@RequestMapping(value="/community/teamIntroListPrevious", method = RequestMethod.GET)
+	public String teamIntroViewPreviousGet(int board_no ,int board_div,Board_tb board_tb) {
+		logger.info(""+board_no+"+"+board_div);
+		    boolean board_noYN = communityService.PreviousArticle(board_tb);
+			int board_no1 = 0;
+			logger.info(""+board_no1);
+			if(board_noYN == false) {
+				return "redirect:/community/teamIntroView?board_no="+board_no;
+			}
+			board_no1 = communityService.ViewPrevious(board_tb);
+			return "redirect:/community/teamIntroView?board_no="+board_no1;
+			
 	}
 	
 	/*
@@ -564,6 +639,45 @@ public class CommunityController {
 		model.addAttribute("board", board);
 		model.addAttribute("list", list);
 	}
+
+	/*
+	 * freeViewPrevious GET
+	 * 자유 상세페이지 다음글 조회 폼
+	 * */
+	@RequestMapping(value="/community/freeListNext", method = RequestMethod.GET)
+	public String freeViewNextGet(int board_no ,int board_div,Board_tb board_tb) {
+		logger.info(""+board_no);
+		logger.info(""+board_div);
+		board_tb.setBoard_no(board_no);
+		board_tb.setBoard_div(board_div);
+			boolean board_noYN = communityService.NextArticle(board_tb);
+			if(board_noYN == false) {
+				return "redirect:/community/freeView?board_no="+board_no;
+			}
+			int board_no1 = communityService.ViewNext(board_tb);
+			logger.info(""+board_no1);
+			return "redirect:/community/freeView?board_no="+board_no1;
+			
+	}
+	
+	/*
+	 * freeViewPrevious GET
+	 * 자유 상세페이지 이전글 조회 폼
+	 * */
+	@RequestMapping(value="/community/freeListPrevious", method = RequestMethod.GET)
+	public String freeViewPreviousGet(int board_no ,int board_div,Board_tb board_tb) {
+		logger.info(""+board_no+"+"+board_div);
+		    boolean board_noYN = communityService.PreviousArticle(board_tb);
+			int board_no1 = 0;
+			logger.info(""+board_no1);
+			if(board_noYN == false) {
+				return "redirect:/community/freeView?board_no="+board_no;
+			}
+			board_no1 = communityService.ViewPrevious(board_tb);
+			return "redirect:/community/freeView?board_no="+board_no1;
+			
+	}
+
 	/*
 	 * FreeWrite GET 자유 글쓰기 폼
 	 */
@@ -833,9 +947,49 @@ public class CommunityController {
 		model.addAttribute("board", board);
 		model.addAttribute("list", list);
 	}
+
+	/*
+	 * reviewViewPrevious GET
+	 * 경기 후기 상세페이지 다음글 조회 폼
+	 * */
+	@RequestMapping(value="/community/reviewListNext", method = RequestMethod.GET)
+	public String reviewViewNextGet(int board_no ,int board_div,Board_tb board_tb) {
+		logger.info(""+board_no);
+		logger.info(""+board_div);
+		board_tb.setBoard_no(board_no);
+		board_tb.setBoard_div(board_div);
+			boolean board_noYN = communityService.NextArticle(board_tb);
+			if(board_noYN == false) {
+				return "redirect:/community/reviewView?board_no="+board_no;
+			}
+			int board_no1 = communityService.ViewNext(board_tb);
+			logger.info(""+board_no1);
+			return "redirect:/community/reviewView?board_no="+board_no1;
+			
+	}
 	
 	/*
-	 * ReviewWrite GET 자유 글쓰기 폼
+	 * reviewViewPrevious GET
+	 * 경기 후기 상세페이지 이전글 조회 폼
+	 * */
+	@RequestMapping(value="/community/reviewListPrevious", method = RequestMethod.GET)
+	public String reviewViewPreviousGet(int board_no ,int board_div,Board_tb board_tb) {
+		logger.info(""+board_no+"+"+board_div);
+		    boolean board_noYN = communityService.PreviousArticle(board_tb);
+			int board_no1 = 0;
+			logger.info(""+board_no1);
+			if(board_noYN == false) {
+				return "redirect:/community/reviewView?board_no="+board_no;
+			}
+			board_no1 = communityService.ViewPrevious(board_tb);
+			return "redirect:/community/reviewView?board_no="+board_no1;
+			
+	}
+
+
+	
+	/*
+	 * ReviewWrite GET 경기 후기 글쓰기 폼
 	 */
 	@RequestMapping(value = "/community/reviewWrite", method = RequestMethod.GET)
 	public void reviewWriteGet() {
@@ -843,7 +997,7 @@ public class CommunityController {
 	}
 
 	/*
-	 * ReviewWrite POST 자유 글쓰기 처리 폼
+	 * ReviewWrite POST 경기 후기 글쓰기 처리 폼
 	 */
 	@RequestMapping(value = "/community/reviewWrite", method = RequestMethod.POST)
 	public String reviewWritePost(Board_tb board_tb, MultipartFile file, HttpSession session, Photo photo) {
@@ -1039,7 +1193,7 @@ public class CommunityController {
 	
 	/*
 	 * ReviewCommentDelete POST
-	 * 자유 댓글 삭제 처리 폼
+	 * 경기 후기 댓글 삭제 처리 폼
 	 * */
 	@RequestMapping(value="/community/reviewCommentDelete", method = RequestMethod.GET)
 	public String reviewCommentDeleteGet(int reply_no , int board_no) {
@@ -1108,7 +1262,46 @@ public class CommunityController {
 		model.addAttribute("board", board);
 		model.addAttribute("list", list);
 	}
+
+	/*
+	 * usedViewPrevious GET
+	 * 중고장터 상세페이지 다음글 조회 폼
+	 * */
+	@RequestMapping(value="/community/usedListNext", method = RequestMethod.GET)
+	public String usedViewNextGet(int board_no ,int board_div,Board_tb board_tb) {
+		logger.info(""+board_no);
+		logger.info(""+board_div);
+		board_tb.setBoard_no(board_no);
+		board_tb.setBoard_div(board_div);
+			boolean board_noYN = communityService.NextArticle(board_tb);
+			if(board_noYN == false) {
+				return "redirect:/community/usedView?board_no="+board_no;
+			}
+			int board_no1 = communityService.ViewNext(board_tb);
+			logger.info(""+board_no1);
+			return "redirect:/community/usedView?board_no="+board_no1;
+			
+	}
 	
+	/*
+	 * usedViewPrevious GET
+	 * 중고장터 상세페이지 이전글 조회 폼
+	 * */
+	@RequestMapping(value="/community/usedListPrevious", method = RequestMethod.GET)
+	public String usedViewPreviousGet(int board_no ,int board_div,Board_tb board_tb) {
+		logger.info(""+board_no+"+"+board_div);
+		    boolean board_noYN = communityService.PreviousArticle(board_tb);
+			int board_no1 = 0;
+			logger.info(""+board_no1);
+			if(board_noYN == false) {
+				return "redirect:/community/usedView?board_no="+board_no;
+			}
+			board_no1 = communityService.ViewPrevious(board_tb);
+			return "redirect:/community/usedView?board_no="+board_no1;
+			
+	}
+
+
 	/*
 	 * UsedWrite GET 중고장터 글쓰기 폼
 	 */
@@ -1376,6 +1569,45 @@ public class CommunityController {
 		model.addAttribute("replaylist", replaylist);
 		
 	}
+
+	/*
+	 * soccerVideoViewPrevious GET
+	 * 자유 상세페이지 다음글 조회 폼
+	 * */
+	@RequestMapping(value="/community/soccerVideoListNext", method = RequestMethod.GET)
+	public String soccerVideoViewNextGet(int board_no ,int board_div,Board_tb board_tb) {
+		logger.info(""+board_no);
+		logger.info(""+board_div);
+		board_tb.setBoard_no(board_no);
+		board_tb.setBoard_div(board_div);
+			boolean board_noYN = communityService.NextArticle(board_tb);
+			if(board_noYN == false) {
+				return "redirect:/community/soccerVideoView?board_no="+board_no;
+			}
+			int board_no1 = communityService.ViewNext(board_tb);
+			logger.info(""+board_no1);
+			return "redirect:/community/soccerVideoView?board_no="+board_no1;
+			
+	}
+	
+	/*
+	 * soccerVideoViewPrevious GET
+	 * 자유 상세페이지 이전글 조회 폼
+	 * */
+	@RequestMapping(value="/community/soccerVideoListPrevious", method = RequestMethod.GET)
+	public String soccerVideoViewPreviousGet(int board_no ,int board_div,Board_tb board_tb) {
+		logger.info(""+board_no+"+"+board_div);
+		    boolean board_noYN = communityService.PreviousArticle(board_tb);
+			int board_no1 = 0;
+			logger.info(""+board_no1);
+			if(board_noYN == false) {
+				return "redirect:/community/soccerVideoView?board_no="+board_no;
+			}
+			board_no1 = communityService.ViewPrevious(board_tb);
+			return "redirect:/community/soccerVideoView?board_no="+board_no1;
+			
+	}
+
 	/*
 
 	 * 축구 동영상  글쓰기 폼
@@ -1513,6 +1745,43 @@ public class CommunityController {
 			model.addAttribute("photo",photo);
 			model.addAttribute("Board_tbview",Board_tbview);
 			model.addAttribute("replylist",replylist);
+	}
+	/*
+	 * teamAddViewPrevious GET
+	 * 팀 모집 게시판 상세페이지 다음글 조회 폼
+	 * */
+	@RequestMapping(value="/community/teamAddListNext", method = RequestMethod.GET)
+	public String teamAddViewNextGet(int board_no ,int board_div,Board_tb board_tb) {
+		logger.info(""+board_no);
+		logger.info(""+board_div);
+		board_tb.setBoard_no(board_no);
+		board_tb.setBoard_div(board_div);
+			boolean board_noYN = communityService.NextArticle(board_tb);
+			if(board_noYN == false) {
+				return "redirect:/community/teamAddView?board_no="+board_no;
+			}
+			int board_no1 = communityService.ViewNext(board_tb);
+			logger.info(""+board_no1);
+			return "redirect:/community/teamAddView?board_no="+board_no1;
+			
+	}
+	
+	/*
+	 * teamAddViewPrevious GET
+	 * 팀 모집 게시판 상세페이지 이전글 조회 폼
+	 * */
+	@RequestMapping(value="/community/teamAddListPrevious", method = RequestMethod.GET)
+	public String teamAddViewPreviousGet(int board_no ,int board_div,Board_tb board_tb) {
+		logger.info(""+board_no+"+"+board_div);
+		    boolean board_noYN = communityService.PreviousArticle(board_tb);
+			int board_no1 = 0;
+			logger.info(""+board_no1);
+			if(board_noYN == false) {
+				return "redirect:/community/teamAddView?board_no="+board_no;
+			}
+			board_no1 = communityService.ViewPrevious(board_tb);
+			return "redirect:/community/teamAddView?board_no="+board_no1;
+			
 	}
 	
 	/*
@@ -1693,8 +1962,8 @@ public class CommunityController {
 			communityService.teamAddUpdate(board_tb);
 		}
 		
-		
-		return "redirect:/community/teamAddList";
+			
+			return "redirect:/community/teamAddList";
 	}
 	
 	/*
@@ -1738,6 +2007,5 @@ public class CommunityController {
 		communityService.DownHit(board_no);
 		return "redirect:/community/teamAddView?board_no="+board_no;
 	}
-	
 	
 }

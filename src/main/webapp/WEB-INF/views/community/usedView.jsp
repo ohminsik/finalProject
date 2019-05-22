@@ -118,7 +118,10 @@
 							<a href="/community/usedUpdate?board_no=${board.board_no }"class="btnform7">수정</a>
 							<a href="/community/usedDelete?board_no=${board.board_no }"class="btnform7">삭제</a>
 						</c:if>	
+
+					<a href="/community/usedListPrevious?board_no=${board.board_no }&board_div=${board.board_div }"class="btnform7">이전글</a>
 					<a href="/community/usedList"class="btnform7">목록</a>
+					<a href="/community/usedListNext?board_no=${board.board_no }&board_div=${board.board_div }"class="btnform7">다음글</a>						
 				</div>
 			</div>
 		</div>

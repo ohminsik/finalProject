@@ -117,8 +117,11 @@
 						<c:if test="${user_no == board.user_no }">
 							<a href="/community/reviewUpdate?board_no=${board.board_no }"class="btnform7">수정</a>
 							<a href="/community/reviewDelete?board_no=${board.board_no }"class="btnform7">삭제</a>
-						</c:if>	
+						</c:if>
+
+					<a href="/community/reviewListPrevious?board_no=${board.board_no }&board_div=${board.board_div }"class="btnform7">이전글</a>
 					<a href="/community/reviewList"class="btnform7">목록</a>
+					<a href="/community/reviewListNext?board_no=${board.board_no }&board_div=${board.board_div }"class="btnform7">다음글</a>							
 				</div>
 			</div>
 		</div>
