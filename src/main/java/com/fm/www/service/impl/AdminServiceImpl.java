@@ -156,6 +156,16 @@ public class AdminServiceImpl implements AdminService{
 	public int totalMatchCnt() {
 		return adminDao.totalMatchCnt();
 	}
+	//이전 대회 가져오기
+	@Override
+	public Tournament tournamentUpdate(Tournament tournament) {
+		return adminDao.tournamentUpdate(tournament);
+	}
+	//대회 수정
+	@Override
+	public void adminTournamentWrite(Tournament tournament) {
+		adminDao.adminTournamentWrite(tournament);
+	}
 	
 	
 

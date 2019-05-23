@@ -419,12 +419,19 @@ public class AdminController {
     * GET
     * */
    @RequestMapping(value = "/admin/board/update", method = RequestMethod.GET)
-   public void adminBoardUpdateGet(int board_no, Board_tb board, Model model, int board_div, Photo photo) {    
+   public void adminBoardUpdateGet(int board_no, Board_tb board, Model model, int board_div, Photo photo,Tournament tournament) {    
 	   // 이전 글 가져오기
 	   board = adminService.boardUpdate(board_no);
 	   // 이전 파일 가져오기
 	   photo = adminService.photoUpdate(photo);
-	   
+	   if(board_div == 9) {
+		   // 이전 대회 가져오기
+		   tournament = adminService.tournamentUpdate(tournament);
+		   model.addAttribute("tournament", tournament);
+		   model.addAttribute("photo", photo);
+		   model.addAttribute("board_div", board_div);
+		   model.addAttribute("board", board);
+	   }
 	   model.addAttribute("photo", photo);
 	   model.addAttribute("board_div", board_div);
 	   model.addAttribute("board", board);
@@ -436,7 +443,7 @@ public class AdminController {
     * GET
     * */
    @RequestMapping(value = "/admin/board/update", method = RequestMethod.POST)
-   public String adminBoardUpdatePOST(int board_div, int board_no, Board_tb board, MultipartFile file, Photo photo, HttpSession session) {    
+   public String adminBoardUpdatePOST(int board_div, int board_no, Board_tb board, MultipartFile file,HttpServletRequest request, Photo photo, HttpSession session,Tournament tournament) {    
 	  
 	  //파일첨부 존재 여부
       int photo_no = adminService.adminPhotoCheck(board_no);
@@ -471,10 +478,55 @@ public class AdminController {
          
             board.setBoard_no(board_no);
             photo.setBoard_no(board_no);
-         
+            
+            if(board_div == 9 ) {
+            	//대회일정 불러오기
+            	// DateFormate 함수 선언
+			    SimpleDateFormat fmt = new SimpleDateFormat("yyyy/MM/dd");
+			    Date con_reg_dates = new Date();
+			    Date con_reg_datee = new Date();
+			    Date con_con_dates = new Date();
+			    Date con_con_datee = new Date();
+				// parameter 값 받기
+				String selDate1 = request.getParameter("con_reg_dates");
+				String selDate2 = request.getParameter("con_reg_datee");
+				String selDate3 = request.getParameter("con_con_dates");
+				String selDate4 = request.getParameter("con_con_datee");
+				logger.info(selDate1);
+				// date로 변환
+				try {
+					con_reg_dates = fmt.parse(selDate1);
+					con_reg_datee = fmt.parse(selDate2);
+					con_con_dates = fmt.parse(selDate3);
+					con_con_datee = fmt.parse(selDate4);
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+				//대회 일정 내용 등록
+				tournament.setCon_reg_dates(con_reg_dates);
+				tournament.setCon_reg_datee(con_reg_datee);
+				tournament.setCon_con_dates(con_con_dates);
+				tournament.setCon_con_datee(con_con_datee);
+				logger.info(selDate1);
+				logger.info(selDate2);
+				logger.info(selDate3);
+				logger.info(selDate4);
+				
+				board.setBoard_no(board_no);
+	            photo.setBoard_no(board_no);
+            	tournament.setBoard_no(board_no);
+            	//대회 수정
+            	adminService.adminTournamentWrite(tournament);   
+            	
+            	//수정 글쓰기
+            	adminService.adminBoardWrite(board);
+            	
+            	//수정 파일첨부
+            	adminService.adminPhotoWrite(photo);
+            }
             //수정 글쓰기
             adminService.adminBoardWrite(board);
-         
+            
             //수정 파일첨부
             adminService.adminPhotoWrite(photo);
             
@@ -508,19 +560,56 @@ public class AdminController {
          
             board.setBoard_no(board_no);
             photo.setBoard_no(board_no);
-            board.setBoard_no(board_no);
-            
-         
+            if(board_div == 9 ) {
+            	
+            	// DateFormate 함수 선언
+            	SimpleDateFormat fmt = new SimpleDateFormat("yyyy/MM/dd");
+            	Date con_reg_dates = new Date();
+            	Date con_reg_datee = new Date();
+            	Date con_con_dates = new Date();
+            	Date con_con_datee = new Date();
+            	// parameter 값 받기
+            	String selDate1 = request.getParameter("con_reg_dates");
+            	String selDate2 = request.getParameter("con_reg_datee");
+            	String selDate3 = request.getParameter("con_con_dates");
+            	String selDate4 = request.getParameter("con_con_datee");
+            	logger.info(selDate1);
+            	// date로 변환
+            	try {
+            		con_reg_dates = fmt.parse(selDate1);
+            		con_reg_datee = fmt.parse(selDate2);
+            		con_con_dates = fmt.parse(selDate3);
+            		con_con_datee = fmt.parse(selDate4);
+            	} catch (ParseException e) {
+            		e.printStackTrace();
+            	}
+            	//대회 일정 내용 등록
+            	tournament.setCon_reg_dates(con_reg_dates);
+            	tournament.setCon_reg_datee(con_reg_datee);
+            	tournament.setCon_con_dates(con_con_dates);
+            	tournament.setCon_con_datee(con_con_datee);	
+            	
+	            board.setBoard_no(board_no);
+	            photo.setBoard_no(board_no);
+            	tournament.setBoard_no(board_no);
+            	//대회 수정
+            	adminService.adminTournamentWrite(tournament);   
+            	
+            	//수정 글쓰기
+            	adminService.adminBoardWrite(board);
+            	
+            	//수정 파일첨부
+            	adminService.adminPhotoWrite(photo);
+            }            
             //수정 글쓰기
             adminService.adminBoardWrite(board);
             //파일첨부
             adminService.adminInsertPhoto(photo, board_div);
          }
       }else {
-            //수정 글쓰기
-            adminService.adminBoardWrite(board);
-      }
-	   
+          //수정 글쓰기
+          adminService.adminBoardWrite(board);
+    }
 	   return "redirect:/admin/board?board_div=" + board_div;
    }
    /*

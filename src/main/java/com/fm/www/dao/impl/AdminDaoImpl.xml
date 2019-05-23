@@ -116,6 +116,11 @@
   		select * from Photo
   		where board_no = #{board_no }
   	</select>
+  	<!-- 이전 대회 정보 가져오기 -->
+  	<select id="tournamentUpdate" parameterType="com.fm.www.dto.Tournament" resultType="com.fm.www.dto.Tournament">
+  		select * from congress
+  		where board_no = #{board_no }
+  	</select>
   	<!-- 파일첨부 존재 여부 -->
   	<select id="adminPhotoCheck" parameterType="int" resultType="int">
   		select count(*) from Photo
@@ -126,6 +131,16 @@
   		update Board_tb
   		 set board_title = #{board_title}
   		 , board_content = #{board_content}
+  		where board_no = #{board_no}
+  	</update>
+  	<!-- 대회 수정 -->
+  	<update id="adminTournamentWrite" parameterType="com.fm.www.dto.Tournament">
+  		 update congress
+  		 set con_reg_dates = #{con_reg_dates}
+  		 , con_con_dates = #{con_con_dates}
+         , con_reg_datee = #{con_reg_datee}
+         , con_con_datee = #{con_con_datee}
+         , con_region = #{con_region}
   		where board_no = #{board_no}
   	</update>
   	

@@ -65,6 +65,10 @@ public interface AdminService {
 	public int totalJoinCnt();
 	public int todayMatchCnt();
 	public int totalMatchCnt();
+	//이전 대회 가져오기
+	public Tournament tournamentUpdate(Tournament tournament);
+	//대회 수정
+	public void adminTournamentWrite(Tournament tournament);
 
 
 	
