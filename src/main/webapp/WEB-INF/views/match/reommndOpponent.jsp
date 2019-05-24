@@ -89,7 +89,7 @@
 						
 					</div>
 					<ul class="tac mt20">
-							<li class="oh1"><a class="btnform0">매치신청</a></li>
+							<li class="oh1"><a class="btnform0 messageapply">쪽지보내기</a></li>
 							<li class="oh1"><a href="/match/reommndOpponent" class="btnform0">다른 상대 찾기</a></li>
 						</ul>
 				</div>
@@ -97,6 +97,35 @@
 		<jsp:include page="../common/footer.jsp"/>
 		</div>
 	</div>
+	
+<div class="messagebg"></div>
+<div class="message_wrap" id="replymessage_wrap" style="text-align:center;">
+	<form action="/mypage/replyMessage" method="POST">
+		<input type="hidden" name="senduser_no" value="${user_no }">
+		<input type="hidden" name="reciveruser_no" value="${reciver.user_no }">
+		<div>
+			<p>받는사람 : ${reciver.user_name }(${reciver.user_id })</p>
+			<i class="xi-close messageclosebtn" style="top:20px; right:20px;"></i>
+			<textarea class="textareaform100p mt20" name="message_content"></textarea>
+			<button class="btnform1 oh1 mt20" >전송</button>
+		</div>	
+	</form>							
+</div>
+<script>
+	$(document).ready(function(){	
+		$(".messageapply").click(function(e){
+			e.preventDefault();
+			$(".messagebg").fadeIn();
+			$(".message_wrap").fadeIn();
+		})
+		
+		$(".messageclosebtn").click(function(e){
+			e.preventDefault();
+			$(".messagebg").fadeOut();
+			$(".message_wrap").fadeOut();
+		})
+	})
+</script>
 </body>
 </html>
 

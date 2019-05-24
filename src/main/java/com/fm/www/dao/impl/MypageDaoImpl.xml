@@ -52,7 +52,7 @@
   		select * from user_tb
   		WHERE 1=1
   		AND team_no = #{team_no}
-  		ORDER BY user_no
+  		ORDER BY user_no asc
   	</select>
   	
   	<!-- 유저번호로 유저정보 조회 -->

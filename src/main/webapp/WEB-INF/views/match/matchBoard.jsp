@@ -163,7 +163,7 @@
 										
 			                        	if( date_fight_date == i) {
 // 											System.out.println( i + " : " + date_fight_date + " : " + cnt);
-			                        		out.println("("+cnt+")"+"</td>");//경기수
+			                        		out.println("<span class='cnttt'>"+cnt+" 경기</span>"+"</td>");//경기수
 			                        	}
 			                        }
 			                                

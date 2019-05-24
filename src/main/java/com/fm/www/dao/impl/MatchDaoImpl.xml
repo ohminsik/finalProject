@@ -80,6 +80,7 @@
 	SELECT date_fight_date, count(*) cnt FROM (
 	    SELECT to_char(fight_date, 'dd') date_fight_date FROM match
 	 	WHERE to_char(fight_date, 'yyyy/mm') = to_char(#{fight_date }, 'yyyy/mm')
+	 	AND match_sport = #{match_sport}
 	 ) M
 	GROUP BY date_fight_date
 	ORDER BY date_fight_date

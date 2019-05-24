@@ -340,8 +340,14 @@ public class MatchController {
          
          System.out.println(RandomTeam);
          
+       
+     	List<User> recivers = mypageDao.selectTeamUserList(RandomTeam.getTeam_no());
+         
          model.addAttribute("team",RandomTeam);
          model.addAttribute("noTeam",true);
+         
+         User reciver = mypageDao.selectUserInformation(recivers.get(0).getUser_no());
+ 		 model.addAttribute("reciver",reciver);
        
 	}
 	
