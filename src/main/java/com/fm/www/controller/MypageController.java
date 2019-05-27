@@ -503,7 +503,7 @@ public class MypageController {
 	 * POST
 	 * */
 	@RequestMapping(value = "/mypage/teamScoreInsert", method = RequestMethod.POST)
-	public void teamScoreInsertPost(Match match, Board_tb board_tb, HttpSession session, HttpServletRequest request, MultipartFile file) {		
+	public String teamScoreInsertPost(Match match, Board_tb board_tb, HttpSession session, HttpServletRequest request, MultipartFile file) {		
 		System.out.println(match.getBlueteam_score());
 		System.out.println(match.getPurpleteam_score());
 		
@@ -516,7 +516,7 @@ public class MypageController {
 		
 		int[] rating_sort = new int[] {b_rating, p_rating};
 		
-		Arrays.sort(rating_sort);
+		Arrays.sort(rating_sort);	//정렬
 		System.out.println(rating_sort[0]);
 		System.out.println(rating_sort[1]);
 		
@@ -654,6 +654,8 @@ public class MypageController {
 		System.out.println("퍼플팀 레이팅" + p_rating);
 		System.out.println(matchInfo.getBlueteam_no());
 		System.out.println(matchInfo.getPurpleteam_no());
+		
+		return "/mypage/teamMatchResult";
 	}
 	
 	/*

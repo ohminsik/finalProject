@@ -79,7 +79,8 @@
 								<tr>
 									<td><label for="">신청기간</label></td>
 									<td>
-										<input type="text" name="con_reg_dates" id="selDate1" value="<fmt:formatDate value="${tournament.con_reg_dates }" pattern="yyyy/MM/dd"/>" class="inputform200" readonly>
+										<input type="text" name="con_reg_dates" id="selDate1" value="<fmt:formatDate value="${tournament.con_reg_dates }" pattern="yyyy/MM/dd"/>" class="inputform200" readonly
+										placeholder="<fmt:formatDate value="${tournament.con_reg_dates }" pattern="yyyy/MM/dd"/>">
 										<i class="xi-calendar-list" onclick="focusFunc1()"></i>
 										~
 										<input type="text" name="con_reg_datee" id="selDate2" value="<fmt:formatDate value="${tournament.con_reg_datee }" pattern="yyyy/MM/dd"/>" class="inputform200" readonly>

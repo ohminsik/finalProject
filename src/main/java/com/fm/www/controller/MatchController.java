@@ -331,7 +331,7 @@ public class MatchController {
 		double randomValue = 0.0;
 		randomValue = Math.random();	 
 		 
-        int ran = 0;
+        int ran = 1;
         ran = (int)(randomValue * matchTeamList.size()) -1;
  
         System.out.println(ran);

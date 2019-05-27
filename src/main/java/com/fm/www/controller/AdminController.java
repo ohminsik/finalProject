@@ -125,7 +125,7 @@ public class AdminController {
     * */
    @RequestMapping(value = "/admin/board", method = RequestMethod.GET)
    public String adminBoardGet(String board_div, Model model, String search, String word, Board_tb board, @RequestParam(defaultValue = "1")int curPage, HttpSession session) {      
-      
+      System.out.println("board_div" + board_div);
       // 게시글 전체 수 
       int totalCount = adminService.boardTotalCount(search, word, board_div);
       System.out.println(totalCount);

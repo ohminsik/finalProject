@@ -43,18 +43,34 @@
 				</div>
 				
 				<div class="teammatchinfo mt50">
-					<p>내가 등록한 매치</p>
+					<p class="mt10 mb10" style="font-size:20px; color: #5383e8;; font-weight: bold;">내가 등록한 매치</p>
 					<ul>
 						<c:forEach items="${matchList }" var="matchList">
 						<li>
 							<div class="wrapppppppp">
 								<div class="left">
-									<p class="img mb30"><img src="/uploadImg/${matchList.blue_mark }"></p>
+									<c:if test="${matchList.blue_mark eq '구장마크' }">
+										<p class="img mb30"><img src="/resources/img/defalutimg2.png"></p>
+									</c:if>
+									<c:if test="${matchList.blue_mark eq null }">
+										<p class="img mb30"><img src="/resources/img/defalutimg2.png"></p>
+									</c:if>
+									<c:if test="${matchList.blue_mark ne '구장마크' }">
+										<p class="img mb30"><img src="/uploadImg/${matchList.blue_mark }"></p>
+									</c:if>
 									<p class="title mb10">${matchList.blue_name }</p>
 									<p class="score">${matchList.blue_etire }전 ${matchList.blue_win }승 ${matchList.blue_tie }무 ${matchList.blue_lose }패</p>
 								</div>
 								<div class="right">
-									<p class="img mb30"><img src="/uploadImg/${matchList.purple_mark }"></p>
+									<c:if test="${matchList.purple_mark eq '구장마크' }">
+										<p class="img mb30"><img src="/resources/img/defalutimg2.png"></p>
+									</c:if>
+									<c:if test="${matchList.purple_mark eq null }">
+										<p class="img mb30"><img src="/resources/img/defalutimg2.png"></p>
+									</c:if>
+									<c:if test="${matchList.purple_mark ne '구장마크' }">
+										<p class="img mb30"><img src="/uploadImg/${matchList.purple_mark }"></p>
+									</c:if>
 									<p class="title mb10">${matchList.purple_name }</p>
 									<p class="score">${matchList.purple_etire }전 ${matchList.purple_win }승 ${matchList.purple_tie }무 ${matchList.purple_lose }패</p>
 								</div>	
@@ -86,18 +102,34 @@
 				</div>
 				
 				<div class="teammatchinfo mt50">
-					<p>내가 신청한 매치</p>
+					<p class="mt10 mb10" style="font-size:20px; color: #5383e8;; font-weight: bold;">내가 신청한 매치</p>
 					<ul>
 						<c:forEach items="${matchList1 }" var="matchList">
 						<li>
 							<div class="wrapppppppp">
 								<div class="left">
-									<p class="img mb30"><img src="/uploadImg/${matchList.blue_mark }"></p>
+									<c:if test="${matchList.blue_mark eq '구장마크' }">
+										<p class="img mb30"><img src="/resources/img/defalutimg2.png"></p>
+									</c:if>
+									<c:if test="${matchList.blue_mark eq null }">
+										<p class="img mb30"><img src="/resources/img/defalutimg2.png"></p>
+									</c:if>
+									<c:if test="${matchList.blue_mark ne '구장마크' }">
+										<p class="img mb30"><img src="/uploadImg/${matchList.blue_mark }"></p>
+									</c:if>
 									<p class="title mb10">${matchList.blue_name }</p>
 									<p class="score">${matchList.blue_etire }전 ${matchList.blue_win }승 ${matchList.blue_tie }무 ${matchList.blue_lose }패</p>
 								</div>
 								<div class="right">
-									<p class="img mb30"><img src="/uploadImg/${matchList.purple_mark }"></p>
+									<c:if test="${matchList.purple_mark eq '구장마크' }">
+										<p class="img mb30"><img src="/resources/img/defalutimg2.png"></p>
+									</c:if>
+									<c:if test="${matchList.purple_mark eq null }">
+										<p class="img mb30"><img src="/resources/img/defalutimg2.png"></p>
+									</c:if>
+									<c:if test="${matchList.purple_mark ne '구장마크' }">
+										<p class="img mb30"><img src="/uploadImg/${matchList.purple_mark }"></p>
+									</c:if>
 									<p class="title mb10">${matchList.purple_name }</p>
 									<p class="score">${matchList.purple_etire }전 ${matchList.purple_win }승 ${matchList.purple_tie }무 ${matchList.purple_lose }패</p>
 								</div>	

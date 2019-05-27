@@ -37,7 +37,15 @@
 						<ul>
 							<li>
 								<div class="top">
-									<p class="img mb30"><img src="/uploadImg/${team.team_mark }"></p>
+									<c:if test="${team.team_mark eq '구장마크' }">
+										<p class="img mb30"><img src="/resources/img/defalutimg2.png"></p>
+									</c:if>
+									<c:if test="${team.team_mark eq null }">
+										<p class="img mb30"><img src="/resources/img/defalutimg2.png"></p>
+									</c:if>
+									<c:if test="${team.team_mark ne '구장마크' }">
+										<p class="img mb30"><img src="/uploadImg/${team.team_mark }"></p>
+									</c:if>
 									<p class="title mb10">${team.team_name }</p>
 									<p class="score">${team.team_etire }전 ${team.team_win }승 ${team.team_tie }무 ${team.team_lose }패</p>
 									<p class="title mt10">Rating : ${team.team_rating }</p>

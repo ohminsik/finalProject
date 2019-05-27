@@ -66,7 +66,15 @@
 					<ul>
 						<li>
 							<div class="top">
-								<p class="img mb30"><img src="/uploadImg/${team.team_mark }"></p>
+								<c:if test="${team.team_mark eq '구장마크' }">
+										<p class="img mb30"><img src="/resources/img/defalutimg2.png"></p>
+								</c:if>
+								<c:if test="${team.team_mark eq null }">
+									<p class="img mb30"><img src="/resources/img/defalutimg2.png"></p>
+								</c:if>
+								<c:if test="${team.team_mark ne '구장마크' }">
+									<p class="img mb30"><img src="/uploadImg/${team.team_mark }"></p>
+								</c:if>
 								<p class="title mb10">${team.team_name }</p>
 								<p class="score">${team.team_etire }전 ${team.team_win }승 ${team.team_tie }무 ${team.team_lose }패</p>
 								<p class="title mt10">Rating : ${team.team_rating }</p>
@@ -114,14 +122,14 @@
 							<table class="j_table_form1">
 								<colgroup>
 									<col width="*">
-									<col width="20%">
-									<col width="20%">
+									<col width="40%">
+									
 								</colgroup>
 								<thead>
 									<tr>
 										<th>이름(아이디)</th>
 										<th>포지션</th>
-										<th>관리</th>
+										
 									</tr>
 								</thead>
 								<tbody>
@@ -129,7 +137,7 @@
 									<tr>
 										<td>${userList.user_name }(${userList.user_id })</td>
 										<td>${userList.user_position }</td>
-										<td><a href="#">관리</a></td>
+									
 									</tr>
 									</c:forEach>
 								</tbody>
@@ -200,11 +208,7 @@
 						</tbody>
 					</table>
 				</div>
-				<form action="/mypage/teamDelete" method="POST">
-					<div class="j_button mt50">
-						<button class="btnform0">팀 해체</button>
-					</div>
-				</form>
+				
 				</c:if>
 			</div>
 		</div>

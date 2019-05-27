@@ -48,13 +48,29 @@
 						<li>
 							<div class="wrapppppppp">
 								<div class="left">
-									<p class="img mb30"><img src="/uploadImg/${matchList.blue_mark }"></p>
+									<c:if test="${matchList.blue_mark eq '구장마크' }">
+										<p class="img mb30"><img src="/resources/img/defalutimg2.png"></p>
+									</c:if>
+									<c:if test="${matchList.blue_mark eq null }">
+										<p class="img mb30"><img src="/resources/img/defalutimg2.png"></p>
+									</c:if>
+									<c:if test="${matchList.blue_mark ne '구장마크' }">
+										<p class="img mb30"><img src="/uploadImg/${matchList.blue_mark }"></p>
+									</c:if>
 									<p class="title mb10">${matchList.blue_name }</p>
 									<p class="score">${matchList.blue_etire }전 ${matchList.blue_win }승 ${matchList.blue_tie }무 ${matchList.blue_lose }패</p>
 									<p class="title mb10">Rating Score<br>${matchList.blue_rating }</p>
 								</div>
 								<div class="right">
-									<p class="img mb30"><img src="/uploadImg/${matchList.purple_mark }"></p>
+									<c:if test="${matchList.purple_mark eq '구장마크' }">
+										<p class="img mb30"><img src="/resources/img/defalutimg2.png"></p>
+									</c:if>
+									<c:if test="${matchList.purple_mark eq null }">
+										<p class="img mb30"><img src="/resources/img/defalutimg2.png"></p>
+									</c:if>
+									<c:if test="${matchList.purple_mark ne '구장마크' }">
+										<p class="img mb30"><img src="/uploadImg/${matchList.purple_mark }"></p>
+									</c:if>
 									<p class="title mb10">${matchList.purple_name }</p>
 									<p class="score">${matchList.purple_etire }전 ${matchList.purple_win }승 ${matchList.purple_tie }무 ${matchList.purple_lose }패</p>
 									<p class="title mb10">Rating Score<br>${matchList.purple_rating }</p>

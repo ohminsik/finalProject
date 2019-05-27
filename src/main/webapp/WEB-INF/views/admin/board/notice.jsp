@@ -119,7 +119,19 @@
                      <td><input type="checkbox" name="checkRow" value="${l.board_no }" /><label for="check2"></label></td>
                      <td>${l.board_no }</td>
                      <td>${l.board_title }<span class="fb chs">[ ${l.board_reply_cnt } ]</span></td>
-                     <td>${l.board_content }</td>
+                      <c:if test="${board_div eq 9 }">
+		               <td>${l.board_content }</td> 
+		            </c:if>
+		             <c:if test="${board_div ne 9 }">
+		                <c:set var="text" value="${l.board_content }"/>		
+						<%
+							String text = pageContext.getAttribute("text").toString();
+							String replacetext = text.replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "");
+						%>
+						<td style="text-align:center"><p style="width:600px; text-align:center; margin:0 auto;"><%=replacetext %></p></td>
+		            </c:if>
+                    
+         
                      <td><fmt:formatDate value="${l.board_date }" pattern="yyyy-MM-dd"></fmt:formatDate></td>
                      <td>${l.board_cnt }</td>
                      <td><c:if test="${l.delete_yn.equals('Y') }">삭제</c:if>

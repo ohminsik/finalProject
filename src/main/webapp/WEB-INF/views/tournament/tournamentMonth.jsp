@@ -69,7 +69,7 @@
 				<ul class="tournament_list">
 					<c:forEach items="${list }" var="list">
 						<li>
-							<a href="/tournament/tournamentMonth?board_no=${list.board_no }">
+							<a href="/tournament/tournamentView?board_no=${list.board_no }">
 								<c:if test="${empty list.photo_stored }">
 								<img alt="" src="/resources/img/defalutimg.png">
 								</c:if>
