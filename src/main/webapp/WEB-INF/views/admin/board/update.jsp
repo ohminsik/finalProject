@@ -79,10 +79,10 @@
 								<tr>
 									<td><label for="">신청기간</label></td>
 									<td>
-										<input type="text" name="con_reg_dates" id="selDate1" placeholder="<fmt:formatDate value="${tournament.con_reg_dates }" pattern="yyyy/MM/dd"/>" value="" class="inputform200" readonly>
+										<input type="text" name="con_reg_dates" id="selDate1" value="<fmt:formatDate value="${tournament.con_reg_dates }" pattern="yyyy/MM/dd"/>" class="inputform200" readonly>
 										<i class="xi-calendar-list" onclick="focusFunc1()"></i>
 										~
-										<input type="text" name="con_reg_datee" id="selDate2" placeholder="<fmt:formatDate value="${tournament.con_reg_datee }" pattern="yyyy/MM/dd"/>" class="inputform200" readonly>
+										<input type="text" name="con_reg_datee" id="selDate2" value="<fmt:formatDate value="${tournament.con_reg_datee }" pattern="yyyy/MM/dd"/>" class="inputform200" readonly>
 										<i class="xi-calendar-list" onclick="focusFunc2()"></i>
 									</td>
 								</tr>
@@ -90,10 +90,10 @@
 								<tr>
 									<td><label for="">대회기간</label></td>
 									<td>
-										<input type="text" name="con_con_dates" id="selDate3" placeholder="<fmt:formatDate value="${tournament.con_con_dates }" pattern="yyyy/MM/dd"/>" class="inputform200" readonly>
+										<input type="text" name="con_con_dates" id="selDate3" value="<fmt:formatDate value="${tournament.con_con_dates }" pattern="yyyy/MM/dd"/>" class="inputform200" readonly>
 										<i class="xi-calendar-list" onclick="focusFunc3()"></i>
 										~
-										<input type="text" name="con_con_datee" id="selDate4" placeholder="<fmt:formatDate value="${tournament.con_con_datee }" pattern="yyyy/MM/dd"/>" class="inputform200" readonly>
+										<input type="text" name="con_con_datee" id="selDate4" value="<fmt:formatDate value="${tournament.con_con_datee }" pattern="yyyy/MM/dd"/>" class="inputform200" readonly>
 										
 										<i class="xi-calendar-list" onclick="focusFunc4()"></i>
 									</td>
@@ -180,6 +180,7 @@
 <script type="text/javascript">
 
 $(function(){
+	
 	var editorConfig = { filebrowserUploadUrl : "/Editor/upload" };
     
     var ck = null;
